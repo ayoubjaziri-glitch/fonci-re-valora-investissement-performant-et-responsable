@@ -159,16 +159,19 @@ export default function Layout({ children, currentPageName }) {
               <h4 className="font-semibold mb-4">Contact</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="mailto:contact@fonciere-patrimoniale.fr" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">
+                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">
                     <Mail className="h-4 w-4" />
-                    contact@fonciere-patrimoniale.fr
+                    ayoubjaziri@gmail.com
                   </a>
                 </li>
                 <li>
                   <a href="tel:+33758736580" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">
                     <Phone className="h-4 w-4" />
-                    +33 (0)7 58 73 65 80
+                    +33 7 58 73 65 80
                   </a>
+                </li>
+                <li className="text-white/60 text-sm">
+                  16 Rue de la Laure<br />03200 Vichy
                 </li>
               </ul>
             </div>

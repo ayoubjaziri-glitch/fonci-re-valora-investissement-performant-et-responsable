@@ -9,7 +9,8 @@ import {
   Building2,
   Users,
   Briefcase,
-  ArrowRight
+  ArrowRight,
+  Clock
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -141,8 +142,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <p className="font-semibold text-[#1E3A5F]">Email</p>
-                      <a href="mailto:contact@fonciere-patrimoniale.fr" className="text-gray-600 hover:text-[#C9A961] transition-colors">
-                        contact@fonciere-patrimoniale.fr
+                      <a href="mailto:ayoubjaziri@gmail.com" className="text-gray-600 hover:text-[#C9A961] transition-colors">
+                        ayoubjaziri@gmail.com
                       </a>
                     </div>
                   </div>
@@ -154,8 +155,28 @@ export default function Contact() {
                     <div>
                       <p className="font-semibold text-[#1E3A5F]">Téléphone</p>
                       <a href="tel:+33758736580" className="text-gray-600 hover:text-[#C9A961] transition-colors">
-                        +33 (0)7 58 73 65 80
+                        +33 7 58 73 65 80
                       </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-[#C9A961]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <MapPin className="h-6 w-6 text-[#C9A961]" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-[#1E3A5F]">Adresse</p>
+                      <p className="text-gray-600">16 Rue de la Laure<br />03200 Vichy</p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="w-12 h-12 bg-[#C9A961]/10 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <Clock className="h-6 w-6 text-[#C9A961]" />
+                    </div>
+                    <div>
+                      <p className="font-semibold text-[#1E3A5F]">Horaires d'ouverture</p>
+                      <p className="text-gray-600">Lundi - Vendredi : 9h - 18h<br />Samedi : 10h - 15h</p>
                     </div>
                   </div>
                 </div>
