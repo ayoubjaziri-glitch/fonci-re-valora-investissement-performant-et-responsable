@@ -21,6 +21,7 @@ import {
   Quote
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import InvestmentSimulator from "../components/InvestmentSimulator";
 
 export default function Home() {
   const stats = [
@@ -32,40 +33,40 @@ export default function Home() {
 
   const services = [
     {
-      title: "Investissement immobilier clé en main",
-      description: "Investissez aux côtés de La Foncière Patrimoniale dans des opérations immobilières structurées. Bénéficiez d'un cadre sécurisé et d'une stratégie patrimoniale claire pour développer votre capital.",
+      title: "Souscription au capital de la foncière",
+      description: "Devenez associé de La Foncière Patrimoniale et participez à des opérations d'acquisition structurées. Profitez d'un véhicule d'investissement collectif sécurisé avec une stratégie de valorisation patrimoniale définie.",
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
       icon: Key
     },
     {
-      title: "Sélection d'opportunités immobilières",
-      description: "Nous identifions et analysons les biens les plus performants adaptés à notre stratégie patrimoniale. Chaque opportunité est évaluée selon sa rentabilité, sa localisation et son potentiel de rénovation durable.",
+      title: "Sourcing et due diligence immobilière",
+      description: "Notre équipe identifie des actifs immobiliers à fort potentiel de revalorisation. Chaque acquisition fait l'objet d'une analyse approfondie : rentabilité locative, décote à l'achat, potentiel de réhabilitation BBC.",
       image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&q=80",
       icon: Search
     },
     {
-      title: "Gestion locative et arbitrage patrimonial",
-      description: "Nous prenons en charge la gestion complète des locataires, le suivi des loyers et des charges, ainsi que les opérations de maintenance et d'arbitrage pour optimiser la rentabilité globale.",
+      title: "Asset management et arbitrage",
+      description: "Gestion locative intégrée, suivi des cash-flows, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur et le TRI de vos parts.",
       image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
       icon: BarChart3
     }
   ];
 
   const atouts = [
-    "Mutualisation et diversification du risque locatif",
-    "Équilibre optimisé entre rendement et niveau de risque",
-    "Absence de contraintes liées à la gestion locative quotidienne",
-    "Approche patrimoniale long terme, sécurisée et structurée",
-    "Liberté dans le choix du montant à investir",
-    "Répartition géographique des investissements"
+    "Mutualisation des risques locatifs sur un portefeuille diversifié",
+    "Allocation optimisée entre rendement courant et plus-value à terme",
+    "Externalisation totale de la gestion d'actifs immobiliers",
+    "Véhicule d'investissement structuré avec gouvernance claire",
+    "Ticket d'entrée accessible et liquidité encadrée",
+    "Diversification géographique limitant l'exposition aux cycles locaux"
   ];
 
   const valeurAjoutee = [
-    "Objectif de performance financière supérieur à l'immobilier traditionnel",
-    "Prise en charge complète : recherche, négociation, acquisition, travaux, location, revente",
-    "Renforcement de la diversification globale du patrimoine",
-    "Transparence totale sur les opérations et la stratégie",
-    "Création de valeur durable à travers des actifs rénovés et optimisés"
+    "Objectif de TRI supérieur aux SCPI et à l'immobilier en direct",
+    "Chaîne de valeur intégrée : sourcing, acquisition, réhabilitation, gestion, cession",
+    "Effet de levier bancaire optimisé (LTV 80%) démultipliant la performance",
+    "Reporting régulier et transparence sur la valorisation des actifs",
+    "Création de valeur via la rénovation BBC et l'amélioration du DPE"
   ];
 
   const testimonials = [
@@ -114,10 +115,10 @@ export default function Home() {
               </h1>
               
               <p className="text-lg text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                <strong className="text-white">Bienvenue chez La Foncière Patrimoniale.</strong> Nous vous accompagnons 
-                dans la constitution d'un patrimoine immobilier durable et performant. Grâce à notre expertise 
-                dans l'acquisition, la rénovation et la gestion de biens, nous transformons chaque projet en 
-                une opportunité concrète de valorisation et de revenus pérennes.
+                <strong className="text-white">Bienvenue chez La Foncière Patrimoniale.</strong> Nous structurons 
+                des opérations d'acquisition et de valorisation d'actifs immobiliers résidentiels. Notre véhicule 
+                d'investissement vous permet de bénéficier de l'effet de levier bancaire et d'une gestion 
+                professionnelle pour optimiser le rendement de vos capitaux propres.
               </p>
 
               <div className="flex flex-wrap justify-center lg:justify-start gap-4">
@@ -193,11 +194,11 @@ export default function Home() {
               Qui sommes-nous ?
             </h2>
             <p className="text-gray-600 leading-relaxed text-lg">
-              <strong className="text-[#1E3A5F]">La Foncière Patrimoniale</strong> est une société immobilière dédiée à l'acquisition, 
-              la rénovation durable et la valorisation d'actifs immobiliers. Notre mission est de constituer 
-              un patrimoine solide et générateur de revenus, en accompagnant nos clients dans des investissements 
-              structurés, sécurisés et orientés long terme, grâce à une gestion intégrée et experte de l'ensemble 
-              du cycle immobilier.
+              <strong className="text-[#1E3A5F]">La Foncière Patrimoniale</strong> est un véhicule d'investissement immobilier 
+              spécialisé dans l'acquisition, la réhabilitation BBC et l'asset management d'actifs résidentiels. 
+              Notre mission : constituer un portefeuille patrimonial performant et résilient, en proposant à nos 
+              associés une exposition au marché immobilier avec effet de levier, gestion déléguée et alignement 
+              total des intérêts via le carried interest.
             </p>
           </motion.div>
         </div>
@@ -213,13 +214,13 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-6">
-              Une Offre Globale pour Vos Projets Immobiliers
+              Un véhicule d'investissement clé en main
             </h2>
             <p className="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
-              <strong>Nous proposons une offre globale clé en main</strong>, pensée pour les investisseurs 
-              souhaitant placer leur argent en toute sérénité. Nous prenons en charge l'ensemble des étapes 
-              de l'investissement immobilier, de la recherche et sélection des biens à l'acquisition, 
-              au pilotage des travaux, à la mise en location et à l'arbitrage des actifs.
+              <strong>La Foncière Patrimoniale prend en charge l'intégralité du cycle immobilier</strong> : 
+              sourcing off-market, structuration du financement bancaire, pilotage des travaux de réhabilitation, 
+              asset management et arbitrage stratégique. Vous bénéficiez d'une gestion professionnelle sans 
+              contrainte opérationnelle.
             </p>
           </motion.div>
 
@@ -342,8 +343,62 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Simulator Section */}
       <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-1 bg-[#C9A961]" />
+                <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
+                  Simulateur
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-6">
+                Projetez la valorisation de votre investissement
+              </h2>
+              <p className="text-gray-600 leading-relaxed mb-6">
+                Notre modèle de performance repose sur un <strong>triple mécanisme de création de valeur</strong> : 
+                les revenus locatifs récurrents, l'amortissement du capital emprunté et la plus-value 
+                potentielle lors de l'arbitrage des actifs.
+              </p>
+              <ul className="space-y-3 mb-8">
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
+                  <span className="text-gray-700">TRI net cible de 10,5% par an</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
+                  <span className="text-gray-700">0€ de frais d'entrée, 100% investi</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
+                  <span className="text-gray-700">Éligibilité PEA-PME (exonération IR)</span>
+                </li>
+                <li className="flex items-center gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
+                  <span className="text-gray-700">Carried interest uniquement sur surperformance</span>
+                </li>
+              </ul>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <InvestmentSimulator />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section */}
+      <section className="py-24 bg-[#F8F9FA]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
