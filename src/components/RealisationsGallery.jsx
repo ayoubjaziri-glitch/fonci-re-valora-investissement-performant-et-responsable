@@ -1,64 +1,79 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Leaf, Home, Thermometer, Zap } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Leaf, Home, Thermometer, Zap, ArrowLeftRight, ArrowRight, MapPin } from 'lucide-react';
 
 const realisations = [
   {
     id: 1,
-    title: "Immeuble Haussmannien - Lyon 6ème",
-    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+    title: "Immeuble de rapport - Lyon 6ème",
+    location: "Lyon, Rhône",
+    imageAvant: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80",
+    imageApres: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
     surface: "1 200 m²",
-    logements: "12 appartements",
+    logements: "12 lots",
     dpeAvant: "F",
     dpeApres: "B",
-    description: "Réhabilitation complète avec isolation thermique par l'extérieur, remplacement des menuiseries et installation d'une chaufferie collective performante.",
-    travaux: ["Isolation ITE", "PAC collective", "VMC double flux", "Menuiseries triple vitrage"]
+    descriptionAvant: "Immeuble dégradé avec installations vétustes et isolation inexistante.",
+    descriptionApres: "Réhabilitation BBC complète : ITE, menuiseries triple vitrage, PAC collective.",
+    travaux: ["ITE complète", "PAC collective", "VMC double flux", "Menuiseries"]
   },
   {
     id: 2,
     title: "Résidence Le Parc - Vichy",
-    image: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80",
+    location: "Vichy, Allier",
+    imageAvant: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80",
+    imageApres: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80",
     surface: "850 m²",
-    logements: "8 appartements",
+    logements: "8 lots",
     dpeAvant: "E",
     dpeApres: "A",
-    description: "Transformation d'un immeuble des années 70 en résidence BBC avec panneaux photovoltaïques et système domotique.",
+    descriptionAvant: "Résidence années 70 avec équipements énergivores et isolation insuffisante.",
+    descriptionApres: "Transformation BBC avec panneaux photovoltaïques et domotique intégrée.",
     travaux: ["Panneaux solaires", "Isolation renforcée", "Domotique", "Toiture végétalisée"]
   },
   {
     id: 3,
-    title: "Villa Belle Époque - Bordeaux",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
+    title: "Hôtel particulier - Bordeaux",
+    location: "Bordeaux, Gironde",
+    imageAvant: "https://images.unsplash.com/photo-1567684014761-b65e2e59b9eb?w=800&q=80",
+    imageApres: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
     surface: "450 m²",
-    logements: "4 appartements",
+    logements: "4 lots",
     dpeAvant: "G",
     dpeApres: "B",
-    description: "Reconversion d'une maison de maître en 4 logements haut de gamme avec préservation du patrimoine architectural.",
-    travaux: ["Isolation intérieure", "Géothermie", "Récupération eaux pluviales", "Matériaux biosourcés"]
+    descriptionAvant: "Maison de maître XIXème en péril avec installations hors normes.",
+    descriptionApres: "Reconversion patrimoniale en 4 appartements avec géothermie et matériaux biosourcés.",
+    travaux: ["Géothermie", "Isolation biosourcée", "Récupération eaux", "Restauration"]
   },
   {
     id: 4,
-    title: "Résidence Thermale - Clermont-Ferrand",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
+    title: "Ensemble immobilier - Clermont",
+    location: "Clermont-Ferrand",
+    imageAvant: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
+    imageApres: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
     surface: "2 100 m²",
-    logements: "18 appartements",
+    logements: "18 lots",
     dpeAvant: "E",
     dpeApres: "A",
-    description: "Projet phare de rénovation énergétique avec objectif carbone neutre et confort thermique optimal.",
-    travaux: ["Isolation performante", "PAC air-eau", "Éclairage LED", "Bornes de recharge VE"]
+    descriptionAvant: "Deux bâtiments mitoyens avec performances énergétiques médiocres.",
+    descriptionApres: "Rénovation carbone neutre avec économies de charges de 65%.",
+    travaux: ["Isolation R=8", "PAC air-eau", "LED intelligent", "Bornes VE"]
   }
 ];
 
 export default function RealisationsGallery() {
-  const [selectedId, setSelectedId] = useState(null);
-  const selectedRealisation = realisations.find(r => r.id === selectedId);
+  const [showAfter, setShowAfter] = useState({});
+
+  const toggleImage = (id) => {
+    setShowAfter(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const getDPEColor = (dpe) => {
     const colors = {
-      'A': 'bg-green-500',
-      'B': 'bg-lime-500',
-      'C': 'bg-yellow-400',
-      'D': 'bg-orange-400',
+      'A': 'bg-emerald-500',
+      'B': 'bg-green-500',
+      'C': 'bg-lime-500',
+      'D': 'bg-yellow-500',
       'E': 'bg-orange-500',
       'F': 'bg-red-400',
       'G': 'bg-red-600'
@@ -67,129 +82,59 @@ export default function RealisationsGallery() {
   };
 
   return (
-    <>
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {realisations.map((item, index) => (
-          <motion.div
-            key={item.id}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: index * 0.1 }}
-            onClick={() => setSelectedId(item.id)}
-            className="group cursor-pointer"
-          >
-            <div className="relative h-64 rounded-2xl overflow-hidden mb-4">
-              <img 
-                src={item.image} 
-                alt={item.title}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
-              
-              {/* DPE Badge */}
-              <div className="absolute top-4 right-4 flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1">
-                <span className={`w-6 h-6 ${getDPEColor(item.dpeAvant)} text-white text-xs font-bold flex items-center justify-center rounded`}>
-                  {item.dpeAvant}
-                </span>
-                <span className="text-slate-400">→</span>
-                <span className={`w-6 h-6 ${getDPEColor(item.dpeApres)} text-white text-xs font-bold flex items-center justify-center rounded`}>
-                  {item.dpeApres}
-                </span>
+    <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {realisations.map((item, index) => (
+        <motion.div
+          key={item.id}
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: index * 0.1 }}
+          className="group"
+        >
+          <div className="relative h-56 rounded-2xl overflow-hidden mb-4">
+            <img 
+              src={showAfter[item.id] ? item.imageApres : item.imageAvant} 
+              alt={item.title}
+              className="w-full h-full object-cover transition-all duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
+            
+            {/* Toggle Button */}
+            <button
+              onClick={() => toggleImage(item.id)}
+              className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1 hover:bg-white transition-colors text-xs"
+            >
+              <ArrowLeftRight className="h-3 w-3 text-slate-700" />
+              <span className="font-medium text-slate-700">
+                {showAfter[item.id] ? 'Avant' : 'Après'}
+              </span>
+            </button>
+
+            {/* Label Avant/Après */}
+            <div className={`absolute top-3 left-3 px-2 py-1 rounded text-xs font-semibold ${showAfter[item.id] ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
+              {showAfter[item.id] ? 'APRÈS' : 'AVANT'}
+            </div>
+
+            {/* DPE Badge */}
+            <div className="absolute bottom-3 left-3 flex items-center gap-1">
+              <div className={`w-7 h-7 ${getDPEColor(item.dpeAvant)} text-white text-xs font-bold flex items-center justify-center rounded`}>
+                {item.dpeAvant}
               </div>
-              
-              <div className="absolute bottom-4 left-4 right-4">
-                <p className="text-white font-semibold text-lg">{item.title}</p>
-                <p className="text-white/70 text-sm">{item.logements} • {item.surface}</p>
+              <ArrowRight className="h-3 w-3 text-white" />
+              <div className={`w-7 h-7 ${getDPEColor(item.dpeApres)} text-white text-xs font-bold flex items-center justify-center rounded`}>
+                {item.dpeApres}
               </div>
             </div>
-          </motion.div>
-        ))}
-      </div>
+          </div>
 
-      {/* Modal */}
-      <AnimatePresence>
-        {selectedRealisation && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/80 backdrop-blur-sm"
-            onClick={() => setSelectedId(null)}
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="relative h-72 md:h-96">
-                <img 
-                  src={selectedRealisation.image} 
-                  alt={selectedRealisation.title}
-                  className="w-full h-full object-cover"
-                />
-                <button
-                  onClick={() => setSelectedId(null)}
-                  className="absolute top-4 right-4 w-10 h-10 bg-white/90 rounded-full flex items-center justify-center hover:bg-white transition-colors"
-                >
-                  <X className="h-5 w-5 text-slate-900" />
-                </button>
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-900 to-transparent p-8">
-                  <h3 className="text-2xl font-serif text-white mb-2">{selectedRealisation.title}</h3>
-                  <div className="flex items-center gap-4 text-white/80 text-sm">
-                    <span className="flex items-center gap-1">
-                      <Home className="h-4 w-4" />
-                      {selectedRealisation.logements}
-                    </span>
-                    <span>{selectedRealisation.surface}</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="p-8">
-                <div className="grid md:grid-cols-2 gap-8 mb-8">
-                  <div>
-                    <h4 className="font-semibold text-slate-900 mb-4">Performance énergétique</h4>
-                    <div className="flex items-center gap-6">
-                      <div className="text-center">
-                        <p className="text-sm text-slate-500 mb-2">Avant</p>
-                        <div className={`w-16 h-16 ${getDPEColor(selectedRealisation.dpeAvant)} text-white text-2xl font-bold flex items-center justify-center rounded-xl`}>
-                          {selectedRealisation.dpeAvant}
-                        </div>
-                      </div>
-                      <Zap className="h-8 w-8 text-amber-500" />
-                      <div className="text-center">
-                        <p className="text-sm text-slate-500 mb-2">Après</p>
-                        <div className={`w-16 h-16 ${getDPEColor(selectedRealisation.dpeApres)} text-white text-2xl font-bold flex items-center justify-center rounded-xl`}>
-                          {selectedRealisation.dpeApres}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div>
-                    <h4 className="font-semibold text-slate-900 mb-4">Travaux réalisés</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedRealisation.travaux.map((travail, idx) => (
-                        <span key={idx} className="px-3 py-1 bg-emerald-50 text-emerald-700 rounded-full text-sm flex items-center gap-1">
-                          <Leaf className="h-3 w-3" />
-                          {travail}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-
-                <p className="text-slate-600 leading-relaxed">
-                  {selectedRealisation.description}
-                </p>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+          <h3 className="font-semibold text-slate-900 text-sm mb-1">{item.title}</h3>
+          <p className="text-xs text-slate-500 mb-2">{item.logements} • {item.surface}</p>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            {showAfter[item.id] ? item.descriptionApres : item.descriptionAvant}
+          </p>
+        </motion.div>
+      ))}
+    </div>
   );
 }

@@ -49,7 +49,7 @@ const zones = [
 
 // Custom icon
 const customIcon = new L.Icon({
-  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
+  iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
@@ -84,7 +84,7 @@ export default function InterventionMap() {
                   <h4 className="font-bold text-slate-900 text-lg mb-2">{zone.name}</h4>
                   <p className="text-slate-600 text-sm mb-3">{zone.description}</p>
                   <div className="flex justify-between text-sm">
-                    <span className="text-amber-600 font-medium">{zone.actifs}</span>
+                    <span className="text-blue-600 font-medium">{zone.actifs}</span>
                     <span className="text-slate-500">{zone.logements}</span>
                   </div>
                 </div>
@@ -98,7 +98,7 @@ export default function InterventionMap() {
       <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg z-[1000]">
         <p className="text-xs text-slate-500 mb-2 font-medium">ZONES D'INTERVENTION</p>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-amber-500 rounded-full"></div>
+          <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
           <span className="text-sm text-slate-700">Actifs en portefeuille</span>
         </div>
       </div>
