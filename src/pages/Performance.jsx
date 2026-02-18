@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   TrendingUp, 
   Percent, 
@@ -12,13 +12,43 @@ import {
   Calculator,
   Shield,
   Handshake,
-  Trophy
+  Trophy,
+  BarChart3,
+  Activity,
+  Eye,
+  Users,
+  Clock
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart, BarChart, Bar, PieChart, Pie, Cell, Legend } from 'recharts';
 import InvestmentSimulator from "../components/InvestmentSimulator";
+import { base44 } from "@/api/base44Client";
 
 export default function Performance() {
+  const [activeTab, setActiveTab] = useState('projection');
+  
+  // Track page view
+  useEffect(() => {
+    base44.analytics.track({
+      eventName: "performance_page_viewed",
+      properties: { timestamp: new Date().toISOString() }
+    });
+  }, []);
+
+  const handleSimulatorInteraction = () => {
+    base44.analytics.track({
+      eventName: "simulator_interaction",
+      properties: { page: "performance" }
+    });
+  };
+
+  const handleCtaClick = (ctaName) => {
+    base44.analytics.track({
+      eventName: "cta_clicked",
+      properties: { cta_name: ctaName, page: "performance" }
+    });
+  };
+
   const projectionData = [
     { year: '2026', value: 10000, label: 'Départ' },
     { year: '2027', value: 11000, label: '+10%' },
@@ -84,6 +114,30 @@ export default function Performance() {
         { label: "Risques", value: "Non mutualisés", negative: true }
       ]
     }
+  ];
+
+  // Advanced Analytics Data
+  const portfolioAllocation = [
+    { name: 'Lyon', value: 35, color: '#3b82f6' },
+    { name: 'Vichy', value: 25, color: '#10b981' },
+    { name: 'Bordeaux', value: 25, color: '#8b5cf6' },
+    { name: 'Clermont', value: 15, color: '#f59e0b' }
+  ];
+
+  const monthlyPerformance = [
+    { month: 'Jan', loyers: 9375, charges: 2500, net: 6875 },
+    { month: 'Fév', loyers: 9375, charges: 2300, net: 7075 },
+    { month: 'Mar', loyers: 9375, charges: 2400, net: 6975 },
+    { month: 'Avr', loyers: 9375, charges: 2200, net: 7175 },
+    { month: 'Mai', loyers: 9375, charges: 2100, net: 7275 },
+    { month: 'Juin', loyers: 9375, charges: 2000, net: 7375 }
+  ];
+
+  const kpiMetrics = [
+    { label: "Taux d'occupation", value: "98%", trend: "+2%", icon: Building2, color: "emerald" },
+    { label: "Rendement brut", value: "10%", trend: "stable", icon: Percent, color: "blue" },
+    { label: "Cash-on-cash", value: "45%", trend: "+5%", icon: TrendingUp, color: "emerald" },
+    { label: "LTV actuel", value: "76%", trend: "-4%", icon: BarChart3, color: "blue" }
   ];
 
   return (
@@ -438,6 +492,147 @@ export default function Performance() {
         </div>
       </section>
 
+      {/* Advanced Analytics Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-1 bg-emerald-500" />
+              <span className="text-emerald-600 font-medium tracking-wider uppercase text-sm">
+                Analytics avancées
+              </span>
+              <div className="w-12 h-1 bg-emerald-500" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
+              Suivi en temps réel du portefeuille
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Accédez à des indicateurs de performance détaillés et suivez l'évolution 
+              de vos investissements en toute transparence.
+            </p>
+          </motion.div>
+
+          {/* KPI Cards */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            {kpiMetrics.map((kpi, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-slate-50 rounded-2xl p-6"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <kpi.icon className={`h-6 w-6 ${kpi.color === 'emerald' ? 'text-emerald-500' : 'text-blue-500'}`} />
+                  <span className={`text-xs font-medium px-2 py-1 rounded-full ${
+                    kpi.trend.includes('+') ? 'bg-emerald-100 text-emerald-700' : 
+                    kpi.trend.includes('-') ? 'bg-blue-100 text-blue-700' : 
+                    'bg-slate-200 text-slate-600'
+                  }`}>
+                    {kpi.trend}
+                  </span>
+                </div>
+                <p className="text-2xl font-bold text-slate-900 mb-1">{kpi.value}</p>
+                <p className="text-sm text-slate-500">{kpi.label}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Charts Grid */}
+          <div className="grid lg:grid-cols-2 gap-8">
+            {/* Portfolio Allocation */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-slate-50 rounded-2xl p-6"
+            >
+              <h3 className="font-semibold text-slate-900 mb-6">Répartition géographique</h3>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <PieChart>
+                    <Pie
+                      data={portfolioAllocation}
+                      cx="50%"
+                      cy="50%"
+                      innerRadius={60}
+                      outerRadius={100}
+                      paddingAngle={2}
+                      dataKey="value"
+                    >
+                      {portfolioAllocation.map((entry, index) => (
+                        <Cell key={`cell-${index}`} fill={entry.color} />
+                      ))}
+                    </Pie>
+                    <Legend />
+                    <Tooltip formatter={(value) => `${value}%`} />
+                  </PieChart>
+                </ResponsiveContainer>
+              </div>
+            </motion.div>
+
+            {/* Monthly Performance */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-slate-50 rounded-2xl p-6"
+            >
+              <h3 className="font-semibold text-slate-900 mb-6">Performance mensuelle (€)</h3>
+              <div className="h-64">
+                <ResponsiveContainer width="100%" height="100%">
+                  <BarChart data={monthlyPerformance}>
+                    <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                    <XAxis dataKey="month" stroke="#6B7280" />
+                    <YAxis stroke="#6B7280" />
+                    <Tooltip 
+                      contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: 'white' }}
+                    />
+                    <Bar dataKey="loyers" fill="#3b82f6" name="Loyers" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="net" fill="#10b981" name="Net" radius={[4, 4, 0, 0]} />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Live Stats Banner */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-8 bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-6"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div className="flex items-center gap-3">
+                <div className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse" />
+                <span className="text-white font-medium">Données actualisées en temps réel</span>
+              </div>
+              <div className="flex items-center gap-6 text-white/70 text-sm">
+                <span className="flex items-center gap-2">
+                  <Eye className="h-4 w-4" />
+                  Reporting mensuel
+                </span>
+                <span className="flex items-center gap-2">
+                  <Activity className="h-4 w-4" />
+                  Alertes automatiques
+                </span>
+                <span className="flex items-center gap-2">
+                  <Clock className="h-4 w-4" />
+                  Maj: {new Date().toLocaleDateString('fr-FR')}
+                </span>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Simulator Section */}
       <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -463,27 +658,40 @@ export default function Performance() {
             </p>
           </motion.div>
 
-          <div className="max-w-2xl mx-auto">
+          <div className="max-w-2xl mx-auto" onClick={handleSimulatorInteraction}>
             <InvestmentSimulator />
           </div>
         </div>
       </section>
 
-      {/* CTA */}
+      {/* Engagement CTA */}
       <section className="py-16 bg-blue-600">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
-            Prêt à investir dans l'immobilier de demain ?
-          </h2>
-          <p className="text-blue-100 mb-8">
-            Rejoignez une communauté d'associés alignés et participez à la création de valeur patrimoniale.
-          </p>
-          <Link to={createPageUrl("Contact")}>
-            <Button className="bg-white hover:bg-slate-100 text-blue-700 px-8 py-6">
-              Devenir associé
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </Link>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
+              Prêt à investir dans l'immobilier de demain ?
+            </h2>
+            <p className="text-blue-100 mb-8">
+              Rejoignez une communauté d'associés alignés et participez à la création de valeur patrimoniale.
+            </p>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link to={createPageUrl("Contact")} onClick={() => handleCtaClick('devenir_associe')}>
+                <Button className="bg-white hover:bg-slate-100 text-blue-700 px-8 py-6">
+                  Devenir associé
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to={createPageUrl("Realisations")} onClick={() => handleCtaClick('voir_actifs')}>
+                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6">
+                  Voir nos actifs
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>
