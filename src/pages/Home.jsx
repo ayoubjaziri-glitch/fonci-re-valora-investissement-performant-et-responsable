@@ -95,115 +95,217 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section with Background Image */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden">
+      {/* Hero Section - Inspired by Orion */}
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
             backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80')"
           }}
         />
-        <div className="absolute inset-0 bg-slate-900/85" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/85 to-slate-900/70" />
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-20">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-              className="text-center lg:text-left"
-            >
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-6">
-                Votre patrimoine,
-                <span className="block text-emerald-400">notre priorité</span>
-              </h1>
-              
-              <p className="text-lg text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
-                <strong className="text-white">Bienvenue chez La Foncière Patrimoniale.</strong> Nous structurons 
-                des opérations d'acquisition et de valorisation d'actifs immobiliers résidentiels. Notre véhicule 
-                d'investissement vous permet de bénéficier de l'effet de levier bancaire et d'une gestion 
-                professionnelle pour optimiser le rendement de vos capitaux propres.
-              </p>
+        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-32">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-3xl"
+          >
+            {/* Accent Line */}
+            <div className="flex items-center gap-4 mb-8">
+              <div className="w-16 h-1 bg-emerald-500" />
+              <span className="text-emerald-400 font-medium tracking-widest uppercase text-sm">
+                Foncière Résidentielle
+              </span>
+            </div>
 
-              <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-                <Link to={createPageUrl("Services")}>
-                  <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-base font-semibold">
-                    Découvrir nos services
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link to={createPageUrl("Contact")}>
-                  <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-base">
-                    Nous contacter
-                  </Button>
-                </Link>
+            {/* Main Title */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-[1.1] mb-4">
+              <span className="block bg-slate-900/60 backdrop-blur-sm inline-block px-4 py-2 border-l-4 border-emerald-500">
+                RÉINVENTER
+              </span>
+              <span className="block text-emerald-400 mt-2">L'INVESTISSEMENT</span>
+            </h1>
+            
+            <h2 className="text-2xl md:text-3xl text-white/90 font-light mb-8">
+              Valoriser le patrimoine
+            </h2>
+            
+            <p className="text-lg text-white/70 mb-10 max-w-2xl leading-relaxed">
+              La Foncière Patrimoniale est née de la rencontre entre des experts immobiliers 
+              forts de <strong className="text-white">18 ans d'expérience</strong> et une vision : 
+              créer une solution d'investissement fiable et qualitative pour ceux qui souhaitent 
+              investir dans la pierre sans les contraintes de la gestion locative.
+            </p>
+
+            <div className="flex flex-wrap gap-4">
+              <Link to={createPageUrl("Contact")}>
+                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-base font-semibold border-2 border-emerald-500">
+                  Devenir associé
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link to={createPageUrl("Strategy")}>
+                <Button variant="outline" className="border-2 border-white/40 text-white hover:bg-white/10 px-8 py-6 text-base">
+                  Découvrir notre stratégie
+                </Button>
+              </Link>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Scroll Indicator */}
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        >
+          <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
+            <motion.div 
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1.5 h-1.5 bg-emerald-400 rounded-full"
+            />
+          </div>
+        </motion.div>
+      </section>
+
+      {/* Qui sommes-nous Section - New Structure */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left - Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-1 bg-blue-600" />
+                <span className="text-blue-600 font-medium tracking-wider uppercase text-sm">
+                  Qui sommes-nous
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
+                Une foncière créée par des experts pour des investisseurs exigeants
+              </h2>
+              <p className="text-slate-600 leading-relaxed mb-6">
+                <strong className="text-slate-900">La Foncière Patrimoniale</strong> est un véhicule d'investissement 
+                spécialisé dans l'acquisition, la réhabilitation BBC et l'asset management d'actifs résidentiels.
+              </p>
+              <p className="text-slate-600 leading-relaxed mb-8">
+                Notre mission : constituer un <strong className="text-slate-900">portefeuille patrimonial performant</strong>, 
+                en proposant une exposition au marché immobilier avec effet de levier, gestion déléguée et 
+                alignement total des intérêts.
+              </p>
+              
+              {/* Key Benefits */}
+              <div className="space-y-4">
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-1 flex-shrink-0" />
+                  <span className="text-slate-700">Pas de tracas liés à la gestion locative</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-1 flex-shrink-0" />
+                  <span className="text-slate-700">Diversification du risque sur plusieurs actifs</span>
+                </div>
+                <div className="flex items-start gap-3">
+                  <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-1 flex-shrink-0" />
+                  <span className="text-slate-700">Fiscalité avantageuse via PEA-PME</span>
+                </div>
               </div>
             </motion.div>
 
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="hidden lg:block"
+            {/* Right - Key Metrics */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="grid grid-cols-2 gap-6"
             >
-              <div className="relative">
-                <div className="absolute -inset-4 bg-emerald-500/20 rounded-3xl blur-2xl" />
-                <div className="relative bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
-                  <div className="text-center mb-6">
-                    <p className="text-emerald-400 font-medium mb-2">Levée en cours</p>
-                    <p className="text-4xl font-bold text-white">250 000 €</p>
-                  </div>
-                  <div className="space-y-4">
-                    <div className="flex justify-between text-white/80">
-                      <span>Ticket minimum</span>
-                      <span className="font-semibold text-white">10 000 €</span>
-                    </div>
-                    <div className="flex justify-between text-white/80">
-                      <span>TRI net visé</span>
-                      <span className="font-semibold text-emerald-400">10,5%</span>
-                    </div>
-                    <div className="flex justify-between text-white/80">
-                      <span>Horizon</span>
-                      <span className="font-semibold text-white">5 ans</span>
-                    </div>
-                    <div className="flex justify-between text-white/80">
-                      <span>Frais d'entrée</span>
-                      <span className="font-semibold text-emerald-400">0 €</span>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-slate-900 rounded-2xl p-6 text-center">
+                <Calendar className="h-8 w-8 text-emerald-400 mx-auto mb-3" />
+                <p className="text-3xl font-bold text-white mb-1">18 ans</p>
+                <p className="text-sm text-white/60">D'expertise immobilière</p>
+              </div>
+              <div className="bg-slate-900 rounded-2xl p-6 text-center">
+                <Building2 className="h-8 w-8 text-emerald-400 mx-auto mb-3" />
+                <p className="text-3xl font-bold text-white mb-1">3 M€</p>
+                <p className="text-sm text-white/60">D'actifs sous gestion</p>
+              </div>
+              <div className="bg-emerald-500 rounded-2xl p-6 text-center">
+                <Percent className="h-8 w-8 text-white mx-auto mb-3" />
+                <p className="text-3xl font-bold text-white mb-1">10,5%</p>
+                <p className="text-sm text-white/80">TRI net visé</p>
+              </div>
+              <div className="bg-blue-600 rounded-2xl p-6 text-center">
+                <Target className="h-8 w-8 text-white mx-auto mb-3" />
+                <p className="text-3xl font-bold text-white mb-1">20 M€</p>
+                <p className="text-sm text-white/80">Objectif 5 ans</p>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Qui sommes-nous Section */}
-      <section className="relative py-24">
-        <div 
-          className="absolute inset-0 bg-cover bg-center bg-fixed"
-          style={{ 
-            backgroundImage: "url('https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1920&q=80')"
-          }}
-        />
-        <div className="absolute inset-0 bg-white/90" />
-        <div className="relative z-10 max-w-4xl mx-auto px-6 lg:px-8">
+      {/* Levée en cours - Moved down */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-5xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-white rounded-3xl p-8 md:p-12 shadow-xl text-center"
+            className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12"
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
-              Qui sommes-nous ?
-            </h2>
-            <p className="text-slate-600 leading-relaxed text-lg">
-              <strong className="text-slate-900">La Foncière Patrimoniale</strong> est un véhicule d'investissement immobilier 
-              spécialisé dans l'acquisition, la réhabilitation BBC et l'asset management d'actifs résidentiels. 
-              Notre mission : constituer un portefeuille patrimonial performant et résilient, en proposant à nos 
-              associés une exposition au marché immobilier avec effet de levier, gestion déléguée et alignement 
-              total des intérêts via le carried interest.
-            </p>
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse" />
+                  <span className="text-emerald-400 font-semibold uppercase tracking-wider text-sm">
+                    Levée en cours
+                  </span>
+                </div>
+                <h3 className="text-3xl md:text-4xl font-serif text-white mb-4">
+                  Rejoignez nos associés
+                </h3>
+                <p className="text-white/70 mb-6">
+                  Participez à notre levée de fonds et bénéficiez d'un véhicule d'investissement 
+                  structuré avec 0€ de frais d'entrée.
+                </p>
+                <Link to={createPageUrl("Contact")}>
+                  <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+                    Souscrire maintenant
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
+                <div className="text-center mb-6">
+                  <p className="text-5xl font-bold text-white">250 000 €</p>
+                  <p className="text-white/60 text-sm">Objectif de la levée</p>
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="text-center p-3 bg-white/5 rounded-xl">
+                    <p className="text-xl font-bold text-white">10 000 €</p>
+                    <p className="text-xs text-white/60">Ticket minimum</p>
+                  </div>
+                  <div className="text-center p-3 bg-white/5 rounded-xl">
+                    <p className="text-xl font-bold text-emerald-400">10,5%</p>
+                    <p className="text-xs text-white/60">TRI net visé</p>
+                  </div>
+                  <div className="text-center p-3 bg-white/5 rounded-xl">
+                    <p className="text-xl font-bold text-white">5 ans</p>
+                    <p className="text-xs text-white/60">Horizon</p>
+                  </div>
+                  <div className="text-center p-3 bg-white/5 rounded-xl">
+                    <p className="text-xl font-bold text-emerald-400">0 €</p>
+                    <p className="text-xs text-white/60">Frais d'entrée</p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
       </section>
