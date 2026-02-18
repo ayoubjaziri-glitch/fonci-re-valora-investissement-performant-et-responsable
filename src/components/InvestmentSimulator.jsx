@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
 import { Calculator, TrendingUp, PiggyBank, Percent, Euro, Info } from 'lucide-react';
 import { Slider } from "@/components/ui/slider";
@@ -42,9 +44,9 @@ export default function InvestmentSimulator() {
 
   return (
     <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
-      <div className="bg-[#1E3A5F] p-6 md:p-8">
+      <div className="bg-slate-900 p-6 md:p-8">
         <div className="flex items-center gap-3 mb-2">
-          <Calculator className="h-8 w-8 text-[#C9A961]" />
+          <Calculator className="h-8 w-8 text-amber-500" />
           <h3 className="text-2xl font-serif text-white">Simulateur de placement</h3>
         </div>
         <p className="text-white/70">Estimez le rendement de votre investissement patrimonial</p>
@@ -54,7 +56,7 @@ export default function InvestmentSimulator() {
         {/* Montant */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-4">
-            <label className="text-[#1E3A5F] font-medium flex items-center gap-2">
+            <label className="text-slate-900 font-medium flex items-center gap-2">
               Montant de la souscription
               <TooltipProvider>
                 <Tooltip>
@@ -67,7 +69,7 @@ export default function InvestmentSimulator() {
                 </Tooltip>
               </TooltipProvider>
             </label>
-            <span className="text-2xl font-bold text-[#C9A961]">{formatNumber(montant)} €</span>
+            <span className="text-2xl font-bold text-amber-500">{formatNumber(montant)} €</span>
           </div>
           <Slider
             value={[montant]}
@@ -86,7 +88,7 @@ export default function InvestmentSimulator() {
         {/* Durée */}
         <div className="mb-8">
           <div className="flex justify-between items-center mb-4">
-            <label className="text-[#1E3A5F] font-medium flex items-center gap-2">
+            <label className="text-slate-900 font-medium flex items-center gap-2">
               Horizon de détention
               <TooltipProvider>
                 <Tooltip>
@@ -99,7 +101,7 @@ export default function InvestmentSimulator() {
                 </Tooltip>
               </TooltipProvider>
             </label>
-            <span className="text-2xl font-bold text-[#C9A961]">{duree} ans</span>
+            <span className="text-2xl font-bold text-amber-500">{duree} ans</span>
           </div>
           <Slider
             value={[duree]}
@@ -121,38 +123,38 @@ export default function InvestmentSimulator() {
             key={results.valeurFinale}
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
-            className="bg-[#F8F9FA] rounded-2xl p-4 text-center"
+            className="bg-slate-50 rounded-2xl p-4 text-center"
           >
-            <Euro className="h-6 w-6 text-[#C9A961] mx-auto mb-2" />
-            <p className="text-xs text-gray-500 mb-1">Valorisation estimée</p>
-            <p className="text-xl font-bold text-[#1E3A5F]">{formatNumber(results.valeurFinale)} €</p>
+            <Euro className="h-6 w-6 text-amber-500 mx-auto mb-2" />
+            <p className="text-xs text-slate-500 mb-1">Valorisation estimée</p>
+            <p className="text-xl font-bold text-slate-900">{formatNumber(results.valeurFinale)} €</p>
           </motion.div>
 
           <motion.div
             key={results.gainTotal}
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
-            className="bg-[#F8F9FA] rounded-2xl p-4 text-center"
+            className="bg-slate-50 rounded-2xl p-4 text-center"
           >
-            <TrendingUp className="h-6 w-6 text-[#C9A961] mx-auto mb-2" />
-            <p className="text-xs text-gray-500 mb-1">Plus-value latente</p>
-            <p className="text-xl font-bold text-green-600">+{formatNumber(results.gainTotal)} €</p>
+            <TrendingUp className="h-6 w-6 text-amber-500 mx-auto mb-2" />
+            <p className="text-xs text-slate-500 mb-1">Plus-value latente</p>
+            <p className="text-xl font-bold text-emerald-600">+{formatNumber(results.gainTotal)} €</p>
           </motion.div>
 
           <motion.div
             key={results.rendementTotal}
             initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
-            className="bg-[#F8F9FA] rounded-2xl p-4 text-center"
+            className="bg-slate-50 rounded-2xl p-4 text-center"
           >
-            <Percent className="h-6 w-6 text-[#C9A961] mx-auto mb-2" />
-            <p className="text-xs text-gray-500 mb-1">Rendement global</p>
-            <p className="text-xl font-bold text-[#C9A961]">+{results.rendementTotal}%</p>
+            <Percent className="h-6 w-6 text-amber-500 mx-auto mb-2" />
+            <p className="text-xs text-slate-500 mb-1">Rendement global</p>
+            <p className="text-xl font-bold text-amber-500">+{results.rendementTotal}%</p>
           </motion.div>
         </div>
 
         {/* Évolution */}
-        <div className="bg-[#1E3A5F] rounded-2xl p-6 mb-6">
+        <div className="bg-slate-900 rounded-2xl p-6 mb-6">
           <h4 className="text-white font-medium mb-4">Projection de valorisation</h4>
           <div className="space-y-3">
             {results.evolution.map((item, index) => (
@@ -165,7 +167,7 @@ export default function InvestmentSimulator() {
                     initial={{ width: 0 }}
                     animate={{ width: `${(item.valeur / results.evolution[results.evolution.length - 1].valeur) * 100}%` }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="h-full bg-[#C9A961] rounded-full"
+                    className="h-full bg-amber-500 rounded-full"
                   />
                 </div>
                 <span className="text-white font-semibold text-sm w-24 text-right">
@@ -184,12 +186,16 @@ export default function InvestmentSimulator() {
 
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button className="flex-1 bg-[#C9A961] hover:bg-[#B8994F] text-[#1E3A5F] font-semibold py-6">
-            Demander une étude personnalisée
-          </Button>
-          <Button variant="outline" className="flex-1 border-[#1E3A5F] text-[#1E3A5F] hover:bg-[#1E3A5F] hover:text-white py-6">
-            Télécharger la documentation
-          </Button>
+          <Link to={createPageUrl("Contact")} className="flex-1">
+            <Button className="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold py-6">
+              Demander une étude personnalisée
+            </Button>
+          </Link>
+          <Link to={createPageUrl("Performance")} className="flex-1">
+            <Button variant="outline" className="w-full border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white py-6">
+              Voir les performances
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
