@@ -37,20 +37,20 @@ export default function Home() {
 
   const services = [
     {
-      title: "Souscription au capital de la foncière",
-      description: "Devenez associé de La Foncière Patrimoniale et participez à des opérations d'acquisition structurées. Profitez d'un véhicule d'investissement collectif sécurisé avec une stratégie de valorisation patrimoniale définie.",
+      title: "Souscription au capital",
+      description: "Devenez associé de La Foncière Patrimoniale et participez à des opérations d'acquisition structurées. Bénéficiez d'un véhicule d'investissement collectif avec une stratégie de valorisation patrimoniale éprouvée.",
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
       icon: Key
     },
     {
-      title: "Sourcing et due diligence immobilière",
-      description: "Notre équipe identifie des actifs immobiliers à fort potentiel de revalorisation. Chaque acquisition fait l'objet d'une analyse approfondie : rentabilité locative, décote à l'achat, potentiel de réhabilitation BBC.",
+      title: "Sourcing et due diligence",
+      description: "Notre équipe identifie des actifs à fort potentiel de revalorisation. Chaque acquisition fait l'objet d'une analyse approfondie : rentabilité locative, décote à l'achat, potentiel de réhabilitation.",
       image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&q=80",
       icon: Search
     },
     {
       title: "Asset management et arbitrage",
-      description: "Gestion locative intégrée, suivi des cash-flows, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur et le TRI de vos parts.",
+      description: "Gestion locative intégrée, suivi des flux de trésorerie, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur et le TRI de vos parts.",
       image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
       icon: BarChart3
     }
@@ -115,7 +115,7 @@ export default function Home() {
             >
               <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-6">
                 Votre patrimoine,
-                <span className="block text-amber-500">notre priorité</span>
+                <span className="block text-emerald-400">notre priorité</span>
               </h1>
               
               <p className="text-lg text-white/80 mb-8 max-w-xl mx-auto lg:mx-0 leading-relaxed">
@@ -127,8 +127,8 @@ export default function Home() {
 
               <div className="flex flex-wrap justify-center lg:justify-start gap-4">
                 <Link to={createPageUrl("Services")}>
-                  <Button className="bg-amber-500 hover:bg-amber-600 text-slate-900 px-8 py-6 text-base font-semibold">
-                    En savoir plus
+                  <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-base font-semibold">
+                    Découvrir nos services
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
@@ -147,10 +147,10 @@ export default function Home() {
               className="hidden lg:block"
             >
               <div className="relative">
-                <div className="absolute -inset-4 bg-amber-500/20 rounded-3xl blur-2xl" />
+                <div className="absolute -inset-4 bg-emerald-500/20 rounded-3xl blur-2xl" />
                 <div className="relative bg-white/10 backdrop-blur-lg rounded-3xl p-8 border border-white/20">
                   <div className="text-center mb-6">
-                    <p className="text-amber-500 font-medium mb-2">Levée en cours</p>
+                    <p className="text-emerald-400 font-medium mb-2">Levée en cours</p>
                     <p className="text-4xl font-bold text-white">250 000 €</p>
                   </div>
                   <div className="space-y-4">
@@ -160,7 +160,7 @@ export default function Home() {
                     </div>
                     <div className="flex justify-between text-white/80">
                       <span>TRI net visé</span>
-                      <span className="font-semibold text-amber-500">10,5%</span>
+                      <span className="font-semibold text-emerald-400">10,5%</span>
                     </div>
                     <div className="flex justify-between text-white/80">
                       <span>Horizon</span>
@@ -168,7 +168,7 @@ export default function Home() {
                     </div>
                     <div className="flex justify-between text-white/80">
                       <span>Frais d'entrée</span>
-                      <span className="font-semibold text-amber-500">0 €</span>
+                      <span className="font-semibold text-emerald-400">0 €</span>
                     </div>
                   </div>
                 </div>
@@ -293,7 +293,7 @@ export default function Home() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
-              Un véhicule d'investissement clé en main
+              Un véhicule d'investissement structuré
             </h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg leading-relaxed">
               <strong>La Foncière Patrimoniale prend en charge l'intégralité du cycle immobilier</strong> : 
@@ -320,14 +320,14 @@ export default function Home() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
-                  <div className="absolute bottom-4 left-4 w-12 h-12 bg-amber-500 rounded-xl flex items-center justify-center">
-                    <service.icon className="h-6 w-6 text-slate-900" />
+                  <div className="absolute bottom-4 left-4 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
+                    <service.icon className="h-6 w-6 text-white" />
                   </div>
                 </div>
                 <h3 className="text-xl font-serif text-slate-900 mb-3">{service.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{service.description}</p>
-                <Link to={createPageUrl("Services")} className="inline-flex items-center text-amber-600 font-medium mt-4 hover:gap-3 transition-all">
-                  Lire plus <ArrowRight className="ml-2 h-4 w-4" />
+                <Link to={createPageUrl("Services")} className="inline-flex items-center text-blue-600 font-medium mt-4 hover:gap-3 transition-all">
+                  En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </motion.div>
             ))}
@@ -348,8 +348,8 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-14 h-14 mx-auto mb-4 bg-amber-500 rounded-2xl flex items-center justify-center">
-                  <stat.icon className="h-7 w-7 text-slate-900" />
+                <div className="w-14 h-14 mx-auto mb-4 bg-blue-600 rounded-2xl flex items-center justify-center">
+                  <stat.icon className="h-7 w-7 text-white" />
                 </div>
                 <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
                 <p className="text-sm text-white/70">{stat.label}</p>
@@ -369,22 +369,31 @@ export default function Home() {
             className="text-center mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-12 h-1 bg-amber-500" />
-              <span className="text-amber-600 font-medium tracking-wider uppercase text-sm">
-                Nos Réalisations
+              <div className="w-12 h-1 bg-emerald-500" />
+              <span className="text-emerald-600 font-medium tracking-wider uppercase text-sm">
+                Portefeuille d'actifs
               </span>
-              <div className="w-12 h-1 bg-amber-500" />
+              <div className="w-12 h-1 bg-emerald-500" />
             </div>
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
-              Des actifs transformés durablement
+              Nos opérations de valorisation
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Découvrez nos projets de réhabilitation : chaque immeuble acquis fait l'objet d'une 
-              transformation profonde visant l'excellence énergétique et la valorisation patrimoniale.
+              Découvrez nos actifs restructurés : chaque acquisition fait l'objet d'une 
+              réhabilitation profonde visant l'excellence énergétique et la création de valeur patrimoniale.
             </p>
           </motion.div>
 
           <RealisationsGallery />
+          
+          <div className="text-center mt-12">
+            <Link to={createPageUrl("Realisations")}>
+              <Button variant="outline" className="border-slate-300 text-slate-700 hover:bg-slate-100">
+                Voir toutes nos opérations
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -407,13 +416,13 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-2xl font-serif text-slate-900 mb-6 flex items-center gap-3">
-                <Shield className="h-8 w-8 text-amber-500" />
+                <Shield className="h-8 w-8 text-blue-600" />
                 Atouts
               </h3>
               <ul className="space-y-4">
                 {atouts.map((atout, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
                     <span className="text-slate-700">{atout}</span>
                   </li>
                 ))}
@@ -435,13 +444,13 @@ export default function Home() {
                 />
               </div>
               <h3 className="text-2xl font-serif text-slate-900 mb-6 flex items-center gap-3">
-                <TrendingUp className="h-8 w-8 text-amber-500" />
+                <TrendingUp className="h-8 w-8 text-emerald-500" />
                 Valeur ajoutée pour l'investisseur
               </h3>
               <ul className="space-y-4">
                 {valeurAjoutee.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-amber-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
                     <span className="text-slate-700">{item}</span>
                   </li>
                 ))}
@@ -479,7 +488,7 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-slate-50 rounded-2xl p-8 relative"
               >
-                <Quote className="h-10 w-10 text-amber-500/30 absolute top-6 right-6" />
+                <Quote className="h-10 w-10 text-blue-500/30 absolute top-6 right-6" />
                 <p className="text-slate-700 leading-relaxed mb-6 italic">
                   "{testimonial.text}"
                 </p>
@@ -508,11 +517,11 @@ export default function Home() {
             className="text-center mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-12 h-1 bg-amber-500" />
-              <span className="text-amber-600 font-medium tracking-wider uppercase text-sm">
+              <div className="w-12 h-1 bg-blue-600" />
+              <span className="text-blue-600 font-medium tracking-wider uppercase text-sm">
                 Zones d'intervention
               </span>
-              <div className="w-12 h-1 bg-amber-500" />
+              <div className="w-12 h-1 bg-blue-600" />
             </div>
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
               Des marchés à fort potentiel
@@ -535,21 +544,21 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-16 bg-amber-500 rounded-2xl p-8 md:p-12"
+            className="mt-16 bg-blue-600 rounded-2xl p-8 md:p-12"
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
-                <h3 className="text-2xl font-serif text-slate-900 mb-2">
+                <h3 className="text-2xl font-serif text-white mb-2">
                   Objectif Stratégique
                 </h3>
-                <p className="text-slate-800/80 max-w-xl">
+                <p className="text-blue-100 max-w-xl">
                   Créer de la valeur durable par revalorisation technique (travaux BBC), 
-                  revalorisation locative, amortissement des prêts et plus-value à la revente.
+                  revalorisation locative, amortissement des prêts et plus-value à l'arbitrage.
                 </p>
               </div>
               <Link to={createPageUrl("Strategy")}>
-                <Button className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-6 whitespace-nowrap">
-                  En savoir plus
+                <Button className="bg-white hover:bg-slate-100 text-blue-700 px-8 py-6 whitespace-nowrap">
+                  Découvrir notre stratégie
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
@@ -575,8 +584,8 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to={createPageUrl("Contact")}>
-                <Button className="bg-amber-500 hover:bg-amber-600 text-slate-900 px-8 py-6 text-base font-semibold">
-                  Contactez-nous
+                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-base font-semibold">
+                  Devenir associé
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
