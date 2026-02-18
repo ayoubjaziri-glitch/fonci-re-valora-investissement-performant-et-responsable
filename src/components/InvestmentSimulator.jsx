@@ -46,10 +46,10 @@ export default function InvestmentSimulator() {
     <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
       <div className="bg-slate-900 p-6 md:p-8">
         <div className="flex items-center gap-3 mb-2">
-          <Calculator className="h-8 w-8 text-amber-500" />
-          <h3 className="text-2xl font-serif text-white">Simulateur de placement</h3>
+          <Calculator className="h-8 w-8 text-emerald-400" />
+          <h3 className="text-2xl font-serif text-white">Simulateur de souscription</h3>
         </div>
-        <p className="text-white/70">Estimez le rendement de votre investissement patrimonial</p>
+        <p className="text-white/70">Projetez la valorisation de vos parts dans la foncière</p>
       </div>
 
       <div className="p-6 md:p-8">
@@ -69,7 +69,7 @@ export default function InvestmentSimulator() {
                 </Tooltip>
               </TooltipProvider>
             </label>
-            <span className="text-2xl font-bold text-amber-500">{formatNumber(montant)} €</span>
+            <span className="text-2xl font-bold text-emerald-500">{formatNumber(montant)} €</span>
           </div>
           <Slider
             value={[montant]}
@@ -101,7 +101,7 @@ export default function InvestmentSimulator() {
                 </Tooltip>
               </TooltipProvider>
             </label>
-            <span className="text-2xl font-bold text-amber-500">{duree} ans</span>
+            <span className="text-2xl font-bold text-emerald-500">{duree} ans</span>
           </div>
           <Slider
             value={[duree]}
@@ -125,7 +125,7 @@ export default function InvestmentSimulator() {
             animate={{ scale: 1 }}
             className="bg-slate-50 rounded-2xl p-4 text-center"
           >
-            <Euro className="h-6 w-6 text-amber-500 mx-auto mb-2" />
+            <Euro className="h-6 w-6 text-blue-600 mx-auto mb-2" />
             <p className="text-xs text-slate-500 mb-1">Valorisation estimée</p>
             <p className="text-xl font-bold text-slate-900">{formatNumber(results.valeurFinale)} €</p>
           </motion.div>
@@ -136,7 +136,7 @@ export default function InvestmentSimulator() {
             animate={{ scale: 1 }}
             className="bg-slate-50 rounded-2xl p-4 text-center"
           >
-            <TrendingUp className="h-6 w-6 text-amber-500 mx-auto mb-2" />
+            <TrendingUp className="h-6 w-6 text-emerald-500 mx-auto mb-2" />
             <p className="text-xs text-slate-500 mb-1">Plus-value latente</p>
             <p className="text-xl font-bold text-emerald-600">+{formatNumber(results.gainTotal)} €</p>
           </motion.div>
@@ -147,27 +147,27 @@ export default function InvestmentSimulator() {
             animate={{ scale: 1 }}
             className="bg-slate-50 rounded-2xl p-4 text-center"
           >
-            <Percent className="h-6 w-6 text-amber-500 mx-auto mb-2" />
-            <p className="text-xs text-slate-500 mb-1">Rendement global</p>
-            <p className="text-xl font-bold text-amber-500">+{results.rendementTotal}%</p>
+            <Percent className="h-6 w-6 text-blue-600 mx-auto mb-2" />
+            <p className="text-xs text-slate-500 mb-1">TRI global</p>
+            <p className="text-xl font-bold text-blue-600">+{results.rendementTotal}%</p>
           </motion.div>
         </div>
 
         {/* Évolution */}
         <div className="bg-slate-900 rounded-2xl p-6 mb-6">
-          <h4 className="text-white font-medium mb-4">Projection de valorisation</h4>
+          <h4 className="text-white font-medium mb-4">Projection de la valeur de vos parts</h4>
           <div className="space-y-3">
             {results.evolution.map((item, index) => (
               <div key={index} className="flex items-center gap-4">
                 <span className="text-white/60 text-sm w-20">
-                  {item.annee === 0 ? 'Départ' : `Année ${item.annee}`}
+                  {item.annee === 0 ? 'Souscription' : `An ${item.annee}`}
                 </span>
                 <div className="flex-1 bg-white/10 rounded-full h-3 overflow-hidden">
                   <motion.div
                     initial={{ width: 0 }}
                     animate={{ width: `${(item.valeur / results.evolution[results.evolution.length - 1].valeur) * 100}%` }}
                     transition={{ duration: 0.5, delay: index * 0.1 }}
-                    className="h-full bg-amber-500 rounded-full"
+                    className="h-full bg-gradient-to-r from-blue-500 to-emerald-500 rounded-full"
                   />
                 </div>
                 <span className="text-white font-semibold text-sm w-24 text-right">
@@ -187,13 +187,13 @@ export default function InvestmentSimulator() {
         {/* CTA */}
         <div className="flex flex-col sm:flex-row gap-4">
           <Link to={createPageUrl("Contact")} className="flex-1">
-            <Button className="w-full bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold py-6">
-              Demander une étude personnalisée
+            <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-6">
+              Demander une documentation
             </Button>
           </Link>
-          <Link to={createPageUrl("Performance")} className="flex-1">
-            <Button variant="outline" className="w-full border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white py-6">
-              Voir les performances
+          <Link to={createPageUrl("Realisations")} className="flex-1">
+            <Button variant="outline" className="w-full border-slate-300 text-slate-700 hover:bg-slate-100 py-6">
+              Voir nos actifs
             </Button>
           </Link>
         </div>

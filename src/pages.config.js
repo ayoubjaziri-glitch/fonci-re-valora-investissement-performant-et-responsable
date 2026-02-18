@@ -53,6 +53,8 @@ import Performance from './pages/Performance';
 import Services from './pages/Services';
 import Strategy from './pages/Strategy';
 import Team from './pages/Team';
+import Realisations from './pages/Realisations';
+import Durabilite from './pages/Durabilite';
 import __Layout from './Layout.jsx';
 
 
@@ -63,6 +65,8 @@ export const PAGES = {
     "Services": Services,
     "Strategy": Strategy,
     "Team": Team,
+    "Realisations": Realisations,
+    "Durabilite": Durabilite,
 }
 
 export const pagesConfig = {
