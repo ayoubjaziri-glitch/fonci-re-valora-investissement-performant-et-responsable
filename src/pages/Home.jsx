@@ -26,7 +26,6 @@ import {
 import { Button } from "@/components/ui/button";
 import RealisationsGallery from "../components/RealisationsGallery";
 import InterventionMap from "../components/InterventionMap";
-import { Link } from 'react-router-dom';
 
 export default function Home() {
   const stats = [
