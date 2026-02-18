@@ -16,6 +16,7 @@ import {
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Area, AreaChart } from 'recharts';
+import InvestmentSimulator from "../components/InvestmentSimulator";
 
 export default function Performance() {
   const projectionData = [
@@ -88,7 +89,7 @@ export default function Performance() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative py-24 bg-[#1E3A5F] overflow-hidden">
+      <section className="relative py-24 bg-slate-900 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 right-20 w-80 h-80 border border-white/20 rounded-full" />
         </div>
@@ -99,8 +100,8 @@ export default function Performance() {
             className="max-w-3xl"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-1 bg-[#C9A961]" />
-              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
+              <div className="w-12 h-1 bg-amber-500" />
+              <span className="text-amber-500 font-medium tracking-wider uppercase text-sm">
                 Performance
               </span>
             </div>
@@ -116,7 +117,7 @@ export default function Performance() {
       </section>
 
       {/* Key Metrics */}
-      <section className="py-16 bg-[#F8F9FA]">
+      <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             <motion.div
@@ -125,8 +126,8 @@ export default function Performance() {
               viewport={{ once: true }}
               className="bg-white rounded-2xl p-6 text-center shadow-sm"
             >
-              <p className="text-sm text-gray-500 mb-2">Actif immobilier</p>
-              <p className="text-2xl font-bold text-[#1E3A5F]">1 250 000 €</p>
+              <p className="text-sm text-slate-500 mb-2">Actif immobilier</p>
+              <p className="text-2xl font-bold text-slate-900">1 250 000 €</p>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -135,8 +136,8 @@ export default function Performance() {
               transition={{ delay: 0.1 }}
               className="bg-white rounded-2xl p-6 text-center shadow-sm"
             >
-              <p className="text-sm text-gray-500 mb-2">Effet de levier</p>
-              <p className="text-2xl font-bold text-[#C9A961]">x5</p>
+              <p className="text-sm text-slate-500 mb-2">Effet de levier</p>
+              <p className="text-2xl font-bold text-amber-500">x5</p>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -145,8 +146,8 @@ export default function Performance() {
               transition={{ delay: 0.2 }}
               className="bg-white rounded-2xl p-6 text-center shadow-sm"
             >
-              <p className="text-sm text-gray-500 mb-2">TRI net</p>
-              <p className="text-2xl font-bold text-[#1E3A5F]">10,5% / an</p>
+              <p className="text-sm text-slate-500 mb-2">TRI net</p>
+              <p className="text-2xl font-bold text-slate-900">10,5% / an</p>
             </motion.div>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -155,15 +156,68 @@ export default function Performance() {
               transition={{ delay: 0.3 }}
               className="bg-white rounded-2xl p-6 text-center shadow-sm"
             >
-              <p className="text-sm text-gray-500 mb-2">Horizon</p>
-              <p className="text-2xl font-bold text-[#1E3A5F]">5 ans</p>
+              <p className="text-sm text-slate-500 mb-2">Horizon</p>
+              <p className="text-2xl font-bold text-slate-900">5 ans</p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Simulator Section */}
+      <section className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-16 items-start">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-12 h-1 bg-amber-500" />
+                <span className="text-amber-500 font-medium tracking-wider uppercase text-sm">
+                  Simulateur
+                </span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
+                Projetez votre investissement
+              </h2>
+              <p className="text-slate-600 leading-relaxed mb-6">
+                Utilisez notre simulateur pour estimer la valorisation de votre capital 
+                sur la durée de détention souhaitée. Le calcul intègre le TRI cible de 10,5% 
+                et l'effet de levier bancaire.
+              </p>
+              <div className="bg-slate-50 rounded-2xl p-6">
+                <h4 className="font-semibold text-slate-900 mb-4">Triple mécanisme de création de valeur</h4>
+                <ul className="space-y-3">
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5" />
+                    <span className="text-slate-600">Revenus locatifs nets capitalisés</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5" />
+                    <span className="text-slate-600">Amortissement du crédit bancaire</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5" />
+                    <span className="text-slate-600">Plus-value potentielle à l'arbitrage</span>
+                  </li>
+                </ul>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
+              <InvestmentSimulator />
             </motion.div>
           </div>
         </div>
       </section>
 
       {/* Chart Section */}
-      <section className="py-24">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -172,19 +226,19 @@ export default function Performance() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-1 bg-[#C9A961]" />
-                <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
+                <div className="w-12 h-1 bg-amber-500" />
+                <span className="text-amber-500 font-medium tracking-wider uppercase text-sm">
                   Projection
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
                 Évolution de votre capital
               </h2>
-              <p className="text-gray-600 mb-8">
+              <p className="text-slate-600 mb-8">
                 Exemple concret : 10 000 € investis lors de la première levée de fonds.
               </p>
               
-              <div className="bg-[#1E3A5F] rounded-2xl p-6 mb-6">
+              <div className="bg-slate-900 rounded-2xl p-6 mb-6">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <p className="text-white/60 text-sm">Départ</p>
@@ -192,11 +246,11 @@ export default function Performance() {
                   </div>
                   <div>
                     <p className="text-white/60 text-sm">Année 5</p>
-                    <p className="text-2xl font-bold text-[#C9A961]">16 489 €</p>
+                    <p className="text-2xl font-bold text-amber-500">16 489 €</p>
                   </div>
                   <div>
                     <p className="text-white/60 text-sm">Gain</p>
-                    <p className="text-2xl font-bold text-[#C9A961]">+64,9%</p>
+                    <p className="text-2xl font-bold text-emerald-400">+64,9%</p>
                   </div>
                 </div>
               </div>
@@ -206,8 +260,8 @@ export default function Performance() {
                   <AreaChart data={projectionData}>
                     <defs>
                       <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#C9A961" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#C9A961" stopOpacity={0}/>
+                        <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.3}/>
+                        <stop offset="95%" stopColor="#f59e0b" stopOpacity={0}/>
                       </linearGradient>
                     </defs>
                     <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
@@ -215,9 +269,9 @@ export default function Performance() {
                     <YAxis stroke="#6B7280" tickFormatter={(value) => `${(value/1000).toFixed(0)}k€`} />
                     <Tooltip 
                       formatter={(value) => [`${value.toLocaleString()} €`, 'Valeur']}
-                      contentStyle={{ backgroundColor: '#1E3A5F', border: 'none', borderRadius: '8px', color: 'white' }}
+                      contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: 'white' }}
                     />
-                    <Area type="monotone" dataKey="value" stroke="#C9A961" strokeWidth={3} fill="url(#colorValue)" />
+                    <Area type="monotone" dataKey="value" stroke="#f59e0b" strokeWidth={3} fill="url(#colorValue)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -228,17 +282,17 @@ export default function Performance() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
             >
-              <h3 className="text-xl font-serif text-[#1E3A5F] mb-6">Triple mécanisme de création de valeur</h3>
+              <h3 className="text-xl font-serif text-slate-900 mb-6">Triple mécanisme de création de valeur</h3>
               <div className="space-y-4">
                 {valueCreation.map((item, index) => (
-                  <div key={index} className="flex gap-4 p-5 bg-[#F8F9FA] rounded-2xl">
-                    <div className="w-14 h-14 bg-[#1E3A5F] rounded-xl flex items-center justify-center flex-shrink-0">
-                      <item.icon className="h-7 w-7 text-[#C9A961]" />
+                  <div key={index} className="flex gap-4 p-5 bg-white rounded-2xl shadow-sm">
+                    <div className="w-14 h-14 bg-slate-900 rounded-xl flex items-center justify-center flex-shrink-0">
+                      <item.icon className="h-7 w-7 text-amber-500" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-[#1E3A5F]">{item.title}</h4>
-                      <p className="text-xl font-bold text-[#C9A961]">{item.value}</p>
-                      <p className="text-sm text-gray-500">{item.desc}</p>
+                      <h4 className="font-semibold text-slate-900">{item.title}</h4>
+                      <p className="text-xl font-bold text-amber-500">{item.value}</p>
+                      <p className="text-sm text-slate-500">{item.desc}</p>
                     </div>
                   </div>
                 ))}
@@ -249,7 +303,7 @@ export default function Performance() {
       </section>
 
       {/* Alignment Model */}
-      <section className="py-24 bg-[#F8F9FA]">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -257,10 +311,10 @@ export default function Performance() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
               Alignement total des intérêts
             </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <p className="text-slate-600 max-w-2xl mx-auto">
               Un modèle de rémunération unique qui garantit la convergence totale de nos intérêts avec votre réussite patrimoniale.
             </p>
           </motion.div>
@@ -270,13 +324,13 @@ export default function Performance() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white rounded-3xl p-8 text-center border border-gray-100"
+              className="bg-white rounded-3xl p-8 text-center border border-slate-200"
             >
-              <div className="w-16 h-16 bg-[#1E3A5F] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Handshake className="h-8 w-8 text-[#C9A961]" />
+              <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Handshake className="h-8 w-8 text-amber-500" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1E3A5F] mb-3">Nous créons de la valeur ensemble</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">Nous créons de la valeur ensemble</h3>
+              <p className="text-slate-600 text-sm">
                 Plus-values réalisées + Remboursement du prêt + Capitalisation intégrale des flux = Patrimoine valorisé
               </p>
             </motion.div>
@@ -286,13 +340,13 @@ export default function Performance() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-[#C9A961] rounded-3xl p-8 text-center"
+              className="bg-amber-500 rounded-3xl p-8 text-center"
             >
-              <div className="w-16 h-16 bg-[#1E3A5F] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Trophy className="h-8 w-8 text-[#C9A961]" />
+              <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Trophy className="h-8 w-8 text-amber-500" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1E3A5F] mb-3">Nous partageons cette réussite</h3>
-              <p className="text-[#1E3A5F]/80 text-sm">
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">Nous partageons cette réussite</h3>
+              <p className="text-slate-800/80 text-sm">
                 Sur la valeur créée au-delà d'un rendement de 6,5%/an
               </p>
             </motion.div>
@@ -302,13 +356,13 @@ export default function Performance() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white rounded-3xl p-8 text-center border border-gray-100"
+              className="bg-white rounded-3xl p-8 text-center border border-slate-200"
             >
-              <div className="w-16 h-16 bg-[#1E3A5F] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <TrendingUp className="h-8 w-8 text-[#C9A961]" />
+              <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <TrendingUp className="h-8 w-8 text-amber-500" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1E3A5F] mb-3">Nous gagnons ensemble</h3>
-              <p className="text-gray-600 text-sm">
+              <h3 className="text-lg font-semibold text-slate-900 mb-3">Nous gagnons ensemble</h3>
+              <p className="text-slate-600 text-sm">
                 Zéro frais initiaux, rémunération progressive alignée sur la performance du parc.
               </p>
             </motion.div>
@@ -318,18 +372,18 @@ export default function Performance() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-12 bg-[#1E3A5F] rounded-2xl p-8 text-center"
+            className="mt-12 bg-slate-900 rounded-2xl p-8 text-center"
           >
             <p className="text-white/80 mb-2">Notre rémunération est alignée avec votre réussite.</p>
             <p className="text-white font-semibold text-lg">
-              Le carried interest s'applique exclusivement à la surperformance au-delà d'un seuil de rendement annuel de <span className="text-[#C9A961]">6,5%</span>.
+              Le carried interest s'applique exclusivement à la surperformance au-delà d'un seuil de rendement annuel de <span className="text-amber-500">6,5%</span>.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Comparatif */}
-      <section className="py-24">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -337,7 +391,7 @@ export default function Performance() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
               Comparatif — 3 modèles d'investissement
             </h2>
           </motion.div>
@@ -350,19 +404,19 @@ export default function Performance() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className={`rounded-3xl p-6 ${model.highlight ? 'bg-[#C9A961] ring-4 ring-[#C9A961]/30' : 'bg-white border border-gray-200'}`}
+                className={`rounded-3xl p-6 ${model.highlight ? 'bg-amber-500 ring-4 ring-amber-500/30' : 'bg-white border border-slate-200'}`}
               >
-                <h3 className={`text-lg font-semibold text-center mb-6 ${model.highlight ? 'text-[#1E3A5F]' : 'text-[#1E3A5F]'}`}>
+                <h3 className={`text-lg font-semibold text-center mb-6 ${model.highlight ? 'text-slate-900' : 'text-slate-900'}`}>
                   {model.title}
                 </h3>
                 <div className="space-y-4">
                   {model.items.map((item, idx) => (
-                    <div key={idx} className={`flex justify-between items-center p-3 rounded-lg ${model.highlight ? 'bg-white/20' : 'bg-gray-50'}`}>
-                      <span className={`text-sm ${model.highlight ? 'text-[#1E3A5F]' : 'text-gray-600'}`}>{item.label}</span>
+                    <div key={idx} className={`flex justify-between items-center p-3 rounded-lg ${model.highlight ? 'bg-white/20' : 'bg-slate-50'}`}>
+                      <span className={`text-sm ${model.highlight ? 'text-slate-900' : 'text-slate-600'}`}>{item.label}</span>
                       <span className={`font-semibold ${
-                        item.positive ? 'text-green-600' : 
+                        item.positive ? 'text-emerald-600' : 
                         item.negative ? 'text-red-500' : 
-                        model.highlight ? 'text-[#1E3A5F]' : 'text-[#1E3A5F]'
+                        model.highlight ? 'text-slate-900' : 'text-slate-900'
                       }`}>
                         {item.value}
                       </span>
@@ -376,7 +430,7 @@ export default function Performance() {
       </section>
 
       {/* Fiscal */}
-      <section className="py-24 bg-[#1E3A5F]">
+      <section className="py-24 bg-slate-900">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -385,8 +439,8 @@ export default function Performance() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-1 bg-[#C9A961]" />
-                <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
+                <div className="w-12 h-1 bg-amber-500" />
+                <span className="text-amber-500 font-medium tracking-wider uppercase text-sm">
                   Optimisation fiscale
                 </span>
               </div>
@@ -399,15 +453,15 @@ export default function Performance() {
               </p>
               <ul className="space-y-3 mb-8">
                 <li className="flex items-center gap-3 text-white/80">
-                  <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
+                  <CheckCircle2 className="h-5 w-5 text-amber-500" />
                   Exonération d'impôt sur le revenu (12,8%)
                 </li>
                 <li className="flex items-center gap-3 text-white/80">
-                  <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
+                  <CheckCircle2 className="h-5 w-5 text-amber-500" />
                   Plus-values et dividendes réinvestis exonérés
                 </li>
                 <li className="flex items-center gap-3 text-white/80">
-                  <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
+                  <CheckCircle2 className="h-5 w-5 text-amber-500" />
                   Avantage fiscal lors de la sortie
                 </li>
               </ul>
@@ -424,12 +478,12 @@ export default function Performance() {
                 <p className="text-4xl font-bold text-white mb-2">30%</p>
                 <p className="text-white/60 text-sm">Flat Tax (PFU)</p>
               </div>
-              <div className="bg-[#C9A961] rounded-2xl p-6 text-center">
-                <p className="text-[#1E3A5F]/70 text-sm mb-2">Avec PEA-PME</p>
-                <p className="text-4xl font-bold text-[#1E3A5F] mb-2">17,2%</p>
-                <p className="text-[#1E3A5F]/70 text-sm">Prélèvements sociaux</p>
-                <div className="mt-4 bg-[#1E3A5F] rounded-lg py-2 px-4">
-                  <p className="text-[#C9A961] text-sm font-semibold">Économie 12,8%</p>
+              <div className="bg-amber-500 rounded-2xl p-6 text-center">
+                <p className="text-slate-900/70 text-sm mb-2">Avec PEA-PME</p>
+                <p className="text-4xl font-bold text-slate-900 mb-2">17,2%</p>
+                <p className="text-slate-900/70 text-sm">Prélèvements sociaux</p>
+                <div className="mt-4 bg-slate-900 rounded-lg py-2 px-4">
+                  <p className="text-amber-500 text-sm font-semibold">Économie 12,8%</p>
                 </div>
               </div>
             </motion.div>
@@ -438,16 +492,16 @@ export default function Performance() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="py-16 bg-amber-500">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1E3A5F] mb-4">
+          <h2 className="text-2xl md:text-3xl font-serif text-slate-900 mb-4">
             Prêt à investir dans l'immobilier de demain ?
           </h2>
-          <p className="text-[#1E3A5F]/80 mb-8">
+          <p className="text-slate-800/80 mb-8">
             Rejoignez une communauté d'associés alignés et créez de la valeur ensemble.
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-[#1E3A5F] hover:bg-[#2A4A6F] text-white px-8 py-6">
+            <Button className="bg-slate-900 hover:bg-slate-800 text-white px-8 py-6">
               Devenir associé
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
