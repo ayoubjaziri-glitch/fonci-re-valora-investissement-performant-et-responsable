@@ -17,7 +17,7 @@ export default function Layout({ children, currentPageName }) {
   const navigation = [
     { name: 'Accueil', page: 'Home' },
     { name: 'Stratégie', page: 'Strategy' },
-    { name: 'Services', page: 'Services' },
+    { name: 'Durabilité', page: 'Services' },
     { name: 'Performance', page: 'Performance' },
     { name: 'Équipe', page: 'Team' },
     { name: 'Contact', page: 'Contact' }
@@ -26,17 +26,17 @@ export default function Layout({ children, currentPageName }) {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to={createPageUrl("Home")} className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#1E3A5F] rounded-lg flex items-center justify-center">
-                <Building2 className="h-6 w-6 text-[#C9A961]" />
+              <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
+                <Building2 className="h-6 w-6 text-amber-500" />
               </div>
               <div className="hidden sm:block">
-                <p className="text-[#1E3A5F] font-serif text-lg leading-tight">La Foncière</p>
-                <p className="text-[#C9A961] text-xs tracking-wider uppercase">Patrimoniale</p>
+                <p className="text-slate-900 font-serif text-lg leading-tight">La Foncière</p>
+                <p className="text-amber-600 text-xs tracking-wider uppercase">Patrimoniale</p>
               </div>
             </Link>
 
@@ -48,8 +48,8 @@ export default function Layout({ children, currentPageName }) {
                   to={createPageUrl(item.page)}
                   className={`text-sm font-medium transition-colors ${
                     currentPageName === item.page 
-                      ? 'text-[#C9A961]' 
-                      : 'text-gray-600 hover:text-[#1E3A5F]'
+                      ? 'text-amber-600' 
+                      : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
                   {item.name}
@@ -60,14 +60,14 @@ export default function Layout({ children, currentPageName }) {
             {/* CTA + Mobile Menu */}
             <div className="flex items-center gap-4">
               <Link to={createPageUrl("Contact")} className="hidden md:block">
-                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1E3A5F] font-semibold">
+                <Button className="bg-slate-900 hover:bg-slate-800 text-white font-semibold">
                   Devenir associé
                 </Button>
               </Link>
               
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-[#1E3A5F]"
+                className="lg:hidden p-2 text-slate-900"
               >
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
@@ -77,21 +77,21 @@ export default function Layout({ children, currentPageName }) {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-gray-100">
+          <div className="lg:hidden bg-white border-t border-slate-100">
             <div className="px-6 py-4 space-y-2">
               {navigation.map((item) => (
                 <Link
                   key={item.page}
                   to={createPageUrl(item.page)}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between py-3 border-b border-gray-100 ${
+                  className={`flex items-center justify-between py-3 border-b border-slate-100 ${
                     currentPageName === item.page 
-                      ? 'text-[#C9A961]' 
-                      : 'text-[#1E3A5F]'
+                      ? 'text-amber-600' 
+                      : 'text-slate-900'
                   }`}
                 >
                   {item.name}
-                  <ChevronRight className="h-5 w-5 text-gray-400" />
+                  <ChevronRight className="h-5 w-5 text-slate-400" />
                 </Link>
               ))}
               <Link 
@@ -99,7 +99,7 @@ export default function Layout({ children, currentPageName }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className="block pt-4"
               >
-                <Button className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1E3A5F] font-semibold">
+                <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-semibold">
                   Devenir associé
                 </Button>
               </Link>
@@ -114,18 +114,18 @@ export default function Layout({ children, currentPageName }) {
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#1E3A5F] text-white">
+      <footer className="bg-slate-900 text-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
           <div className="grid md:grid-cols-4 gap-12">
             {/* Brand */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-[#C9A961] rounded-lg flex items-center justify-center">
-                  <Building2 className="h-6 w-6 text-[#1E3A5F]" />
+                <div className="w-10 h-10 bg-amber-500 rounded-lg flex items-center justify-center">
+                  <Building2 className="h-6 w-6 text-slate-900" />
                 </div>
                 <div>
                   <p className="text-white font-serif text-lg leading-tight">La Foncière</p>
-                  <p className="text-[#C9A961] text-xs tracking-wider uppercase">Patrimoniale</p>
+                  <p className="text-amber-500 text-xs tracking-wider uppercase">Patrimoniale</p>
                 </div>
               </div>
               <p className="text-white/60 mb-6 max-w-sm">
@@ -145,7 +145,7 @@ export default function Layout({ children, currentPageName }) {
                   <li key={item.page}>
                     <Link
                       to={createPageUrl(item.page)}
-                      className="text-white/60 hover:text-[#C9A961] transition-colors text-sm"
+                      className="text-white/60 hover:text-amber-500 transition-colors text-sm"
                     >
                       {item.name}
                     </Link>
@@ -159,13 +159,13 @@ export default function Layout({ children, currentPageName }) {
               <h4 className="font-semibold mb-4">Contact</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">
+                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-amber-500 transition-colors text-sm">
                     <Mail className="h-4 w-4" />
                     ayoubjaziri@gmail.com
                   </a>
                 </li>
                 <li>
-                  <a href="tel:+33758736580" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">
+                  <a href="tel:+33758736580" className="flex items-center gap-2 text-white/60 hover:text-amber-500 transition-colors text-sm">
                     <Phone className="h-4 w-4" />
                     +33 7 58 73 65 80
                   </a>
