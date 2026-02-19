@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Leaf, Home, Thermometer, Zap, ArrowLeftRight, ArrowRight, MapPin } from 'lucide-react';
+import BeforeAfterSlider from "./BeforeAfterSlider";
 
 const realisations = [
   {
     id: 1,
-    title: "Immeuble de rapport - Lyon 6ème",
+    title: "Immeuble haussmannien - Lyon 6ème",
     location: "Lyon, Rhône",
-    imageAvant: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80",
-    imageApres: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+    imageAvant: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800&q=80",
+    imageApres: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
     surface: "1 200 m²",
     logements: "12 lots",
     dpeAvant: "F",
@@ -19,10 +20,10 @@ const realisations = [
   },
   {
     id: 2,
-    title: "Résidence Le Parc - Vichy",
+    title: "Résidence bourgeoise - Vichy",
     location: "Vichy, Allier",
-    imageAvant: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80",
-    imageApres: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80",
+    imageAvant: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&q=80",
+    imageApres: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
     surface: "850 m²",
     logements: "8 lots",
     dpeAvant: "E",
@@ -33,15 +34,15 @@ const realisations = [
   },
   {
     id: 3,
-    title: "Hôtel particulier - Bordeaux",
+    title: "Immeuble en pierre - Bordeaux",
     location: "Bordeaux, Gironde",
-    imageAvant: "https://images.unsplash.com/photo-1567684014761-b65e2e59b9eb?w=800&q=80",
+    imageAvant: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=800&q=80",
     imageApres: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
     surface: "450 m²",
     logements: "4 lots",
     dpeAvant: "G",
     dpeApres: "B",
-    descriptionAvant: "Maison de maître XIXème en péril avec installations hors normes.",
+    descriptionAvant: "Immeuble en pierre XIXème en péril avec installations hors normes.",
     descriptionApres: "Reconversion patrimoniale en 4 appartements avec géothermie et matériaux biosourcés.",
     travaux: ["Géothermie", "Isolation biosourcée", "Récupération eaux", "Restauration"]
   },
@@ -93,36 +94,19 @@ export default function RealisationsGallery() {
           className="group"
         >
           <div className="relative h-56 rounded-2xl overflow-hidden mb-4">
-            <img 
-              src={showAfter[item.id] ? item.imageApres : item.imageAvant} 
+            <BeforeAfterSlider 
+              beforeImage={item.imageAvant}
+              afterImage={item.imageApres}
               alt={item.title}
-              className="w-full h-full object-cover transition-all duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
             
-            {/* Toggle Button */}
-            <button
-              onClick={() => toggleImage(item.id)}
-              className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm rounded-lg px-2 py-1 flex items-center gap-1 hover:bg-white transition-colors text-xs"
-            >
-              <ArrowLeftRight className="h-3 w-3 text-slate-700" />
-              <span className="font-medium text-slate-700">
-                {showAfter[item.id] ? 'Avant' : 'Après'}
-              </span>
-            </button>
-
-            {/* Label Avant/Après */}
-            <div className={`absolute top-3 left-3 px-2 py-1 rounded text-xs font-semibold ${showAfter[item.id] ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
-              {showAfter[item.id] ? 'APRÈS' : 'AVANT'}
-            </div>
-
             {/* DPE Badge */}
-            <div className="absolute bottom-3 left-3 flex items-center gap-1">
-              <div className={`w-7 h-7 ${getDPEColor(item.dpeAvant)} text-white text-xs font-bold flex items-center justify-center rounded`}>
+            <div className="absolute bottom-3 left-3 flex items-center gap-1 z-10">
+              <div className={`w-7 h-7 ${getDPEColor(item.dpeAvant)} text-white text-xs font-bold flex items-center justify-center rounded shadow-lg`}>
                 {item.dpeAvant}
               </div>
-              <ArrowRight className="h-3 w-3 text-white" />
-              <div className={`w-7 h-7 ${getDPEColor(item.dpeApres)} text-white text-xs font-bold flex items-center justify-center rounded`}>
+              <ArrowRight className="h-3 w-3 text-white drop-shadow-lg" />
+              <div className={`w-7 h-7 ${getDPEColor(item.dpeApres)} text-white text-xs font-bold flex items-center justify-center rounded shadow-lg`}>
                 {item.dpeApres}
               </div>
             </div>
@@ -131,7 +115,7 @@ export default function RealisationsGallery() {
           <h3 className="font-semibold text-slate-900 text-sm mb-1">{item.title}</h3>
           <p className="text-xs text-slate-500 mb-2">{item.logements} • {item.surface}</p>
           <p className="text-xs text-slate-600 leading-relaxed">
-            {showAfter[item.id] ? item.descriptionApres : item.descriptionAvant}
+            {item.descriptionApres}
           </p>
         </motion.div>
       ))}
