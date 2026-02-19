@@ -96,7 +96,7 @@ export default function Durabilite() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative py-24 bg-emerald-900 overflow-hidden">
+      <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <img 
             src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=1920&q=80"
@@ -111,8 +111,8 @@ export default function Durabilite() {
             className="max-w-3xl"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-1 bg-emerald-400" />
-              <span className="text-emerald-300 font-medium tracking-wider uppercase text-sm">
+              <div className="w-12 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
                 Stratégie ESG
               </span>
             </div>
@@ -151,12 +151,12 @@ export default function Durabilite() {
               </p>
               
               <div className="flex flex-wrap gap-3">
-                {certifications.map((cert, idx) => (
-                  <div key={idx} className="bg-emerald-50 border border-emerald-200 rounded-xl px-4 py-3">
-                    <p className="font-semibold text-emerald-800 text-sm">{cert.name}</p>
-                    <p className="text-emerald-600 text-xs">{cert.desc}</p>
-                  </div>
-                ))}
+              {certifications.map((cert, idx) => (
+                <div key={idx} className="bg-[#C9A961]/10 border border-[#C9A961]/30 rounded-xl px-4 py-3">
+                  <p className="font-semibold text-[#1A3A52] text-sm">{cert.name}</p>
+                  <p className="text-[#C9A961] text-xs">{cert.desc}</p>
+                </div>
+              ))}
               </div>
             </motion.div>
 
@@ -173,11 +173,11 @@ export default function Durabilite() {
               />
               <div className="absolute -bottom-8 -left-8 bg-white rounded-2xl p-6 shadow-xl border border-slate-100">
                 <div className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-emerald-100 rounded-2xl flex items-center justify-center">
-                    <Leaf className="h-8 w-8 text-emerald-600" />
+                  <div className="w-16 h-16 bg-[#C9A961]/20 rounded-2xl flex items-center justify-center">
+                    <Leaf className="h-8 w-8 text-[#C9A961]" />
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-slate-900">-60%</p>
+                    <p className="text-3xl font-bold text-[#1A3A52]">-60%</p>
                     <p className="text-slate-600 text-sm">Émissions CO₂ moyennes</p>
                   </div>
                 </div>
@@ -215,13 +215,13 @@ export default function Durabilite() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
               >
-                <div className="w-14 h-14 bg-emerald-100 rounded-2xl flex items-center justify-center mb-4">
-                  <item.icon className="h-7 w-7 text-emerald-600" />
+                <div className="w-14 h-14 bg-[#C9A961]/20 rounded-2xl flex items-center justify-center mb-4">
+                  <item.icon className="h-7 w-7 text-[#C9A961]" />
                 </div>
-                <h3 className="font-semibold text-slate-900 mb-2">{item.title}</h3>
+                <h3 className="font-semibold text-[#1A3A52] mb-2">{item.title}</h3>
                 <p className="text-slate-600 text-sm mb-4">{item.description}</p>
                 <div className="pt-4 border-t border-slate-100">
-                  <p className="text-2xl font-bold text-emerald-600">{item.metric}</p>
+                  <p className="text-2xl font-bold text-[#C9A961]">{item.metric}</p>
                   <p className="text-xs text-slate-500">{item.metricLabel}</p>
                 </div>
               </motion.div>
@@ -252,32 +252,16 @@ export default function Durabilite() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className={`rounded-3xl p-8 ${
-                  pilier.color === 'emerald' ? 'bg-emerald-50 border-emerald-200' :
-                  pilier.color === 'blue' ? 'bg-blue-50 border-blue-200' :
-                  'bg-slate-50 border-slate-200'
-                } border`}
+                className="rounded-3xl p-8 bg-white border border-slate-200"
               >
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 ${
-                  pilier.color === 'emerald' ? 'bg-emerald-100' :
-                  pilier.color === 'blue' ? 'bg-blue-100' :
-                  'bg-slate-200'
-                }`}>
-                  <pilier.icon className={`h-7 w-7 ${
-                    pilier.color === 'emerald' ? 'text-emerald-600' :
-                    pilier.color === 'blue' ? 'text-blue-600' :
-                    'text-slate-700'
-                  }`} />
+                <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-[#C9A961]/20">
+                  <pilier.icon className="h-7 w-7 text-[#C9A961]" />
                 </div>
-                <h3 className="text-xl font-semibold text-slate-900 mb-4">{pilier.title}</h3>
+                <h3 className="text-xl font-semibold text-[#1A3A52] mb-4">{pilier.title}</h3>
                 <ul className="space-y-3">
                   {pilier.items.map((item, idx) => (
                     <li key={idx} className="flex items-start gap-2">
-                      <CheckCircle2 className={`h-5 w-5 mt-0.5 flex-shrink-0 ${
-                        pilier.color === 'emerald' ? 'text-emerald-500' :
-                        pilier.color === 'blue' ? 'text-blue-500' :
-                        'text-slate-500'
-                      }`} />
+                      <CheckCircle2 className="h-5 w-5 mt-0.5 flex-shrink-0 text-[#C9A961]" />
                       <span className="text-slate-700 text-sm">{item}</span>
                     </li>
                   ))}
@@ -289,7 +273,7 @@ export default function Durabilite() {
       </section>
 
       {/* Trajectoire */}
-      <section className="py-24 bg-emerald-900">
+      <section className="py-24 bg-[#1A3A52]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -300,7 +284,7 @@ export default function Durabilite() {
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
               Notre trajectoire bas-carbone
             </h2>
-            <p className="text-emerald-200 max-w-2xl mx-auto">
+            <p className="text-white/70 max-w-2xl mx-auto">
               Un plan d'action progressif pour atteindre la neutralité carbone 
               opérationnelle de notre parc d'ici 2030.
             </p>
@@ -316,9 +300,9 @@ export default function Durabilite() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20"
               >
-                <p className="text-emerald-300 font-medium mb-2">{item.year}</p>
+                <p className="text-[#C9A961] font-medium mb-2">{item.year}</p>
                 <p className="text-4xl font-bold text-white mb-2">{item.objectif}</p>
-                <p className="text-emerald-200 text-sm">{item.desc}</p>
+                <p className="text-white/70 text-sm">{item.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -345,8 +329,8 @@ export default function Durabilite() {
 
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-slate-50 rounded-2xl p-6">
-              <Thermometer className="h-10 w-10 text-emerald-600 mb-4" />
-              <h3 className="font-semibold text-slate-900 mb-3">Isolation thermique</h3>
+              <Thermometer className="h-10 w-10 text-[#C9A961] mb-4" />
+              <h3 className="font-semibold text-[#1A3A52] mb-3">Isolation thermique</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li>• ITE (Isolation Thermique par l'Extérieur)</li>
                 <li>• Isolation des combles et planchers</li>
@@ -356,8 +340,8 @@ export default function Durabilite() {
             </div>
 
             <div className="bg-slate-50 rounded-2xl p-6">
-              <Zap className="h-10 w-10 text-emerald-600 mb-4" />
-              <h3 className="font-semibold text-slate-900 mb-3">Systèmes énergétiques</h3>
+              <Zap className="h-10 w-10 text-[#C9A961] mb-4" />
+              <h3 className="font-semibold text-[#1A3A52] mb-3">Systèmes énergétiques</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li>• Pompes à chaleur air-eau / géothermie</li>
                 <li>• Chaudières à condensation</li>
@@ -367,8 +351,8 @@ export default function Durabilite() {
             </div>
 
             <div className="bg-slate-50 rounded-2xl p-6">
-              <Sun className="h-10 w-10 text-emerald-600 mb-4" />
-              <h3 className="font-semibold text-slate-900 mb-3">Énergies renouvelables</h3>
+              <Sun className="h-10 w-10 text-[#C9A961] mb-4" />
+              <h3 className="font-semibold text-[#1A3A52] mb-3">Énergies renouvelables</h3>
               <ul className="space-y-2 text-sm text-slate-600">
                 <li>• Panneaux photovoltaïques en toiture</li>
                 <li>• Chauffe-eau solaire collectif</li>
@@ -381,24 +365,24 @@ export default function Durabilite() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-slate-900">
+      <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
+          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
             Investissez dans l'immobilier responsable
           </h2>
-          <p className="text-slate-400 mb-8">
+          <p className="text-[#1A3A52]/80 mb-8">
             Participez à la transition énergétique du parc immobilier français 
             tout en bénéficiant d'une performance financière attractive.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to={createPageUrl("Contact")}>
-              <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6">
+              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
                 Devenir associé
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link to={createPageUrl("Realisations")}>
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6">
+              <Button variant="outline" className="border-[#1A3A52]/30 text-[#1A3A52] hover:bg-[#1A3A52]/10 px-8 py-6 font-semibold">
                 Voir nos réalisations
               </Button>
             </Link>

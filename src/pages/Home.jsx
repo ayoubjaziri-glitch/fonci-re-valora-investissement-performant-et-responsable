@@ -311,7 +311,7 @@ export default function Home() {
       </section>
 
       {/* Durabilité Section */}
-      <section className="py-24 bg-emerald-50">
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -320,8 +320,8 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-1 bg-emerald-500" />
-                <span className="text-emerald-600 font-medium tracking-wider uppercase text-sm">
+                <div className="w-12 h-1 bg-[#C9A961]" />
+                <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
                   Durabilité
                 </span>
               </div>
@@ -335,24 +335,24 @@ export default function Home() {
               </p>
               
               <div className="grid grid-cols-2 gap-4 mb-8">
-                <div className="bg-white rounded-2xl p-5 shadow-sm">
-                  <Thermometer className="h-8 w-8 text-emerald-500 mb-3" />
-                  <p className="font-semibold text-slate-900 mb-1">Rénovation BBC</p>
+                <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                  <Thermometer className="h-8 w-8 text-[#C9A961] mb-3" />
+                  <p className="font-semibold text-[#1A3A52] mb-1">Rénovation BBC</p>
                   <p className="text-sm text-slate-600">Objectif DPE A ou B sur 100% du parc</p>
                 </div>
-                <div className="bg-white rounded-2xl p-5 shadow-sm">
-                  <Zap className="h-8 w-8 text-emerald-500 mb-3" />
-                  <p className="font-semibold text-slate-900 mb-1">-60% énergie</p>
+                <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                  <Zap className="h-8 w-8 text-[#C9A961] mb-3" />
+                  <p className="font-semibold text-[#1A3A52] mb-1">-60% énergie</p>
                   <p className="text-sm text-slate-600">Réduction moyenne de consommation</p>
                 </div>
-                <div className="bg-white rounded-2xl p-5 shadow-sm">
-                  <TreePine className="h-8 w-8 text-emerald-500 mb-3" />
-                  <p className="font-semibold text-slate-900 mb-1">Matériaux durables</p>
+                <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                  <TreePine className="h-8 w-8 text-[#C9A961] mb-3" />
+                  <p className="font-semibold text-[#1A3A52] mb-1">Matériaux durables</p>
                   <p className="text-sm text-slate-600">Isolation biosourcée privilégiée</p>
                 </div>
-                <div className="bg-white rounded-2xl p-5 shadow-sm">
-                  <Leaf className="h-8 w-8 text-emerald-500 mb-3" />
-                  <p className="font-semibold text-slate-900 mb-1">Impact carbone</p>
+                <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
+                  <Leaf className="h-8 w-8 text-[#C9A961] mb-3" />
+                  <p className="font-semibold text-[#1A3A52] mb-1">Impact carbone</p>
                   <p className="text-sm text-slate-600">Trajectoire bas-carbone 2030</p>
                 </div>
               </div>
@@ -376,9 +376,9 @@ export default function Home() {
                 alt="Rénovation durable"
                 className="rounded-3xl shadow-2xl"
               />
-              <div className="absolute -bottom-6 -left-6 bg-emerald-600 text-white rounded-2xl p-6 shadow-xl">
+              <div className="absolute -bottom-6 -left-6 bg-[#C9A961] text-[#1A3A52] rounded-2xl p-6 shadow-xl">
                 <p className="text-4xl font-bold mb-1">100%</p>
-                <p className="text-emerald-100 text-sm">des actifs rénovés<br/>aux normes BBC</p>
+                <p className="text-[#1A3A52]/80 text-sm">des actifs rénovés<br/>aux normes BBC</p>
               </div>
             </motion.div>
           </div>
@@ -422,13 +422,13 @@ export default function Home() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
-                  <div className="absolute bottom-4 left-4 w-12 h-12 bg-blue-600 rounded-xl flex items-center justify-center">
-                    <service.icon className="h-6 w-6 text-white" />
+                  <div className="absolute bottom-4 left-4 w-12 h-12 bg-[#C9A961] rounded-xl flex items-center justify-center">
+                    <service.icon className="h-6 w-6 text-[#1A3A52]" />
                   </div>
                 </div>
                 <h3 className="text-xl font-serif text-slate-900 mb-3">{service.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{service.description}</p>
-                <Link to={createPageUrl("Services")} className="inline-flex items-center text-blue-600 font-medium mt-4 hover:gap-3 transition-all">
+                <Link to={createPageUrl("Services")} className="inline-flex items-center text-[#C9A961] font-medium mt-4 hover:gap-3 transition-all">
                   En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </motion.div>
@@ -438,7 +438,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-slate-900">
+      <section className="py-16 bg-[#1A3A52]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
@@ -450,8 +450,8 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="text-center"
               >
-                <div className="w-14 h-14 mx-auto mb-4 bg-blue-600 rounded-2xl flex items-center justify-center">
-                  <stat.icon className="h-7 w-7 text-white" />
+                <div className="w-14 h-14 mx-auto mb-4 bg-[#C9A961] rounded-2xl flex items-center justify-center">
+                  <stat.icon className="h-7 w-7 text-[#1A3A52]" />
                 </div>
                 <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
                 <p className="text-sm text-white/70">{stat.label}</p>
@@ -471,11 +471,11 @@ export default function Home() {
             className="text-center mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-12 h-1 bg-emerald-500" />
-              <span className="text-emerald-600 font-medium tracking-wider uppercase text-sm">
+              <div className="w-12 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
                 Portefeuille d'actifs
               </span>
-              <div className="w-12 h-1 bg-emerald-500" />
+              <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
               Nos opérations de valorisation
@@ -517,14 +517,14 @@ export default function Home() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-2xl font-serif text-slate-900 mb-6 flex items-center gap-3">
-                <Shield className="h-8 w-8 text-blue-600" />
+              <h3 className="text-2xl font-serif text-[#1A3A52] mb-6 flex items-center gap-3">
+                <Shield className="h-8 w-8 text-[#C9A961]" />
                 Atouts
               </h3>
               <ul className="space-y-4">
                 {atouts.map((atout, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-0.5 flex-shrink-0" />
                     <span className="text-slate-700">{atout}</span>
                   </li>
                 ))}
@@ -545,14 +545,14 @@ export default function Home() {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <h3 className="text-2xl font-serif text-slate-900 mb-6 flex items-center gap-3">
-                <TrendingUp className="h-8 w-8 text-emerald-500" />
+              <h3 className="text-2xl font-serif text-[#1A3A52] mb-6 flex items-center gap-3">
+                <TrendingUp className="h-8 w-8 text-[#C9A961]" />
                 Valeur ajoutée pour l'investisseur
               </h3>
               <ul className="space-y-4">
                 {valeurAjoutee.map((item, index) => (
                   <li key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-0.5 flex-shrink-0" />
+                    <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-0.5 flex-shrink-0" />
                     <span className="text-slate-700">{item}</span>
                   </li>
                 ))}
@@ -590,16 +590,16 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="bg-slate-50 rounded-2xl p-8 relative"
               >
-                <Quote className="h-10 w-10 text-blue-500/30 absolute top-6 right-6" />
+                <Quote className="h-10 w-10 text-[#C9A961]/30 absolute top-6 right-6" />
                 <p className="text-slate-700 leading-relaxed mb-6 italic">
                   "{testimonial.text}"
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 bg-slate-900 rounded-full flex items-center justify-center">
-                    <span className="text-white font-semibold">{testimonial.author.split(' ').map(n => n[0]).join('')}</span>
+                  <div className="w-12 h-12 bg-[#1A3A52] rounded-full flex items-center justify-center">
+                    <span className="text-[#C9A961] font-semibold">{testimonial.author.split(' ').map(n => n[0]).join('')}</span>
                   </div>
                   <div>
-                    <p className="font-semibold text-slate-900">{testimonial.author}</p>
+                    <p className="font-semibold text-[#1A3A52]">{testimonial.author}</p>
                     <p className="text-sm text-slate-500">{testimonial.role}</p>
                   </div>
                 </div>
@@ -619,11 +619,11 @@ export default function Home() {
             className="text-center mb-16"
           >
             <div className="flex items-center justify-center gap-3 mb-6">
-              <div className="w-12 h-1 bg-blue-600" />
-              <span className="text-blue-600 font-medium tracking-wider uppercase text-sm">
+              <div className="w-12 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
                 Zones d'intervention
               </span>
-              <div className="w-12 h-1 bg-blue-600" />
+              <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
               Des marchés à fort potentiel
@@ -646,20 +646,20 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-16 bg-blue-600 rounded-2xl p-8 md:p-12"
+            className="mt-16 bg-[#1A3A52] rounded-2xl p-8 md:p-12"
           >
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
                 <h3 className="text-2xl font-serif text-white mb-2">
                   Objectif Stratégique
                 </h3>
-                <p className="text-blue-100 max-w-xl">
+                <p className="text-white/70 max-w-xl">
                   Créer de la valeur durable par revalorisation technique (travaux BBC), 
                   revalorisation locative, amortissement des prêts et plus-value à l'arbitrage.
                 </p>
               </div>
               <Link to={createPageUrl("Strategy")}>
-                <Button className="bg-white hover:bg-slate-100 text-blue-700 px-8 py-6 whitespace-nowrap">
+                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 whitespace-nowrap font-semibold">
                   Découvrir notre stratégie
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -670,7 +670,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-slate-900">
+      <section className="py-24 bg-[#1A3A52]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
