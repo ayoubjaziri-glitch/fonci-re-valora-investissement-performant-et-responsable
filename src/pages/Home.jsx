@@ -114,18 +114,18 @@ export default function Home() {
           >
             {/* Accent Line */}
             <div className="flex items-center gap-4 mb-8">
-              <div className="w-16 h-1 bg-emerald-500" />
-              <span className="text-emerald-400 font-medium tracking-widest uppercase text-sm">
+              <div className="w-16 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-medium tracking-widest uppercase text-sm">
                 Foncière Résidentielle
               </span>
             </div>
 
             {/* Main Title */}
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-[1.1] mb-4">
-              <span className="block bg-slate-900/60 backdrop-blur-sm inline-block px-4 py-2 border-l-4 border-emerald-500">
+              <span className="block bg-[#1A3A52]/60 backdrop-blur-sm inline-block px-4 py-2 border-l-4 border-[#C9A961]">
                 RÉINVENTER
               </span>
-              <span className="block text-emerald-400 mt-2">L'INVESTISSEMENT</span>
+              <span className="block text-[#C9A961] mt-2">L'INVESTISSEMENT</span>
             </h1>
             
             <h2 className="text-2xl md:text-3xl text-white/90 font-light mb-8">
@@ -141,7 +141,7 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4">
               <Link to={createPageUrl("Contact")}>
-                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-base font-semibold border-2 border-emerald-500">
+                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 text-base font-semibold border-2 border-[#C9A961]">
                   Devenir associé
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -166,8 +166,8 @@ export default function Home() {
             <motion.div 
               animate={{ y: [0, 12, 0] }}
               transition={{ duration: 1.5, repeat: Infinity }}
-              className="w-1.5 h-1.5 bg-emerald-400 rounded-full"
-            />
+              className="w-1.5 h-1.5 bg-[#C9A961] rounded-full"
+              />
           </div>
         </motion.div>
       </section>
@@ -183,8 +183,8 @@ export default function Home() {
               viewport={{ once: true }}
             >
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-12 h-1 bg-blue-600" />
-                <span className="text-blue-600 font-medium tracking-wider uppercase text-sm">
+                <div className="w-12 h-1 bg-[#C9A961]" />
+                <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
                   Qui sommes-nous
                 </span>
               </div>
@@ -204,15 +204,15 @@ export default function Home() {
               {/* Key Benefits */}
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-1 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
                   <span className="text-slate-700">Pas de tracas liés à la gestion locative</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-1 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
                   <span className="text-slate-700">Diversification du risque sur plusieurs actifs</span>
                 </div>
                 <div className="flex items-start gap-3">
-                  <CheckCircle2 className="h-5 w-5 text-emerald-500 mt-1 flex-shrink-0" />
+                  <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
                   <span className="text-slate-700">Fiscalité avantageuse via PEA-PME</span>
                 </div>
               </div>
@@ -225,23 +225,23 @@ export default function Home() {
               viewport={{ once: true }}
               className="grid grid-cols-2 gap-6"
             >
-              <div className="bg-slate-900 rounded-2xl p-6 text-center">
-                <Calendar className="h-8 w-8 text-emerald-400 mx-auto mb-3" />
+              <div className="bg-[#1A3A52] rounded-2xl p-6 text-center">
+                <Calendar className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
                 <p className="text-3xl font-bold text-white mb-1">18 ans</p>
                 <p className="text-sm text-white/60">D'expertise immobilière</p>
               </div>
-              <div className="bg-slate-900 rounded-2xl p-6 text-center">
-                <Building2 className="h-8 w-8 text-emerald-400 mx-auto mb-3" />
+              <div className="bg-[#1A3A52] rounded-2xl p-6 text-center">
+                <Building2 className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
                 <p className="text-3xl font-bold text-white mb-1">3 M€</p>
                 <p className="text-sm text-white/60">D'actifs sous gestion</p>
               </div>
-              <div className="bg-emerald-500 rounded-2xl p-6 text-center">
-                <Percent className="h-8 w-8 text-white mx-auto mb-3" />
-                <p className="text-3xl font-bold text-white mb-1">10,5%</p>
-                <p className="text-sm text-white/80">TRI net visé</p>
+              <div className="bg-[#C9A961] rounded-2xl p-6 text-center">
+                <Percent className="h-8 w-8 text-[#1A3A52] mx-auto mb-3" />
+                <p className="text-3xl font-bold text-[#1A3A52] mb-1">10,5%</p>
+                <p className="text-sm text-[#1A3A52]/80">TRI net visé</p>
               </div>
-              <div className="bg-blue-600 rounded-2xl p-6 text-center">
-                <Target className="h-8 w-8 text-white mx-auto mb-3" />
+              <div className="bg-[#1A3A52] rounded-2xl p-6 text-center">
+                <Target className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
                 <p className="text-3xl font-bold text-white mb-1">20 M€</p>
                 <p className="text-sm text-white/80">Objectif 5 ans</p>
               </div>
@@ -257,13 +257,13 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="bg-gradient-to-r from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12"
+            className="bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] rounded-3xl p-8 md:p-12"
           >
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
                 <div className="flex items-center gap-2 mb-4">
-                  <span className="w-3 h-3 bg-emerald-500 rounded-full animate-pulse" />
-                  <span className="text-emerald-400 font-semibold uppercase tracking-wider text-sm">
+                  <span className="w-3 h-3 bg-[#C9A961] rounded-full animate-pulse" />
+                  <span className="text-[#C9A961] font-semibold uppercase tracking-wider text-sm">
                     Levée en cours
                   </span>
                 </div>
@@ -275,7 +275,7 @@ export default function Home() {
                   structuré avec 0€ de frais d'entrée.
                 </p>
                 <Link to={createPageUrl("Contact")}>
-                  <Button className="bg-emerald-500 hover:bg-emerald-600 text-white">
+                  <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
                     Souscrire maintenant
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
@@ -292,7 +292,7 @@ export default function Home() {
                     <p className="text-xs text-white/60">Ticket minimum</p>
                   </div>
                   <div className="text-center p-3 bg-white/5 rounded-xl">
-                    <p className="text-xl font-bold text-emerald-400">10,5%</p>
+                    <p className="text-xl font-bold text-[#C9A961]">10,5%</p>
                     <p className="text-xs text-white/60">TRI net visé</p>
                   </div>
                   <div className="text-center p-3 bg-white/5 rounded-xl">
@@ -300,7 +300,7 @@ export default function Home() {
                     <p className="text-xs text-white/60">Horizon</p>
                   </div>
                   <div className="text-center p-3 bg-white/5 rounded-xl">
-                    <p className="text-xl font-bold text-emerald-400">0 €</p>
+                    <p className="text-xl font-bold text-[#C9A961]">0 €</p>
                     <p className="text-xs text-white/60">Frais d'entrée</p>
                   </div>
                 </div>
@@ -357,8 +357,8 @@ export default function Home() {
                 </div>
               </div>
 
-              <Link to={createPageUrl("Services")}>
-                <Button className="bg-emerald-600 hover:bg-emerald-700 text-white">
+              <Link to={createPageUrl("Durabilite")}>
+                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
                   Découvrir notre engagement ESG
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -686,7 +686,7 @@ export default function Home() {
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to={createPageUrl("Contact")}>
-                <Button className="bg-emerald-500 hover:bg-emerald-600 text-white px-8 py-6 text-base font-semibold">
+                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 text-base font-semibold">
                   Devenir associé
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>

@@ -32,12 +32,12 @@ export default function Layout({ children, currentPageName }) {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to={createPageUrl("Home")} className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center">
-                <Building2 className="h-6 w-6 text-emerald-400" />
+              <div className="w-10 h-10 bg-[#1A3A52] rounded-lg flex items-center justify-center">
+                <Building2 className="h-6 w-6 text-[#C9A961]" />
               </div>
               <div className="hidden sm:block">
-                <p className="text-slate-900 font-serif text-lg leading-tight">La Foncière</p>
-                <p className="text-blue-600 text-xs tracking-wider uppercase">Patrimoniale</p>
+                <p className="text-[#1A3A52] font-serif text-lg leading-tight">La Foncière</p>
+                <p className="text-[#C9A961] text-xs tracking-wider uppercase">Patrimoniale</p>
               </div>
             </Link>
 
@@ -61,7 +61,7 @@ export default function Layout({ children, currentPageName }) {
             {/* CTA + Mobile Menu */}
             <div className="flex items-center gap-4">
               <Link to={createPageUrl("Contact")} className="hidden md:block">
-                <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
                   Devenir associé
                 </Button>
               </Link>
@@ -100,7 +100,7 @@ export default function Layout({ children, currentPageName }) {
                 onClick={() => setMobileMenuOpen(false)}
                 className="block pt-4"
               >
-                <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+                <Button className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
                   Devenir associé
                 </Button>
               </Link>
@@ -121,12 +121,12 @@ export default function Layout({ children, currentPageName }) {
             {/* Brand */}
             <div className="md:col-span-2">
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-emerald-500 rounded-lg flex items-center justify-center">
-                  <Building2 className="h-6 w-6 text-white" />
+                <div className="w-10 h-10 bg-[#C9A961] rounded-lg flex items-center justify-center">
+                  <Building2 className="h-6 w-6 text-[#1A3A52]" />
                 </div>
                 <div>
                   <p className="text-white font-serif text-lg leading-tight">La Foncière</p>
-                  <p className="text-emerald-400 text-xs tracking-wider uppercase">Patrimoniale</p>
+                  <p className="text-[#C9A961] text-xs tracking-wider uppercase">Patrimoniale</p>
                 </div>
               </div>
               <p className="text-white/60 mb-6 max-w-sm">
@@ -146,7 +146,7 @@ export default function Layout({ children, currentPageName }) {
                   <li key={item.page}>
                     <Link
                       to={createPageUrl(item.page)}
-                      className="text-white/60 hover:text-emerald-400 transition-colors text-sm"
+                      className="text-white/60 hover:text-[#C9A961] transition-colors text-sm"
                     >
                       {item.name}
                     </Link>
@@ -160,13 +160,13 @@ export default function Layout({ children, currentPageName }) {
               <h4 className="font-semibold mb-4">Contact</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-emerald-400 transition-colors text-sm">
+                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">
                     <Mail className="h-4 w-4" />
                     ayoubjaziri@gmail.com
                   </a>
                 </li>
                 <li>
-                  <a href="tel:+33758736580" className="flex items-center gap-2 text-white/60 hover:text-emerald-400 transition-colors text-sm">
+                  <a href="tel:+33758736580" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">
                     <Phone className="h-4 w-4" />
                     +33 7 58 73 65 80
                   </a>
