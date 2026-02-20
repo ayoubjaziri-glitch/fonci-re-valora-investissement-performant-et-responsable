@@ -74,17 +74,17 @@ export default function Contact() {
           className="text-center max-w-md mx-auto px-6"
         >
           <div className="w-20 h-20 bg-[#C9A961] rounded-full flex items-center justify-center mx-auto mb-6">
-            <CheckCircle2 className="h-10 w-10 text-[#1E3A5F]" />
+          <CheckCircle2 className="h-10 w-10 text-[#1A3A52]" />
           </div>
-          <h2 className="text-2xl font-serif text-[#1E3A5F] mb-4">Message envoyé !</h2>
-          <p className="text-gray-600 mb-6">
-            Merci pour votre intérêt. Notre équipe vous contactera dans les plus brefs délais.
+          <h2 className="text-2xl font-serif text-[#1A3A52] mb-4">Message envoyé !</h2>
+          <p className="text-slate-600 mb-6">
+          Merci pour votre intérêt. Notre équipe vous contactera dans les plus brefs délais.
           </p>
           <Button 
-            onClick={() => setSubmitted(false)}
-            className="bg-[#1E3A5F] hover:bg-[#2A4A6F] text-white"
+          onClick={() => setSubmitted(false)}
+          className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white font-semibold"
           >
-            Envoyer un autre message
+          Envoyer un autre message
           </Button>
         </motion.div>
       </div>
@@ -94,7 +94,7 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative py-24 bg-[#1E3A5F] overflow-hidden">
+      <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-0 left-0 w-96 h-96 border border-white/20 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
         </div>
@@ -141,7 +141,7 @@ export default function Contact() {
                       <Mail className="h-6 w-6 text-[#C9A961]" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#1E3A5F]">Email</p>
+                      <p className="font-semibold text-[#1A3A52]">Email</p>
                       <a href="mailto:ayoubjaziri@gmail.com" className="text-gray-600 hover:text-[#C9A961] transition-colors">
                         ayoubjaziri@gmail.com
                       </a>
@@ -153,7 +153,7 @@ export default function Contact() {
                       <Phone className="h-6 w-6 text-[#C9A961]" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#1E3A5F]">Téléphone</p>
+                      <p className="font-semibold text-[#1A3A52]">Téléphone</p>
                       <a href="tel:+33758736580" className="text-gray-600 hover:text-[#C9A961] transition-colors">
                         +33 7 58 73 65 80
                       </a>
@@ -165,7 +165,7 @@ export default function Contact() {
                       <MapPin className="h-6 w-6 text-[#C9A961]" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#1E3A5F]">Adresse</p>
+                      <p className="font-semibold text-[#1A3A52]">Adresse</p>
                       <p className="text-gray-600">16 Rue de la Laure<br />03200 Vichy</p>
                     </div>
                   </div>
@@ -175,7 +175,7 @@ export default function Contact() {
                       <Clock className="h-6 w-6 text-[#C9A961]" />
                     </div>
                     <div>
-                      <p className="font-semibold text-[#1E3A5F]">Horaires d'ouverture</p>
+                      <p className="font-semibold text-[#1A3A52]">Horaires d'ouverture</p>
                       <p className="text-gray-600">Lundi - Vendredi : 9h - 18h<br />Samedi : 10h - 15h</p>
                     </div>
                   </div>
@@ -183,15 +183,15 @@ export default function Contact() {
 
                 {/* Investment Options */}
                 <div className="bg-[#F8F9FA] rounded-2xl p-6">
-                  <h3 className="font-semibold text-[#1E3A5F] mb-4">Options d'investissement</h3>
+                  <h3 className="font-semibold text-[#1A3A52] mb-4">Options d'investissement</h3>
                   <div className="space-y-3">
                     {investmentOptions.map((option) => (
-                      <div key={option.id} className="bg-white rounded-xl p-4 border border-gray-100">
+                      <div key={option.id} className="bg-white rounded-xl p-4 border border-slate-200">
                         <div className="flex justify-between items-start mb-2">
-                          <span className="font-semibold text-[#1E3A5F]">{option.title}</span>
+                          <span className="font-semibold text-[#1A3A52]">{option.title}</span>
                           <span className="text-[#C9A961] font-semibold">{option.ticket}</span>
                         </div>
-                        <p className="text-sm text-gray-600">{option.description}</p>
+                        <p className="text-sm text-slate-600">{option.description}</p>
                       </div>
                     ))}
                   </div>
@@ -206,8 +206,8 @@ export default function Contact() {
               viewport={{ once: true }}
               className="lg:col-span-3"
             >
-              <div className="bg-white rounded-3xl p-8 border border-gray-200 shadow-sm">
-                <h3 className="text-xl font-serif text-[#1E3A5F] mb-6">Formulaire de contact</h3>
+              <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
+                <h3 className="text-xl font-serif text-[#1A3A52] mb-6">Formulaire de contact</h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
@@ -275,7 +275,7 @@ export default function Contact() {
                             htmlFor={option.id}
                             className="flex flex-col p-4 border rounded-xl cursor-pointer transition-all peer-data-[state=checked]:border-[#C9A961] peer-data-[state=checked]:bg-[#C9A961]/5 hover:border-[#C9A961]/50"
                           >
-                            <span className="font-semibold text-[#1E3A5F] text-sm">{option.title}</span>
+                            <span className="font-semibold text-[#1A3A52] text-sm">{option.title}</span>
                             <span className="text-[#C9A961] text-sm">{option.ticket}</span>
                           </Label>
                         </div>
@@ -372,7 +372,7 @@ export default function Contact() {
             viewport={{ once: true }}
             className="mt-16 bg-[#C9A961] rounded-2xl p-6 text-center"
           >
-            <p className="text-[#1E3A5F] font-medium">
+            <p className="text-[#1A3A52] font-medium">
               Horizon d'investissement recommandé : <strong>5 ans</strong>. Possibilité de rachat dès la deuxième année.
             </p>
           </motion.div>

@@ -121,7 +121,7 @@ export default function Strategy() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Le Constat</p>
-                  <h3 className="text-2xl font-serif text-[#1E3A5F]">La difficulté</h3>
+                  <h3 className="text-2xl font-serif text-[#1A3A52]">La difficulté</h3>
                 </div>
               </div>
               <div className="space-y-4">
@@ -131,7 +131,7 @@ export default function Strategy() {
                       <item.icon className="h-5 w-5 text-red-400" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-[#1E3A5F] mb-1">{item.title}</h4>
+                      <h4 className="font-semibold text-[#1A3A52] mb-1">{item.title}</h4>
                       <p className="text-sm text-gray-600">{item.desc}</p>
                     </div>
                   </div>
@@ -144,11 +144,11 @@ export default function Strategy() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-[#1E3A5F] rounded-3xl p-8"
+              className="bg-[#1A3A52] rounded-3xl p-8"
             >
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 bg-[#C9A961] rounded-full flex items-center justify-center">
-                  <CheckCircle2 className="h-6 w-6 text-[#1E3A5F]" />
+                  <CheckCircle2 className="h-6 w-6 text-[#1A3A52]" />
                 </div>
                 <div>
                   <p className="text-sm text-[#C9A961]">Notre solution</p>
@@ -159,7 +159,7 @@ export default function Strategy() {
                 {solutions.map((item, index) => (
                   <div key={index} className="flex gap-4 p-4 bg-white/10 backdrop-blur-sm rounded-xl border border-white/10">
                     <div className="w-10 h-10 bg-[#C9A961] rounded-lg flex items-center justify-center flex-shrink-0">
-                      <CheckCircle2 className="h-5 w-5 text-[#1E3A5F]" />
+                      <CheckCircle2 className="h-5 w-5 text-[#1A3A52]" />
                     </div>
                     <div>
                       <h4 className="font-semibold text-white mb-1">{item.title}</h4>
@@ -189,7 +189,7 @@ export default function Strategy() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
               Les piliers de notre acquisition
             </h2>
           </motion.div>
@@ -202,13 +202,13 @@ export default function Strategy() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 border border-gray-100 hover:shadow-lg transition-shadow"
+                className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
               >
-                <div className="w-14 h-14 bg-[#1E3A5F] rounded-xl flex items-center justify-center mb-4">
+                <div className="w-14 h-14 bg-[#1A3A52] rounded-xl flex items-center justify-center mb-4">
                   <point.icon className="h-7 w-7 text-[#C9A961]" />
                 </div>
-                <h3 className="text-lg font-semibold text-[#1E3A5F] mb-2">{point.title}</h3>
-                <p className="text-gray-600">{point.description}</p>
+                <h3 className="text-lg font-semibold text-[#1A3A52] mb-2">{point.title}</h3>
+                <p className="text-slate-600">{point.description}</p>
               </motion.div>
             ))}
           </div>
@@ -230,7 +230,7 @@ export default function Strategy() {
                   Zones cibles
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
                 Zones à Fort Potentiel
               </h2>
               <p className="text-gray-600 mb-8 leading-relaxed">
@@ -242,12 +242,12 @@ export default function Strategy() {
               
               <div className="grid grid-cols-2 gap-4">
                 {zones.map((zone, index) => (
-                  <div key={index} className="p-4 bg-[#F8F9FA] rounded-xl">
+                  <div key={index} className="p-4 bg-white rounded-xl border border-slate-200">
                     <div className="flex items-center gap-2 mb-2">
                       <MapPin className="h-5 w-5 text-[#C9A961]" />
-                      <span className="font-semibold text-[#1E3A5F]">{zone.name}</span>
+                      <span className="font-semibold text-[#1A3A52]">{zone.name}</span>
                     </div>
-                    <p className="text-sm text-gray-600">{zone.description}</p>
+                    <p className="text-sm text-slate-600">{zone.description}</p>
                   </div>
                 ))}
               </div>
@@ -257,13 +257,13 @@ export default function Strategy() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-[#1E3A5F] rounded-3xl p-8"
+              className="bg-[#1A3A52] rounded-3xl p-8"
             >
               <h3 className="text-xl font-serif text-white mb-6">Objectifs clés</h3>
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-[#C9A961] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl font-bold text-[#1E3A5F]">4</span>
+                    <span className="text-2xl font-bold text-[#1A3A52]">4</span>
                   </div>
                   <div>
                     <p className="text-white font-semibold">Villes ciblées</p>
@@ -297,14 +297,14 @@ export default function Strategy() {
       {/* CTA */}
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1E3A5F] mb-4">
+          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
             Intéressé par notre stratégie ?
           </h2>
-          <p className="text-[#1E3A5F]/80 mb-8">
+          <p className="text-[#1A3A52]/80 mb-8">
             Découvrez comment notre approche peut faire fructifier votre patrimoine.
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-[#1E3A5F] hover:bg-[#2A4A6F] text-white px-8 py-6">
+            <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
               Devenir associé
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

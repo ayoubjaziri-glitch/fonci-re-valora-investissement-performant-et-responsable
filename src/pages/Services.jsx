@@ -85,20 +85,34 @@ export default function Services() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Parcours clé en main
+              Solution intégrée de bout en bout
             </h1>
             <p className="text-xl text-white/70">
-              Un accompagnement complet de l'acquisition à l'arbitrage, piloté par une équipe 
+              Une gestion institutionnelle de l'acquisition à l'arbitrage, pilotée par une équipe 
               d'experts dédiée à la création de valeur patrimoniale durable.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Process Timeline */}
-      <section className="py-16 bg-[#F8F9FA]">
+      {/* Process Timeline - Enhanced for better visibility */}
+      <section className="py-24 bg-[#F8F9FA]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex overflow-x-auto gap-4 pb-4 scrollbar-hide">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
+              Processus d'investissement structuré
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Six étapes maîtrisées pour maximiser la création de valeur patrimoniale
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {processSteps.map((step, index) => (
               <motion.div
                 key={index}
@@ -106,16 +120,15 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="flex-shrink-0 flex items-center gap-4"
+                className="bg-white rounded-2xl p-6 border border-slate-200 hover:shadow-lg transition-all"
               >
-                <div className="bg-white rounded-2xl p-6 shadow-sm min-w-[200px]">
-                  <span className="text-3xl font-bold text-[#C9A961]">{step.number}</span>
-                  <h3 className="font-semibold text-[#1E3A5F] mt-2">{step.title}</h3>
-                  <p className="text-sm text-gray-600 mt-1">{step.desc}</p>
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-12 h-12 bg-[#1A3A52] rounded-xl flex items-center justify-center flex-shrink-0">
+                    <span className="text-xl font-bold text-[#C9A961]">{step.number}</span>
+                  </div>
+                  <h3 className="font-semibold text-[#1A3A52] text-lg">{step.title}</h3>
                 </div>
-                {index < processSteps.length - 1 && (
-                  <ArrowRight className="h-6 w-6 text-[#C9A961] flex-shrink-0" />
-                )}
+                <p className="text-sm text-slate-600 leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </div>
@@ -154,13 +167,13 @@ export default function Services() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group bg-white rounded-3xl p-8 border border-gray-100 hover:shadow-xl transition-all duration-300 hover:border-[#C9A961]/30"
-              >
-                <div className="w-16 h-16 bg-[#1E3A5F] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#C9A961] transition-colors">
-                  <service.icon className="h-8 w-8 text-[#C9A961] group-hover:text-[#1E3A5F] transition-colors" />
+                className="group bg-white rounded-3xl p-8 border border-slate-200 hover:shadow-2xl transition-all duration-500 hover:border-[#C9A961] hover:-translate-y-2"
+                >
+                <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#C9A961] transition-all duration-300 group-hover:scale-110">
+                  <service.icon className="h-8 w-8 text-[#C9A961] group-hover:text-[#1A3A52] transition-colors" />
                 </div>
-                <h3 className="text-xl font-semibold text-[#1E3A5F] mb-3">{service.title}</h3>
-                <p className="text-gray-600 mb-6">{service.description}</p>
+                <h3 className="text-xl font-semibold text-[#1A3A52] mb-3">{service.title}</h3>
+                <p className="text-slate-600 mb-6 leading-relaxed">{service.description}</p>
                 <ul className="space-y-2">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
@@ -243,14 +256,14 @@ export default function Services() {
       {/* CTA */}
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1E3A5F] mb-4">
-            Prêt à déléguer votre investissement immobilier ?
+          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
+            Déléguez votre investissement immobilier
           </h2>
-          <p className="text-[#1E3A5F]/80 mb-8">
-            Rejoignez La Foncière Patrimoniale et bénéficiez de notre expertise complète.
+          <p className="text-[#1A3A52]/80 mb-8">
+            Rejoignez La Foncière Patrimoniale et bénéficiez d'une gestion institutionnelle de vos actifs.
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-[#1E3A5F] hover:bg-[#2A4A6F] text-white px-8 py-6">
+            <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
               Nous contacter
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

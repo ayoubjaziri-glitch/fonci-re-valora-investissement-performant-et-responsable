@@ -121,22 +121,19 @@ export default function Home() {
             </div>
 
             {/* Main Title */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-[1.1] mb-4">
-              <span className="block bg-[#1A3A52]/60 backdrop-blur-sm inline-block px-4 py-2 border-l-4 border-[#C9A961]">
-                RÉINVENTER
-              </span>
-              <span className="block text-[#C9A961] mt-2">L'INVESTISSEMENT</span>
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-[1.1] mb-6">
+              <span className="block text-white/90">INVESTIR</span>
+              <span className="block text-[#C9A961] mt-2">&</span>
+              <span className="block text-white/90 mt-2">VALORISER</span>
+              <span className="block text-[#C9A961] mt-2">DURABLEMENT</span>
             </h1>
             
-            <h2 className="text-2xl md:text-3xl text-white/90 font-light mb-8">
-              Valoriser le patrimoine
-            </h2>
-            
-            <p className="text-lg text-white/70 mb-10 max-w-2xl leading-relaxed">
-              La Foncière Patrimoniale est née de la rencontre entre des experts immobiliers 
-              forts de <strong className="text-white">18 ans d'expérience</strong> et une vision : 
-              créer une solution d'investissement fiable et qualitative pour ceux qui souhaitent 
-              investir dans la pierre sans les contraintes de la gestion locative.
+            <p className="text-xl text-white/80 mb-10 max-w-2xl leading-relaxed">
+              Depuis 2008, le Groupe Auvergne et Patrimoine développe une expertise pointue 
+              dans l'acquisition et la valorisation d'actifs résidentiels. Aujourd'hui, 
+              <strong className="text-[#C9A961]"> La Foncière Patrimoniale</strong> vous permet 
+              d'accéder à cette stratégie éprouvée : un portefeuille immobilier performant, 
+              géré par des experts, avec <strong className="text-white">zéro contrainte de gestion</strong>.
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -147,7 +144,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link to={createPageUrl("Strategy")}>
-                <Button variant="outline" className="border-2 border-white/40 text-white hover:bg-white/10 px-8 py-6 text-base">
+                <Button variant="outline" className="border-2 border-[#C9A961]/60 text-[#C9A961] hover:bg-[#C9A961]/10 px-8 py-6 text-base font-semibold">
                   Découvrir notre stratégie
                 </Button>
               </Link>
@@ -250,65 +247,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Levée en cours - Moved down */}
-      <section className="py-16 bg-slate-50">
-        <div className="max-w-5xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] rounded-3xl p-8 md:p-12"
-          >
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div>
-                <div className="flex items-center gap-2 mb-4">
-                  <span className="w-3 h-3 bg-[#C9A961] rounded-full animate-pulse" />
-                  <span className="text-[#C9A961] font-semibold uppercase tracking-wider text-sm">
-                    Levée en cours
-                  </span>
-                </div>
-                <h3 className="text-3xl md:text-4xl font-serif text-white mb-4">
-                  Rejoignez nos associés
-                </h3>
-                <p className="text-white/70 mb-6">
-                  Participez à notre levée de fonds et bénéficiez d'un véhicule d'investissement 
-                  structuré avec 0€ de frais d'entrée.
-                </p>
-                <Link to={createPageUrl("Contact")}>
-                  <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-                    Souscrire maintenant
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10">
-                <div className="text-center mb-6">
-                  <p className="text-5xl font-bold text-white">250 000 €</p>
-                  <p className="text-white/60 text-sm">Objectif de la levée</p>
-                </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="text-center p-3 bg-white/5 rounded-xl">
-                    <p className="text-xl font-bold text-white">10 000 €</p>
-                    <p className="text-xs text-white/60">Ticket minimum</p>
-                  </div>
-                  <div className="text-center p-3 bg-white/5 rounded-xl">
-                    <p className="text-xl font-bold text-[#C9A961]">10,5%</p>
-                    <p className="text-xs text-white/60">TRI net visé</p>
-                  </div>
-                  <div className="text-center p-3 bg-white/5 rounded-xl">
-                    <p className="text-xl font-bold text-white">5 ans</p>
-                    <p className="text-xs text-white/60">Horizon</p>
-                  </div>
-                  <div className="text-center p-3 bg-white/5 rounded-xl">
-                    <p className="text-xl font-bold text-[#C9A961]">0 €</p>
-                    <p className="text-xs text-white/60">Frais d'entrée</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+
 
       {/* Durabilité Section */}
       <section className="py-24 bg-slate-50">
@@ -385,8 +324,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Nos Services Section */}
-      <section className="py-24 bg-white">
+      {/* Nos Services Section - Enhanced */}
+      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -397,16 +336,16 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Nos Services
+                Notre Expertise
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
             <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
-              Parcours clé en main
+              Solution intégrée de bout en bout
             </h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg leading-relaxed">
-              Un accompagnement complet de l'acquisition à l'arbitrage, piloté par une équipe 
-              d'experts dédiée à la création de valeur patrimoniale durable.
+              De l'acquisition à l'arbitrage, nous pilotons l'intégralité de la chaîne de valeur. 
+              Délégation opérationnelle complète pour une performance patrimoniale optimale.
             </p>
           </motion.div>
 
@@ -418,24 +357,30 @@ export default function Home() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="group"
+                className="group relative"
               >
-                <div className="relative h-64 rounded-2xl overflow-hidden mb-6">
-                  <img 
-                    src={service.image} 
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A3A52]/90 to-transparent" />
-                  <div className="absolute bottom-4 left-4 w-12 h-12 bg-[#C9A961] rounded-xl flex items-center justify-center">
-                    <service.icon className="h-6 w-6 text-[#1A3A52]" />
+                <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-500 h-full">
+                  <div className="relative h-72 overflow-hidden">
+                    <img 
+                      src={service.image} 
+                      alt={service.title}
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#1A3A52] via-[#1A3A52]/50 to-transparent" />
+                    <div className="absolute bottom-6 left-6">
+                      <div className="w-14 h-14 bg-[#C9A961] rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                        <service.icon className="h-7 w-7 text-[#1A3A52]" />
+                      </div>
+                      <h3 className="text-xl font-serif text-white mb-1">{service.title}</h3>
+                    </div>
+                  </div>
+                  <div className="p-6">
+                    <p className="text-slate-600 leading-relaxed mb-4">{service.description}</p>
+                    <Link to={createPageUrl("Services")} className="inline-flex items-center text-[#C9A961] font-semibold hover:gap-3 transition-all group-hover:text-[#B8994F]">
+                      Découvrir <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
                   </div>
                 </div>
-                <h3 className="text-xl font-serif text-[#1A3A52] mb-3">{service.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{service.description}</p>
-                <Link to={createPageUrl("Services")} className="inline-flex items-center text-[#C9A961] font-medium mt-4 hover:gap-3 transition-all">
-                  En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
               </motion.div>
             ))}
           </div>
@@ -563,7 +508,7 @@ export default function Home() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
               Nos opérations de valorisation
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
@@ -576,12 +521,91 @@ export default function Home() {
           
           <div className="text-center mt-12">
             <Link to={createPageUrl("Realisations")}>
-              <Button variant="outline" className="border-slate-300 text-slate-700 hover:bg-slate-100">
+              <Button variant="outline" className="border-[#1A3A52] text-[#1A3A52] hover:bg-slate-100 font-semibold">
                 Voir toutes nos opérations
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
           </div>
+        </div>
+      </section>
+
+      {/* Levée en cours - Moved down and enhanced */}
+      <section className="py-24 bg-gradient-to-br from-[#1A3A52] via-[#2A4A6F] to-[#1A3A52]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <div className="flex items-center gap-3 mb-6">
+                  <span className="w-3 h-3 bg-[#C9A961] rounded-full animate-pulse" />
+                  <span className="text-[#C9A961] font-bold uppercase tracking-wider text-sm">
+                    Levée en cours
+                  </span>
+                </div>
+                <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">
+                  Rejoignez la première levée
+                </h2>
+                <p className="text-xl text-white/80 mb-8 leading-relaxed">
+                  Participez à notre levée inaugurale et bénéficiez d'un positionnement stratégique 
+                  dans une foncière résidentielle à fort potentiel. 100% de votre apport investi 
+                  dans les actifs, <strong className="text-[#C9A961]">0€ de frais d'entrée</strong>.
+                </p>
+                <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <p className="text-white/60 text-sm mb-1">TRI net visé</p>
+                    <p className="text-3xl font-bold text-[#C9A961]">10,5%</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                    <p className="text-white/60 text-sm mb-1">Horizon recommandé</p>
+                    <p className="text-3xl font-bold text-white">5 ans</p>
+                  </div>
+                </div>
+                <Link to={createPageUrl("Contact")}>
+                  <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-bold px-10 py-7 text-lg">
+                    Souscrire maintenant
+                    <ArrowRight className="ml-2 h-6 w-6" />
+                  </Button>
+                </Link>
+              </div>
+
+              <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/20">
+                <div className="text-center mb-8">
+                  <p className="text-[#C9A961] text-sm font-medium mb-2">Objectif de la levée</p>
+                  <p className="text-6xl font-bold text-white mb-2">250 000 €</p>
+                  <p className="text-white/60 text-sm">Première opération à 1,25 M€</p>
+                </div>
+                
+                <div className="grid grid-cols-2 gap-4 mb-6">
+                  <div className="bg-white/5 rounded-2xl p-5 text-center border border-white/10">
+                    <p className="text-white/60 text-xs mb-2">Ticket minimum</p>
+                    <p className="text-2xl font-bold text-white">10 000 €</p>
+                  </div>
+                  <div className="bg-[#C9A961]/20 rounded-2xl p-5 text-center border border-[#C9A961]/40">
+                    <p className="text-white/60 text-xs mb-2">Frais d'entrée</p>
+                    <p className="text-2xl font-bold text-[#C9A961]">0 €</p>
+                  </div>
+                  <div className="bg-white/5 rounded-2xl p-5 text-center border border-white/10">
+                    <p className="text-white/60 text-xs mb-2">Effet de levier</p>
+                    <p className="text-2xl font-bold text-white">x5</p>
+                  </div>
+                  <div className="bg-[#C9A961]/20 rounded-2xl p-5 text-center border border-[#C9A961]/40">
+                    <p className="text-white/60 text-xs mb-2">Valorisation An 5</p>
+                    <p className="text-2xl font-bold text-[#C9A961]">+61%</p>
+                  </div>
+                </div>
+
+                <div className="bg-[#C9A961] rounded-xl p-4 text-center">
+                  <p className="text-[#1A3A52] font-semibold">
+                    Investissement aligné • Rémunération à la performance
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
