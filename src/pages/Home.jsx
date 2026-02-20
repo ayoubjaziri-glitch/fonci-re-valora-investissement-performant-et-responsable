@@ -39,19 +39,19 @@ export default function Home() {
     {
       title: "Souscription au capital",
       description: "Devenez associé de La Foncière Patrimoniale et participez à des opérations d'acquisition structurées. Bénéficiez d'un véhicule d'investissement collectif avec une stratégie de valorisation patrimoniale éprouvée.",
-      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+      image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/5c0c78345_pa00083251-bordeaux-immeuble.jpg",
       icon: Key
     },
     {
       title: "Sourcing et due diligence",
       description: "Notre équipe identifie des actifs à fort potentiel de revalorisation. Chaque acquisition fait l'objet d'une analyse approfondie : rentabilité locative, décote à l'achat, potentiel de réhabilitation.",
-      image: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&q=80",
+      image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/6612247a6_immeuble_bordeaux__098875700_1532_22022018.jpg",
       icon: Search
     },
     {
       title: "Asset management et arbitrage",
       description: "Gestion locative intégrée, suivi des flux de trésorerie, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur et le TRI de vos parts.",
-      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
+      image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg",
       icon: BarChart3
     }
   ];
@@ -100,7 +100,7 @@ export default function Home() {
         <div 
           className="absolute inset-0 bg-cover bg-center"
           style={{ 
-            backgroundImage: "url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80')"
+            backgroundImage: "url('https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg')"
           }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/85 to-slate-900/70" />
@@ -121,11 +121,10 @@ export default function Home() {
             </div>
 
             {/* Main Title */}
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-serif text-white leading-[1.1] mb-6">
-              <span className="block text-white/90">INVESTIR</span>
-              <span className="block text-[#C9A961] mt-2">&</span>
-              <span className="block text-white/90 mt-2">VALORISER</span>
-              <span className="block text-[#C9A961] mt-2">DURABLEMENT</span>
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-6">
+              <span className="text-white">INVESTIR & VALORISER</span>
+              <br />
+              <span className="text-[#C9A961]">DURABLEMENT</span>
             </h1>
             
             <p className="text-xl text-white/80 mb-10 max-w-2xl leading-relaxed">
@@ -185,15 +184,15 @@ export default function Home() {
                   Qui sommes-nous
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
                 Une foncière créée par des experts pour des investisseurs exigeants
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                <strong className="text-slate-900">La Foncière Patrimoniale</strong> est un véhicule d'investissement 
+                <strong className="text-[#1A3A52]">La Foncière Patrimoniale</strong> est un véhicule d'investissement 
                 spécialisé dans l'acquisition, la réhabilitation BBC et l'asset management d'actifs résidentiels.
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Notre mission : constituer un <strong className="text-slate-900">portefeuille patrimonial performant</strong>, 
+                Notre mission : constituer un <strong className="text-[#1A3A52]">portefeuille patrimonial performant</strong>, 
                 en proposant une exposition au marché immobilier avec effet de levier, gestion déléguée et 
                 alignement total des intérêts.
               </p>
@@ -264,7 +263,7 @@ export default function Home() {
                   Durabilité
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
+              <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
                 La Foncière Responsable
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
@@ -311,7 +310,7 @@ export default function Home() {
               className="relative"
             >
               <img 
-                src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=800&q=80" 
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg" 
                 alt="Rénovation durable"
                 className="rounded-3xl shadow-2xl"
               />
@@ -324,8 +323,109 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Atouts & Valeur Ajoutée Section - MOVED UP AND ENHANCED */}
+      <section className="py-32 bg-gradient-to-br from-slate-50 via-white to-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-20"
+          >
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-16 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-bold tracking-wider uppercase">
+                Pourquoi investir avec nous
+              </span>
+              <div className="w-16 h-1 bg-[#C9A961]" />
+            </div>
+            <h2 className="text-4xl md:text-5xl font-serif text-[#1A3A52] mb-6">
+              Les avantages d'une foncière structurée
+            </h2>
+            <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
+              Contrairement aux SCPI traditionnelles et à l'immobilier en direct, notre modèle 
+              offre un alignement total des intérêts et une performance optimisée.
+            </p>
+          </motion.div>
+
+          <div className="grid lg:grid-cols-2 gap-12 mb-16">
+            {/* Atouts */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl p-10 border-2 border-[#1A3A52] shadow-xl"
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center">
+                  <Shield className="h-9 w-9 text-[#C9A961]" />
+                </div>
+                <h3 className="text-3xl font-serif text-[#1A3A52]">Atouts</h3>
+              </div>
+              <ul className="space-y-5">
+                {atouts.map((atout, index) => (
+                  <motion.li 
+                    key={index} 
+                    initial={{ opacity: 0, x: -10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-start gap-4 p-4 bg-slate-50 rounded-xl hover:bg-[#C9A961]/5 transition-all"
+                  >
+                    <CheckCircle2 className="h-6 w-6 text-[#C9A961] mt-0.5 flex-shrink-0" />
+                    <span className="text-slate-700 font-medium">{atout}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+
+            {/* Valeur Ajoutée */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-[#C9A961] rounded-3xl p-10 shadow-xl"
+            >
+              <div className="flex items-center gap-4 mb-8">
+                <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center">
+                  <TrendingUp className="h-9 w-9 text-[#C9A961]" />
+                </div>
+                <h3 className="text-3xl font-serif text-[#1A3A52]">Valeur ajoutée</h3>
+              </div>
+              <ul className="space-y-5">
+                {valeurAjoutee.map((item, index) => (
+                  <motion.li 
+                    key={index} 
+                    initial={{ opacity: 0, x: 10 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.1 }}
+                    className="flex items-start gap-4 p-4 bg-[#1A3A52]/20 rounded-xl hover:bg-[#1A3A52]/30 transition-all"
+                  >
+                    <CheckCircle2 className="h-6 w-6 text-[#1A3A52] mt-0.5 flex-shrink-0" />
+                    <span className="text-[#1A3A52] font-medium">{item}</span>
+                  </motion.li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center bg-[#1A3A52] rounded-2xl p-8"
+          >
+            <p className="text-white text-lg">
+              <strong className="text-[#C9A961]">Un modèle unique</strong> : 0€ de frais d'entrée • 
+              Rémunération à la performance • Alignement total des intérêts
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Nos Services Section - Enhanced */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -359,7 +459,7 @@ export default function Home() {
                 transition={{ delay: index * 0.1 }}
                 className="group relative"
               >
-                <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-500 h-full">
+                <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-500 h-full hover:-translate-y-2">
                   <div className="relative h-72 overflow-hidden">
                     <img 
                       src={service.image} 
@@ -609,68 +709,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Atouts & Valeur Ajoutée Section */}
-      <section className="py-24 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12">
-            {/* Atouts */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="absolute top-0 left-0 w-64 h-64 rounded-2xl overflow-hidden -z-10 opacity-20">
-                <img 
-                  src="https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=400&q=80" 
-                  alt="" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-2xl font-serif text-[#1A3A52] mb-6 flex items-center gap-3">
-                <Shield className="h-8 w-8 text-[#C9A961]" />
-                Atouts
-              </h3>
-              <ul className="space-y-4">
-                {atouts.map((atout, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-0.5 flex-shrink-0" />
-                    <span className="text-slate-700">{atout}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
 
-            {/* Valeur Ajoutée */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="absolute top-0 right-0 w-64 h-64 rounded-2xl overflow-hidden -z-10 opacity-20">
-                <img 
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80" 
-                  alt="" 
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              <h3 className="text-2xl font-serif text-[#1A3A52] mb-6 flex items-center gap-3">
-                <TrendingUp className="h-8 w-8 text-[#C9A961]" />
-                Valeur ajoutée pour l'investisseur
-              </h3>
-              <ul className="space-y-4">
-                {valeurAjoutee.map((item, index) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-0.5 flex-shrink-0" />
-                    <span className="text-slate-700">{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
       {/* Testimonials Section */}
       <section className="py-24 bg-white">
@@ -681,7 +720,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
               Ce que nos clients disent de nous
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
@@ -735,7 +774,7 @@ export default function Home() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
               Des marchés à fort potentiel
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">

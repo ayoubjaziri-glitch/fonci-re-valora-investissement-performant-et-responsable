@@ -39,9 +39,9 @@ export default function Layout({ children, currentPageName }) {
             {/* Logo */}
             <Link to={createPageUrl("Home")} className="flex items-center gap-3">
               <img 
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/69a6c1caa_logo.png"
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
                 alt="La Foncière Patrimoniale"
-                className="h-12 w-auto"
+                className="h-16 w-auto"
               />
             </Link>
 
@@ -126,9 +126,9 @@ export default function Layout({ children, currentPageName }) {
             <div className="md:col-span-2">
               <div className="mb-6">
                 <img 
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/69a6c1caa_logo.png"
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
                   alt="La Foncière Patrimoniale"
-                  className="h-12 w-auto mb-4"
+                  className="h-16 w-auto mb-4"
                 />
               </div>
               <p className="text-white/60 mb-6 max-w-sm">
