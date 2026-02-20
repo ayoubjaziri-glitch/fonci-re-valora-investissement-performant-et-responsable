@@ -7,15 +7,16 @@ import {
   Calendar, MapPin, Euro, ChevronLeft, ChevronRight, ArrowLeftRight
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import BeforeAfterSlider from "../components/BeforeAfterSlider";
 
 const realisations = [
   {
     id: 1,
-    title: "Immeuble de rapport - Lyon 6ème",
+    title: "Immeuble haussmannien - Lyon 6ème",
     location: "Lyon, Rhône",
     year: "2023",
-    imageAvant: "https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80",
-    imageApres: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80",
+    imageAvant: "https://images.unsplash.com/photo-1523217582562-09d0def993a6?w=800&q=80",
+    imageApres: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
     surface: "1 200 m²",
     logements: "12 lots",
     investissement: "1 450 000 €",
@@ -29,11 +30,11 @@ const realisations = [
   },
   {
     id: 2,
-    title: "Résidence Le Parc - Vichy",
+    title: "Résidence bourgeoise - Vichy",
     location: "Vichy, Allier",
     year: "2022",
-    imageAvant: "https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800&q=80",
-    imageApres: "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80",
+    imageAvant: "https://images.unsplash.com/photo-1582407947304-fd86f028f716?w=800&q=80",
+    imageApres: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
     surface: "850 m²",
     logements: "8 lots",
     investissement: "720 000 €",
@@ -47,10 +48,10 @@ const realisations = [
   },
   {
     id: 3,
-    title: "Hôtel particulier - Bordeaux",
+    title: "Immeuble en pierre - Bordeaux",
     location: "Bordeaux, Gironde",
     year: "2023",
-    imageAvant: "https://images.unsplash.com/photo-1567684014761-b65e2e59b9eb?w=800&q=80",
+    imageAvant: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=800&q=80",
     imageApres: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
     surface: "450 m²",
     logements: "4 lots",
@@ -123,8 +124,8 @@ export default function Realisations() {
             className="max-w-3xl"
           >
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-1 bg-emerald-500" />
-              <span className="text-emerald-400 font-medium tracking-wider uppercase text-sm">
+              <div className="w-12 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
                 Portefeuille
               </span>
             </div>
@@ -148,15 +149,15 @@ export default function Realisations() {
               <p className="text-sm text-slate-600">Opérations réalisées</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-emerald-600">42</p>
+              <p className="text-3xl font-bold text-[#C9A961]">42</p>
               <p className="text-sm text-slate-600">Lots restructurés</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-slate-900">5,2 M€</p>
+              <p className="text-3xl font-bold text-[#1A3A52]">5,2 M€</p>
               <p className="text-sm text-slate-600">Valeur du parc</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-emerald-600">100%</p>
+              <p className="text-3xl font-bold text-[#C9A961]">100%</p>
               <p className="text-sm text-slate-600">DPE A ou B</p>
             </div>
           </div>
@@ -176,46 +177,29 @@ export default function Realisations() {
                 transition={{ delay: index * 0.1 }}
                 className="group"
               >
-                {/* Image avec toggle avant/après */}
+                {/* Before/After Slider */}
                 <div className="relative h-80 rounded-2xl overflow-hidden mb-6">
-                  <img 
-                    src={showAfter[item.id] ? item.imageApres : item.imageAvant} 
+                  <BeforeAfterSlider 
+                    beforeImage={item.imageAvant}
+                    afterImage={item.imageApres}
                     alt={item.title}
-                    className="w-full h-full object-cover transition-all duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-transparent to-transparent" />
                   
-                  {/* Toggle Button */}
-                  <button
-                    onClick={() => toggleImage(item.id)}
-                    className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 flex items-center gap-2 hover:bg-white transition-colors"
-                  >
-                    <ArrowLeftRight className="h-4 w-4 text-slate-700" />
-                    <span className="text-sm font-medium text-slate-700">
-                      {showAfter[item.id] ? 'Voir avant' : 'Voir après'}
-                    </span>
-                  </button>
-
-                  {/* Label Avant/Après */}
-                  <div className={`absolute top-4 left-4 px-3 py-1 rounded-lg text-sm font-semibold ${showAfter[item.id] ? 'bg-emerald-500 text-white' : 'bg-red-500 text-white'}`}>
-                    {showAfter[item.id] ? 'APRÈS' : 'AVANT'}
-                  </div>
-
                   {/* DPE Badge */}
-                  <div className="absolute bottom-4 left-4 flex items-center gap-2">
-                    <div className={`w-10 h-10 ${getDPEColor(item.dpeAvant)} text-white text-lg font-bold flex items-center justify-center rounded-lg`}>
+                  <div className="absolute bottom-4 left-4 flex items-center gap-2 z-10">
+                    <div className={`w-10 h-10 ${getDPEColor(item.dpeAvant)} text-white text-lg font-bold flex items-center justify-center rounded-lg shadow-lg`}>
                       {item.dpeAvant}
                     </div>
-                    <ArrowRight className="h-5 w-5 text-white" />
-                    <div className={`w-10 h-10 ${getDPEColor(item.dpeApres)} text-white text-lg font-bold flex items-center justify-center rounded-lg`}>
+                    <ArrowRight className="h-5 w-5 text-white drop-shadow-lg" />
+                    <div className={`w-10 h-10 ${getDPEColor(item.dpeApres)} text-white text-lg font-bold flex items-center justify-center rounded-lg shadow-lg`}>
                       {item.dpeApres}
                     </div>
                   </div>
 
                   {/* Info Bottom */}
-                  <div className="absolute bottom-4 right-4 text-right">
-                    <p className="text-white font-semibold text-lg">{item.title}</p>
-                    <p className="text-white/70 text-sm flex items-center justify-end gap-1">
+                  <div className="absolute bottom-4 right-4 text-right z-10">
+                    <p className="text-white font-semibold text-lg drop-shadow-lg">{item.title}</p>
+                    <p className="text-white/90 text-sm flex items-center justify-end gap-1 drop-shadow-lg">
                       <MapPin className="h-3 w-3" /> {item.location}
                     </p>
                   </div>
@@ -269,16 +253,16 @@ export default function Realisations() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-emerald-600">
+      <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
+          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
             Participez à nos prochaines opérations
           </h2>
-          <p className="text-emerald-100 mb-8">
+          <p className="text-[#1A3A52]/80 mb-8">
             Devenez associé et bénéficiez de notre expertise en réhabilitation patrimoniale.
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-white hover:bg-slate-100 text-emerald-700 px-8 py-6">
+            <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
               Devenir associé
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

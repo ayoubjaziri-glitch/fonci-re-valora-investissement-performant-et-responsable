@@ -18,6 +18,7 @@ export default function Layout({ children, currentPageName }) {
     { name: 'Accueil', page: 'Home' },
     { name: 'Stratégie', page: 'Strategy' },
     { name: 'Nos Services', page: 'Services' },
+    { name: 'Équipe', page: 'Equipe' },
     { name: 'Durabilité', page: 'Durabilite' },
     { name: 'Réalisations', page: 'Realisations' },
     { name: 'Performance', page: 'Performance' },
@@ -32,13 +33,11 @@ export default function Layout({ children, currentPageName }) {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to={createPageUrl("Home")} className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-[#1A3A52] rounded-lg flex items-center justify-center">
-                <Building2 className="h-6 w-6 text-[#C9A961]" />
-              </div>
-              <div className="hidden sm:block">
-                <p className="text-[#1A3A52] font-serif text-lg leading-tight">La Foncière</p>
-                <p className="text-[#C9A961] text-xs tracking-wider uppercase">Patrimoniale</p>
-              </div>
+              <img 
+                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/69a6c1caa_logo.png"
+                alt="La Foncière Patrimoniale"
+                className="h-12 w-auto"
+              />
             </Link>
 
             {/* Desktop Navigation */}
@@ -120,14 +119,12 @@ export default function Layout({ children, currentPageName }) {
           <div className="grid md:grid-cols-4 gap-12">
             {/* Brand */}
             <div className="md:col-span-2">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-[#C9A961] rounded-lg flex items-center justify-center">
-                  <Building2 className="h-6 w-6 text-[#1A3A52]" />
-                </div>
-                <div>
-                  <p className="text-white font-serif text-lg leading-tight">La Foncière</p>
-                  <p className="text-[#C9A961] text-xs tracking-wider uppercase">Patrimoniale</p>
-                </div>
+              <div className="mb-6">
+                <img 
+                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/69a6c1caa_logo.png"
+                  alt="La Foncière Patrimoniale"
+                  className="h-12 w-auto mb-4"
+                />
               </div>
               <p className="text-white/60 mb-6 max-w-sm">
                 Foncière résidentielle spécialisée dans l'acquisition, la rénovation BBC et la valorisation 

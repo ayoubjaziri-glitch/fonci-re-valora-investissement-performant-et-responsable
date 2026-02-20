@@ -385,7 +385,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Offre Globale Section */}
+      {/* Nos Services Section */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
@@ -394,14 +394,19 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
-              Un véhicule d'investissement structuré
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
+                Nos Services
+              </span>
+              <div className="w-12 h-1 bg-[#C9A961]" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
+              Parcours clé en main
             </h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg leading-relaxed">
-              <strong>La Foncière Patrimoniale prend en charge l'intégralité du cycle immobilier</strong> : 
-              sourcing off-market, structuration du financement bancaire, pilotage des travaux de réhabilitation, 
-              asset management et arbitrage stratégique. Vous bénéficiez d'une gestion professionnelle sans 
-              contrainte opérationnelle.
+              Un accompagnement complet de l'acquisition à l'arbitrage, piloté par une équipe 
+              d'experts dédiée à la création de valeur patrimoniale durable.
             </p>
           </motion.div>
 
@@ -421,18 +426,99 @@ export default function Home() {
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A3A52]/90 to-transparent" />
                   <div className="absolute bottom-4 left-4 w-12 h-12 bg-[#C9A961] rounded-xl flex items-center justify-center">
                     <service.icon className="h-6 w-6 text-[#1A3A52]" />
                   </div>
                 </div>
-                <h3 className="text-xl font-serif text-slate-900 mb-3">{service.title}</h3>
+                <h3 className="text-xl font-serif text-[#1A3A52] mb-3">{service.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{service.description}</p>
                 <Link to={createPageUrl("Services")} className="inline-flex items-center text-[#C9A961] font-medium mt-4 hover:gap-3 transition-all">
                   En savoir plus <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Équipe Section */}
+      <section className="py-24 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
+                Équipe fondatrice
+              </span>
+              <div className="w-12 h-1 bg-[#C9A961]" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
+              Une équipe d'experts engagés
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              18 ans d'expérience cumulée sur l'immobilier résidentiel avec une chaîne de valeur intégrée
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8 mb-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-2xl p-8 text-center border border-slate-200"
+            >
+              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
+                <Users className="h-10 w-10 text-[#C9A961]" />
+              </div>
+              <h3 className="font-semibold text-[#1A3A52] mb-2">Ayoub Jaziri</h3>
+              <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
+              <p className="text-slate-600 text-sm">Stratégie d'acquisition, suivi des travaux, financement et gouvernance</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-white rounded-2xl p-8 text-center border border-slate-200"
+            >
+              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
+                <TrendingUp className="h-10 w-10 text-[#C9A961]" />
+              </div>
+              <h3 className="font-semibold text-[#1A3A52] mb-2">Sophian Naili</h3>
+              <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
+              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • 3 M€ de patrimoine</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-2xl p-8 text-center border border-slate-200"
+            >
+              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
+                <HomeIcon className="h-10 w-10 text-[#C9A961]" />
+              </div>
+              <h3 className="font-semibold text-[#1A3A52] mb-2">Renaud Marchand</h3>
+              <p className="text-[#C9A961] text-sm font-medium mb-3">Associé</p>
+              <p className="text-slate-600 text-sm">Travaux & rénovation, pilotage des chantiers • Ingénieur BTP • 40+ biens</p>
+            </motion.div>
+          </div>
+
+          <div className="text-center">
+            <Link to={createPageUrl("Equipe")}>
+              <Button variant="outline" className="border-[#1A3A52] text-[#1A3A52] hover:bg-slate-100">
+                Découvrir l'équipe complète
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

@@ -118,10 +118,10 @@ export default function Performance() {
 
   // Advanced Analytics Data
   const portfolioAllocation = [
-    { name: 'Lyon', value: 35, color: '#3b82f6' },
-    { name: 'Vichy', value: 25, color: '#10b981' },
-    { name: 'Bordeaux', value: 25, color: '#8b5cf6' },
-    { name: 'Clermont', value: 15, color: '#f59e0b' }
+    { name: 'Lyon', value: 35, color: '#1A3A52' },
+    { name: 'Vichy', value: 25, color: '#C9A961' },
+    { name: 'Bordeaux', value: 25, color: '#2A4A6F' },
+    { name: 'Clermont', value: 15, color: '#B8994F' }
   ];
 
   const monthlyPerformance = [
@@ -143,7 +143,7 @@ export default function Performance() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative py-24 bg-slate-900 overflow-hidden">
+      <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-20 right-20 w-80 h-80 border border-white/20 rounded-full" />
         </div>
@@ -239,7 +239,7 @@ export default function Performance() {
                 Exemple concret : 10 000 € investis lors de la première levée de fonds.
               </p>
               
-              <div className="bg-slate-900 rounded-2xl p-6 mb-6">
+              <div className="bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] rounded-2xl p-6 mb-6">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <p className="text-white/60 text-sm">Souscription</p>
@@ -257,24 +257,24 @@ export default function Performance() {
               </div>
 
               <div className="h-72">
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={projectionData}>
-                    <defs>
-                      <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="5%" stopColor="#10b981" stopOpacity={0.3}/>
-                        <stop offset="95%" stopColor="#10b981" stopOpacity={0}/>
-                      </linearGradient>
-                    </defs>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
-                    <XAxis dataKey="year" stroke="#6B7280" />
-                    <YAxis stroke="#6B7280" tickFormatter={(value) => `${(value/1000).toFixed(0)}k€`} />
-                    <Tooltip 
-                      formatter={(value) => [`${value.toLocaleString()} €`, 'Valeur']}
-                      contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: 'white' }}
-                    />
-                    <Area type="monotone" dataKey="value" stroke="#10b981" strokeWidth={3} fill="url(#colorValue)" />
-                  </AreaChart>
-                </ResponsiveContainer>
+              <ResponsiveContainer width="100%" height="100%">
+                <AreaChart data={projectionData}>
+                  <defs>
+                    <linearGradient id="colorValue" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="5%" stopColor="#C9A961" stopOpacity={0.3}/>
+                      <stop offset="95%" stopColor="#C9A961" stopOpacity={0}/>
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="3 3" stroke="#E5E7EB" />
+                  <XAxis dataKey="year" stroke="#6B7280" />
+                  <YAxis stroke="#6B7280" tickFormatter={(value) => `${(value/1000).toFixed(0)}k€`} />
+                  <Tooltip 
+                    formatter={(value) => [`${value.toLocaleString()} €`, 'Valeur']}
+                    contentStyle={{ backgroundColor: '#1A3A52', border: 'none', borderRadius: '8px', color: 'white' }}
+                  />
+                  <Area type="monotone" dataKey="value" stroke="#C9A961" strokeWidth={3} fill="url(#colorValue)" />
+                </AreaChart>
+              </ResponsiveContainer>
               </div>
             </motion.div>
 
@@ -286,13 +286,13 @@ export default function Performance() {
               <h3 className="text-xl font-serif text-slate-900 mb-6">Triple mécanisme de création de valeur</h3>
               <div className="space-y-4">
                 {valueCreation.map((item, index) => (
-                  <div key={index} className="flex gap-4 p-5 bg-slate-50 rounded-2xl">
-                    <div className="w-14 h-14 bg-slate-900 rounded-xl flex items-center justify-center flex-shrink-0">
-                      <item.icon className="h-7 w-7 text-emerald-400" />
+                  <div key={index} className="flex gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-200">
+                    <div className="w-14 h-14 bg-[#1A3A52] rounded-xl flex items-center justify-center flex-shrink-0">
+                      <item.icon className="h-7 w-7 text-[#C9A961]" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-slate-900">{item.title}</h4>
-                      <p className="text-xl font-bold text-emerald-600">{item.value}</p>
+                      <h4 className="font-semibold text-[#1A3A52]">{item.title}</h4>
+                      <p className="text-xl font-bold text-[#C9A961]">{item.value}</p>
                       <p className="text-sm text-slate-500">{item.desc}</p>
                     </div>
                   </div>
@@ -357,12 +357,12 @@ export default function Performance() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white rounded-3xl p-8 text-center border border-slate-200"
+              className="bg-white rounded-3xl p-8 text-center border-2 border-[#1A3A52]"
             >
-              <div className="w-16 h-16 bg-slate-900 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <TrendingUp className="h-8 w-8 text-emerald-400" />
+              <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <TrendingUp className="h-8 w-8 text-[#C9A961]" />
               </div>
-              <h3 className="text-lg font-semibold text-slate-900 mb-3">Nous gagnons ensemble</h3>
+              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">Nous gagnons ensemble</h3>
               <p className="text-slate-600 text-sm">
                 Zéro frais initiaux, rémunération progressive alignée sur la performance du parc.
               </p>
@@ -384,7 +384,7 @@ export default function Performance() {
       </section>
 
       {/* Comparatif */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -431,7 +431,7 @@ export default function Performance() {
       </section>
 
       {/* Fiscal */}
-      <section className="py-24 bg-slate-900">
+      <section className="py-24 bg-[#1A3A52]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -453,15 +453,15 @@ export default function Performance() {
                 au dispositif PEA-PME avec exonération d'impôt sur le revenu (12,8%) sur les gains capitalisés.
               </p>
               <ul className="space-y-3 mb-8">
-                <li className="flex items-center gap-3 text-white/80">
+                <li className="flex items-center gap-3 text-white">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
                   Exonération d'impôt sur le revenu (12,8%)
                 </li>
-                <li className="flex items-center gap-3 text-white/80">
+                <li className="flex items-center gap-3 text-white">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
                   Plus-values et dividendes réinvestis exonérés
                 </li>
-                <li className="flex items-center gap-3 text-white/80">
+                <li className="flex items-center gap-3 text-white">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
                   Avantage fiscal lors de la sortie
                 </li>
@@ -526,10 +526,10 @@ export default function Performance() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-slate-50 rounded-2xl p-6"
+                className="bg-white rounded-2xl p-6 border border-slate-200"
               >
                 <div className="flex items-center justify-between mb-3">
-                  <kpi.icon className={`h-6 w-6 ${kpi.color === 'emerald' ? 'text-[#C9A961]' : 'text-[#1A3A52]'}`} />
+                  <kpi.icon className="h-6 w-6 text-[#C9A961]" />
                   <span className={`text-xs font-medium px-2 py-1 rounded-full ${
                     kpi.trend.includes('+') ? 'bg-[#C9A961]/20 text-[#C9A961]' : 
                     kpi.trend.includes('-') ? 'bg-[#1A3A52]/20 text-[#1A3A52]' : 
@@ -538,7 +538,7 @@ export default function Performance() {
                     {kpi.trend}
                   </span>
                 </div>
-                <p className="text-2xl font-bold text-slate-900 mb-1">{kpi.value}</p>
+                <p className="text-2xl font-bold text-[#1A3A52] mb-1">{kpi.value}</p>
                 <p className="text-sm text-slate-500">{kpi.label}</p>
               </motion.div>
             ))}
@@ -551,9 +551,9 @@ export default function Performance() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-slate-50 rounded-2xl p-6"
+              className="bg-white rounded-2xl p-6 border border-slate-200"
             >
-              <h3 className="font-semibold text-slate-900 mb-6">Répartition géographique</h3>
+              <h3 className="font-semibold text-[#1A3A52] mb-6">Répartition géographique</h3>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -582,9 +582,9 @@ export default function Performance() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-slate-50 rounded-2xl p-6"
+              className="bg-white rounded-2xl p-6 border border-slate-200"
             >
-              <h3 className="font-semibold text-slate-900 mb-6">Performance mensuelle (€)</h3>
+              <h3 className="font-semibold text-[#1A3A52] mb-6">Performance mensuelle (€)</h3>
               <div className="h-64">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart data={monthlyPerformance}>
@@ -594,8 +594,9 @@ export default function Performance() {
                     <Tooltip 
                       contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: 'white' }}
                     />
-                    <Bar dataKey="loyers" fill="#3b82f6" name="Loyers" radius={[4, 4, 0, 0]} />
-                    <Bar dataKey="net" fill="#10b981" name="Net" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="loyers" fill="#1A3A52" name="Loyers" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="charges" fill="#e5e7eb" name="Charges" radius={[4, 4, 0, 0]} />
+                    <Bar dataKey="net" fill="#C9A961" name="Net" radius={[4, 4, 0, 0]} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>
