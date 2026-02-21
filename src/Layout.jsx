@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { createPageUrl } from './utils';
-import { 
-  Menu, 
-  X, 
-  Phone, 
+import {
+  Menu,
+  X,
+  Phone,
   Mail,
   Building2,
-  ChevronRight
-} from 'lucide-react';
+  ChevronRight } from
+'lucide-react';
 import { Button } from "@/components/ui/button";
 
 export default function Layout({ children, currentPageName }) {
@@ -20,15 +20,15 @@ export default function Layout({ children, currentPageName }) {
   }, [location.pathname]);
 
   const navigation = [
-    { name: 'Accueil', page: 'Home' },
-    { name: 'Stratégie', page: 'Strategy' },
-    { name: 'Nos Services', page: 'Services' },
-    { name: 'Équipe', page: 'Equipe' },
-    { name: 'Durabilité', page: 'Durabilite' },
-    { name: 'Réalisations', page: 'Realisations' },
-    { name: 'Performance', page: 'Performance' },
-    { name: 'Contact', page: 'Contact' }
-  ];
+  { name: 'Accueil', page: 'Home' },
+  { name: 'Stratégie', page: 'Strategy' },
+  { name: 'Nos Services', page: 'Services' },
+  { name: 'Équipe', page: 'Equipe' },
+  { name: 'Durabilité', page: 'Durabilite' },
+  { name: 'Réalisations', page: 'Realisations' },
+  { name: 'Performance', page: 'Performance' },
+  { name: 'Contact', page: 'Contact' }];
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -38,28 +38,28 @@ export default function Layout({ children, currentPageName }) {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to={createPageUrl("Home")} className="flex items-center gap-3">
-              <img 
+              <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
-                alt="La Foncière Patrimoniale"
-                className="h-16 w-auto"
-              />
+                alt="La Foncière Patrimoniale" className="rounded-[10px] h-16 w-auto" />
+
+
             </Link>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
-              {navigation.map((item) => (
-                <Link
-                  key={item.page}
-                  to={createPageUrl(item.page)}
-                  className={`text-sm font-medium transition-colors ${
-                    currentPageName === item.page 
-                      ? 'text-amber-600' 
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
+              {navigation.map((item) =>
+              <Link
+                key={item.page}
+                to={createPageUrl(item.page)}
+                className={`text-sm font-medium transition-colors ${
+                currentPageName === item.page ?
+                'text-amber-600' :
+                'text-slate-600 hover:text-slate-900'}`
+                }>
+
                   {item.name}
                 </Link>
-              ))}
+              )}
             </nav>
 
             {/* CTA + Mobile Menu */}
@@ -72,8 +72,8 @@ export default function Layout({ children, currentPageName }) {
               
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 text-slate-900"
-              >
+                className="lg:hidden p-2 text-slate-900">
+
                 {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
               </button>
             </div>
@@ -81,36 +81,36 @@ export default function Layout({ children, currentPageName }) {
         </div>
 
         {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-slate-100">
+        {mobileMenuOpen &&
+        <div className="lg:hidden bg-white border-t border-slate-100">
             <div className="px-6 py-4 space-y-2">
-              {navigation.map((item) => (
-                <Link
-                  key={item.page}
-                  to={createPageUrl(item.page)}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`flex items-center justify-between py-3 border-b border-slate-100 ${
-                    currentPageName === item.page 
-                      ? 'text-amber-600' 
-                      : 'text-slate-900'
-                  }`}
-                >
+              {navigation.map((item) =>
+            <Link
+              key={item.page}
+              to={createPageUrl(item.page)}
+              onClick={() => setMobileMenuOpen(false)}
+              className={`flex items-center justify-between py-3 border-b border-slate-100 ${
+              currentPageName === item.page ?
+              'text-amber-600' :
+              'text-slate-900'}`
+              }>
+
                   {item.name}
                   <ChevronRight className="h-5 w-5 text-slate-400" />
                 </Link>
-              ))}
-              <Link 
-                to={createPageUrl("Contact")}
-                onClick={() => setMobileMenuOpen(false)}
-                className="block pt-4"
-              >
+            )}
+              <Link
+              to={createPageUrl("Contact")}
+              onClick={() => setMobileMenuOpen(false)}
+              className="block pt-4">
+
                 <Button className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
                   Devenir associé
                 </Button>
               </Link>
             </div>
           </div>
-        )}
+        }
       </header>
 
       {/* Main Content */}
@@ -125,11 +125,11 @@ export default function Layout({ children, currentPageName }) {
             {/* Brand */}
             <div className="md:col-span-2">
               <div className="mb-6">
-                <img 
+                <img
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
                   alt="La Foncière Patrimoniale"
-                  className="h-16 w-auto mb-4"
-                />
+                  className="h-16 w-auto mb-4" />
+
               </div>
               <p className="text-white/60 mb-6 max-w-sm">
                 Foncière résidentielle spécialisée dans l'acquisition, la rénovation BBC et la valorisation 
@@ -144,16 +144,16 @@ export default function Layout({ children, currentPageName }) {
             <div>
               <h4 className="font-semibold mb-4">Navigation</h4>
               <ul className="space-y-2">
-                {navigation.map((item) => (
-                  <li key={item.page}>
+                {navigation.map((item) =>
+                <li key={item.page}>
                     <Link
-                      to={createPageUrl(item.page)}
-                      className="text-white/60 hover:text-[#C9A961] transition-colors text-sm"
-                    >
+                    to={createPageUrl(item.page)}
+                    className="text-white/60 hover:text-[#C9A961] transition-colors text-sm">
+
                       {item.name}
                     </Link>
                   </li>
-                ))}
+                )}
               </ul>
             </div>
 
@@ -190,6 +190,6 @@ export default function Layout({ children, currentPageName }) {
           </div>
         </div>
       </footer>
-    </div>
-  );
+    </div>);
+
 }
