@@ -311,7 +311,7 @@ export default function Home() {
               <img 
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg" 
                 alt="Rénovation durable"
-                className="rounded-3xl shadow-2xl"
+                className="rounded-3xl shadow-2xl w-full h-80 object-cover"
               />
               <div className="absolute -bottom-6 -left-6 bg-[#C9A961] text-[#1A3A52] rounded-2xl p-6 shadow-xl">
                 <p className="text-4xl font-bold mb-1">100%</p>
@@ -509,10 +509,10 @@ export default function Home() {
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
             <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Une équipe d'experts engagés
+              Associés opérationnels & Gouvernance
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              18 ans d'expérience cumulée sur l'immobilier résidentiel avec une chaîne de valeur intégrée
+              Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur
             </p>
           </motion.div>
 
