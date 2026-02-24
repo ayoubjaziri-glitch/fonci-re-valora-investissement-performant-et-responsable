@@ -64,6 +64,11 @@ export default function Layout({ children, currentPageName }) {
 
             {/* CTA + Mobile Menu */}
             <div className="flex items-center gap-4">
+              <Link to={createPageUrl("EspaceInvestisseurs")} className="hidden md:block">
+                <Button variant="outline" className="border-[#C9A961] text-[#C9A961] hover:bg-[#C9A961]/10 font-semibold">
+                  Espace Investisseurs
+                </Button>
+              </Link>
               <Link to={createPageUrl("Contact")} className="hidden md:block">
                 <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
                   Nous contacter
