@@ -13,15 +13,15 @@ export default function Durabilite() {
   const engagements = [
     {
       icon: Thermometer,
-      title: "Objectif DPE C, B, voire A",
-      description: "Tous nos actifs sont réhabilités avec un objectif minimum de DPE C. Selon les opportunités, nous visons les classes B et A lorsque techniquement et économiquement justifié.",
-      metric: "C, B, A",
-      metricLabel: "Objectifs DPE"
+      title: "Objectif DPE C minimum",
+      description: "DPE C minimum systématique, DPE B lorsque le rapport coût/valorisation est optimal. Le passage de G/F à C offre le meilleur retour sur investissement.",
+      metric: "DPE C",
+      metricLabel: "Cible standard"
     },
     {
       icon: Zap,
       title: "Réduction énergétique",
-      description: "Objectif de -40% d'économies d'énergie après réhabilitation, conformément aux standards BBC et aux attentes réglementaires.",
+      description: "Objectif -40% d'économies d'énergie après réhabilitation, conformément au Décret Tertiaire et aux attentes locatives.",
       metric: "-40%",
       metricLabel: "consommation"
     },
@@ -138,23 +138,22 @@ export default function Durabilite() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
-                Une stratégie ciblée et cohérente
+                Une stratégie pragmatique et rentable
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Notre démarche de rénovation énergétique vise à transformer des passoires thermiques (F/G) 
-                en actifs performants et durables. L'objectif principal est d'atteindre <strong>un DPE C minimum</strong>, 
-                garantissant la conformité réglementaire et la louabilité pérenne.
+                Plutôt que de viser des objectifs difficilement atteignables, nous concentrons nos efforts 
+                sur ce qui crée véritablement de la valeur : <strong>transformer des actifs F/G en actifs C</strong>, 
+                assurant ainsi une louabilité pérenne et un rendement optimal.
               </p>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Lorsque les conditions techniques et la configuration des bâtiments le permettent, nous visons 
-                des performances supérieures avec un <strong>DPE B, voire A</strong>. Cette approche flexible 
-                répond à un triple enjeu : <strong>conformité réglementaire</strong>, <strong>confort des occupants</strong> 
-                et <strong>valorisation patrimoniale durable</strong>.
+                Cette approche répond à un triple enjeu : <strong>conformité réglementaire</strong> (éradication 
+                des passoires thermiques), <strong>confort des occupants</strong> (VMC performante, isolation efficace) 
+                et <strong>optimisation du rapport coût/valorisation</strong>.
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Chaque projet fait l'objet d'un audit énergétique approfondi permettant de définir le niveau 
-                de performance optimal en fonction des caractéristiques du bâtiment et du marché local. 
-                L'objectif est de maximiser la création de valeur tout en assurant une exécution maîtrisée.
+                Le coût pour atteindre un DPE C est maîtrisé (400-600 €/m²), permettant une exécution rapide (4-6 mois) 
+                et une éligibilité bancaire optimale. Le passage à un DPE A nécessiterait des budgets disproportionnés 
+                (>1200 €/m²) sans création de valeur équivalente.
               </p>
             </motion.div>
 

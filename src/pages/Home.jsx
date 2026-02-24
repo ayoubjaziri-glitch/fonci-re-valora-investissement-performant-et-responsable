@@ -528,7 +528,7 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Ayoub Jaziri</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
-              <p className="text-slate-600 text-sm">Vision opérationnelle, architecture financière et coordination des projets</p>
+              <p className="text-slate-600 text-sm">Stratégie d'acquisition, suivi des travaux, financement et gouvernance</p>
             </motion.div>
 
             <motion.div
@@ -541,9 +541,9 @@ export default function Home() {
               <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
                 <TrendingUp className="h-10 w-10 text-[#C9A961]" />
               </div>
-              <h3 className="font-semibold text-[#1A3A52] mb-2">Sofhian Naili</h3>
+              <h3 className="font-semibold text-[#1A3A52] mb-2">Sophian Naili</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
-              <p className="text-slate-600 text-sm">Gouvernance juridique, vision stratégique et relation investisseurs</p>
+              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • 3 M€ de patrimoine</p>
             </motion.div>
 
             <motion.div
@@ -557,18 +557,9 @@ export default function Home() {
                 <HomeIcon className="h-10 w-10 text-[#C9A961]" />
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Renaud Marchand</h3>
-              <p className="text-[#C9A961] text-sm font-medium mb-3">Investisseur stratégique</p>
-              <p className="text-slate-600 text-sm">Expertise technique BTP et vision patrimoniale de long terme</p>
+              <p className="text-[#C9A961] text-sm font-medium mb-3">Associé</p>
+              <p className="text-slate-600 text-sm">Travaux & rénovation, pilotage des chantiers • Ingénieur BTP • 40+ biens</p>
             </motion.div>
-          </div>
-
-          <div className="text-center">
-            <Link to={createPageUrl("Equipe")}>
-              <Button variant="outline" className="border-[#1A3A52] text-[#1A3A52] hover:bg-slate-100">
-                Découvrir l'équipe complète
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-            </Link>
           </div>
 
           <div className="text-center">
@@ -856,7 +847,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link to={createPageUrl("StrategyPerformance")}>
-                <Button variant="outline" className="border-[#C9A961] text-[#C9A961] hover:bg-[#C9A961]/10 px-8 py-6 text-base">
+                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-base">
                   Stratégie & Performance
                 </Button>
               </Link>

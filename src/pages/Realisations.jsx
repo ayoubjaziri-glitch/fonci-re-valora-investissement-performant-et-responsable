@@ -146,19 +146,19 @@ export default function Realisations() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
               <p className="text-3xl font-bold text-slate-900">4</p>
-              <p className="text-sm text-slate-600">Immeubles</p>
+              <p className="text-sm text-slate-600">Opérations réalisées</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-[#C9A961]">42</p>
-              <p className="text-sm text-slate-600">Lots</p>
+              <p className="text-sm text-slate-600">Lots restructurés</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-[#1A3A52]">3 M€</p>
-              <p className="text-sm text-slate-600">Patrimoine sous gestion</p>
+              <p className="text-3xl font-bold text-[#1A3A52]">5,2 M€</p>
+              <p className="text-sm text-slate-600">Valeur du parc</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-[#C9A961]">100%</p>
-              <p className="text-sm text-slate-600">DPE C minimum</p>
+              <p className="text-sm text-slate-600">DPE A ou B</p>
             </div>
           </div>
         </div>
