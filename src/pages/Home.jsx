@@ -57,12 +57,12 @@ export default function Home() {
   ];
 
   const atouts = [
-    "Mutualisation des risques locatifs sur un portefeuille diversifié",
-    "Allocation optimisée entre rendement courant et plus-value à terme",
-    "Externalisation totale de la gestion d'actifs immobiliers",
-    "Véhicule d'investissement structuré avec gouvernance claire",
-    "Ticket d'entrée accessible et liquidité encadrée",
-    "Diversification géographique limitant l'exposition aux cycles locaux"
+    "Mutualisation du risque locatif au sein d'un portefeuille diversifié",
+    "Allocation équilibrée entre revenus courants et création de valeur à long terme",
+    "Gestion opérationnelle des actifs intégralement déléguée",
+    "Véhicule d'investissement structuré, doté d'une gouvernance lisible",
+    "Ticket d'entrée accessible avec des mécanismes de liquidité encadrés",
+    "Diversification géographique visant à atténuer l'exposition aux cycles locaux"
   ];
 
   const valeurAjoutee = [
@@ -138,11 +138,11 @@ export default function Home() {
             <div className="flex flex-wrap gap-4">
               <Link to={createPageUrl("Contact")}>
                 <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 text-base font-semibold border-2 border-[#C9A961]">
-                  Devenir associé
+                  Entrer en relation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link to={createPageUrl("Strategy")}>
+              <Link to={createPageUrl("StrategyPerformance")}>
                 <Button variant="outline" className="border-2 border-[#C9A961]/60 text-[#C9A961] hover:bg-[#C9A961]/10 px-8 py-6 text-base font-semibold">
                   Découvrir notre stratégie
                 </Button>
@@ -185,31 +185,30 @@ export default function Home() {
                 </span>
               </div>
               <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
-                Une foncière créée par des experts pour des investisseurs exigeants
+                Une foncière indépendante au service d'une vision patrimoniale exigeante
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                <strong className="text-[#1A3A52]">La Foncière Patrimoniale</strong> est un véhicule d'investissement 
-                spécialisé dans l'acquisition, la réhabilitation BBC et l'asset management d'actifs résidentiels.
+                La Foncière Patrimoniale développe et valorise des actifs résidentiels durables à travers 
+                une stratégie d'acquisition sélective, de réhabilitation BBC et de gestion active.
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Notre mission : constituer un <strong className="text-[#1A3A52]">portefeuille patrimonial performant</strong>, 
-                en proposant une exposition au marché immobilier avec effet de levier, gestion déléguée et 
-                alignement total des intérêts.
+                Un modèle conçu pour offrir aux investisseurs une exposition structurée à l'immobilier, 
+                avec effet de levier maîtrisé, gouvernance alignée et gestion intégralement déléguée.
               </p>
               
               {/* Key Benefits */}
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
-                  <span className="text-slate-700">Pas de tracas liés à la gestion locative</span>
+                  <span className="text-slate-700">Portefeuille diversifié</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
-                  <span className="text-slate-700">Diversification du risque sur plusieurs actifs</span>
+                  <span className="text-slate-700">Gestion opérationnelle centralisée</span>
                 </div>
                 <div className="flex items-start gap-3">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
-                  <span className="text-slate-700">Fiscalité avantageuse via PEA-PME</span>
+                  <span className="text-slate-700">Éligibilité PEA-PME</span>
                 </div>
               </div>
             </motion.div>
@@ -267,9 +266,9 @@ export default function Home() {
                 La Foncière Responsable
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Nos engagements en matière de <strong>durabilité, de gouvernance et de responsabilité sociale</strong> sont 
-                au cœur de notre stratégie. Chaque réhabilitation vise l'amélioration significative de la 
-                performance énergétique des bâtiments pour un parc immobilier plus vertueux.
+                La durabilité, la qualité de la gouvernance et l'attention portée aux enjeux sociaux structurent 
+                notre démarche. Chaque opération de réhabilitation s'inscrit dans une logique d'amélioration mesurable 
+                de la performance énergétique, contribuant à la valorisation d'un patrimoine immobilier plus sobre et pérenne.
               </p>
               
               <div className="grid grid-cols-2 gap-4 mb-8">
@@ -340,11 +339,17 @@ export default function Home() {
               <div className="w-16 h-1 bg-[#C9A961]" />
             </div>
             <h2 className="text-4xl md:text-5xl font-serif text-[#1A3A52] mb-6">
-              Les avantages d'une foncière structurée
+              Les atouts d'une foncière structurée
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
-              Contrairement aux SCPI traditionnelles et à l'immobilier en direct, notre modèle 
-              offre un alignement total des intérêts et une performance optimisée.
+              À la différence des véhicules fortement mutualisés ou d'un investissement immobilier 
+              en direct, notre modèle repose sur une approche structurée de la création de valeur, 
+              avec un alignement clair des intérêts entre les associés.
+            </p>
+            <p className="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed mt-4">
+              La stratégie d'investissement permet d'établir un lien lisible entre la valorisation 
+              des actifs immobiliers sous-jacents et l'appréhension de cette valeur par l'investisseur, 
+              offrant une lecture plus directe du patrimoine et de son évolution dans le temps.
             </p>
           </motion.div>
 
@@ -444,8 +449,8 @@ export default function Home() {
               Solution intégrée de bout en bout
             </h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg leading-relaxed">
-              De l'acquisition à l'arbitrage, nous pilotons l'intégralité de la chaîne de valeur. 
-              Délégation opérationnelle complète pour une performance patrimoniale optimale.
+              Une gestion structurée, de l'acquisition à l'arbitrage, portée par une équipe 
+              engagée dans la création de valeur patrimoniale durable.
             </p>
           </motion.div>
 
@@ -666,7 +671,7 @@ export default function Home() {
                 </div>
                 <Link to={createPageUrl("Contact")}>
                   <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-bold px-10 py-7 text-lg">
-                    Souscrire maintenant
+                    Entrer en relation
                     <ArrowRight className="ml-2 h-6 w-6" />
                   </Button>
                 </Link>
@@ -778,8 +783,9 @@ export default function Home() {
               Des marchés à fort potentiel
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Nous concentrons nos acquisitions sur des marchés secondaires dynamiques 
-              et des zones géographiques résilientes offrant un équilibre optimal entre rendement et sécurité.
+              La stratégie d'investissement s'oriente vers des territoires présentant des perspectives 
+              de valorisation pérennes, fondées sur la profondeur du marché locatif, la stabilité 
+              démographique et la vitalité des bassins d'emploi.
             </p>
           </motion.div>
 
@@ -807,7 +813,7 @@ export default function Home() {
                   revalorisation locative, amortissement des prêts et plus-value à l'arbitrage.
                 </p>
               </div>
-              <Link to={createPageUrl("Strategy")}>
+              <Link to={createPageUrl("StrategyPerformance")}>
                 <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 whitespace-nowrap font-semibold">
                   Découvrir notre stratégie
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -827,22 +833,22 @@ export default function Home() {
             viewport={{ once: true }}
           >
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">
-              Rejoignez une communauté d'associés alignés
+              Investir aux côtés de La Foncière Patrimoniale
             </h2>
             <p className="text-white/70 mb-8 max-w-2xl mx-auto">
-              Portée par un groupe solide depuis 2008, contribuez à la création 
-              de valeur patrimoniale durable avec La Foncière Patrimoniale.
+              Foncière résidentielle spécialisée dans l'acquisition et la réhabilitation d'actifs à fort 
+              potentiel de valorisation, principalement situés sur des marchés locatifs tendus.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link to={createPageUrl("Contact")}>
                 <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 text-base font-semibold">
-                  Devenir associé
+                  Entrer en relation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
-              <Link to={createPageUrl("Performance")}>
+              <Link to={createPageUrl("StrategyPerformance")}>
                 <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-base">
-                  Voir les performances
+                  Stratégie & Performance
                 </Button>
               </Link>
             </div>
