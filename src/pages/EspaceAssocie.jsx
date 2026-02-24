@@ -7,7 +7,7 @@ import {
   Eye, EyeOff, Lock, Mail, ArrowRight, BarChart3, Leaf, 
   Calendar, Euro, PieChart, Download, Target, Zap, Calculator,
   TrendingDown, AlertCircle, CheckCircle2, DollarSign, Activity,
-  Briefcase, Award, Clock
+  Briefcase, Award, Clock, FileSpreadsheet, Rocket, MapPin
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -193,6 +193,54 @@ export default function EspaceAssocie() {
     { nom: "Clermont-Ferrand", lots: 16, valeur: "1 350 000 €", dpe: "C", occupation: "95%" }
   ];
 
+  const valorisationSociete = {
+    valeurActuelle: 3200000,
+    valeurPrecedente: 2950000,
+    evolution: "+8.5%",
+    nombreActions: 32000,
+    valeurAction: 100,
+    valeurActionPrecedente: 92.19,
+    plusValueAction: "+8.5%",
+    dateValo: "31 Déc 2025"
+  };
+
+  const acquisitionsEnCours = [
+    {
+      ville: "Toulouse - Capitole",
+      prix: "1 850 000 €",
+      lots: 14,
+      dpe: "F → B",
+      statut: "Due Diligence",
+      avancement: 65,
+      livraison: "Juin 2026"
+    },
+    {
+      ville: "Montpellier Centre",
+      prix: "950 000 €",
+      lots: 8,
+      dpe: "E → C",
+      statut: "Négociation",
+      avancement: 40,
+      livraison: "Septembre 2026"
+    }
+  ];
+
+  const roadmap = [
+    { etape: "Levée de fonds Série A", date: "Q1 2026", statut: "en_cours", avancement: 75 },
+    { etape: "Acquisition Toulouse", date: "Q2 2026", statut: "en_cours", avancement: 65 },
+    { etape: "Livraison Lyon Garibaldi", date: "Q1 2026", statut: "en_cours", avancement: 75 },
+    { etape: "Acquisition Montpellier", date: "Q3 2026", statut: "planifie", avancement: 0 },
+    { etape: "Levée de fonds Série B", date: "Q4 2026", statut: "planifie", avancement: 0 },
+    { etape: "Expansion Marseille", date: "Q1 2027", statut: "planifie", avancement: 0 }
+  ];
+
+  const documentsFinanciers = [
+    { name: "Bilan comptable 2025", type: "Bilan", date: "2025-12-31", size: "2.4 MB" },
+    { name: "Compte de résultat 2025", type: "Compte de résultat", date: "2025-12-31", size: "1.8 MB" },
+    { name: "Annexes comptables 2025", type: "Annexes", date: "2025-12-31", size: "3.2 MB" },
+    { name: "Rapport du commissaire aux comptes", type: "Audit", date: "2026-01-15", size: "1.5 MB" }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
       {/* Header Dashboard */}
@@ -214,6 +262,37 @@ export default function EspaceAssocie() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-8">
+        {/* Valorisation Société */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-gradient-to-br from-[#1A3A52] to-[#2A4A6F] rounded-2xl p-6 mb-8 text-white"
+        >
+          <h3 className="text-xl font-serif mb-6">Valorisation de la Société</h3>
+          <div className="grid md:grid-cols-4 gap-6">
+            <div>
+              <p className="text-white/60 text-sm mb-1">Valorisation Globale</p>
+              <p className="text-3xl font-bold text-[#C9A961]">{valorisationSociete.valeurActuelle.toLocaleString()} €</p>
+              <p className="text-emerald-400 text-sm mt-1">{valorisationSociete.evolution} vs {valorisationSociete.dateValo}</p>
+            </div>
+            <div>
+              <p className="text-white/60 text-sm mb-1">Valeur de l'Action</p>
+              <p className="text-3xl font-bold text-white">{valorisationSociete.valeurAction} €</p>
+              <p className="text-emerald-400 text-sm mt-1">{valorisationSociete.plusValueAction} depuis création</p>
+            </div>
+            <div>
+              <p className="text-white/60 text-sm mb-1">Nombre d'Actions</p>
+              <p className="text-3xl font-bold text-white">{valorisationSociete.nombreActions.toLocaleString()}</p>
+              <p className="text-white/40 text-sm mt-1">Actions émises</p>
+            </div>
+            <div>
+              <p className="text-white/60 text-sm mb-1">Plus-value Réalisée</p>
+              <p className="text-3xl font-bold text-[#C9A961]">+250 000 €</p>
+              <p className="text-emerald-400 text-sm mt-1">Sur période 2024-2025</p>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Levée en cours */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -448,11 +527,96 @@ export default function EspaceAssocie() {
               </div>
             </motion.div>
 
-            {/* Revenus & Distributions */}
+            {/* Acquisitions en Cours */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.35 }}
+              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <MapPin className="h-6 w-6 text-[#C9A961]" />
+                <h3 className="text-lg font-semibold text-slate-900">Acquisitions en Cours</h3>
+              </div>
+              
+              <div className="space-y-4">
+                {acquisitionsEnCours.map((acq, index) => (
+                  <div key={index} className="border-l-4 border-[#C9A961] pl-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-semibold text-slate-900">{acq.ville}</h4>
+                        <p className="text-sm text-slate-600">{acq.lots} lots • {acq.dpe}</p>
+                        <p className="text-xs text-slate-500 mt-1">Prix : {acq.prix}</p>
+                      </div>
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        acq.statut === 'Due Diligence' ? 'bg-blue-100 text-blue-700' : 'bg-amber-100 text-amber-700'
+                      }`}>
+                        {acq.statut}
+                      </span>
+                    </div>
+                    <div className="mb-2">
+                      <div className="flex justify-between text-xs text-slate-600 mb-1">
+                        <span>Avancement</span>
+                        <span>{acq.avancement}%</span>
+                      </div>
+                      <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#C9A961]" style={{width: `${acq.avancement}%`}} />
+                      </div>
+                    </div>
+                    <p className="text-xs text-slate-500">Livraison prévue : {acq.livraison}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Roadmap */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Rocket className="h-6 w-6 text-[#C9A961]" />
+                <h3 className="text-lg font-semibold text-slate-900">Roadmap 2026-2027</h3>
+              </div>
+              
+              <div className="space-y-3">
+                {roadmap.map((item, index) => (
+                  <div key={index} className="flex items-start gap-3">
+                    <div className={`w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0 ${
+                      item.statut === 'en_cours' ? 'bg-[#C9A961]' : 'bg-slate-200'
+                    }`}>
+                      {item.statut === 'en_cours' ? (
+                        <CheckCircle2 className="h-5 w-5 text-[#1A3A52]" />
+                      ) : (
+                        <Clock className="h-5 w-5 text-slate-500" />
+                      )}
+                    </div>
+                    <div className="flex-1">
+                      <div className="flex justify-between items-start mb-1">
+                        <h4 className="font-semibold text-slate-900 text-sm">{item.etape}</h4>
+                        <span className="text-xs text-slate-500">{item.date}</span>
+                      </div>
+                      {item.statut === 'en_cours' && (
+                        <div className="mt-2">
+                          <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                            <div className="h-full bg-[#C9A961]" style={{width: `${item.avancement}%`}} />
+                          </div>
+                          <p className="text-xs text-slate-500 mt-1">{item.avancement}% complété</p>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Revenus & Résultats */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45 }}
               className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200"
             >
               <h3 className="text-lg font-semibold text-slate-900 mb-6">Revenus & Résultats</h3>
@@ -487,7 +651,7 @@ export default function EspaceAssocie() {
 
           {/* Right Column */}
           <div className="space-y-8">
-            {/* Documents */}
+            {/* Documents Financiers */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
@@ -495,11 +659,49 @@ export default function EspaceAssocie() {
               className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200"
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-slate-900">Documents</h3>
+                <h3 className="text-lg font-semibold text-slate-900">Documents Financiers</h3>
+                <FileSpreadsheet className="h-6 w-6 text-slate-400" />
+              </div>
+              
+              <div className="space-y-3 mb-4">
+                {documentsFinanciers.map((doc, index) => (
+                  <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-100">
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-slate-900">{doc.name}</p>
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
+                          {doc.type}
+                        </span>
+                        <span className="text-xs text-slate-500">{doc.date}</span>
+                        <span className="text-xs text-slate-400">• {doc.size}</span>
+                      </div>
+                    </div>
+                    <button className="text-[#C9A961] hover:text-[#B8994F]">
+                      <Download className="h-5 w-5" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <Button className="w-full bg-[#1A3A52] hover:bg-[#2A4A6F] text-white font-semibold">
+                <FileSpreadsheet className="mr-2 h-5 w-5" />
+                Générer Rapport Financier
+              </Button>
+            </motion.div>
+
+            {/* Documents Juridiques */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.25 }}
+              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200"
+            >
+              <div className="flex items-center justify-between mb-6">
+                <h3 className="text-lg font-semibold text-slate-900">Documents Juridiques</h3>
                 <FileText className="h-6 w-6 text-slate-400" />
               </div>
               
-              <div className="space-y-3 max-h-96 overflow-y-auto">
+              <div className="space-y-3 max-h-80 overflow-y-auto">
                 {documents.map((doc, index) => (
                   <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors">
                     <div className="flex-1">
