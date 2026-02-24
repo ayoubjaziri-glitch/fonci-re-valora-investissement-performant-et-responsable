@@ -584,17 +584,17 @@ export default function StrategyPerformance() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="py-16 bg-[#1A3A52]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
+          <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
             Investir aux côtés de La Foncière Patrimoniale
           </h2>
-          <p className="text-[#1A3A52]/80 mb-8">
+          <p className="text-white/80 mb-8">
             Accédez à une exposition immobilière organisée autour d'un pilotage professionnel 
             et d'une gouvernance claire.
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+            <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 font-semibold">
               Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

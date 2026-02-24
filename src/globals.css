@@ -5,7 +5,7 @@
 
 /* Réduction des espacements globaux */
 section {
-  @apply py-12 md:py-14;
+  @apply py-8 md:py-10;
 }
 
 @layer base {

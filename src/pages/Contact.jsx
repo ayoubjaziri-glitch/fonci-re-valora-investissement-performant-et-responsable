@@ -39,27 +39,19 @@ export default function Contact() {
   const investmentOptions = [
     {
       id: "investisseur",
-      title: "Associé Investisseur",
-      ticket: "15 000 €",
-      description: "Valorisation du capital avec TRI cible >10%"
+      title: "Associé Investisseur"
     },
     {
       id: "obligataire",
-      title: "Obligataire",
-      ticket: "10 000 €",
-      description: "Taux fixe garanti, sécurisé et prioritaire"
+      title: "Obligataire"
     },
     {
       id: "actif",
-      title: "Associé Actif",
-      ticket: "10 000 €",
-      description: "Rôle opérationnel + work for equity"
+      title: "Associé Actif"
     },
     {
       id: "partenariat",
-      title: "Partenariat",
-      ticket: "Sur mesure",
-      description: "Collaboration structurée"
+      title: "Partenariat"
     }
   ];
 
@@ -73,25 +65,56 @@ export default function Contact() {
 
   if (submitted) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-white flex items-center justify-center p-6">
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center max-w-md mx-auto px-6"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-2xl mx-auto"
         >
-          <div className="w-20 h-20 bg-[#C9A961] rounded-full flex items-center justify-center mx-auto mb-6">
-          <CheckCircle2 className="h-10 w-10 text-[#1A3A52]" />
+          <div className="bg-white rounded-3xl p-12 shadow-xl border border-slate-100">
+            <div className="w-20 h-20 bg-gradient-to-br from-[#C9A961] to-[#B8994F] rounded-full flex items-center justify-center mx-auto mb-6">
+              <CheckCircle2 className="h-10 w-10 text-white" />
+            </div>
+            <h2 className="text-3xl font-serif text-[#1A3A52] mb-4 text-center">Votre demande a été transmise avec succès</h2>
+            <p className="text-slate-600 mb-8 text-center leading-relaxed">
+              Merci de l'intérêt que vous portez à La Foncière Patrimoniale. Notre équipe étudiera votre demande 
+              et vous contactera dans les prochains jours pour échanger sur votre projet d'investissement.
+            </p>
+            
+            <div className="bg-[#F8F9FA] rounded-2xl p-6 mb-8">
+              <h3 className="font-semibold text-[#1A3A52] mb-4 text-center">Prochaines étapes</h3>
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#C9A961] rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm font-bold">1</span>
+                  </div>
+                  <p className="text-sm text-slate-600">Étude de votre profil par notre équipe</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#C9A961] rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm font-bold">2</span>
+                  </div>
+                  <p className="text-sm text-slate-600">Prise de contact sous 48h ouvrées</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 bg-[#C9A961] rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white text-sm font-bold">3</span>
+                  </div>
+                  <p className="text-sm text-slate-600">Échange détaillé sur votre projet</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex gap-3 justify-center">
+              <Button 
+                onClick={() => setSubmitted(false)}
+                variant="outline"
+                className="border-[#1A3A52] text-[#1A3A52] hover:bg-[#1A3A52] hover:text-white font-semibold"
+              >
+                Envoyer un nouveau message
+              </Button>
+            </div>
           </div>
-          <h2 className="text-2xl font-serif text-[#1A3A52] mb-4">Message envoyé !</h2>
-          <p className="text-slate-600 mb-6">
-          Merci pour votre intérêt. Notre équipe vous contactera dans les plus brefs délais.
-          </p>
-          <Button 
-          onClick={() => setSubmitted(false)}
-          className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white font-semibold"
-          >
-          Envoyer un autre message
-          </Button>
         </motion.div>
       </div>
     );
@@ -190,14 +213,10 @@ export default function Contact() {
                 {/* Investment Options */}
                 <div className="bg-[#F8F9FA] rounded-2xl p-6">
                   <h3 className="font-semibold text-[#1A3A52] mb-4">Options d'investissement</h3>
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     {investmentOptions.map((option) => (
-                      <div key={option.id} className="bg-white rounded-xl p-4 border border-slate-200">
-                        <div className="flex justify-between items-start mb-2">
-                          <span className="font-semibold text-[#1A3A52]">{option.title}</span>
-                          <span className="text-[#C9A961] font-semibold">{option.ticket}</span>
-                        </div>
-                        <p className="text-sm text-slate-600">{option.description}</p>
+                      <div key={option.id} className="bg-white rounded-xl p-3 border border-slate-200">
+                        <span className="font-semibold text-[#1A3A52]">{option.title}</span>
                       </div>
                     ))}
                   </div>
@@ -273,7 +292,7 @@ export default function Contact() {
                     >
                       {investmentOptions.map((option) => (
                         <option key={option.id} value={option.id}>
-                          {option.title} - {option.description}
+                          {option.title}
                         </option>
                       ))}
                     </select>

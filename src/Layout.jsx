@@ -23,7 +23,7 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Accueil', page: 'Home' },
   { name: 'Stratégie & Performance', page: 'StrategyPerformance' },
   { name: 'Nos Services', page: 'Services' },
-  { name: 'Équipe', page: 'Equipe' },
+  { name: 'Qui sommes-nous', page: 'Equipe' },
   { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
   { name: 'Réalisations', page: 'Realisations' },
@@ -40,7 +40,7 @@ export default function Layout({ children, currentPageName }) {
             <Link to={createPageUrl("Home")} className="flex items-center gap-3">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
-                alt="La Foncière Patrimoniale" className="rounded-[10px] h-20 w-auto" />
+                alt="La Foncière Patrimoniale" className="rounded-[10px] h-24 w-auto" />
 
 
             </Link>
