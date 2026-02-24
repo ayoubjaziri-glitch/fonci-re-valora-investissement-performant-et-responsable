@@ -46,7 +46,7 @@ export default function EspaceAssocie() {
               <div className="w-20 h-20 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-10 w-10 text-[#1A3A52]" />
               </div>
-              <h1 className="text-2xl font-serif text-[#1A3A52] mb-2">Espace Associé</h1>
+              <h1 className="text-2xl font-serif text-[#1A3A52] mb-2">Le Club</h1>
               <p className="text-slate-600">Accédez à votre tableau de bord sécurisé</p>
             </div>
 
@@ -200,7 +200,7 @@ export default function EspaceAssocie() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl font-serif text-white mb-1">Espace Associé</h1>
+              <h1 className="text-2xl font-serif text-white mb-1">Le Club</h1>
               <p className="text-white/60 text-sm">Dernière mise à jour : 24 Février 2026</p>
             </div>
             <Button 
@@ -460,7 +460,7 @@ export default function EspaceAssocie() {
               transition={{ delay: 0.35 }}
               className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200"
             >
-              <h3 className="text-lg font-semibold text-slate-900 mb-6">Revenus & Distributions</h3>
+              <h3 className="text-lg font-semibold text-slate-900 mb-6">Revenus & Résultats</h3>
               
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-4 bg-emerald-50 rounded-xl">
@@ -473,16 +473,16 @@ export default function EspaceAssocie() {
 
                 <div className="flex justify-between items-center p-4 bg-blue-50 rounded-xl">
                   <div>
-                    <p className="text-sm text-slate-600 mb-1">Distribution T4 2025</p>
-                    <p className="text-xs text-slate-500">Versée le 15 janvier 2026</p>
+                    <p className="text-sm text-slate-600 mb-1">Résultat Net T4 2025</p>
+                    <p className="text-xs text-slate-500">Publié le 15 janvier 2026</p>
                   </div>
                   <span className="text-2xl font-bold text-blue-700">32 500 €</span>
                 </div>
 
                 <div className="flex justify-between items-center p-4 bg-slate-50 rounded-xl border border-slate-200">
                   <div>
-                    <p className="text-sm text-slate-600 mb-1">Prochaine distribution</p>
-                    <p className="text-xs text-slate-500">Prévue : 15 avril 2026</p>
+                    <p className="text-sm text-slate-600 mb-1">Prochain résultat net</p>
+                    <p className="text-xs text-slate-500">Prévu : 15 avril 2026</p>
                   </div>
                   <span className="text-lg font-bold text-slate-900">≈ 28 000 €</span>
                 </div>
