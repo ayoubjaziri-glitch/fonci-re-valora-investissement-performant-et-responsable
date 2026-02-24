@@ -58,7 +58,6 @@ import Realisations from './pages/Realisations';
 import Home from './pages/Home';
 import MentionsLegales from './pages/MentionsLegales';
 import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
-import SimulateurInvestissement from './pages/SimulateurInvestissement';
 import EspaceAssocie from './pages/EspaceAssocie';
 import __Layout from './Layout.jsx';
 
@@ -75,7 +74,6 @@ export const PAGES = {
     "Home": Home,
     "MentionsLegales": MentionsLegales,
     "PolitiqueConfidentialite": PolitiqueConfidentialite,
-    "SimulateurInvestissement": SimulateurInvestissement,
     "EspaceAssocie": EspaceAssocie,
 }
 
