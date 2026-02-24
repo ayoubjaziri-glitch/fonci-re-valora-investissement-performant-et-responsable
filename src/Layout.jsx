@@ -21,12 +21,12 @@ export default function Layout({ children, currentPageName }) {
 
   const navigation = [
   { name: 'Accueil', page: 'Home' },
-  { name: 'Stratégie', page: 'Strategy' },
+  { name: 'Stratégie & Performance', page: 'StrategyPerformance' },
   { name: 'Nos Services', page: 'Services' },
   { name: 'Équipe', page: 'Equipe' },
+  { name: 'Partenaires', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
   { name: 'Réalisations', page: 'Realisations' },
-  { name: 'Performance', page: 'Performance' },
   { name: 'Contact', page: 'Contact' }];
 
 
@@ -40,7 +40,7 @@ export default function Layout({ children, currentPageName }) {
             <Link to={createPageUrl("Home")} className="flex items-center gap-3">
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
-                alt="La Foncière Patrimoniale" className="rounded-[10px] h-16 w-auto" />
+                alt="La Foncière Patrimoniale" className="rounded-[10px] h-20 w-auto" />
 
 
             </Link>
@@ -128,12 +128,12 @@ export default function Layout({ children, currentPageName }) {
                 <img
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
                   alt="La Foncière Patrimoniale"
-                  className="h-16 w-auto mb-4" />
+                  className="h-20 w-auto mb-4" />
 
               </div>
               <p className="text-white/60 mb-6 max-w-sm">
-                Foncière résidentielle spécialisée dans l'acquisition, la rénovation BBC et la valorisation 
-                d'immeubles à fort potentiel dans les zones tendues.
+                Foncière résidentielle dédiée à l'acquisition, à la réhabilitation BBC et à la valorisation 
+                d'immeubles présentant un potentiel de création de valeur au sein de marchés résidentiels dynamiques.
               </p>
               <p className="text-white/40 text-sm">
                 Groupe Auvergne et Patrimoine — Fondé en 2008

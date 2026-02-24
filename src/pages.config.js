@@ -57,6 +57,7 @@ import Services from './pages/Services';
 import Strategy from './pages/Strategy';
 import Team from './pages/Team';
 import StrategyPerformance from './pages/StrategyPerformance';
+import Partenaires from './pages/Partenaires';
 import __Layout from './Layout.jsx';
 
 
@@ -71,6 +72,7 @@ export const PAGES = {
     "Strategy": Strategy,
     "Team": Team,
     "StrategyPerformance": StrategyPerformance,
+    "Partenaires": Partenaires,
 }
 
 export const pagesConfig = {
