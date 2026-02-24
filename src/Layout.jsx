@@ -23,7 +23,7 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Accueil', page: 'Home' },
   { name: 'Stratégie & Performance', page: 'StrategyPerformance' },
   { name: 'Nos Services', page: 'Services' },
-  { name: 'Qui sommes-nous', page: 'Equipe' },
+  { name: 'Notre histoire', page: 'Equipe' },
   { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
   { name: 'Réalisations', page: 'Realisations' },
@@ -180,11 +180,21 @@ export default function Layout({ children, currentPageName }) {
             </div>
           </div>
 
-          <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-white/40 text-sm">
-              © 2024 La Foncière Patrimoniale. Tous droits réservés.
-            </p>
-            <p className="text-white/40 text-xs text-center md:text-right max-w-lg">
+          <div className="border-t border-white/10 mt-12 pt-8">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
+              <p className="text-white/40 text-sm">
+                © 2024 La Foncière Patrimoniale. Tous droits réservés.
+              </p>
+              <div className="flex flex-wrap justify-center gap-4">
+                <Link to={createPageUrl("MentionsLegales")} className="text-white/40 hover:text-white/70 text-sm transition-colors">
+                  Mentions légales
+                </Link>
+                <Link to={createPageUrl("PolitiqueConfidentialite")} className="text-white/40 hover:text-white/70 text-sm transition-colors">
+                  Politique de confidentialité
+                </Link>
+              </div>
+            </div>
+            <p className="text-white/40 text-xs text-center max-w-lg mx-auto">
               Ce document est à caractère promotionnel et ne constitue pas un conseil en investissement.
             </p>
           </div>

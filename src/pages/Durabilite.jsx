@@ -13,29 +13,29 @@ export default function Durabilite() {
   const engagements = [
     {
       icon: Thermometer,
-      title: "Objectif DPE C minimum",
-      description: "DPE C minimum systématique, DPE B lorsque le rapport coût/valorisation est optimal. Le passage de G/F à C offre le meilleur retour sur investissement.",
-      metric: "DPE C",
-      metricLabel: "Cible standard"
+      title: "Objectif DPE C, B ou A",
+      description: "Nous visons systématiquement un DPE C minimum. L'objectif DPE B ou A est poursuivi lorsque le rapport coût/valorisation le permet et que la configuration du bien s'y prête.",
+      metric: "DPE C, B ou A",
+      metricLabel: "Selon opportunité"
     },
     {
       icon: Zap,
       title: "Réduction énergétique",
-      description: "Objectif -40% d'économies d'énergie après réhabilitation, conformément au Décret Tertiaire et aux attentes locatives.",
+      description: "Objectif de réduction moyenne de 40% de la consommation énergétique après réhabilitation, contribuant à l'amélioration du confort et à la baisse des charges.",
       metric: "-40%",
       metricLabel: "consommation"
     },
     {
       icon: Target,
       title: "Éradication passoires",
-      description: "100% du parc hors des classes E, F et G d'ici 2027, assurant la conformité réglementaire et la louabilité pérenne.",
+      description: "100% du parc hors des classes E, F et G d'ici 2027, assurant la conformité réglementaire et la louabilité pérenne des actifs.",
       metric: "100%",
       metricLabel: "hors E/F/G"
     },
     {
       icon: Droplets,
       title: "Gestion de l'eau",
-      description: "Installation de mousseurs et chasses d'eau double flux pour réduire les charges d'eau des occupants.",
+      description: "Installation de mousseurs et chasses d'eau double flux pour réduire les charges d'eau des occupants et limiter l'impact environnemental.",
       metric: "-20%",
       metricLabel: "conso eau"
     }
@@ -47,9 +47,9 @@ export default function Durabilite() {
       icon: Globe,
       color: "emerald",
       items: [
-        "Focus sur l'éradication des passoires thermiques (achat en G, livraison en C)",
+        "Transformation de passoires thermiques en actifs performants (achat F/G, livraison C minimum)",
         "Isolation systématique des combles et planchers bas",
-        "Remplacement des chaudières fioul/gaz par des PAC",
+        "Remplacement des chaudières fioul/gaz par des systèmes performants (PAC si pertinent)",
         "Utilisation de matériaux à faible impact (laine de roche, métisse)",
         "Gestion responsable des déchets de chantier"
       ]
@@ -63,7 +63,7 @@ export default function Durabilite() {
         "Réduction des charges locatives grâce à l'efficacité énergétique",
         "Confort thermique été comme hiver",
         "Partenariats avec entreprises locales",
-        "Installation de bornes de recharge véhicules électriques"
+        "Équipements modernes : bornes de recharge véhicules électriques si opportun"
       ]
     },
     {
@@ -78,12 +78,6 @@ export default function Durabilite() {
         "Audit énergétique systématique avant acquisition"
       ]
     }
-  ];
-
-  const certifications = [
-    { name: "BBC Effinergie", desc: "Bâtiment Basse Consommation" },
-    { name: "HPE Rénovation", desc: "Haute Performance Énergétique" },
-    { name: "Label E+C-", desc: "Énergie Positive & Réduction Carbone" }
   ];
 
   const trajectoire = [
@@ -120,9 +114,9 @@ export default function Durabilite() {
               Valorisation Patrimoniale Durable
             </h1>
             <p className="text-xl text-white/80">
-              Transformer des passoires thermiques en actifs sains et louables sur les 20 prochaines années, 
-              sans risque réglementaire. Notre approche privilégie la pérennité patrimoniale plutôt que 
-              la quête d'objectifs difficilement atteignables.
+              Transformer des actifs énergivores en logements performants et pérennes, 
+              sans risque réglementaire. Notre approche privilégie l'équilibre entre 
+              performance énergétique et rentabilité patrimoniale.
             </p>
           </motion.div>
         </div>
@@ -138,22 +132,21 @@ export default function Durabilite() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
-                Une stratégie pragmatique et rentable
+                Une stratégie pragmatique et durable
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Plutôt que de viser des objectifs difficilement atteignables, nous concentrons nos efforts 
-                sur ce qui crée véritablement de la valeur : <strong>transformer des actifs F/G en actifs C</strong>, 
-                assurant ainsi une louabilité pérenne et un rendement optimal.
+                Notre stratégie se concentre sur <strong>la transformation d'actifs F/G en actifs de classe C minimum</strong>, 
+                assurant ainsi une louabilité pérenne et une valorisation patrimoniale optimale. 
+                Lorsque les caractéristiques du bien et le contexte économique le permettent, nous visons un DPE B ou A.
               </p>
               <p className="text-slate-600 leading-relaxed mb-6">
                 Cette approche répond à un triple enjeu : <strong>conformité réglementaire</strong> (éradication 
                 des passoires thermiques), <strong>confort des occupants</strong> (VMC performante, isolation efficace) 
-                et <strong>optimisation du rapport coût/valorisation</strong>.
+                et <strong>création de valeur patrimoniale</strong>.
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Le coût pour atteindre un DPE C est maîtrisé (400-600 €/m²), permettant une exécution rapide (4-6 mois) 
-                et une éligibilité bancaire optimale. Le passage à un DPE A nécessiterait des budgets disproportionnés 
-                (>1200 €/m²) sans création de valeur équivalente.
+                Chaque projet fait l'objet d'une analyse approfondie pour déterminer l'objectif de performance 
+                énergétique optimal, en fonction des contraintes techniques, réglementaires et financières.
               </p>
             </motion.div>
 
@@ -319,8 +312,8 @@ export default function Durabilite() {
               Nos interventions techniques
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Un programme de réhabilitation complet pour atteindre les meilleurs standards 
-              de performance énergétique.
+              Un programme de réhabilitation adapté à chaque actif pour atteindre les objectifs 
+              de performance énergétique et de valorisation patrimoniale.
             </p>
           </motion.div>
 
@@ -340,7 +333,7 @@ export default function Durabilite() {
               <Zap className="h-10 w-10 text-[#C9A961] mb-4" />
               <h3 className="font-semibold text-[#1A3A52] mb-3">Systèmes énergétiques</h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                <li>• Remplacement fioul/gaz par PAC air-eau</li>
+                <li>• Remplacement fioul/gaz par systèmes performants</li>
                 <li>• Raccordement réseau chaleur urbain si disponible</li>
                 <li>• VMC performante (simple ou double flux)</li>
                 <li>• Régulation et programmation optimisées</li>
@@ -351,10 +344,10 @@ export default function Durabilite() {
               <Sun className="h-10 w-10 text-[#C9A961] mb-4" />
               <h3 className="font-semibold text-[#1A3A52] mb-3">Compléments & services</h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                <li>• Bornes de recharge véhicules électriques (image premium)</li>
+                <li>• Bornes de recharge véhicules électriques si opportun</li>
                 <li>• Mousseurs et chasses d'eau double flux</li>
                 <li>• Éclairage LED dans les parties communes</li>
-                <li>• Matériaux à faible impact privilégiés (laine de roche, métisse)</li>
+                <li>• Matériaux à faible impact privilégiés</li>
               </ul>
             </div>
           </div>

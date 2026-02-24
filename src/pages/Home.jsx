@@ -516,7 +516,7 @@ export default function Home() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 gap-8 mb-12 max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -528,7 +528,7 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Ayoub Jaziri</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
-              <p className="text-slate-600 text-sm">Stratégie d'acquisition, suivi des travaux, financement et gouvernance</p>
+              <p className="text-slate-600 text-sm">Vision opérationnelle, coordination des acteurs, architecture financière</p>
             </motion.div>
 
             <motion.div
@@ -541,11 +541,13 @@ export default function Home() {
               <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
                 <TrendingUp className="h-10 w-10 text-[#C9A961]" />
               </div>
-              <h3 className="font-semibold text-[#1A3A52] mb-2">Sophian Naili</h3>
+              <h3 className="font-semibold text-[#1A3A52] mb-2">Sofhian Naili</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
-              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • 3 M€ de patrimoine</p>
+              <p className="text-slate-600 text-sm">Gouvernance juridique, vision stratégique, fondateur Groupe Auvergne & Patrimoine</p>
             </motion.div>
-
+          </div>
+          
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -557,15 +559,30 @@ export default function Home() {
                 <HomeIcon className="h-10 w-10 text-[#C9A961]" />
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Renaud Marchand</h3>
-              <p className="text-[#C9A961] text-sm font-medium mb-3">Associé</p>
-              <p className="text-slate-600 text-sm">Travaux & rénovation, pilotage des chantiers • Ingénieur BTP • 40+ biens</p>
+              <p className="text-[#C9A961] text-sm font-medium mb-3">Investisseur stratégique</p>
+              <p className="text-slate-600 text-sm">Expertise technique BTP, ingénieur, président SCABB</p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.3 }}
+              className="bg-white rounded-2xl p-8 text-center border border-slate-200"
+            >
+              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
+                <Users className="h-10 w-10 text-[#C9A961]" />
+              </div>
+              <h3 className="font-semibold text-[#1A3A52] mb-2">Christophe Gironde</h3>
+              <p className="text-[#C9A961] text-sm font-medium mb-3">Directeur administratif</p>
+              <p className="text-slate-600 text-sm">Direction administrative, coordination opérationnelle, Société Gabriel</p>
             </motion.div>
           </div>
 
           <div className="text-center">
             <Link to={createPageUrl("Equipe")}>
               <Button variant="outline" className="border-[#1A3A52] text-[#1A3A52] hover:bg-slate-100">
-                Découvrir l'équipe complète
+                Découvrir notre histoire
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
             </Link>
@@ -847,7 +864,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link to={createPageUrl("StrategyPerformance")}>
-                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-base">
+                <Button variant="outline" className="border-[#C9A961] text-[#C9A961] hover:bg-[#C9A961]/10 px-8 py-6 text-base">
                   Stratégie & Performance
                 </Button>
               </Link>
