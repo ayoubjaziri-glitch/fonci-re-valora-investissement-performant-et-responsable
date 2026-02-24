@@ -124,7 +124,7 @@ export default function StrategyPerformance() {
       </section>
 
       {/* Context / Solution */}
-      <section className="py-24">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-8">
             <motion.div
@@ -196,7 +196,7 @@ export default function StrategyPerformance() {
       </section>
 
       {/* Strategy Points */}
-      <section className="py-24 bg-[#F8F9FA]">
+      <section className="py-16 bg-[#F8F9FA]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -231,7 +231,7 @@ export default function StrategyPerformance() {
       </section>
 
       {/* Zones */}
-      <section className="py-24 bg-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -302,8 +302,124 @@ export default function StrategyPerformance() {
         </div>
       </section>
 
-      {/* Performance - Projection */}
-      <section className="py-24 bg-slate-50">
+      {/* Alignment - MOVED UP */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
+              Alignement total des intérêts
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Le modèle privilégie un alignement durable entre associés, indépendamment de la taille 
+              de leur engagement, autour d'une trajectoire patrimoniale commune.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl p-8 text-center border border-slate-200"
+            >
+              <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Handshake className="h-8 w-8 text-[#C9A961]" />
+              </div>
+              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">Création de valeur partagée</h3>
+              <p className="text-slate-600 text-sm">
+                Plus-values réalisées + Remboursement du prêt + Capitalisation des flux
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="bg-[#C9A961] rounded-3xl p-8 text-center"
+            >
+              <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <Trophy className="h-8 w-8 text-white" />
+              </div>
+              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">Rémunération à la performance</h3>
+              <p className="text-[#1A3A52]/80 text-sm">
+                Carried interest uniquement sur la surperformance au-delà de 6,5%/an
+              </p>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="bg-white rounded-3xl p-8 text-center border-2 border-[#1A3A52]"
+            >
+              <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-6">
+                <TrendingUp className="h-8 w-8 text-[#C9A961]" />
+              </div>
+              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">0€ de frais initiaux</h3>
+              <p className="text-slate-600 text-sm">
+                100% de l'apport investi dans les actifs
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Comparatif */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
+              Comparatif — 3 modèles d'investissement
+            </h2>
+          </motion.div>
+
+          <div className="grid md:grid-cols-3 gap-6">
+            {comparatif.map((model, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className={`rounded-3xl p-6 ${model.highlight ? 'bg-[#C9A961] ring-4 ring-[#C9A961]/30' : 'bg-white border border-slate-200'}`}
+              >
+                <h3 className={`text-lg font-semibold text-center mb-6 ${model.highlight ? 'text-white' : 'text-slate-900'}`}>
+                  {model.title}
+                </h3>
+                <div className="space-y-4">
+                  {model.items.map((item, idx) => (
+                    <div key={idx} className={`flex justify-between items-center p-3 rounded-lg ${model.highlight ? 'bg-white/20' : 'bg-slate-50'}`}>
+                      <span className={`text-sm ${model.highlight ? 'text-[#1A3A52]' : 'text-slate-600'}`}>{item.label}</span>
+                      <span className={`font-semibold ${
+                        item.positive ? 'text-[#1A3A52]' : 
+                        item.negative ? 'text-red-500' : 
+                        model.highlight ? 'text-[#1A3A52]' : 'text-slate-900'
+                      }`}>
+                        {item.value}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Performance - Projection - BEFORE SIMULATOR */}
+      <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -388,55 +504,7 @@ export default function StrategyPerformance() {
         </div>
       </section>
 
-      {/* Comparatif */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Comparatif — 3 modèles d'investissement
-            </h2>
-          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-6">
-            {comparatif.map((model, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className={`rounded-3xl p-6 ${model.highlight ? 'bg-[#C9A961] ring-4 ring-[#C9A961]/30' : 'bg-white border border-slate-200'}`}
-              >
-                <h3 className={`text-lg font-semibold text-center mb-6 ${model.highlight ? 'text-white' : 'text-slate-900'}`}>
-                  {model.title}
-                </h3>
-                <div className="space-y-4">
-                  {model.items.map((item, idx) => (
-                    <div key={idx} className={`flex justify-between items-center p-3 rounded-lg ${model.highlight ? 'bg-white/20' : 'bg-slate-50'}`}>
-                      <span className={`text-sm ${model.highlight ? 'text-[#1A3A52]' : 'text-slate-600'}`}>{item.label}</span>
-                      <span className={`font-semibold ${
-                        item.positive ? 'text-[#1A3A52]' : 
-                        item.negative ? 'text-red-500' : 
-                        model.highlight ? 'text-[#1A3A52]' : 'text-slate-900'
-                      }`}>
-                        {item.value}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Alignment */}
-      <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -505,7 +573,7 @@ export default function StrategyPerformance() {
       </section>
 
       {/* Fiscal PEA-PME */}
-      <section className="py-24 bg-[#1A3A52]">
+      <section className="py-16 bg-[#1A3A52]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -561,7 +629,7 @@ export default function StrategyPerformance() {
       </section>
 
       {/* Simulator */}
-      <section className="py-24 bg-white">
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
