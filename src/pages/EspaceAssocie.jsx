@@ -333,12 +333,7 @@ export default function EspaceAssocie() {
                 </div>
               </div>
 
-              <Link to={createPageUrl("SimulateurInvestissement")}>
-                <Button className="w-full mt-4 bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-                  Simulateur Avancé
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
+
             </motion.div>
 
             {/* DPE Distribution */}

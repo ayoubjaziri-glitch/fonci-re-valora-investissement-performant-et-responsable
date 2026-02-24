@@ -101,11 +101,11 @@ export default function Equipe() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Gouvernance et pilotage opérationnel
+              Notre histoire
             </h1>
             <p className="text-xl text-white/70">
-              Une organisation structurée réunissant des compétences complémentaires au service 
-              d'une stratégie patrimoniale de long terme.
+              Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur, 
+              uni par une vision patrimoniale de long terme et un alignement durable des intérêts.
             </p>
           </motion.div>
         </div>
@@ -121,10 +121,10 @@ export default function Equipe() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Les fondateurs
+              Associés opérationnels & Gouvernance
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Fondateurs et associés stratégiques mobilisant leurs compétences au service du projet
+              Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur
             </p>
           </motion.div>
 
