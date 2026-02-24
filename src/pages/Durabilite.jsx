@@ -13,69 +13,69 @@ export default function Durabilite() {
   const engagements = [
     {
       icon: Thermometer,
-      title: "Performance énergétique",
-      description: "Objectif DPE A ou B sur 100% de notre parc immobilier d'ici 2026",
-      metric: "100%",
-      metricLabel: "actifs BBC"
+      title: "Objectif DPE C minimum",
+      description: "DPE C minimum systématique, DPE B lorsque le rapport coût/valorisation est optimal. Le passage de G/F à C offre le meilleur retour sur investissement.",
+      metric: "DPE C",
+      metricLabel: "Cible standard"
     },
     {
       icon: Zap,
       title: "Réduction énergétique",
-      description: "Diminution moyenne de 60% de la consommation énergétique après réhabilitation",
-      metric: "-60%",
+      description: "Objectif -40% d'économies d'énergie après réhabilitation, conformément au Décret Tertiaire et aux attentes locatives.",
+      metric: "-40%",
       metricLabel: "consommation"
     },
     {
-      icon: Leaf,
-      title: "Matériaux biosourcés",
-      description: "Privilégier les isolants naturels : fibre de bois, ouate de cellulose, chanvre",
-      metric: "80%",
-      metricLabel: "biosourcés"
+      icon: Target,
+      title: "Éradication passoires",
+      description: "100% du parc hors des classes E, F et G d'ici 2027, assurant la conformité réglementaire et la louabilité pérenne.",
+      metric: "100%",
+      metricLabel: "hors E/F/G"
     },
     {
-      icon: Sun,
-      title: "Énergies renouvelables",
-      description: "Installation systématique de solutions ENR : PAC, photovoltaïque, géothermie",
-      metric: "100%",
-      metricLabel: "ENR intégrées"
+      icon: Droplets,
+      title: "Gestion de l'eau",
+      description: "Installation de mousseurs et chasses d'eau double flux pour réduire les charges d'eau des occupants.",
+      metric: "-20%",
+      metricLabel: "conso eau"
     }
   ];
 
   const piliers = [
     {
-      title: "Environnement",
+      title: "Environnement (E)",
       icon: Globe,
       color: "emerald",
       items: [
-        "Rénovation thermique BBC systématique",
-        "Réduction de l'empreinte carbone du parc",
-        "Gestion responsable des déchets de chantier",
-        "Préservation de la biodiversité urbaine",
-        "Installation d'équipements hydro-économes"
+        "Focus sur l'éradication des passoires thermiques (achat en G, livraison en C)",
+        "Isolation systématique des combles et planchers bas",
+        "Remplacement des chaudières fioul/gaz par des PAC",
+        "Utilisation de matériaux à faible impact (laine de roche, métisse)",
+        "Gestion responsable des déchets de chantier"
       ]
     },
     {
-      title: "Social",
+      title: "Social (S)",
       icon: Users,
       color: "blue",
       items: [
-        "Amélioration du confort des occupants",
-        "Réduction des charges locatives",
-        "Accessibilité PMR des parties communes",
+        "Logements sains : VMC performante pour éviter l'humidité",
+        "Réduction des charges locatives grâce à l'efficacité énergétique",
+        "Confort thermique été comme hiver",
         "Partenariats avec entreprises locales",
-        "Formation des équipes aux enjeux RSE"
+        "Installation de bornes de recharge véhicules électriques"
       ]
     },
     {
-      title: "Gouvernance",
+      title: "Gouvernance (G)",
       icon: ShieldCheck,
       color: "slate",
       items: [
-        "Transparence des reporting ESG",
-        "Intégration des critères durables dans les décisions",
-        "Dialogue avec les parties prenantes",
+        "Rapport annuel sur l'évolution du DPE moyen du parc",
+        "Transparence totale avec les investisseurs",
+        "Budgets de travaux maîtrisés et prévisibles",
         "Respect des réglementations thermiques",
-        "Audit énergétique systématique"
+        "Audit énergétique systématique avant acquisition"
       ]
     }
   ];
@@ -87,10 +87,10 @@ export default function Durabilite() {
   ];
 
   const trajectoire = [
-    { year: "2024", objectif: "40%", desc: "Actifs certifiés BBC" },
-    { year: "2025", objectif: "70%", desc: "Actifs certifiés BBC" },
-    { year: "2026", objectif: "100%", desc: "Actifs certifiés BBC" },
-    { year: "2030", objectif: "Neutre", desc: "Carbone opérationnel" }
+    { year: "2026", objectif: "50%", desc: "Parc hors E/F/G" },
+    { year: "2027", objectif: "100%", desc: "Parc hors E/F/G" },
+    { year: "2028", objectif: "80%", desc: "Actifs DPE C ou mieux" },
+    { year: "2030", objectif: "95%", desc: "Actifs DPE C ou mieux" }
   ];
 
   return (
@@ -117,13 +117,12 @@ export default function Durabilite() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              La Foncière Responsable
+              Valorisation Patrimoniale Durable
             </h1>
             <p className="text-xl text-white/80">
-              La durabilité, la qualité de la gouvernance et l'attention portée aux enjeux sociaux 
-              structurent notre démarche. Chaque opération de réhabilitation s'inscrit dans une logique 
-              d'amélioration mesurable de la performance énergétique, contribuant à la valorisation d'un 
-              patrimoine immobilier plus sobre et pérenne.
+              Transformer des passoires thermiques en actifs sains et louables sur les 20 prochaines années, 
+              sans risque réglementaire. Notre approche privilégie la pérennité patrimoniale plutôt que 
+              la quête d'objectifs difficilement atteignables.
             </p>
           </motion.div>
         </div>
@@ -139,27 +138,23 @@ export default function Durabilite() {
               viewport={{ once: true }}
             >
               <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
-                Notre vision de l'immobilier durable
+                Une stratégie pragmatique et rentable
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                La Foncière Patrimoniale place la <strong>performance environnementale</strong> au centre 
-                de sa stratégie d'acquisition et de valorisation. Chaque actif acquis fait l'objet 
-                d'une réhabilitation profonde visant l'excellence énergétique.
+                Plutôt que de viser des objectifs difficilement atteignables, nous concentrons nos efforts 
+                sur ce qui crée véritablement de la valeur : <strong>transformer des actifs F/G en actifs C</strong>, 
+                assurant ainsi une louabilité pérenne et un rendement optimal.
+              </p>
+              <p className="text-slate-600 leading-relaxed mb-6">
+                Cette approche répond à un triple enjeu : <strong>conformité réglementaire</strong> (éradication 
+                des passoires thermiques), <strong>confort des occupants</strong> (VMC performante, isolation efficace) 
+                et <strong>optimisation du rapport coût/valorisation</strong>.
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Cette approche répond à un triple objectif : <strong>réduire l'empreinte carbone</strong> de 
-                notre parc, <strong>améliorer le confort des occupants</strong> et <strong>optimiser la valeur 
-                patrimoniale</strong> à long terme de nos actifs.
+                Le coût pour atteindre un DPE C est maîtrisé (400-600 €/m²), permettant une exécution rapide (4-6 mois) 
+                et une éligibilité bancaire optimale. Le passage à un DPE A nécessiterait des budgets disproportionnés 
+                (>1200 €/m²) sans création de valeur équivalente.
               </p>
-              
-              <div className="flex flex-wrap gap-3">
-              {certifications.map((cert, idx) => (
-                <div key={idx} className="bg-[#C9A961]/10 border border-[#C9A961]/30 rounded-xl px-4 py-3">
-                  <p className="font-semibold text-[#1A3A52] text-sm">{cert.name}</p>
-                  <p className="text-[#C9A961] text-xs">{cert.desc}</p>
-                </div>
-              ))}
-              </div>
             </motion.div>
 
             <motion.div
@@ -179,8 +174,8 @@ export default function Durabilite() {
                     <Leaf className="h-8 w-8 text-[#C9A961]" />
                   </div>
                   <div>
-                    <p className="text-3xl font-bold text-[#1A3A52]">-60%</p>
-                    <p className="text-slate-600 text-sm">Émissions CO₂ moyennes</p>
+                    <p className="text-3xl font-bold text-[#1A3A52]">-40%</p>
+                    <p className="text-slate-600 text-sm">Économies d'énergie</p>
                   </div>
                 </div>
               </div>
@@ -284,11 +279,11 @@ export default function Durabilite() {
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              Notre trajectoire bas-carbone
+              Notre trajectoire de valorisation
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto">
-              Un plan d'action progressif pour atteindre la neutralité carbone 
-              opérationnelle de notre parc d'ici 2030.
+              Un plan d'action réaliste et mesurable pour transformer l'intégralité de notre parc 
+              en actifs conformes et pérennes.
             </p>
           </motion.div>
 
@@ -334,10 +329,10 @@ export default function Durabilite() {
               <Thermometer className="h-10 w-10 text-[#C9A961] mb-4" />
               <h3 className="font-semibold text-[#1A3A52] mb-3">Isolation thermique</h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                <li>• ITE (Isolation Thermique par l'Extérieur)</li>
-                <li>• Isolation des combles et planchers</li>
-                <li>• Menuiseries triple vitrage</li>
-                <li>• Traitement des ponts thermiques</li>
+                <li>• Isolation systématique des combles et planchers bas</li>
+                <li>• Menuiseries double vitrage performantes</li>
+                <li>• ITE si nécessaire selon diagnostic</li>
+                <li>• Traitement des ponts thermiques critiques</li>
               </ul>
             </div>
 
@@ -345,21 +340,21 @@ export default function Durabilite() {
               <Zap className="h-10 w-10 text-[#C9A961] mb-4" />
               <h3 className="font-semibold text-[#1A3A52] mb-3">Systèmes énergétiques</h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                <li>• Pompes à chaleur air-eau / géothermie</li>
-                <li>• Chaudières à condensation</li>
-                <li>• VMC double flux</li>
-                <li>• Éclairage LED intelligent</li>
+                <li>• Remplacement fioul/gaz par PAC air-eau</li>
+                <li>• Raccordement réseau chaleur urbain si disponible</li>
+                <li>• VMC performante (simple ou double flux)</li>
+                <li>• Régulation et programmation optimisées</li>
               </ul>
             </div>
 
             <div className="bg-slate-50 rounded-2xl p-6">
               <Sun className="h-10 w-10 text-[#C9A961] mb-4" />
-              <h3 className="font-semibold text-[#1A3A52] mb-3">Énergies renouvelables</h3>
+              <h3 className="font-semibold text-[#1A3A52] mb-3">Compléments & services</h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                <li>• Panneaux photovoltaïques en toiture</li>
-                <li>• Chauffe-eau solaire collectif</li>
-                <li>• Récupération des eaux pluviales</li>
-                <li>• Bornes de recharge VE</li>
+                <li>• Bornes de recharge véhicules électriques (image premium)</li>
+                <li>• Mousseurs et chasses d'eau double flux</li>
+                <li>• Éclairage LED dans les parties communes</li>
+                <li>• Matériaux à faible impact privilégiés (laine de roche, métisse)</li>
               </ul>
             </div>
           </div>
