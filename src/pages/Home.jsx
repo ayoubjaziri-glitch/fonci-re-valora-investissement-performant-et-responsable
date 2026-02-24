@@ -66,11 +66,11 @@ export default function Home() {
   ];
 
   const valeurAjoutee = [
-    "Objectif de TRI supérieur aux SCPI et à l'immobilier en direct",
+    "Objectif de TRI supérieur aux véhicules d'investissement collectifs traditionnels et à l'immobilier en direct",
     "Chaîne de valeur intégrée : sourcing, acquisition, réhabilitation, gestion, cession",
     "Effet de levier bancaire optimisé (LTV 80%) démultipliant la performance",
     "Reporting régulier et transparence sur la valorisation des actifs",
-    "Création de valeur via la rénovation BBC et l'amélioration du DPE"
+    "Création de valeur via la rénovation énergétique et l'amélioration du DPE"
   ];
 
   const testimonials = [

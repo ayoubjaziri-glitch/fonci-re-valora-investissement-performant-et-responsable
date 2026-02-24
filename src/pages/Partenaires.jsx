@@ -40,8 +40,29 @@ export default function Partenaires() {
       icon: Users,
       category: "Entreprises BTP",
       title: "Excellence opérationnelle",
-      description: "Les entreprises du bâtiment avec lesquelles nous collaborons sont sélectionnées pour leur savoir-faire technique, leur engagement dans la transition énergétique et leur capacité à respecter les standards BBC.",
+      description: "Les entreprises du bâtiment avec lesquelles nous collaborons sont sélectionnées pour leur savoir-faire technique, leur engagement dans la transition énergétique et leur capacité à respecter les standards de performance énergétique.",
       values: ["Qualité d'exécution garantie", "Engagement dans la transition énergétique", "Partenaires techniques de confiance"]
+    },
+    {
+      icon: Shield,
+      category: "Notaires & Avocats",
+      title: "Sécurisation juridique",
+      description: "Accompagnement par des notaires et cabinets d'avocats spécialisés en droit immobilier, en structuration de sociétés et en gouvernance patrimoniale.",
+      values: ["Sécurisation des opérations", "Structuration juridique adaptée", "Conformité réglementaire"]
+    },
+    {
+      icon: TrendingUp,
+      category: "Agents immobiliers",
+      title: "Sourcing & commercialisation",
+      description: "Réseau d'agents immobiliers pour l'accès à des opportunités off-market et la commercialisation locative des actifs réhabilités.",
+      values: ["Accès privilégié au marché", "Connaissance locale approfondie", "Réactivité commerciale"]
+    },
+    {
+      icon: Award,
+      category: "Établissements bancaires",
+      title: "Financement structuré",
+      description: "Partenariats avec des établissements de crédit pour structurer des financements adaptés aux opérations d'acquisition et de rénovation.",
+      values: ["Conditions négociées", "Relations de long terme", "Expertise financement immobilier"]
     },
     {
       icon: Handshake,
@@ -133,7 +154,7 @@ export default function Partenaires() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {ecosysteme.map((partenaire, index) => (
               <motion.div
                 key={index}
