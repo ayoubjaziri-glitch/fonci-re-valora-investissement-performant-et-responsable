@@ -51,11 +51,11 @@ import Contact from './pages/Contact';
 import Durabilite from './pages/Durabilite';
 import Equipe from './pages/Equipe';
 import Home from './pages/Home';
+import Partenaires from './pages/Partenaires';
 import Realisations from './pages/Realisations';
 import Services from './pages/Services';
-import Team from './pages/Team';
 import StrategyPerformance from './pages/StrategyPerformance';
-import Partenaires from './pages/Partenaires';
+import Team from './pages/Team';
 import __Layout from './Layout.jsx';
 
 
@@ -64,11 +64,11 @@ export const PAGES = {
     "Durabilite": Durabilite,
     "Equipe": Equipe,
     "Home": Home,
+    "Partenaires": Partenaires,
     "Realisations": Realisations,
     "Services": Services,
-    "Team": Team,
     "StrategyPerformance": StrategyPerformance,
-    "Partenaires": Partenaires,
+    "Team": Team,
 }
 
 export const pagesConfig = {

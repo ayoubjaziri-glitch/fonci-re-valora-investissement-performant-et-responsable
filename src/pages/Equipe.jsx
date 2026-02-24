@@ -25,7 +25,10 @@ export default function Equipe() {
       description: "De formation juridique, Sofhian Naili est également fondateur du Groupe Auvergne et Patrimoine, actif dans la structuration et la valorisation d'actifs immobiliers depuis 2008.",
       experience: "Il assure la gouvernance juridique et la vision stratégique de la foncière, veille à la structuration statutaire, à l'équilibre entre les associés et au respect des principes d'éthique et de loyauté, tout en sécurisant la trajectoire de développement dans une logique patrimoniale de long terme. Il anime également, aux côtés d'Ayoub Jaziri, la relation avec les investisseurs et les partenaires stratégiques.",
       image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80"
-    },
+    }
+  ];
+
+  const team = [
     {
       name: "Renaud Marchand",
       role: "Investisseur stratégique",
@@ -33,6 +36,14 @@ export default function Equipe() {
       description: "Ingénieur BTP de formation, multi-entrepreneur et président de la société SCABB, Renaud Marchand dirige plusieurs entreprises spécialisées dans le domaine du gros œuvre.",
       experience: "Fort d'une expertise reconnue dans le secteur du bâtiment, il intervient au sein de la foncière en qualité d'investisseur stratégique, apportant une lecture technique et opérationnelle des projets et contribuant à une dynamique d'association fondée sur une vision patrimoniale de long terme et un alignement durable des intérêts entre associés.",
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80"
+    },
+    {
+      name: "Christophe Gironde",
+      role: "Directeur administratif",
+      focus: "Société Gabriel",
+      description: "Ancien libraire durant quatorze ans et conférencier, Christophe Gironde a rejoint le groupe en 2022.",
+      experience: "Il assure la direction administrative au sein de la société Gabriel, structure de présidence de la foncière, et veille à la coordination administrative des opérations. Il suit la validation, la présentation et la mise en forme des propositions ainsi que des accords d'association, veille à la tenue des registres et assure la coordination avec les partenaires juridiques, financiers et opérationnels. En lien avec les partenaires culturels du groupe, il participe également à l'ouverture de la foncière vers des initiatives patrimoniales et culturelles, dans une démarche respectueuse des territoires et des usages.",
+      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80"
     }
   ];
 
