@@ -59,6 +59,7 @@ import Home from './pages/Home';
 import MentionsLegales from './pages/MentionsLegales';
 import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
 import EspaceInvestisseurs from './pages/EspaceInvestisseurs';
+import SimulateurInvestissement from './pages/SimulateurInvestissement';
 import __Layout from './Layout.jsx';
 
 
@@ -75,6 +76,7 @@ export const PAGES = {
     "MentionsLegales": MentionsLegales,
     "PolitiqueConfidentialite": PolitiqueConfidentialite,
     "EspaceInvestisseurs": EspaceInvestisseurs,
+    "SimulateurInvestissement": SimulateurInvestissement,
 }
 
 export const pagesConfig = {
