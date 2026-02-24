@@ -190,91 +190,27 @@ export default function Partenaires() {
         </div>
       </section>
 
-      {/* Formulaire de contact */}
-      <section className="py-16 bg-white">
-        <div className="max-w-3xl mx-auto px-6 lg:px-8">
+      {/* CTA Contact */}
+      <section className="py-16 bg-[#C9A961]">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-8"
           >
             <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
               Entrer en relation
             </h2>
-            <p className="text-slate-600 mb-8">
+            <p className="text-[#1A3A52]/80 mb-8">
               Les échanges se déroulent dans un cadre privé et confidentiel après qualification des interlocuteurs.
             </p>
-          </motion.div>
-
-          {submitted ? (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="text-center bg-slate-50 rounded-2xl p-12"
-            >
-              <div className="w-16 h-16 bg-[#C9A961] rounded-full flex items-center justify-center mx-auto mb-4">
-                <CheckCircle2 className="h-8 w-8 text-[#1A3A52]" />
-              </div>
-              <h3 className="text-xl font-serif text-[#1A3A52] mb-2">Message envoyé</h3>
-              <p className="text-slate-600">Nous vous recontacterons dans les meilleurs délais.</p>
-            </motion.div>
-          ) : (
-            <form onSubmit={handleSubmit} className="bg-slate-50 rounded-2xl p-8 space-y-6">
-              <div>
-                <label className="block text-sm font-medium text-[#1A3A52] mb-2">Nom *</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.nom}
-                  onChange={(e) => setFormData({...formData, nom: e.target.value})}
-                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#1A3A52] mb-2">Fonction / Société *</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.fonction}
-                  onChange={(e) => setFormData({...formData, fonction: e.target.value})}
-                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#1A3A52] mb-2">Profil *</label>
-                <select
-                  required
-                  value={formData.profil}
-                  onChange={(e) => setFormData({...formData, profil: e.target.value})}
-                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
-                >
-                  <option value="architecte">Architecte</option>
-                  <option value="entreprise">Entreprise BTP</option>
-                  <option value="partenaire">Partenaire patrimonial</option>
-                  <option value="autre">Autre</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-[#1A3A52] mb-2">Message</label>
-                <textarea
-                  rows={4}
-                  value={formData.message}
-                  onChange={(e) => setFormData({...formData, message: e.target.value})}
-                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
-                  placeholder="Décrivez votre projet ou demande..."
-                />
-              </div>
-
-              <Button type="submit" className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] py-6 font-semibold">
-                Envoyer
+            <Link to={createPageUrl("Contact")}>
+              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+                Nous contacter
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
-            </form>
-          )}
+            </Link>
+          </motion.div>
         </div>
       </section>
 
