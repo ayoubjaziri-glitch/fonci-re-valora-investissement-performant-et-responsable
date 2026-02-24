@@ -13,25 +13,25 @@ export default function Equipe() {
     {
       name: "Ayoub Jaziri",
       role: "Cofondateur",
-      focus: "Stratégie d'acquisition",
-      description: "Suivi des travaux, financement et gouvernance.",
-      experience: "Ex-chef de projet immobilier d'envergure en promotion immobilière à Bordeaux • 8 ans d'expérience, investisseur immobilier depuis 5 ans.",
+      focus: "Vision opérationnelle",
+      description: "Ayoub Jaziri porte la vision opérationnelle de la foncière et accompagne la mise en œuvre concrète des projets immobiliers.",
+      experience: "Il intervient sur l'architecture financière des opérations, la relation avec les partenaires investisseurs et clients, ainsi que la coordination des acteurs impliqués dans le développement et la valorisation des actifs. Son action s'inscrit dans une logique de structuration durable et de suivi opérationnel des projets.",
       image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
     },
     {
-      name: "Sophian Naili",
+      name: "Sofhian Naili",
       role: "Cofondateur",
-      focus: "Investissement & Sourcing",
-      description: "Sourcing off-market et arbitrages.",
-      experience: "Investisseur immobilier depuis 2008 • 30+ biens • 3 M€ de patrimoine immobilier.",
+      focus: "Gouvernance juridique & Vision stratégique",
+      description: "De formation juridique, Sofhian Naili est également fondateur du Groupe Auvergne et Patrimoine, actif dans la structuration et la valorisation d'actifs immobiliers depuis 2008.",
+      experience: "Il assure la gouvernance juridique et la vision stratégique de la foncière, veille à la structuration statutaire, à l'équilibre entre les associés et au respect des principes d'éthique et de loyauté, tout en sécurisant la trajectoire de développement dans une logique patrimoniale de long terme. Il anime également, aux côtés d'Ayoub Jaziri, la relation avec les investisseurs et les partenaires stratégiques.",
       image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80"
     },
     {
       name: "Renaud Marchand",
-      role: "Associé",
-      focus: "Travaux & Rénovation",
-      description: "Pilotage des chantiers, qualité BBC.",
-      experience: "Ingénieur BTP • réseau de 12 entreprises de BTP • Investisseur immobilier • 40+ biens • 5 M€ de patrimoine immobilier.",
+      role: "Investisseur stratégique",
+      focus: "Expertise technique BTP",
+      description: "Ingénieur BTP de formation, multi-entrepreneur et président de la société SCABB, Renaud Marchand dirige plusieurs entreprises spécialisées dans le domaine du gros œuvre.",
+      experience: "Fort d'une expertise reconnue dans le secteur du bâtiment, il intervient au sein de la foncière en qualité d'investisseur stratégique, apportant une lecture technique et opérationnelle des projets et contribuant à une dynamique d'association fondée sur une vision patrimoniale de long terme et un alignement durable des intérêts entre associés.",
       image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80"
     }
   ];
@@ -90,11 +90,11 @@ export default function Equipe() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Une équipe d'experts engagés
+              Gouvernance et pilotage opérationnel
             </h1>
             <p className="text-xl text-white/70">
-              Des professionnels de l'immobilier unis par une vision commune : 
-              créer de la valeur patrimoniale durable.
+              Une organisation structurée réunissant des compétences complémentaires au service 
+              d'une stratégie patrimoniale de long terme.
             </p>
           </motion.div>
         </div>
@@ -113,7 +113,7 @@ export default function Equipe() {
               Les fondateurs
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Une équipe complémentaire réunissant expertise financière, technique et opérationnelle
+              Fondateurs et associés stratégiques mobilisant leurs compétences au service du projet
             </p>
           </motion.div>
 

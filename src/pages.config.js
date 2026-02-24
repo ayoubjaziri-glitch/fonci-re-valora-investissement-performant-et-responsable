@@ -51,10 +51,8 @@ import Contact from './pages/Contact';
 import Durabilite from './pages/Durabilite';
 import Equipe from './pages/Equipe';
 import Home from './pages/Home';
-import Performance from './pages/Performance';
 import Realisations from './pages/Realisations';
 import Services from './pages/Services';
-import Strategy from './pages/Strategy';
 import Team from './pages/Team';
 import StrategyPerformance from './pages/StrategyPerformance';
 import Partenaires from './pages/Partenaires';
@@ -66,10 +64,8 @@ export const PAGES = {
     "Durabilite": Durabilite,
     "Equipe": Equipe,
     "Home": Home,
-    "Performance": Performance,
     "Realisations": Realisations,
     "Services": Services,
-    "Strategy": Strategy,
     "Team": Team,
     "StrategyPerformance": StrategyPerformance,
     "Partenaires": Partenaires,

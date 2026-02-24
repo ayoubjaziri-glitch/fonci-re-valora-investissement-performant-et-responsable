@@ -120,8 +120,10 @@ export default function Durabilite() {
               La Foncière Responsable
             </h1>
             <p className="text-xl text-white/80">
-              Notre engagement pour un patrimoine immobilier durable, performant et responsable. 
-              La transition énergétique au cœur de notre stratégie de valorisation.
+              La durabilité, la qualité de la gouvernance et l'attention portée aux enjeux sociaux 
+              structurent notre démarche. Chaque opération de réhabilitation s'inscrit dans une logique 
+              d'amélioration mesurable de la performance énergétique, contribuant à la valorisation d'un 
+              patrimoine immobilier plus sobre et pérenne.
             </p>
           </motion.div>
         </div>
@@ -368,16 +370,16 @@ export default function Durabilite() {
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
-            Investissez dans l'immobilier responsable
+            Investir aux côtés de La Foncière Patrimoniale
           </h2>
           <p className="text-[#1A3A52]/80 mb-8">
-            Participez à la transition énergétique du parc immobilier français 
-            tout en bénéficiant d'une performance financière attractive.
+            Participez à une approche patrimoniale intégrant les enjeux de durabilité 
+            au sein d'une stratégie structurée.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to={createPageUrl("Contact")}>
               <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
-                Devenir associé
+                Entrer en relation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
