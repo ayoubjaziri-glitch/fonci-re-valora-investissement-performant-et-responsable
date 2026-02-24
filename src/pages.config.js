@@ -56,6 +56,8 @@ import Realisations from './pages/Realisations';
 import Services from './pages/Services';
 import StrategyPerformance from './pages/StrategyPerformance';
 import Team from './pages/Team';
+import MentionsLegales from './pages/MentionsLegales';
+import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
 import __Layout from './Layout.jsx';
 
 
@@ -69,6 +71,8 @@ export const PAGES = {
     "Services": Services,
     "StrategyPerformance": StrategyPerformance,
     "Team": Team,
+    "MentionsLegales": MentionsLegales,
+    "PolitiqueConfidentialite": PolitiqueConfidentialite,
 }
 
 export const pagesConfig = {
