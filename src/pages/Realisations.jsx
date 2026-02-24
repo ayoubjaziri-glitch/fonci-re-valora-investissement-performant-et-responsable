@@ -256,14 +256,14 @@ export default function Realisations() {
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
-            Participez à nos prochaines opérations
+            Investir aux côtés de La Foncière Patrimoniale
           </h2>
           <p className="text-[#1A3A52]/80 mb-8">
-            Devenez associé et bénéficiez de notre expertise en réhabilitation patrimoniale.
+            Accédez à une exposition immobilière structurée et à un pilotage professionnel.
           </p>
           <Link to={createPageUrl("Contact")}>
             <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
-              Devenir associé
+              Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>

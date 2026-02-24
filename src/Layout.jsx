@@ -66,7 +66,7 @@ export default function Layout({ children, currentPageName }) {
             <div className="flex items-center gap-4">
               <Link to={createPageUrl("Contact")} className="hidden md:block">
                 <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-                  Devenir associé
+                  Nous contacter
                 </Button>
               </Link>
               
@@ -105,7 +105,7 @@ export default function Layout({ children, currentPageName }) {
               className="block pt-4">
 
                 <Button className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-                  Devenir associé
+                  Nous contacter
                 </Button>
               </Link>
             </div>

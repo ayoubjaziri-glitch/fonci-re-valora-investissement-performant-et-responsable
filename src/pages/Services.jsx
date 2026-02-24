@@ -27,8 +27,8 @@ export default function Services() {
     {
       icon: Search,
       title: "Acquisition & Sélection",
-      description: "Sourcing stratégique d'actifs résidentiels à fort potentiel de valorisation.",
-      features: ["Analyse multicritères rigoureuse", "Négociation experte", "Due diligence complète"]
+      description: "Sourcing stratégique d'actifs résidentiels présentant un potentiel de valorisation durable.",
+      features: ["Analyse multicritères structurée", "Négociation maîtrisée", "Due diligence approfondie"]
     },
     {
       icon: Hammer,
@@ -38,31 +38,31 @@ export default function Services() {
     },
     {
       icon: Users,
-      title: "Gestion intégrée & équipe dédiée",
-      description: "Une équipe pluridisciplinaire dédie l'intégralité de son temps au pilotage et à la performance de la foncière.",
-      features: ["Analystes & gestionnaires", "Techniciens qualifiés", "Suivi personnalisé"]
+      title: "Gestion déléguée, vision partagée",
+      description: "La gestion opérationnelle est intégralement pilotée par la foncière, permettant aux investisseurs de rester concentrés sur leur stratégie patrimoniale tout en conservant une lecture claire des actifs et des décisions structurantes.",
+      features: ["Gestion opérationnelle complète", "Reporting régulier", "Gouvernance transparente"]
     },
     {
       icon: HomeIcon,
-      title: "Gestion Locative & Pilotage",
-      description: "Commercialisation multi-canaux avec taux d'occupation cible >98%.",
-      features: ["Sélection rigoureuse locataires", "Reporting semestriel détaillé", "Gestion des impayés"]
+      title: "Gestion locative & Pilotage",
+      description: "Commercialisation multi-canaux visant un taux d'occupation cible supérieur à 98 %.",
+      features: ["Sélection rigoureuse des locataires", "Reporting semestriel structuré", "Suivi administratif et financier des flux locatifs"]
     },
     {
       icon: Briefcase,
       title: "Arbitrage Stratégique & Fiscalité",
-      description: "Cessions bloc ou lot par lot avec optimisation fiscale PEA-PME.",
-      features: ["Stratégie de sortie optimisée", "Exonération IR après 5 ans", "Création de valeur maximisée"]
+      description: "Cessions d'actifs, en bloc ou de manière sélective, intégrant une approche patrimoniale et un cadre fiscal adapté, notamment via le PEA-PME.",
+      features: ["Stratégie de sortie structurée dans une logique de long terme", "Cadre fiscal pouvant bénéficier des dispositifs en vigueur, dont le PEA-PME", "Valorisation progressive du patrimoine"]
     }
   ];
 
   const processSteps = [
-    { number: "01", title: "Sourcing", desc: "Identification d'opportunités off-market" },
-    { number: "02", title: "Analyse", desc: "Due diligence approfondie" },
-    { number: "03", title: "Acquisition", desc: "Négociation et financement" },
-    { number: "04", title: "Rénovation", desc: "Travaux BBC pilotés" },
-    { number: "05", title: "Location", desc: "Mise en marché optimisée" },
-    { number: "06", title: "Arbitrage", desc: "Cession stratégique" }
+    { number: "01", title: "Sourcing", desc: "Identification d'opportunités, y compris hors marché" },
+    { number: "02", title: "Analyse", desc: "Études approfondies et due diligence structurée" },
+    { number: "03", title: "Acquisition", desc: "Structuration, négociation et financement des opérations" },
+    { number: "04", title: "Réhabilitation", desc: "Programmes de rénovation BBC pilotés et suivis" },
+    { number: "05", title: "Exploitation locative", desc: "Mise en location et gestion optimisée des actifs" },
+    { number: "06", title: "Arbitrage", desc: "Cessions et réallocations stratégiques du portefeuille" }
   ];
 
   return (
@@ -228,9 +228,10 @@ export default function Services() {
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <FileText className="h-8 w-8 text-[#1E3A5F]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Transparence totale</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">Information & Gouvernance</h3>
               <p className="text-white/70">
-                Reporting régulier, accès aux informations et gouvernance participative.
+                Une communication périodique claire et une organisation de la gouvernance pensée pour offrir 
+                aux investisseurs une vision précise de l'évolution du portefeuille.
               </p>
             </motion.div>
 
@@ -244,9 +245,10 @@ export default function Services() {
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Users className="h-8 w-8 text-[#1E3A5F]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Équipe dédiée</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">Pilotage opérationnel</h3>
               <p className="text-white/70">
-                Une équipe pluridisciplinaire à temps plein au service de votre investissement.
+                Une organisation structurée réunissant des compétences complémentaires au service 
+                de la stratégie patrimoniale.
               </p>
             </motion.div>
           </div>
@@ -257,14 +259,14 @@ export default function Services() {
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
-            Déléguez votre investissement immobilier
+            Investir aux côtés de La Foncière Patrimoniale
           </h2>
           <p className="text-[#1A3A52]/80 mb-8">
-            Rejoignez La Foncière Patrimoniale et bénéficiez d'une gestion institutionnelle de vos actifs.
+            Accédez à une exposition immobilière organisée autour d'un pilotage professionnel et d'une gouvernance claire.
           </p>
           <Link to={createPageUrl("Contact")}>
             <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
-              Nous contacter
+              Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>

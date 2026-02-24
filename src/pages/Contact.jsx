@@ -111,10 +111,10 @@ export default function Contact() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Devenir associé
+              Échanger avec la foncière
             </h1>
             <p className="text-xl text-white/70">
-              Rejoignez une communauté d'associés alignés et contribuez à la création de valeur patrimoniale durable.
+              Prenez contact avec notre équipe pour découvrir notre stratégie d'investissement structuré.
             </p>
           </motion.div>
         </div>
@@ -207,7 +207,7 @@ export default function Contact() {
               className="lg:col-span-3"
             >
               <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-                <h3 className="text-xl font-serif text-[#1A3A52] mb-6">Formulaire de contact</h3>
+                <h3 className="text-xl font-serif text-[#1A3A52] mb-6">Entrer en relation</h3>
                 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid md:grid-cols-2 gap-4">
@@ -309,9 +309,9 @@ export default function Contact() {
 
                   <Button 
                     type="submit" 
-                    className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1E3A5F] py-6 text-base font-semibold"
+                    className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] py-6 text-base font-semibold"
                   >
-                    Envoyer ma demande
+                    Prendre contact
                     <Send className="ml-2 h-5 w-5" />
                   </Button>
 
@@ -372,8 +372,10 @@ export default function Contact() {
             viewport={{ once: true }}
             className="mt-16 bg-[#C9A961] rounded-2xl p-6 text-center"
           >
-            <p className="text-[#1A3A52] font-medium">
-              Horizon d'investissement recommandé : <strong>5 ans</strong>. Possibilité de rachat dès la deuxième année.
+            <p className="text-[#1A3A52] font-medium text-sm">
+              Ce formulaire a pour seul objet de permettre une prise de contact à l'initiative des personnes intéressées 
+              et ne constitue pas une offre de titres financiers. La souscription éventuelle n'interviendra qu'après des échanges privés 
+              et la transmission de la documentation complète (statuts, pacte d'associés).
             </p>
           </motion.div>
         </div>
