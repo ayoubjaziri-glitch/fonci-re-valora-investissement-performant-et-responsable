@@ -23,11 +23,10 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Accueil', page: 'Home' },
   { name: 'Stratégie & Performance', page: 'StrategyPerformance' },
   { name: 'Nos Services', page: 'Services' },
-  { name: 'Qui sommes-nous', page: 'Equipe' },
+  { name: 'Notre histoire', page: 'Equipe' },
   { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
-  { name: 'Réalisations', page: 'Realisations' },
-  { name: 'Contact', page: 'Contact' }];
+  { name: 'Réalisations', page: 'Realisations' }];
 
 
   return (
@@ -64,12 +63,6 @@ export default function Layout({ children, currentPageName }) {
 
             {/* CTA + Mobile Menu */}
             <div className="flex items-center gap-4">
-              <Link to={createPageUrl("Contact")} className="hidden md:block">
-                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-                  Nous contacter
-                </Button>
-              </Link>
-              
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 className="lg:hidden p-2 text-slate-900">
@@ -99,15 +92,6 @@ export default function Layout({ children, currentPageName }) {
                   <ChevronRight className="h-5 w-5 text-slate-400" />
                 </Link>
             )}
-              <Link
-              to={createPageUrl("Contact")}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block pt-4">
-
-                <Button className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-                  Nous contacter
-                </Button>
-              </Link>
             </div>
           </div>
         }
@@ -154,6 +138,34 @@ export default function Layout({ children, currentPageName }) {
                     </Link>
                   </li>
                 )}
+                <li>
+                  <Link
+                    to={createPageUrl("Contact")}
+                    className="text-white/60 hover:text-[#C9A961] transition-colors text-sm">
+                    Contact
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            {/* Légal */}
+            <div>
+              <h4 className="font-semibold mb-4">Légal</h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to={createPageUrl("MentionsLegales")}
+                    className="text-white/60 hover:text-[#C9A961] transition-colors text-sm">
+                    Mentions légales
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={createPageUrl("PolitiqueConfidentialite")}
+                    className="text-white/60 hover:text-[#C9A961] transition-colors text-sm">
+                    Politique de confidentialité
+                  </Link>
+                </li>
               </ul>
             </div>
 

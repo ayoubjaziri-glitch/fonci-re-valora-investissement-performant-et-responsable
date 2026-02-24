@@ -847,7 +847,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link to={createPageUrl("StrategyPerformance")}>
-                <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-base">
+                <Button variant="outline" className="border-[#C9A961] text-[#C9A961] hover:bg-[#C9A961]/10 px-8 py-6 text-base">
                   Stratégie & Performance
                 </Button>
               </Link>
