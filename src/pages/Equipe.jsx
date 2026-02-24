@@ -117,7 +117,7 @@ export default function Equipe() {
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto mb-12">
             {founders.map((founder, index) => (
               <motion.div
                 key={index}
@@ -147,6 +147,41 @@ export default function Equipe() {
                 <div className="p-6">
                   <p className="text-slate-700 mb-4">{founder.description}</p>
                   <p className="text-sm text-slate-600 leading-relaxed">{founder.experience}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+            {team.map((member, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-xl transition-shadow"
+              >
+                <div className="relative h-80">
+                  <img 
+                    src={member.image} 
+                    alt={member.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#1A3A52]/90 via-[#1A3A52]/50 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 p-6">
+                    <div className="mb-2">
+                      <span className="text-[#C9A961] text-sm font-medium tracking-wider uppercase">
+                        {member.role}
+                      </span>
+                    </div>
+                    <h3 className="text-2xl font-serif text-white mb-2">{member.name}</h3>
+                    <p className="text-white/80 text-sm font-medium">{member.focus}</p>
+                  </div>
+                </div>
+                <div className="p-6">
+                  <p className="text-slate-700 mb-4">{member.description}</p>
+                  <p className="text-sm text-slate-600 leading-relaxed">{member.experience}</p>
                 </div>
               </motion.div>
             ))}

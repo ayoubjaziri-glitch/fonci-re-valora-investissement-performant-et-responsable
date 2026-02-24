@@ -1,6 +1,12 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Réduction des espacements globaux */
+section {
+  @apply py-16;
+}
 
 @layer base {
   * {

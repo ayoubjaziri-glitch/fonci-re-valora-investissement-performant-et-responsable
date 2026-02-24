@@ -24,7 +24,7 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Stratégie & Performance', page: 'StrategyPerformance' },
   { name: 'Nos Services', page: 'Services' },
   { name: 'Équipe', page: 'Equipe' },
-  { name: 'Partenaires', page: 'Partenaires' },
+  { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
   { name: 'Réalisations', page: 'Realisations' },
   { name: 'Contact', page: 'Contact' }];

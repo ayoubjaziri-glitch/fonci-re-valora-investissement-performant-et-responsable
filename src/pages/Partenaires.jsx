@@ -15,34 +15,40 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function Partenaires() {
-  const partenaires = [
+  const [formData, setFormData] = React.useState({
+    nom: '',
+    fonction: '',
+    profil: 'architecte',
+    message: ''
+  });
+  const [submitted, setSubmitted] = React.useState(false);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSubmitted(true);
+  };
+
+  const ecosysteme = [
     {
       icon: Building2,
-      category: "Bancaire & Financement",
-      title: "Établissements de crédit",
-      description: "Partenariats avec des institutions bancaires de premier plan pour structurer des financements adaptés aux opérations d'acquisition et de rénovation.",
-      values: ["Négociation de conditions compétitives", "Accès privilégié", "Relations de long terme"]
-    },
-    {
-      icon: Shield,
-      category: "Juridique & Fiscal",
-      title: "Conseils juridiques",
-      description: "Accompagnement par des cabinets spécialisés en droit des sociétés, en fiscalité patrimoniale et en structuration d'opérations immobilières.",
-      values: ["Structuration statutaire", "Conformité réglementaire", "Optimisation fiscale"]
+      category: "Architectes",
+      title: "Vision architecturale & valorisation",
+      description: "Les architectes partenaires interviennent sur la conception des projets de réhabilitation, apportant une signature architecturale respectueuse du patrimoine bâti tout en intégrant les exigences de performance énergétique.",
+      values: ["Rôle clé dans la valorisation des actifs", "Vision patrimoniale de long terme", "Signature architecturale soignée"]
     },
     {
       icon: Users,
-      category: "Technique & Travaux",
-      title: "Entreprises du bâtiment",
-      description: "Collaboration avec des artisans et entreprises BTP qualifiés pour la conduite des programmes de réhabilitation BBC.",
-      values: ["Qualifications RGE", "Respect des délais", "Qualité d'exécution"]
+      category: "Entreprises BTP",
+      title: "Excellence opérationnelle",
+      description: "Les entreprises du bâtiment avec lesquelles nous collaborons sont sélectionnées pour leur savoir-faire technique, leur engagement dans la transition énergétique et leur capacité à respecter les standards BBC.",
+      values: ["Qualité d'exécution garantie", "Engagement dans la transition énergétique", "Partenaires techniques de confiance"]
     },
     {
-      icon: TrendingUp,
-      category: "Commercial & Locatif",
-      title: "Réseau d'agents immobiliers",
-      description: "Relations privilégiées avec un réseau d'agents et de prescripteurs pour l'accès à des opportunités off-market et la commercialisation locative.",
-      values: ["Sourcing exclusif", "Connaissance du marché local", "Réactivité"]
+      icon: Handshake,
+      category: "Partenaires patrimoniaux",
+      title: "Accompagnement durable",
+      description: "Des acteurs engagés dans la durée qui accompagnent les projets immobiliers par leur expertise, leur réseau et leur vision stratégique, contribuant à la pérennité du développement de la foncière.",
+      values: ["Acteurs engagés dans la durée", "Accompagnement structuré des projets", "Alignement sur une vision patrimoniale"]
     }
   ];
 
@@ -80,22 +86,22 @@ export default function Partenaires() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Partenaires
+                Écosystème
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Un écosystème de partenaires sélectionnés
+              Écosystème de partenaires
             </h1>
             <p className="text-xl text-white/70">
-              La réussite de notre stratégie patrimoniale repose sur la qualité 
-              et la complémentarité des acteurs qui accompagnent nos opérations.
+              La foncière s'appuie sur un écosystème de professionnels qualifiés : 
+              architectes, entreprises du bâtiment et partenaires patrimoniaux.
             </p>
           </motion.div>
         </div>
       </section>
 
       {/* Introduction */}
-      <section className="py-16 bg-white">
+      <section className="py-12 bg-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -103,34 +109,32 @@ export default function Partenaires() {
             viewport={{ once: true }}
           >
             <p className="text-lg text-slate-600 leading-relaxed">
-              La Foncière Patrimoniale s'entoure de partenaires reconnus pour leur professionnalisme 
-              et leur capacité à intervenir efficacement sur l'ensemble du cycle immobilier. 
-              Cette collaboration structurée permet d'assurer la qualité d'exécution de nos opérations 
-              et de sécuriser la trajectoire patrimoniale à long terme.
+              La foncière travaille avec différents professionnels : architectes, entreprises du bâtiment 
+              et partenaires patrimoniaux, intervenant à chaque étape du cycle de valorisation des actifs.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Partenaires Grid */}
-      <section className="py-24 bg-slate-50">
+      {/* Écosystème Grid */}
+      <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
             <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Nos catégories de partenaires
+              Nos partenaires
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Des acteurs spécialisés intervenant à chaque étape du cycle d'investissement.
+              Des acteurs qualifiés intervenant sur l'ensemble du cycle de valorisation.
             </p>
           </motion.div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {partenaires.map((partenaire, index) => (
+          <div className="grid md:grid-cols-3 gap-8">
+            {ecosysteme.map((partenaire, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -165,8 +169,96 @@ export default function Partenaires() {
         </div>
       </section>
 
+      {/* Formulaire de contact */}
+      <section className="py-16 bg-white">
+        <div className="max-w-3xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-8"
+          >
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
+              Entrer en relation
+            </h2>
+            <p className="text-slate-600 mb-8">
+              Les échanges se déroulent dans un cadre privé et confidentiel après qualification des interlocuteurs.
+            </p>
+          </motion.div>
+
+          {submitted ? (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="text-center bg-slate-50 rounded-2xl p-12"
+            >
+              <div className="w-16 h-16 bg-[#C9A961] rounded-full flex items-center justify-center mx-auto mb-4">
+                <CheckCircle2 className="h-8 w-8 text-[#1A3A52]" />
+              </div>
+              <h3 className="text-xl font-serif text-[#1A3A52] mb-2">Message envoyé</h3>
+              <p className="text-slate-600">Nous vous recontacterons dans les meilleurs délais.</p>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="bg-slate-50 rounded-2xl p-8 space-y-6">
+              <div>
+                <label className="block text-sm font-medium text-[#1A3A52] mb-2">Nom *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.nom}
+                  onChange={(e) => setFormData({...formData, nom: e.target.value})}
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#1A3A52] mb-2">Fonction / Société *</label>
+                <input
+                  type="text"
+                  required
+                  value={formData.fonction}
+                  onChange={(e) => setFormData({...formData, fonction: e.target.value})}
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#1A3A52] mb-2">Profil *</label>
+                <select
+                  required
+                  value={formData.profil}
+                  onChange={(e) => setFormData({...formData, profil: e.target.value})}
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
+                >
+                  <option value="architecte">Architecte</option>
+                  <option value="entreprise">Entreprise BTP</option>
+                  <option value="partenaire">Partenaire patrimonial</option>
+                  <option value="autre">Autre</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-[#1A3A52] mb-2">Message</label>
+                <textarea
+                  rows={4}
+                  value={formData.message}
+                  onChange={(e) => setFormData({...formData, message: e.target.value})}
+                  className="w-full px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
+                  placeholder="Décrivez votre projet ou demande..."
+                />
+              </div>
+
+              <Button type="submit" className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] py-6 font-semibold">
+                Envoyer
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </form>
+          )}
+        </div>
+      </section>
+
       {/* Principes */}
-      <section className="py-24 bg-white">
+      <section className="py-16 bg-white" style={{display: 'none'}}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -204,7 +296,7 @@ export default function Partenaires() {
       </section>
 
       {/* Valeur Ajoutée */}
-      <section className="py-24 bg-[#1A3A52]">
+      <section className="py-16 bg-[#1A3A52]" style={{display: 'none'}}>
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -272,28 +364,12 @@ export default function Partenaires() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      {/* Mention légale */}
+      <section className="py-8 bg-slate-50">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
-              Vous souhaitez rejoindre notre écosystème ?
-            </h2>
-            <p className="text-[#1A3A52]/80 mb-8">
-              Nous sommes ouverts à l'intégration de nouveaux partenaires qualifiés 
-              partageant nos valeurs d'excellence et de professionnalisme.
-            </p>
-            <Link to={createPageUrl("Contact")}>
-              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
-                Nous contacter
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-          </motion.div>
+          <p className="text-xs text-slate-500">
+            Les informations présentées ont un caractère institutionnel et ne constituent pas une offre au public.
+          </p>
         </div>
       </section>
     </div>

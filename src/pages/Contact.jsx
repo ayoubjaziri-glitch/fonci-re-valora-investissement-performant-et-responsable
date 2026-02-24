@@ -44,8 +44,8 @@ export default function Contact() {
       description: "Valorisation du capital avec TRI cible >10%"
     },
     {
-      id: "obligation",
-      title: "Obligation",
+      id: "obligataire",
+      title: "Obligataire",
       ticket: "10 000 €",
       description: "Taux fixe garanti, sécurisé et prioritaire"
     },
@@ -54,6 +54,12 @@ export default function Contact() {
       title: "Associé Actif",
       ticket: "10 000 €",
       description: "Rôle opérationnel + work for equity"
+    },
+    {
+      id: "partenariat",
+      title: "Partenariat",
+      ticket: "Sur mesure",
+      description: "Collaboration structurée"
     }
   ];
 
@@ -258,29 +264,19 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <Label className="mb-3 block">Type d'investissement souhaité</Label>
-                    <RadioGroup
+                    <Label htmlFor="investmentType">Type de contact souhaité</Label>
+                    <select
+                      id="investmentType"
                       value={formData.investmentType}
-                      onValueChange={(value) => setFormData({...formData, investmentType: value})}
-                      className="grid md:grid-cols-3 gap-3"
+                      onChange={(e) => setFormData({...formData, investmentType: e.target.value})}
+                      className="w-full mt-2 px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
                     >
                       {investmentOptions.map((option) => (
-                        <div key={option.id} className="relative">
-                          <RadioGroupItem
-                            value={option.id}
-                            id={option.id}
-                            className="peer sr-only"
-                          />
-                          <Label
-                            htmlFor={option.id}
-                            className="flex flex-col p-4 border rounded-xl cursor-pointer transition-all peer-data-[state=checked]:border-[#C9A961] peer-data-[state=checked]:bg-[#C9A961]/5 hover:border-[#C9A961]/50"
-                          >
-                            <span className="font-semibold text-[#1A3A52] text-sm">{option.title}</span>
-                            <span className="text-[#C9A961] text-sm">{option.ticket}</span>
-                          </Label>
-                        </div>
+                        <option key={option.id} value={option.id}>
+                          {option.title} - {option.description}
+                        </option>
                       ))}
-                    </RadioGroup>
+                    </select>
                   </div>
 
                   <div>
