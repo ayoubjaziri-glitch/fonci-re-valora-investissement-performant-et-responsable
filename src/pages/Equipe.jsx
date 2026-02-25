@@ -44,6 +44,30 @@ export default function Equipe() {
       description: "Ancien libraire durant quatorze ans et conférencier, Christophe Gironde a rejoint le groupe en 2022.",
       experience: "Il assure la direction administrative au sein de la société Gabriel, structure de présidence de la foncière, et veille à la coordination administrative des opérations. Il suit la validation, la présentation et la mise en forme des propositions ainsi que des accords d'association, veille à la tenue des registres et assure la coordination avec les partenaires juridiques, financiers et opérationnels. En lien avec les partenaires culturels du groupe, il participe également à l'ouverture de la foncière vers des initiatives patrimoniales et culturelles, dans une démarche respectueuse des territoires et des usages.",
       image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80"
+    },
+    {
+      name: "Marie Dupont",
+      role: "Gestionnaire locative",
+      focus: "Relation locataires",
+      description: "Spécialiste de la gestion locative avec 8 ans d'expérience dans l'immobilier résidentiel.",
+      experience: "Elle assure le suivi quotidien des locataires, la gestion des états des lieux, et veille à maintenir un taux d'occupation optimal tout en garantissant la satisfaction des occupants.",
+      image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80"
+    },
+    {
+      name: "Thomas Bernard",
+      role: "Responsable travaux",
+      focus: "Coordination chantiers",
+      description: "Conducteur de travaux avec 10 ans d'expérience dans la rénovation énergétique.",
+      experience: "Il pilote l'ensemble des chantiers de réhabilitation, coordonne les corps de métier et s'assure du respect des délais et budgets. Expert en rénovation BBC.",
+      image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&q=80"
+    },
+    {
+      name: "Sophie Laurent",
+      role: "Analyste financière",
+      focus: "Modélisation & reporting",
+      description: "Diplômée d'une grande école de commerce, spécialisée en finance immobilière.",
+      experience: "Elle réalise les analyses financières des opportunités d'acquisition, construit les modèles de valorisation et assure le reporting trimestriel aux investisseurs.",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80"
     }
   ];
 
@@ -68,7 +92,7 @@ export default function Equipe() {
   const groupStats = [
     { label: "Actifs sous gestion", value: "3 M€" },
     { label: "Entreprises BTP", value: "30+" },
-    { label: "Collaborateurs", value: "4" },
+    { label: "Collaborateurs", value: "7" },
     { label: "Années d'expertise", value: "18 ans" }
   ];
 
@@ -163,7 +187,7 @@ export default function Equipe() {
             ))}
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {team.map((member, index) => (
               <motion.div
                 key={index}
@@ -171,28 +195,28 @@ export default function Equipe() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-xl transition-shadow"
+                className="bg-white rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-shadow"
               >
-                <div className="relative h-80">
+                <div className="relative h-64">
                   <img 
                     src={member.image} 
                     alt={member.name}
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1A3A52]/90 via-[#1A3A52]/50 to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6">
-                    <div className="mb-2">
-                      <span className="text-[#C9A961] text-sm font-medium tracking-wider uppercase">
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="mb-1">
+                      <span className="text-[#C9A961] text-xs font-medium tracking-wider uppercase">
                         {member.role}
                       </span>
                     </div>
-                    <h3 className="text-2xl font-serif text-white mb-2">{member.name}</h3>
-                    <p className="text-white/80 text-sm font-medium">{member.focus}</p>
+                    <h3 className="text-lg font-serif text-white mb-1">{member.name}</h3>
+                    <p className="text-white/80 text-xs font-medium">{member.focus}</p>
                   </div>
                 </div>
-                <div className="p-6">
-                  <p className="text-slate-700 mb-4">{member.description}</p>
-                  <p className="text-sm text-slate-600 leading-relaxed">{member.experience}</p>
+                <div className="p-4">
+                  <p className="text-slate-700 mb-2 text-sm">{member.description}</p>
+                  <p className="text-xs text-slate-600 leading-relaxed">{member.experience}</p>
                 </div>
               </motion.div>
             ))}

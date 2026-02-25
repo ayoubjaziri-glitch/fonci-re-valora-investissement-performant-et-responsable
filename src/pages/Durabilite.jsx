@@ -82,9 +82,9 @@ export default function Durabilite() {
 
   const trajectoire = [
     { year: "2026", objectif: "100%", desc: "DPE C minimum" },
-    { year: "2027", objectif: "30%", desc: "DPE B ou A" },
-    { year: "2028", objectif: "50%", desc: "DPE B ou A" },
-    { year: "2030", objectif: "70%", desc: "DPE B ou A" }
+    { year: "2027", objectif: "80%", desc: "DPE B ou A" },
+    { year: "2028", objectif: "90%", desc: "DPE B ou A" },
+    { year: "2030", objectif: "95%", desc: "DPE B ou A" }
   ];
 
   return (
@@ -275,8 +275,8 @@ export default function Durabilite() {
               Notre trajectoire de valorisation
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto">
-              Dès le début, nous visons un DPE C minimum sur 100% de notre parc. Notre trajectoire vise ensuite 
-              à augmenter progressivement la part d'actifs atteignant les classes B et A, selon les opportunités et la rentabilité.
+              Dès le départ, nous visons un DPE C minimum sur l'ensemble des acquisitions. 
+              Notre ambition : atteindre progressivement 95% du parc en DPE B ou A d'ici 2030.
             </p>
           </motion.div>
 
