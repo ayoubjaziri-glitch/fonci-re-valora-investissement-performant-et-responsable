@@ -60,6 +60,7 @@ import Services from './pages/Services';
 import StrategyPerformance from './pages/StrategyPerformance';
 import Team from './pages/Team';
 import GestionPhotos from './pages/GestionPhotos';
+import GererAcces from './pages/GererAcces';
 import __Layout from './Layout.jsx';
 
 
@@ -77,6 +78,7 @@ export const PAGES = {
     "StrategyPerformance": StrategyPerformance,
     "Team": Team,
     "GestionPhotos": GestionPhotos,
+    "GererAcces": GererAcces,
 }
 
 export const pagesConfig = {

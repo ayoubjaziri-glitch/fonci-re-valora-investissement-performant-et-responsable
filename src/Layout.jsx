@@ -26,7 +26,8 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Notre histoire', page: 'Equipe' },
   { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
-  { name: 'Réalisations', page: 'Realisations' }];
+  { name: 'Réalisations', page: 'Realisations' },
+  { name: 'Gestion Photos', page: 'GestionPhotos' }];
 
 
   return (
