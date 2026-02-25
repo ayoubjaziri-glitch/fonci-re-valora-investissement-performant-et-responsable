@@ -523,8 +523,13 @@ export default function Home() {
               viewport={{ once: true }}
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
-              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
-                <Users className="h-10 w-10 text-[#C9A961]" />
+              {/* MODIFIEZ L'URL DE LA PHOTO CI-DESSOUS pour Ayoub Jaziri */}
+              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
+                <img 
+                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" 
+                  alt="Ayoub Jaziri"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Ayoub Jaziri</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
@@ -538,8 +543,13 @@ export default function Home() {
               transition={{ delay: 0.1 }}
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
-              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
-                <TrendingUp className="h-10 w-10 text-[#C9A961]" />
+              {/* MODIFIEZ L'URL DE LA PHOTO CI-DESSOUS pour Sophian Naili */}
+              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
+                <img 
+                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" 
+                  alt="Sophian Naili"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Sophian Naili</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
@@ -553,8 +563,13 @@ export default function Home() {
               transition={{ delay: 0.2 }}
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
-              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 flex items-center justify-center">
-                <HomeIcon className="h-10 w-10 text-[#C9A961]" />
+              {/* MODIFIEZ L'URL DE LA PHOTO CI-DESSOUS pour Renaud Marchand */}
+              <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
+                <img 
+                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" 
+                  alt="Renaud Marchand"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Renaud Marchand</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Associé</p>
