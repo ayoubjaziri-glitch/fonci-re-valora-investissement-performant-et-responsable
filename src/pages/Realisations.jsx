@@ -10,19 +10,14 @@ import InterventionMap from "../components/InterventionMap";
 import { Button } from "@/components/ui/button";
 import BeforeAfterSlider from "../components/BeforeAfterSlider";
 
-/* ========================================
-   PHOTOS MODIFIABLES - PAGE RÉALISATIONS
-   ======================================== */
-
 const realisations = [
   {
     id: 1,
     title: "Immeuble haussmannien - Lyon 6ème",
     location: "Lyon, Rhône",
     year: "2023",
-    // 📸 MODIFIEZ LA PHOTO "AVANT" ICI :
+    // MODIFIEZ LES PHOTOS AVANT/APRÈS CI-DESSOUS pour Lyon
     imageAvant: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/5c0c78345_pa00083251-bordeaux-immeuble.jpg",
-    // 📸 MODIFIEZ LA PHOTO "APRÈS" ICI :
     imageApres: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg",
     surface: "1 200 m²",
     logements: "12 lots",
@@ -40,9 +35,8 @@ const realisations = [
     title: "Résidence en pierre - Bordeaux",
     location: "Bordeaux, Gironde",
     year: "2022",
-    // 📸 MODIFIEZ LA PHOTO "AVANT" ICI :
+    // MODIFIEZ LES PHOTOS AVANT/APRÈS CI-DESSOUS pour Bordeaux
     imageAvant: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/6612247a6_immeuble_bordeaux__098875700_1532_22022018.jpg",
-    // 📸 MODIFIEZ LA PHOTO "APRÈS" ICI :
     imageApres: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/5c0c78345_pa00083251-bordeaux-immeuble.jpg",
     surface: "850 m²",
     logements: "8 lots",
@@ -60,9 +54,8 @@ const realisations = [
     title: "Immeuble haussmannien - Paris",
     location: "Paris, Île-de-France",
     year: "2023",
-    // 📸 MODIFIEZ LA PHOTO "AVANT" ICI :
+    // MODIFIEZ LES PHOTOS AVANT/APRÈS CI-DESSOUS pour Paris
     imageAvant: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg",
-    // 📸 MODIFIEZ LA PHOTO "APRÈS" ICI :
     imageApres: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
     surface: "450 m²",
     logements: "4 lots",
@@ -80,9 +73,8 @@ const realisations = [
     title: "Ensemble immobilier - Clermont-Ferrand",
     location: "Clermont-Ferrand, Puy-de-Dôme",
     year: "2024",
-    // 📸 MODIFIEZ LA PHOTO "AVANT" ICI :
+    // MODIFIEZ LES PHOTOS AVANT/APRÈS CI-DESSOUS pour Clermont
     imageAvant: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
-    // 📸 MODIFIEZ LA PHOTO "APRÈS" ICI :
     imageApres: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
     surface: "2 100 m²",
     logements: "18 lots",
@@ -123,8 +115,8 @@ export default function Realisations() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-slate-900 overflow-hidden">
+        {/* MODIFIEZ LA PHOTO DE FOND DU HERO CI-DESSOUS */}
         <div className="absolute inset-0 opacity-20">
-          {/* 📸 MODIFIEZ L'IMAGE DE FOND DU HERO ICI : */}
           <img 
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
             alt=""

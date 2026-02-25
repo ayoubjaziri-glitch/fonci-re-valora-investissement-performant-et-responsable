@@ -8,6 +8,7 @@ const realisations = [
     id: 1,
     title: "Immeuble haussmannien - Lyon 6ème",
     location: "Lyon, Rhône",
+    // MODIFIEZ LES PHOTOS AVANT/APRÈS CI-DESSOUS pour Lyon
     imageAvant: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/5c0c78345_pa00083251-bordeaux-immeuble.jpg",
     imageApres: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg",
     surface: "1 200 m²",
@@ -22,6 +23,7 @@ const realisations = [
     id: 2,
     title: "Résidence bourgeoise - Bordeaux",
     location: "Bordeaux, Gironde",
+    // MODIFIEZ LES PHOTOS AVANT/APRÈS CI-DESSOUS pour Bordeaux
     imageAvant: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/6612247a6_immeuble_bordeaux__098875700_1532_22022018.jpg",
     imageApres: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/5c0c78345_pa00083251-bordeaux-immeuble.jpg",
     surface: "850 m²",
@@ -36,6 +38,7 @@ const realisations = [
     id: 3,
     title: "Immeuble en pierre - Bordeaux",
     location: "Bordeaux, Gironde",
+    // MODIFIEZ LES PHOTOS AVANT/APRÈS CI-DESSOUS pour Bordeaux 2
     imageAvant: "https://images.unsplash.com/photo-1516156008625-3a9d6067fab5?w=800&q=80",
     imageApres: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80",
     surface: "450 m²",
@@ -50,6 +53,7 @@ const realisations = [
     id: 4,
     title: "Ensemble immobilier - Clermont",
     location: "Clermont-Ferrand",
+    // MODIFIEZ LES PHOTOS AVANT/APRÈS CI-DESSOUS pour Clermont
     imageAvant: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
     imageApres: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
     surface: "2 100 m²",

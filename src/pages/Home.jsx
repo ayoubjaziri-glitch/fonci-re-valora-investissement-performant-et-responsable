@@ -28,10 +28,6 @@ import RealisationsGallery from "../components/RealisationsGallery";
 import InterventionMap from "../components/InterventionMap";
 
 export default function Home() {
-  /* ========================================
-     PHOTOS MODIFIABLES - PAGE D'ACCUEIL
-     ======================================== */
-
   const stats = [
   { value: "18 ans", label: "D'expertise immobilière", icon: Calendar },
   { value: "3 M€", label: "D'actifs sous gestion", icon: Building2 },
@@ -43,21 +39,21 @@ export default function Home() {
   {
     title: "Souscription au capital",
     description: "Devenez associé de La Foncière Patrimoniale et participez à des opérations d'acquisition structurées. Bénéficiez d'un véhicule d'investissement collectif avec une stratégie de valorisation patrimoniale éprouvée.",
-    // 📸 MODIFIEZ LA PHOTO DU SERVICE 1 ICI :
+    // MODIFIEZ LA PHOTO CI-DESSOUS pour le service Souscription
     image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/5c0c78345_pa00083251-bordeaux-immeuble.jpg",
     icon: Key
   },
   {
     title: "Sourcing et due diligence",
     description: "Notre équipe identifie des actifs à fort potentiel de revalorisation. Chaque acquisition fait l'objet d'une analyse approfondie : rentabilité locative, décote à l'achat, potentiel de réhabilitation.",
-    // 📸 MODIFIEZ LA PHOTO DU SERVICE 2 ICI :
+    // MODIFIEZ LA PHOTO CI-DESSOUS pour le service Sourcing
     image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/6612247a6_immeuble_bordeaux__098875700_1532_22022018.jpg",
     icon: Search
   },
   {
     title: "Asset management et arbitrage",
     description: "Gestion locative intégrée, suivi des flux de trésorerie, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur et le TRI de vos parts.",
-    // 📸 MODIFIEZ LA PHOTO DU SERVICE 3 ICI :
+    // MODIFIEZ LA PHOTO CI-DESSOUS pour le service Asset management
     image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg",
     icon: BarChart3
   }];
@@ -104,7 +100,7 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       {/* Hero Section - Inspired by Orion */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* 📸 MODIFIEZ L'IMAGE DE FOND DU HERO ICI : */}
+        {/* MODIFIEZ LA PHOTO DE FOND DU HERO CI-DESSOUS */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
@@ -316,7 +312,7 @@ export default function Home() {
               viewport={{ once: true }}
               className="relative">
 
-              {/* 📸 MODIFIEZ L'IMAGE DE LA SECTION DURABILITÉ ICI : */}
+              {/* MODIFIEZ LA PHOTO DE LA SECTION DURABILITÉ CI-DESSOUS */}
               <img
                 src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg"
                 alt="Rénovation durable"
