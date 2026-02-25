@@ -47,8 +47,7 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Notre histoire', page: 'Equipe' },
   { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
-  { name: 'Nos biens', page: 'Realisations' },
-  { name: 'Blog', page: 'Blog' }];
+  { name: 'Nos biens', page: 'Realisations' }];
 
 
   return (
