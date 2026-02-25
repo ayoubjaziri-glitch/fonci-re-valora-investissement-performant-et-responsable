@@ -63,6 +63,13 @@ export default function Equipe() {
       focus: "Reporting financier",
       description: "Assure la comptabilité, le reporting financier et le suivi des indicateurs de performance.",
       image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80"
+    },
+    {
+      name: "Lucas Mercier",
+      role: "Chargé d'acquisition",
+      focus: "Sourcing & négociation",
+      description: "Identifie et négocie les opportunités d'acquisition off-market auprès des notaires et agents.",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80"
     }
   ];
 
