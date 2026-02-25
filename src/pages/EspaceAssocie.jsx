@@ -22,12 +22,34 @@ export default function EspaceAssocie() {
   const [associeName, setAssociateName] = useState('');
 
   useEffect(() => {
-    const savedAuth = localStorage.getItem('associe_auth');
-    if (savedAuth) {
-      const auth = JSON.parse(savedAuth);
-      setIsLoggedIn(true);
-      setAssociateName(auth.nom);
-    }
+    // Vérifier l'authentification au chargement
+    const checkAuth = async () => {
+      const savedAuth = localStorage.getItem('associe_auth');
+      if (savedAuth) {
+        try {
+          const auth = JSON.parse(savedAuth);
+          // Vérifier que le compte existe toujours et est actif
+          const allAccess = await base44.entities.AccesAssocie.list();
+          const associe = allAccess.find(a => 
+            a.email === auth.email && 
+            a.actif === true
+          );
+          
+          if (associe) {
+            setIsLoggedIn(true);
+            setAssociateName(auth.nom);
+          } else {
+            // Le compte n'existe plus ou est désactivé
+            localStorage.removeItem('associe_auth');
+          }
+        } catch (error) {
+          console.error('Erreur vérification auth:', error);
+          localStorage.removeItem('associe_auth');
+        }
+      }
+    };
+    
+    checkAuth();
   }, []);
   const [montantSimulation, setMontantSimulation] = useState(25000);
   const [dureeSimulation, setDureeSimulation] = useState(5);
@@ -45,27 +67,36 @@ export default function EspaceAssocie() {
     setLoginError('');
     
     try {
-      const associes = await base44.entities.AccesAssocie.filter({ 
-        email: loginData.email,
-        actif: true
-      });
+      // Récupérer tous les accès actifs
+      const allAccess = await base44.entities.AccesAssocie.list();
       
-      if (associes.length === 0) {
-        setLoginError('Email non reconnu');
+      // Filtrer manuellement pour trouver l'associé avec cet email et actif
+      const associe = allAccess.find(a => 
+        a.email === loginData.email && 
+        a.actif === true
+      );
+      
+      if (!associe) {
+        setLoginError('Email non reconnu ou compte désactivé');
         return;
       }
       
-      const associe = associes[0];
+      // Vérifier le mot de passe
       if (associe.password !== loginData.password) {
         setLoginError('Mot de passe incorrect');
         return;
       }
       
+      // Connexion réussie
       setIsLoggedIn(true);
       setAssociateName(associe.nom);
-      localStorage.setItem('associe_auth', JSON.stringify({ email: associe.email, nom: associe.nom }));
+      localStorage.setItem('associe_auth', JSON.stringify({ 
+        email: associe.email, 
+        nom: associe.nom 
+      }));
     } catch (error) {
-      setLoginError('Erreur de connexion');
+      console.error('Erreur:', error);
+      setLoginError('Erreur de connexion. Veuillez réessayer.');
     }
   };
 

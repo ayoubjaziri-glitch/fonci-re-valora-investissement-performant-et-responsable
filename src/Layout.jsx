@@ -10,6 +10,27 @@ import {
   ChevronRight } from
 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from '@/api/base44Client';
+
+function LogoImage() {
+  const { data: images = [] } = useQuery({
+    queryKey: ['site-images'],
+    queryFn: () => base44.entities.SiteImage.list(),
+    initialData: [],
+  });
+
+  const logoImage = images.find(img => img.key === 'logo');
+  const logoUrl = logoImage?.url || 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png';
+
+  return (
+    <img
+      src={logoUrl}
+      alt="La Foncière Patrimoniale" 
+      className="rounded-[10px] h-24 w-auto" 
+    />
+  );
+}
 
 export default function Layout({ children, currentPageName }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -38,9 +59,7 @@ export default function Layout({ children, currentPageName }) {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to={createPageUrl("Home")} className="flex items-center gap-3">
-              <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
-                alt="La Foncière Patrimoniale" className="rounded-[10px] h-24 w-auto" />
+              <LogoImage />
 
 
             </Link>
@@ -130,11 +149,7 @@ export default function Layout({ children, currentPageName }) {
             {/* Brand */}
             <div className="md:col-span-2">
               <div className="bg-slate-900 mb-6">
-                <img
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
-                  alt="La Foncière Patrimoniale"
-                  className="h-20 w-auto mb-4" />
-
+                <LogoImage />
               </div>
               <p className="text-white/60 mb-6 max-w-sm">
                 Foncière résidentielle dédiée à l'acquisition, à la réhabilitation BBC et à la valorisation 
