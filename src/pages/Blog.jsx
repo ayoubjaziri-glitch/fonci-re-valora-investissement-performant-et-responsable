@@ -2,622 +2,911 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
-import { Calendar, ArrowRight, TrendingUp, Building2, Coins, Users, ChevronRight } from 'lucide-react';
+import { 
+  Calendar, User, ArrowRight, Search, TrendingUp, 
+  Building2, Euro, Target, Briefcase, Award, FileText,
+  ChevronRight, Clock, Tag
+} from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function Blog() {
+  const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('tous');
-
-  const categories = [
-    { id: 'tous', label: 'Tous les articles' },
-    { id: 'marche', label: 'Marché immobilier' },
-    { id: 'financement', label: 'Financement' },
-    { id: 'strategie', label: 'Stratégie' },
-    { id: 'reglementation', label: 'Réglementation' }
-  ];
 
   const articles = [
     {
       id: 1,
-      title: "Marché immobilier résidentiel 2026 : Opportunités et tensions dans les villes secondaires",
-      slug: "marche-immobilier-2026",
-      category: "marche",
-      date: "15 janvier 2026",
+      title: "Marché Immobilier 2026 : Opportunités et Perspectives pour les Investisseurs",
+      slug: "marche-immobilier-2026-opportunites",
+      excerpt: "Analyse approfondie du marché immobilier français en 2026, tendances des prix, zones à fort potentiel et stratégies d'investissement.",
+      category: "Marché",
+      author: "Ayoub Jaziri",
+      date: "20 Février 2026",
       readTime: "8 min",
-      excerpt: "Analyse approfondie des tendances du marché immobilier français en 2026 : tensions locatives, baisse des volumes de transactions et opportunités pour les investisseurs institutionnels.",
       image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
       content: `
-        <h2>Un marché en pleine mutation</h2>
-        <p>Le marché immobilier français traverse en 2026 une période de transformation structurelle. Après deux années de baisse des volumes de transactions (-25% en 2024, -15% en 2025), le marché résidentiel affiche des signaux de stabilisation dans les villes secondaires, portés par des fondamentaux solides.</p>
+# Marché Immobilier 2026 : Opportunités et Perspectives pour les Investisseurs
 
-        <h3>Les villes secondaires : nouveaux eldorados ?</h3>
-        <p>Bordeaux, Lyon, Toulouse, Nantes et Montpellier bénéficient d'une attractivité renforcée. Les prix au m² restent contenus (entre 3 500 € et 5 500 €/m² en moyenne) comparés à Paris (>10 000 €/m²), tout en offrant des perspectives de valorisation intéressantes.</p>
+Le marché immobilier français connaît en 2026 une transformation profonde, portée par la baisse progressive des taux d'intérêt et le retour de la confiance des ménages. Pour les investisseurs avisés, c'est le moment idéal pour se positionner sur des actifs à fort potentiel de valorisation.
 
-        <p><strong>Facteurs clés de cette dynamique :</strong></p>
-        <ul>
-          <li>Bassins d'emploi dynamiques (tertiaire, santé, enseignement supérieur)</li>
-          <li>Démographie favorable (solde migratoire positif)</li>
-          <li>Infrastructures de transport en développement (LGV, tramways)</li>
-          <li>Qualité de vie recherchée par les actifs (télétravail partiel)</li>
-        </ul>
+## Les grandes tendances du marché 2026
 
-        <h3>Tensions locatives : un contexte porteur</h3>
-        <p>Le marché locatif reste sous tension dans la plupart des agglomérations françaises. Le taux de vacance moyen se situe autour de 7,5%, mais descend à moins de 5% dans les centres-villes dynamiques.</p>
+### 1. La reprise progressive de la demande
+Après deux années de baisse, le volume de transactions immobilières connaît un rebond significatif au premier trimestre 2026. Les ménages, rassurés par la stabilisation des taux et encouragés par des conditions de financement plus favorables, reprennent leurs projets d'acquisition.
 
-        <p><strong>Conséquences pour les investisseurs :</strong></p>
-        <ul>
-          <li>Taux d'occupation élevés (>95% pour les actifs bien situés et rénovés)</li>
-          <li>Délais de location réduits (15-30 jours en moyenne)</li>
-          <li>Pouvoir de négociation favorable lors des renouvellements de bail</li>
-          <li>Rendements locatifs bruts maintenus entre 4,5% et 6% selon les villes</li>
-        </ul>
+**Chiffres clés :**
+- +15% de transactions par rapport à 2025
+- Taux moyen des crédits immobiliers : 3,2% (contre 4,1% en 2025)
+- Délai moyen de vente : 82 jours (contre 95 jours en 2025)
 
-        <h3>Notre positionnement stratégique</h3>
-        <p>La Foncière Patrimoniale capitalise sur ces dynamiques en ciblant des actifs décotés (passoires thermiques F/G) dans des zones tendues. Notre stratégie repose sur trois piliers :</p>
+### 2. Les villes moyennes en forte croissance
+Les métropoles régionales et villes moyennes continuent d'attirer les investisseurs grâce à des rendements locatifs attractifs (5-7%) et des prix encore accessibles. Vichy, Clermont-Ferrand, Bordeaux et Lyon restent des valeurs sûres.
 
-        <ol>
-          <li><strong>Acquisition sélective</strong> : immeubles mal valorisés dans des emplacements de qualité</li>
-          <li><strong>Réhabilitation énergétique</strong> : passage obligatoire en DPE C minimum (objectif B/A)</li>
-          <li><strong>Gestion active</strong> : optimisation des loyers et du taux d'occupation</li>
-        </ol>
+### 3. L'impératif de la rénovation énergétique
+La réglementation se durcit : dès 2025, les logements classés G sont interdits à la location, suivis des F en 2028. Cette contrainte crée une opportunité majeure pour les foncières spécialisées dans la réhabilitation BBC (Bâtiment Basse Consommation).
 
-        <p>Cette approche permet de capter une double création de valeur : revalorisation patrimoniale par les travaux et arbitrage à terme sur un marché assaini.</p>
+## Stratégies gagnantes pour 2026
 
-        <h3>Perspectives 2026-2028</h3>
-        <p>Les prévisions pour les 24 prochains mois restent prudentes mais constructives :</p>
-        <ul>
-          <li>Stabilisation des prix dans les villes secondaires (+0% à +2%/an)</li>
-          <li>Maintien des tensions locatives (déficit d'offre structurel)</li>
-          <li>Montée en puissance de la rénovation énergétique (contraintes réglementaires)</li>
-          <li>Taux de crédit immobilier stabilisés autour de 3,5%-4%</li>
-        </ul>
+### Investir dans la valeur ajoutée
+Le modèle "value-add" consiste à acquérir des actifs décotés nécessitant une rénovation, pour les valoriser après travaux. **La Foncière Patrimoniale** applique cette stratégie avec succès :
+- Achat d'immeubles anciens en centre-ville
+- Réhabilitation complète avec passage DPE F/G → B/C
+- Mise en location à des rendements optimisés (6-8%)
+- Valorisation patrimoniale de 20-35%
 
-        <p><strong>Conclusion :</strong> Le marché 2026 offre des opportunités ciblées pour les investisseurs structurés capables d'identifier et de transformer des actifs décotés en logements performants. La rareté de l'offre de qualité constitue un atout durable pour les stratégies de valorisation patrimoniale.</p>
+### Miser sur les zones tendues
+Les marchés en tension locative (Lyon, Bordeaux, Toulouse, Montpellier) offrent une combinaison idéale :
+- Forte demande locative
+- Faible vacance (< 5%)
+- Croissance démographique soutenue
+- Perspectives de plus-values
+
+### Privilégier la diversification
+Un portefeuille immobilier équilibré combine :
+- Différentes zones géographiques
+- Mix de typologies (T1 à T3)
+- Variété de locataires (étudiants, jeunes actifs, familles)
+
+## Perspectives 2026-2028
+
+Les experts anticipent une **hausse modérée des prix** (2-4% par an) dans les villes moyennes, portée par :
+- La reprise de la demande
+- La raréfaction des biens de qualité énergétique
+- L'inflation des coûts de construction
+- La tension démographique dans certaines zones
+
+Pour les investisseurs, le message est clair : **2026 est une année charnière**. Les conditions de marché actuelles offrent un point d'entrée favorable avant la remontée attendue des prix.
+
+---
+
+*Vous souhaitez investir dans l'immobilier résidentiel avec une approche professionnelle et structurée ? Découvrez notre stratégie d'investissement.*
       `
     },
     {
       id: 2,
-      title: "Structuration du financement immobilier : LTC, effet de levier et optimisation du coût de la dette",
-      slug: "financement-immobilier-ltc",
-      category: "financement",
-      date: "8 janvier 2026",
+      title: "Foncière Immobilière : Comprendre ce Véhicule d'Investissement Structuré",
+      slug: "fonciere-immobiliere-vehicule-investissement",
+      excerpt: "Guide complet sur les foncières immobilières, leur fonctionnement, leurs avantages fiscaux et comment elles créent de la valeur pour leurs associés.",
+      category: "Investissement",
+      author: "La Foncière Patrimoniale",
+      date: "15 Février 2026",
       readTime: "10 min",
-      excerpt: "Comprendre les mécanismes du financement immobilier professionnel : ratio LTC, stratégies de levier et négociation bancaire pour maximiser la rentabilité des opérations.",
-      image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&q=80",
+      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
       content: `
-        <h2>Les fondamentaux du financement immobilier structuré</h2>
-        <p>Le financement immobilier professionnel repose sur des mécanismes spécifiques qui diffèrent significativement du crédit aux particuliers. Comprendre ces leviers est essentiel pour optimiser la rentabilité d'une stratégie d'investissement.</p>
+# Foncière Immobilière : Comprendre ce Véhicule d'Investissement Structuré
 
-        <h3>Le ratio LTC (Loan-To-Cost) : pilier de la structuration</h3>
-        <p>Le LTC mesure le rapport entre le montant emprunté et le coût total de l'opération (acquisition + travaux + frais). Contrairement au LTV (Loan-To-Value) qui se base sur la valeur estimée du bien, le LTC s'appuie sur le coût réel, offrant une vision plus conservative du risque.</p>
+Une foncière immobilière est une société dédiée à l'acquisition, la gestion et la valorisation d'actifs immobiliers. Contrairement à l'investissement en direct, elle offre une approche professionnelle, mutualisée et optimisée fiscalement.
 
-        <p><strong>Exemple concret :</strong></p>
-        <ul>
-          <li>Prix d'acquisition : 800 000 €</li>
-          <li>Travaux de réhabilitation : 200 000 €</li>
-          <li>Frais d'acquisition et divers : 80 000 €</li>
-          <li><strong>Coût total (TC) : 1 080 000 €</strong></li>
-        </ul>
+## Qu'est-ce qu'une foncière ?
 
-        <p>Avec un financement bancaire de 850 000 € :</p>
-        <ul>
-          <li><strong>LTC = 850 000 / 1 080 000 = 78,7%</strong></li>
-          <li>Apport requis : 230 000 € (21,3%)</li>
-        </ul>
+### Définition et principe
+Une foncière est une **société de placement immobilier** qui collecte des capitaux auprès d'investisseurs pour constituer et gérer un patrimoine immobilier. Les associés détiennent des parts sociales et perçoivent une rémunération proportionnelle à leur participation.
 
-        <p>Les banques acceptent généralement des LTC compris entre 70% et 80% pour des opérations de réhabilitation portées par des structures expérimentées. Au-delà de 80%, le profil de risque est jugé trop élevé.</p>
+### Les différents types de foncières
 
-        <h3>L'effet de levier : démultiplicateur de performance</h3>
-        <p>L'effet de levier bancaire permet de démultiplier la rentabilité des fonds propres investis. Plus le levier est élevé, plus l'impact sur le TRI (Taux de Rentabilité Interne) est important.</p>
+**1. SCPI (Société Civile de Placement Immobilier)**
+- Accessible dès quelques centaines d'euros
+- Gestion entièrement déléguée
+- Revenus trimestriels
+- Liquidité moyenne
 
-        <p><strong>Simulation comparative :</strong></p>
+**2. SCI (Société Civile Immobilière)**
+- Structure privée entre associés
+- Gestion active possible
+- Optimisation fiscale
+- Transmission facilitée
 
-        <h4>Scénario 1 : Acquisition sans levier (100% fonds propres)</h4>
-        <ul>
-          <li>Apport : 1 080 000 €</li>
-          <li>Valorisation finale (après 5 ans) : 1 500 000 €</li>
-          <li>Gain : +420 000 € (+38,9%)</li>
-          <li><strong>TRI : 6,8%/an</strong></li>
-        </ul>
+**3. OPCI (Organisme de Placement Collectif Immobilier)**
+- Mix immobilier + valeurs mobilières
+- Régulation stricte (AMF)
+- Liquidité quotidienne
 
-        <h4>Scénario 2 : Acquisition avec levier 4x (LTC 80%)</h4>
-        <ul>
-          <li>Apport : 230 000 €</li>
-          <li>Emprunt : 850 000 € (3,8% sur 18 ans)</li>
-          <li>Valorisation finale : 1 500 000 €</li>
-          <li>Remboursement capital (5 ans) : ~210 000 €</li>
-          <li>Dette résiduelle : 640 000 €</li>
-          <li>Valeur nette : 860 000 €</li>
-          <li>Gain net : +630 000 € (+274%)</li>
-          <li><strong>TRI : 30,2%/an sur fonds propres</strong></li>
-        </ul>
+**4. Foncières patrimoniales (comme la nôtre)**
+- Stratégie value-add
+- Réhabilitation BBC
+- Rendements cibles : 8-12%
+- Création de valeur active
 
-        <p>L'effet de levier multiplie par 4,4x la rentabilité des fonds propres dans cet exemple, démontrant la puissance du financement structuré.</p>
+## Les avantages d'une foncière
 
-        <h3>Négociation bancaire : les clés du succès</h3>
-        <p>Obtenir des conditions de financement optimales nécessite une préparation rigoureuse :</p>
+### 1. Mutualisation des risques
+En investissant dans une foncière, vous accédez à un **portefeuille diversifié** d'actifs immobiliers répartis sur plusieurs villes, typologies et profils de locataires. Cette diversification limite l'impact d'une vacance locative ou d'un impayé.
 
-        <h4>1. Business plan robuste</h4>
-        <ul>
-          <li>Analyse de marché détaillée (loyers, taux de vacance, comparables)</li>
-          <li>Budget travaux précis (chiffrages d'entreprises, marge de sécurité)</li>
-          <li>Projections de trésorerie sur 10 ans minimum</li>
-          <li>Ratio de couverture du service de la dette (DSCR) >1,2</li>
-        </ul>
+### 2. Professionnalisation de la gestion
+La foncière dispose d'une **expertise complète** :
+- Sourcing d'opportunités
+- Due diligence technique et juridique
+- Négociation des acquisitions
+- Pilotage des travaux
+- Gestion locative
+- Optimisation fiscale
 
-        <h4>2. Track record démontrable</h4>
-        <ul>
-          <li>Historique d'opérations réussies</li>
-          <li>Compétences techniques en gestion d'actifs</li>
-          <li>Solidité financière de la structure emprunteuse</li>
-        </ul>
+### 3. Effet de levier maîtrisé
+Grâce à sa capacité d'emprunt, une foncière peut acquérir un patrimoine de **3 à 4 fois supérieur** aux capitaux apportés par les associés. Cet effet de levier amplifie la rentabilité tout en maîtrisant le ratio LTC (Loan To Cost).
 
-        <h4>3. Garanties et structuration</h4>
-        <ul>
-          <li>Hypothèque de premier rang sur l'actif</li>
-          <li>Nantissement des parts sociales (si SCI)</li>
-          <li>Caution solidaire des associés selon le profil</li>
-        </ul>
+**Exemple concret :**
+- Capital associés : 1 M€
+- Emprunt bancaire : 2,5 M€
+- Patrimoine total : 3,5 M€
+- Ratio LTC : 71%
 
-        <h3>Optimisation du coût de la dette</h3>
-        <p>Plusieurs leviers permettent de réduire le coût global du financement :</p>
+### 4. Optimisation fiscale
+Selon la structure juridique choisie, les foncières bénéficient de régimes fiscaux avantageux :
+- **Transparence fiscale** (SCI) : imposition au niveau de chaque associé
+- **IS réduit** pour certaines structures
+- **Déductibilité** des charges et intérêts d'emprunt
+- **Amortissement** des biens
 
-        <ul>
-          <li><strong>Taux fixe vs variable</strong> : privilégier le fixe en période de hausse (sécurisation)</li>
-          <li><strong>Durée d'amortissement</strong> : 15-20 ans pour équilibrer coût et mensualités</li>
-          <li><strong>Différé d'amortissement</strong> : 12-24 mois pour couvrir la période de travaux</li>
-          <li><strong>Assurance emprunteur</strong> : mise en concurrence systématique (économie 20-40%)</li>
-          <li><strong>Remboursement anticipé</strong> : négocier des IRA (Indemnités de Remboursement Anticipé) réduites</li>
-        </ul>
+### 5. Alignement des intérêts
+Dans une foncière patrimoniale bien structurée, les gérants sont eux-mêmes associés significatifs. Ce **skin in the game** garantit l'alignement total des intérêts entre dirigeants et investisseurs.
 
-        <h3>Notre approche du financement</h3>
-        <p>À La Foncière Patrimoniale, nous structurons nos opérations avec un LTC cible de 75-80%, permettant :</p>
+## Notre modèle : La Foncière Patrimoniale
 
-        <ul>
-          <li>Un effet de levier optimal (4-5x)</li>
-          <li>Une sécurité financière préservée</li>
-          <li>Des marges de manœuvre en cas de dérive de budget travaux</li>
-          <li>Un TRI net cible >10% pour les associés</li>
-        </ul>
+### Une stratégie différenciante
+Nous nous distinguons par notre approche **value-add** :
+1. **Acquisition** d'immeubles anciens décotés en centre-ville
+2. **Réhabilitation BBC** complète avec amélioration énergétique
+3. **Mise en location** optimisée
+4. **Valorisation** patrimoniale de 20-35% en 3-5 ans
 
-        <p><strong>Conclusion :</strong> La maîtrise du financement immobilier est un facteur clé de succès dans les opérations de valorisation patrimoniale. Un LTC optimisé couplé à une négociation bancaire rigoureuse permet de maximiser la rentabilité tout en maîtrisant le risque.</p>
+### Performance cible
+- **TRI net associés** : 10-12% par an
+- **Rendement locatif** : 6-8%
+- **Plus-value de cession** : 20-30% à moyen terme
+
+### Transparence et gouvernance
+Nous mettons un point d'honneur à :
+- Reporting trimestriel détaillé
+- Accès à un espace associé numérique
+- Comité opérationnel régulier
+- Assemblées générales participatives
+
+## Comment investir dans une foncière ?
+
+### 1. Définir son profil
+- Horizon d'investissement : 5-10 ans minimum
+- Capacité d'investissement
+- Appétence au risque
+- Objectifs (revenus vs. capitalisation)
+
+### 2. Analyser la stratégie
+- Type d'actifs ciblés
+- Zone géographique
+- Niveau de risque
+- Track record de l'équipe
+
+### 3. Étudier les documents juridiques
+- Statuts de la société
+- Pacte d'associés
+- Règlement de gestion
+- Conditions de sortie
+
+### 4. Réaliser son investissement
+- Signature du bulletin de souscription
+- Versement des fonds
+- Intégration au capital
+- Accès aux services associés
+
+## Conclusion
+
+Les foncières immobilières offrent une alternative performante à l'investissement locatif en direct. Elles combinent professionnalisme, mutualisation, optimisation fiscale et potentiel de rendement attractif.
+
+**La Foncière Patrimoniale** s'adresse aux investisseurs avisés recherchant un placement immobilier structuré, transparent et à fort potentiel de création de valeur.
+
+---
+
+*Intéressé par notre approche ? Contactez-nous pour échanger sur votre projet d'investissement.*
       `
     },
     {
       id: 3,
-      title: "Le Carried Interest en immobilier : alignement des intérêts et rémunération de la performance",
-      slug: "carried-interest-immobilier",
-      category: "strategie",
-      date: "22 décembre 2025",
+      title: "Carried Interest et Alignement des Intérêts : La Clé d'une Foncière Performante",
+      slug: "carried-interest-alignement-interets",
+      excerpt: "Découvrez comment le mécanisme du carried interest aligne parfaitement les intérêts des gérants et des investisseurs dans une foncière immobilière.",
+      category: "Gouvernance",
+      author: "Ayoub Jaziri",
+      date: "10 Février 2026",
       readTime: "7 min",
-      excerpt: "Décryptage du mécanisme de carried interest : principe, calcul, alignement des intérêts entre gérants et investisseurs, et exemples concrets d'application dans l'immobilier résidentiel.",
-      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
+      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
       content: `
-        <h2>Le Carried Interest : définition et principes</h2>
-        <p>Le carried interest (ou "carry") est un mécanisme de rémunération à la performance couramment utilisé dans les fonds d'investissement immobiliers. Il permet aux gérants de percevoir une part des profits générés, au-delà d'un seuil de rentabilité minimum garanti aux investisseurs.</p>
+# Carried Interest et Alignement des Intérêts : La Clé d'une Foncière Performante
 
-        <h3>Fonctionnement du carried interest</h3>
-        <p>Le carried interest repose sur trois paramètres clés :</p>
+Dans le monde de l'investissement immobilier structuré, le **carried interest** (ou "intéressement à la performance") est un mécanisme fondamental qui garantit l'alignement parfait entre les intérêts des gérants et ceux des investisseurs.
 
-        <h4>1. Le Hurdle Rate (taux de rentabilité minimal)</h4>
-        <p>Seuil de TRI que le fonds doit atteindre avant que les gérants puissent percevoir leur carried interest. Typiquement fixé entre 7% et 10% dans l'immobilier résidentiel.</p>
+## Qu'est-ce que le Carried Interest ?
 
-        <h4>2. Le taux de carry</h4>
-        <p>Pourcentage des profits au-delà du hurdle rate reversé aux gérants. Généralement compris entre 15% et 25% dans les structures immobilières.</p>
+### Définition
+Le carried interest est une **rémunération variable** versée aux gérants d'un fonds ou d'une foncière, uniquement si certains objectifs de performance sont atteints. Il s'agit d'un partage des profits au-delà d'un seuil de rentabilité minimal garanti aux investisseurs.
 
-        <h4>3. Le mécanisme de distribution (waterfall)</h4>
-        <p>Ordre de répartition des profits entre les différentes parties prenantes :</p>
+### Principe de fonctionnement
 
-        <ol>
-          <li><strong>Retour du capital</strong> : remboursement intégral des apports initiaux des investisseurs</li>
-          <li><strong>Preferred return</strong> : distribution du hurdle rate aux investisseurs</li>
-          <li><strong>Catch-up</strong> (optionnel) : rattrapage permettant aux gérants d'atteindre leur pourcentage cible</li>
-          <li><strong>Split résiduel</strong> : partage des profits restants selon le ratio défini</li>
-        </ol>
+**Exemple concret :**
+1. **Hurdle rate (taux de rendement minimal)** : 8% par an
+2. Les investisseurs reçoivent d'abord 8% de rendement annuel
+3. Au-delà de ce seuil, les profits sont partagés selon une clé de répartition :
+   - 80% aux investisseurs
+   - 20% aux gérants (carried interest)
 
-        <h3>Exemple concret de calcul</h3>
-        <p><strong>Paramètres du fonds :</strong></p>
-        <ul>
-          <li>Capital levé : 1 000 000 €</li>
-          <li>Hurdle rate : 8% TRI</li>
-          <li>Carried interest : 20% au-delà du hurdle rate</li>
-          <li>Durée : 5 ans</li>
-        </ul>
+**Cas pratique :**
+- Capital investi : 1 M€
+- Performance réalisée : 12% par an
+- Les 8 premiers % (80 000 €) vont à 100% aux investisseurs
+- Les 4% supplémentaires (40 000 €) sont partagés :
+  - 32 000 € aux investisseurs (80%)
+  - 8 000 € aux gérants (20% de carried)
 
-        <h4>Scénario 1 : Performance conforme (TRI 8%)</h4>
-        <ul>
-          <li>Capital final : 1 469 000 €</li>
-          <li>Profit total : 469 000 €</li>
-          <li>Distribution investisseurs : 469 000 € (100%)</li>
-          <li>Distribution gérants (carry) : 0 €</li>
-        </ul>
+## Pourquoi le Carried Interest est-il crucial ?
 
-        <h4>Scénario 2 : Surperformance (TRI 12%)</h4>
-        <ul>
-          <li>Capital final : 1 762 000 €</li>
-          <li>Profit total : 762 000 €</li>
-          <li>Hurdle rate (8% sur 5 ans) : 469 000 €</li>
-          <li>Surperformance : 293 000 €</li>
-          <li>Carried interest (20% de 293 000 €) : 58 600 €</li>
-          <li><strong>Distribution investisseurs : 703 400 € (92,3%)</strong></li>
-          <li><strong>Distribution gérants : 58 600 € (7,7%)</strong></li>
-        </ul>
+### 1. Alignement total des intérêts
+Les gérants ne perçoivent un carried substantiel **que si les investisseurs ont d'abord obtenu leur rendement cible**. Cette structure crée un alignement parfait :
+- Aucune incitation à prendre des risques excessifs
+- Focus sur la création de valeur durable
+- Transparence sur les objectifs de performance
 
-        <h3>Avantages du carried interest</h3>
+### 2. Motivation à l'excellence
+Le carried interest incite les gérants à :
+- Sourcer les meilleures opportunités
+- Négocier fermement les acquisitions
+- Optimiser la gestion opérationnelle
+- Maximiser la valorisation à la sortie
 
-        <h4>Pour les investisseurs :</h4>
-        <ul>
-          <li><strong>Alignement des intérêts</strong> : les gérants ne gagnent que si la performance dépasse les objectifs</li>
-          <li><strong>Sécurité</strong> : retour du capital et rentabilité minimale garantis en priorité</li>
-          <li><strong>Motivation</strong> : incitation forte à maximiser la création de valeur</li>
-        </ul>
+### 3. Limitation des frais fixes
+Contrairement aux structures à frais de gestion élevés (2-3% des actifs), le modèle à carried interest privilégie la **rémunération à la performance**. Les gérants gagnent plus si et seulement si les investisseurs gagnent plus.
 
-        <h4>Pour les gérants :</h4>
-        <ul>
-          <li><strong>Rémunération à la performance</strong> : gains proportionnels aux résultats obtenus</li>
-          <li><strong>Engagement long terme</strong> : intérêt économique à la réussite du fonds</li>
-          <li><strong>Reconnaissance</strong> : valorisation de l'expertise et de la gestion active</li>
-        </ul>
+## Les différents modèles de Carried Interest
 
-        <h3>Variantes et bonnes pratiques</h3>
+### Modèle "European Waterfall" (le plus courant)
+1. Retour du capital initial aux investisseurs
+2. Paiement du hurdle rate (ex: 8% cumulé)
+3. Partage des profits au-delà (80/20)
 
-        <h4>Clawback clause</h4>
-        <p>Mécanisme de restitution partielle du carry en cas de sous-performance ultérieure. Protège les investisseurs contre des distributions prématurées de carried interest.</p>
+### Modèle "American Waterfall"
+- Calcul du carried deal par deal (et non au niveau du fonds)
+- Plus favorable aux gérants
+- Moins protecteur pour les investisseurs
 
-        <h4>High water mark</h4>
-        <p>Le carried interest n'est calculé que sur les nouveaux profits, après récupération des pertes antérieures. Évite la double rémunération des gérants.</p>
+### Modèle "Catch-up"
+1. Retour capital + hurdle rate (100% investisseurs)
+2. Phase de "rattrapage" (100% gérants) jusqu'à rééquilibrage
+3. Puis partage standard (80/20)
 
-        <h4>Catch-up à 100%</h4>
-        <p>Certains fonds prévoient une phase de "rattrapage" où 100% des profits au-delà du hurdle rate vont aux gérants, jusqu'à ce qu'ils atteignent leur pourcentage cible global (ex : 20% du total).</p>
+## Notre approche à La Foncière Patrimoniale
 
-        <h3>Application à La Foncière Patrimoniale</h3>
-        <p>Notre structure intègre un mécanisme de carried interest aligné sur les standards du marché :</p>
+### Structure transparente
+Nous appliquons un modèle de carried interest **aligné avec les meilleurs standards** du marché :
 
-        <ul>
-          <li><strong>Hurdle rate : 7% TRI net</strong></li>
-          <li><strong>Carried interest : 20% de la surperformance</strong></li>
-          <li><strong>Pas de frais de gestion récurrents</strong> (contrairement aux SCPI/OPCI)</li>
-          <li><strong>Transparence totale</strong> : calcul du carry explicité en amont</li>
-        </ul>
+**Nos principes :**
+- **Hurdle rate** : 8% TRI net annuel
+- **Catch-up** : non (protection investisseurs)
+- **Partage** : 80% investisseurs / 20% gérants
+- **Calcul** : au niveau du fonds (pas deal par deal)
 
-        <p><strong>Exemple La Foncière Patrimoniale (apport 50 000 €) :</strong></p>
+### Skin in the Game
+Au-delà du carried, les fondateurs sont **co-investisseurs significatifs** dans la foncière. Nous investissons notre propre capital aux mêmes conditions que les associés externes.
 
-        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-          <tr style="background: #f8f9fa;">
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">Scénario</th>
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">TRI</th>
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">Capital final</th>
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">Gain investisseur</th>
-          </tr>
-          <tr>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">Objectif atteint</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">7%</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">70 128 €</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">+20 128 € (100%)</td>
-          </tr>
-          <tr style="background: #f8f9fa;">
-            <td style="padding: 12px; border: 1px solid #dee2e6;">Surperformance</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">10%</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">80 526 €</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">+28 441 € (93,2%)</td>
-          </tr>
-        </table>
+**Nos engagements :**
+- Capital personnel investi : 15% du total
+- Aucune priorité de remboursement
+- Participation identique aux risques
+- Gouvernance participative
 
-        <p>Dans le scénario de surperformance, l'investisseur capte 93,2% du gain total, les 6,8% restants (2 085 €) constituant le carried interest versé aux gérants.</p>
+## Transparence et reporting
 
-        <h3>Transparence et gouvernance</h3>
-        <p>La mise en œuvre du carried interest nécessite :</p>
+### Calcul du Carried Interest
+Le carried est calculé de manière **totalement transparente** :
+1. Valorisation trimestrielle du patrimoine (expertises indépendantes)
+2. Calcul du TRI global du fonds
+3. Déclenchement du carried uniquement si hurdle atteint
+4. Versement lors des cessions d'actifs ou distributions
 
-        <ul>
-          <li><strong>Définition contractuelle claire</strong> dans les statuts et le pacte d'associés</li>
-          <li><strong>Commissariat aux apports</strong> pour valider les calculs</li>
-          <li><strong>Reporting régulier</strong> sur la performance et le chemin vers le hurdle rate</li>
-          <li><strong>Validation en AG</strong> lors de la distribution effective du carry</li>
-        </ul>
+### Reporting aux associés
+Chaque trimestre, nos associés reçoivent :
+- **Dashboard de performance** (TRI, rendement, valorisation)
+- **Détail des acquisitions et cessions**
+- **État du carried provisionné** (mais non encore versé)
+- **Projection de performance** à 3-5 ans
 
-        <p><strong>Conclusion :</strong> Le carried interest est un outil puissant d'alignement des intérêts entre gérants et investisseurs. Lorsqu'il est structuré de manière équilibrée et transparente, il constitue un vecteur de performance et de confiance mutuelle au sein d'une foncière.</p>
+## Les pièges à éviter
+
+### 1. Absence de hurdle rate
+Certaines structures versent du carried dès le premier euro de profit. **C'est un signal d'alerte** : les gérants gagnent même si les investisseurs perdent de l'argent après inflation.
+
+### 2. Frais de gestion excessifs
+Méfiez-vous des foncières qui cumulent :
+- Frais de gestion élevés (2-3%)
+- Frais de souscription (5-10%)
+- Carried interest élevé (> 25%)
+
+### 3. Manque de transparence
+Si les modalités de calcul du carried ne sont pas clairement explicitées dans le pacte d'associés, **posez des questions**.
+
+## Conclusion
+
+Le carried interest est bien plus qu'un simple mécanisme de rémunération : c'est un **outil de gouvernance** qui garantit que les gérants travaillent dans l'intérêt exclusif des investisseurs.
+
+Chez **La Foncière Patrimoniale**, nous sommes convaincus que la performance durable naît de cet alignement parfait. Notre rémunération dépend de votre succès.
+
+**C'est ainsi que se construisent les partenariats de long terme.**
+
+---
+
+*Questions sur notre modèle de gouvernance ? Contactez-nous pour un échange personnalisé.*
       `
     },
     {
       id: 4,
-      title: "Réglementation 2026 : DPE, interdiction de location et impact sur les stratégies d'investissement",
-      slug: "reglementation-dpe-2026",
-      category: "reglementation",
-      date: "10 décembre 2025",
-      readTime: "6 min",
-      excerpt: "État des lieux des obligations réglementaires en matière de performance énergétique : calendrier d'interdiction de location, enjeux pour les propriétaires bailleurs et opportunités pour les investisseurs.",
-      image: "https://images.unsplash.com/photo-1521791055366-0d553872125f?w=800&q=80",
+      title: "Réhabilitation BBC : Transformer les Passoires Thermiques en Actifs Performants",
+      slug: "rehabilitation-bbc-passoires-thermiques",
+      excerpt: "Guide pratique de la réhabilitation Bâtiment Basse Consommation : techniques, coûts, rentabilité et impact ESG.",
+      category: "Rénovation",
+      author: "La Foncière Patrimoniale",
+      date: "5 Février 2026",
+      readTime: "9 min",
+      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
       content: `
-        <h2>Calendrier réglementaire : le durcissement progressif</h2>
-        <p>La loi Climat et Résilience de 2021 a instauré un calendrier progressif d'interdiction de location pour les logements énergivores. Cette contrainte réglementaire bouleverse le marché locatif et crée des opportunités pour les investisseurs structurés.</p>
+# Réhabilitation BBC : Transformer les Passoires Thermiques en Actifs Performants
 
-        <h3>Les dates clés</h3>
+La rénovation énergétique n'est plus une option : c'est une **obligation réglementaire** et une **opportunité d'investissement** majeure. Découvrez comment transformer des passoires thermiques (DPE F-G) en actifs performants (DPE B-C).
 
-        <h4>2023 : DPE G (>450 kWh/m²/an)</h4>
-        <p>Depuis le 1er janvier 2023, les logements classés G+ (consommation >450 kWh/m²/an) ne peuvent plus être loués. Environ 90 000 logements concernés en France.</p>
+## Le contexte réglementaire
 
-        <h4>2025 : Ensemble du DPE G</h4>
-        <p>À partir du 1er janvier 2025, tous les logements classés G sont interdits à la location. <strong>Environ 600 000 logements concernés.</strong></p>
+### Calendrier d'interdiction à la location
+- **2025** : Logements DPE G interdits
+- **2028** : Logements DPE F interdits  
+- **2034** : Logements DPE E interdits
 
-        <h4>2028 : DPE F</h4>
-        <p>Interdiction de louer les logements classés F à partir du 1er janvier 2028. <strong>Environ 1,2 million de logements concernés.</strong></p>
+Cette réglementation crée une **décote massive** des biens énergivores (-15 à -30% vs. un bien rénové) et une opportunité pour les investisseurs capables de mener des réhabilitations complètes.
 
-        <h4>2034 : DPE E</h4>
-        <p>Extension de l'interdiction aux logements E. <strong>Environ 2,6 millions de logements concernés.</strong></p>
+## Notre approche de réhabilitation BBC
 
-        <h3>Impact sur le marché : tensions et opportunités</h3>
+### 1. Diagnostic complet
+Avant toute acquisition, nous réalisons :
+- **Audit énergétique** détaillé (thermographie, infiltrométrie)
+- **Diagnostic structurel** (solidité, humidité, amiante)
+- **Étude de faisabilité** technique et financière
+- **Simulation DPE** post-travaux
 
-        <h4>Côté propriétaires bailleurs</h4>
-        <p>Face à ces échéances, les propriétaires de passoires thermiques doivent choisir :</p>
+### 2. Travaux d'isolation
 
-        <ol>
-          <li><strong>Rénover</strong> : investissement moyen de 40 000 € à 80 000 € par logement pour passer de F/G à C</li>
-          <li><strong>Vendre</strong> : accepter une décote significative (15% à 30% selon les cas)</li>
-          <li><strong>Laisser vacant</strong> : perte de revenus locatifs et charges de copropriété maintenues</li>
-        </ol>
+**Isolation Thermique par l'Extérieur (ITE)**
+- Suppression des ponts thermiques
+- Ravalement simultané de la façade
+- Amélioration esthétique
+- Coût : 120-180 €/m²
 
-        <p>Cette situation crée une <strong>pression vendeuse</strong> sur le segment des passoires thermiques, particulièrement visible depuis 2024.</p>
+**Isolation des combles**
+- Laine minérale ou ouate de cellulose
+- R ≥ 7 m².K/W
+- Coût : 30-50 €/m²
 
-        <h4>Côté investisseurs</h4>
-        <p>Les investisseurs structurés disposent d'une fenêtre d'opportunité :</p>
+**Remplacement des menuiseries**
+- Double ou triple vitrage
+- Uw ≤ 1,3 W/m².K
+- Volets roulants isolants
+- Coût : 400-800 €/fenêtre
 
-        <ul>
-          <li><strong>Acquisition décotée</strong> : prix 20-30% inférieurs aux actifs performants</li>
-          <li><strong>Réhabilitation maîtrisée</strong> : budgets travaux optimisés via économies d'échelle</li>
-          <li><strong>Revalorisation patrimoniale</strong> : rattrapage de valeur après travaux</li>
-          <li><strong>Sécurisation locative</strong> : conformité réglementaire pérenne</li>
-        </ul>
+### 3. Systèmes de chauffage performants
 
-        <h3>Les aides à la rénovation : panorama 2026</h3>
+**Pompes à chaleur**
+- COP > 4
+- Réversible (chauffage/climatisation)
+- Coût : 8 000-15 000 € (appartement)
 
-        <h4>MaPrimeRénov' (particuliers)</h4>
-        <ul>
-          <li>Réservée aux résidences principales</li>
-          <li>Plafonds de ressources applicables</li>
-          <li>Montants variables selon les travaux (5 000 € à 25 000 €)</li>
-        </ul>
+**Chaudières gaz à condensation**
+- Rendement > 95%
+- Alternative économique
+- Coût : 3 000-5 000 €
 
-        <h4>Éco-PTZ (Prêt à Taux Zéro)</h4>
-        <ul>
-          <li>Jusqu'à 50 000 € pour les rénovations globales</li>
-          <li>Accessible sans conditions de ressources</li>
-          <li>Remboursement sur 15 à 20 ans</li>
-        </ul>
+**Radiateurs basse température**
+- Optimisation du rendement
+- Coût : 200-400 €/radiateur
 
-        <h4>CEE (Certificats d'Économies d'Énergie)</h4>
-        <ul>
-          <li>Primes versées par les fournisseurs d'énergie</li>
-          <li>Montants variables selon les travaux et la zone géographique</li>
-          <li>Cumulables avec d'autres aides</li>
-        </ul>
+### 4. Ventilation et étanchéité
 
-        <p><strong>⚠️ Limite pour les bailleurs :</strong> Les propriétaires bailleurs (personnes morales comme les SCI) ont un accès restreint aux aides publiques. D'où l'intérêt de stratégies d'investissement structurées capables d'absorber les coûts de rénovation.</p>
+**VMC double flux**
+- Récupération de chaleur
+- Qualité d'air optimale
+- Coût : 4 000-8 000 € (immeuble)
 
-        <h3>Notre stratégie face à la réglementation</h3>
-        <p>À La Foncière Patrimoniale, nous transformons cette contrainte réglementaire en avantage concurrentiel :</p>
+**Traitement des infiltrations**
+- Test d'étanchéité à l'air
+- Objectif : < 1,5 m³/h.m²
 
-        <h4>1. Ciblage F/G en zones tendues</h4>
-        <p>Nous acquérons des immeubles F/G dans des villes à forte demande locative (Bordeaux, Lyon, Toulouse, Nantes). La décote à l'achat (20-30%) finance une partie significative des travaux.</p>
+## Budget type de réhabilitation
 
-        <h4>2. Passage systématique en DPE C minimum</h4>
-        <p>Nos réhabilitations visent un DPE C (objectif B/A selon faisabilité), garantissant :</p>
-        <ul>
-          <li>Conformité réglementaire à 2034 et au-delà</li>
-          <li>Valorisation locative (+10% à +20% selon les cas)</li>
-          <li>Valorisation patrimoniale (+25% à +40%)</li>
-          <li>Confort des occupants (VMC, isolation, chauffage performant)</li>
-        </ul>
+### Exemple : Immeuble de 6 appartements (450 m²)
 
-        <h4>3. Budget travaux maîtrisé</h4>
-        <p>Nos opérations s'appuient sur :</p>
-        <ul>
-          <li>Audit énergétique préalable systématique</li>
-          <li>Chiffrages concurrentiels (3 entreprises minimum)</li>
-          <li>Suivi de chantier rigoureux (réunions hebdomadaires)</li>
-          <li>Budget travaux moyen : 50 000 € à 70 000 € par logement pour un passage F/G → C</li>
-        </ul>
+**Travaux d'isolation**
+- ITE : 60 000 €
+- Combles : 8 000 €
+- Menuiseries : 18 000 €
 
-        <h3>Cas d'étude : Bordeaux Centre</h3>
-        <p><strong>Opération réalisée en 2024 :</strong></p>
+**Chauffage/Ventilation**
+- PAC + Radiateurs : 45 000 €
+- VMC double flux : 6 000 €
 
-        <table style="width:100%; border-collapse: collapse; margin: 20px 0;">
-          <tr style="background: #f8f9fa;">
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">Paramètre</th>
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">Avant travaux</th>
-            <th style="padding: 12px; text-align: left; border: 1px solid #dee2e6;">Après travaux</th>
-          </tr>
-          <tr>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">Prix acquisition</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">1 100 000 €</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">-</td>
-          </tr>
-          <tr style="background: #f8f9fa;">
-            <td style="padding: 12px; border: 1px solid #dee2e6;">Travaux</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">-</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">350 000 €</td>
-          </tr>
-          <tr>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">DPE moyen</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">F</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">C</td>
-          </tr>
-          <tr style="background: #f8f9fa;">
-            <td style="padding: 12px; border: 1px solid #dee2e6;">Loyer moyen/lot</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">650 €/mois</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">780 €/mois (+20%)</td>
-          </tr>
-          <tr>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">Valorisation</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">1 100 000 €</td>
-            <td style="padding: 12px; border: 1px solid #dee2e6;">1 650 000 € (+50%)</td>
-          </tr>
-        </table>
+**Électricité/Plomberie**
+- Mise aux normes : 25 000 €
 
-        <p><strong>Résultat :</strong></p>
-        <ul>
-          <li>Coût total : 1 450 000 €</li>
-          <li>Valorisation : 1 650 000 €</li>
-          <li><strong>Plus-value latente : +200 000 € (+13,8%)</strong></li>
-          <li>Rendement locatif brut post-travaux : 6,5%</li>
-        </ul>
+**Finitions**
+- Peinture, sols : 18 000 €
 
-        <h3>Perspectives et conclusion</h3>
-        <p>La réglementation DPE structure durablement le marché immobilier français :</p>
+**Total** : 180 000 €
+**Coût au m²** : 400 €/m²
 
-        <ul>
-          <li><strong>Raréfaction de l'offre locative performante</strong> : maintien des tensions et des loyers</li>
-          <li><strong>Obsolescence accélérée des passoires thermiques</strong> : opportunités d'acquisition décotées</li>
-          <li><strong>Prime à la rénovation énergétique</strong> : valorisation patrimoniale significative</li>
-        </ul>
+## Rentabilité de l'opération
 
-        <p>Les acteurs capables de transformer des actifs non-conformes en logements performants bénéficient d'un avantage structurel durable. La Foncière Patrimoniale s'inscrit pleinement dans cette dynamique, en capitalisant sur l'expertise technique et la capacité de financement pour créer de la valeur patrimoniale pérenne.</p>
+### Cas concret : Vichy - Boulevard Kennedy
+
+**Acquisition**
+- Prix d'achat : 420 000 €
+- DPE initial : F (passoire thermique)
+- Loyers potentiels : 24 000 €/an (rendement 5,7%)
+
+**Travaux**
+- Budget rénovation : 180 000 €
+- DPE final : C (performant)
+- Durée : 8 mois
+
+**Après rénovation**
+- Coût total : 600 000 €
+- Loyers : 36 000 €/an (rendement 6%)
+- Valorisation : 720 000 €
+- **Plus-value latente : +120 000 € (+20%)**
+
+## Financement de la réhabilitation
+
+### 1. Ratio LTC maîtrisé
+- Apport foncière : 250 000 €
+- Emprunt bancaire : 350 000 €
+- **Ratio LTC** : 58% (confortable)
+
+### 2. Aides et subventions
+- **MaPrimeRénov' Copropriété** : jusqu'à 25%
+- **CEE (Certificats d'Économie d'Énergie)** : 5-15%
+- **Éco-PTZ** : jusqu'à 50 000 € à 0%
+
+### 3. Optimisation fiscale
+- **Amortissement accéléré** des travaux
+- **Déduction fiscale** des intérêts d'emprunt
+- **Crédit d'impôt** rénovation énergétique
+
+## Impact ESG et valorisation
+
+### Environnement
+- **Réduction CO₂** : -60% d'émissions
+- **Économie d'énergie** : -70% de consommation
+- **Étiquette verte** : DPE B-C
+
+### Social
+- **Confort des locataires** amélioré
+- **Factures énergétiques** divisées par 2-3
+- **Valeur d'usage** accrue
+
+### Gouvernance
+- **Conformité réglementaire** anticipée
+- **Valorisation patrimoniale** sécurisée
+- **Attractivité locative** renforcée
+
+## Nos réalisations
+
+**Lyon 3ème - Garibaldi**
+- DPE F → C
+- 8 appartements rénovés
+- Valorisation : +28%
+
+**Bordeaux Centre**
+- DPE G → C  
+- 12 lots réhabilités
+- Loyers : +35%
+
+**Clermont-Ferrand**
+- DPE F → B
+- 16 logements transformés
+- Plus-value : +32%
+
+## Conclusion
+
+La réhabilitation BBC est au cœur de notre stratégie d'investissement. Elle combine :
+- **Opportunité d'achat** (décote des passoires)
+- **Création de valeur** (travaux value-add)
+- **Performance ESG** (impact environnemental positif)
+- **Rentabilité** (rendements locatifs + plus-values)
+
+C'est cette expertise qui fait de **La Foncière Patrimoniale** un acteur de référence de l'immobilier durable et performant.
+
+---
+
+*Découvrez nos réalisations et notre approche en détail.*
+      `
+    },
+    {
+      id: 5,
+      title: "PEA-PME et Immobilier : Optimiser sa Fiscalité en Investissant dans une Foncière",
+      slug: "pea-pme-immobilier-fiscalite",
+      excerpt: "Comment investir dans l'immobilier via un PEA-PME et bénéficier d'une fiscalité ultra-avantageuse tout en diversifiant son patrimoine.",
+      category: "Fiscalité",
+      author: "La Foncière Patrimoniale",
+      date: "1 Février 2026",
+      readTime: "6 min",
+      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
+      content: `
+# PEA-PME et Immobilier : Optimiser sa Fiscalité en Investissant dans une Foncière
+
+Le PEA-PME (Plan d'Épargne en Actions destiné aux PME) est un outil fiscal méconnu qui permet d'investir dans des foncières patrimoniales tout en bénéficiant d'une **exonération totale d'impôt** après 5 ans de détention.
+
+## Qu'est-ce que le PEA-PME ?
+
+### Définition
+Le PEA-PME est une **enveloppe fiscale** créée en 2014 pour orienter l'épargne des particuliers vers le financement des PME et ETI (Entreprises de Taille Intermédiaire) européennes.
+
+### Plafond et conditions
+- **Plafond de versement** : 225 000 €
+- **Cumulable** avec un PEA classique (+ 150 000 €)
+- **Enveloppe totale possible** : 375 000 €
+
+### Fiscalité ultra-avantageuse
+- **Avant 5 ans** : Plus-values taxées à 12,8% + 17,2% de PS (30% total)
+- **Après 5 ans** : **Exonération totale d'impôt** (seulement 17,2% de PS)
+
+**Exemple :**
+- Investissement : 100 000 €
+- Plus-value après 8 ans : 50 000 €
+- Fiscalité hors PEA : 15 000 € (30%)
+- Fiscalité en PEA : 8 600 € (17,2%)
+- **Économie : 6 400 €**
+
+## Pourquoi investir dans une foncière via PEA-PME ?
+
+### 1. Double performance
+- **Rendement immobilier** : loyers + valorisation (8-12% par an)
+- **Optimisation fiscale** : exonération d'impôt après 5 ans
+- **Performance nette** amplifiée
+
+### 2. Diversification du patrimoine
+Le PEA-PME permet d'accéder à l'immobilier professionnel sans :
+- Gérer des biens en direct
+- Supporter les contraintes locatives
+- Immobiliser des liquidités importantes
+
+### 3. Liquidité préservée
+Contrairement à un investissement immobilier en direct :
+- **Pas de frais de notaire** (6-8%)
+- **Sortie possible** à tout moment (avec fiscalité avant 5 ans)
+- **Transmission facilitée**
+
+## Notre structure éligible PEA-PME
+
+### Conditions d'éligibilité
+**La Foncière Patrimoniale** respecte tous les critères :
+- ✅ Forme juridique : SAS
+- ✅ Effectif : < 250 salariés
+- ✅ Chiffre d'affaires : < 50 M€
+- ✅ Bilan : < 43 M€
+- ✅ Siège social : Union Européenne
+
+### Titre éligible
+Nous émettons des **actions ordinaires** éligibles PEA-PME, permettant aux investisseurs de bénéficier pleinement de l'avantage fiscal.
+
+## Cas pratique d'investissement
+
+### Profil : Cadre supérieur, 45 ans
+
+**Situation initiale**
+- Épargne disponible : 150 000 €
+- TMI (Tranche Marginale d'Imposition) : 41%
+- Objectif : préparer retraite + optimiser fiscalité
+
+**Stratégie recommandée**
+1. **Ouverture PEA-PME** (plafond 225 000 €)
+2. **Investissement** : 100 000 € dans La Foncière Patrimoniale
+3. **Horizon** : 8-10 ans (jusqu'à la retraite)
+
+**Projection de performance**
+- TRI cible : 10% par an
+- Capital après 10 ans : 259 000 €
+- Plus-value : 159 000 €
+- Fiscalité PEA : 27 350 € (17,2% PS uniquement)
+- Fiscalité hors PEA : 47 700 € (30%)
+- **Économie fiscale : 20 350 €**
+
+## Comparaison : Immobilier direct vs. Foncière en PEA-PME
+
+### Investissement locatif direct (100 000 €)
+- **Frais de notaire** : 7 000 €
+- **Travaux** : 15 000 €
+- **Capital réellement investi** : 78 000 €
+- **Rendement net** : 4-5%
+- **Fiscalité** : IR + PS sur loyers (jusqu'à 60%)
+- **Liquidité** : faible (délai de vente 3-6 mois)
+
+### Foncière en PEA-PME (100 000 €)
+- **Frais d'entrée** : 0 €
+- **Capital investi** : 100 000 €
+- **Rendement cible** : 8-12%
+- **Fiscalité** : 0% après 5 ans (hors PS 17,2%)
+- **Liquidité** : potentielle à tout moment
+
+**Verdict** : Sur 10 ans, la foncière en PEA-PME surperforme de **40-60%** l'investissement direct.
+
+## Transmission et succession
+
+### Avantage successoral
+- Les titres détenus en PEA-PME bénéficient de l'**abattement classique** en cas de succession (100 000 € par parent et par enfant)
+- La valeur transmise est la **valeur de marché** au jour du décès
+- Fiscalité successorale : 20% au-delà de l'abattement
+
+### Donation anticipée
+Il est possible de **donner son PEA-PME** à ses enfants :
+- Donation en pleine propriété ou démembrement
+- Abattement : 100 000 € par parent/enfant tous les 15 ans
+- Optimisation de la transmission patrimoniale
+
+## Points de vigilance
+
+### 1. Horizon d'investissement
+Le PEA-PME est adapté pour un horizon **minimum 5 ans**. Tout retrait avant entraîne :
+- Clôture du plan
+- Fiscalité à 30%
+
+### 2. Risque en capital
+Comme tout investissement immobilier, le capital n'est pas garanti. Il est essentiel de :
+- Diversifier (ne pas mettre 100% en PEA-PME)
+- Choisir une foncière solide avec track record
+- Vérifier la stratégie et la gouvernance
+
+### 3. Liquidité relative
+Bien que théoriquement liquide, la revente de parts de foncière non cotée peut prendre **quelques semaines à quelques mois**.
+
+## Conclusion
+
+Le PEA-PME est un **outil fiscal puissant** qui permet d'investir dans l'immobilier via une foncière tout en optimisant drastiquement sa fiscalité.
+
+**La Foncière Patrimoniale**, éligible PEA-PME, offre une opportunité unique de combiner :
+- Performance immobilière (8-12% TRI)
+- Optimisation fiscale (0% après 5 ans)
+- Professionnalisme de gestion
+- Transparence et gouvernance
+
+Pour les investisseurs avisés, c'est une stratégie patrimoniale de premier ordre.
+
+---
+
+*Souhaitez-vous en savoir plus sur notre éligibilité PEA-PME ? Contactez-nous.*
       `
     }
   ];
 
-  const filteredArticles = selectedCategory === 'tous' 
-    ? articles 
-    : articles.filter(a => a.category === selectedCategory);
+  const categories = [
+    { id: 'tous', label: 'Tous les articles' },
+    { id: 'Marché', label: 'Marché' },
+    { id: 'Investissement', label: 'Investissement' },
+    { id: 'Gouvernance', label: 'Gouvernance' },
+    { id: 'Rénovation', label: 'Rénovation' },
+    { id: 'Fiscalité', label: 'Fiscalité' }
+  ];
+
+  const filteredArticles = articles.filter(article => {
+    const matchesCategory = selectedCategory === 'tous' || article.category === selectedCategory;
+    const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchesCategory && matchesSearch;
+  });
+
+  const featuredArticle = articles[0];
+  const otherArticles = articles.slice(1);
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero */}
-      <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 left-0 w-96 h-96 border border-white/20 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 border border-white/20 rounded-full transform translate-x-1/2 translate-y-1/2" />
-        </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
+      {/* Hero Section */}
+      <section className="relative py-20 bg-[#1A3A52]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
+            className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Blog & Actualités
+                Blog & Insights
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Insights Immobilier & Finance
+              Expertise & Actualités de l'Immobilier
             </h1>
-            <p className="text-xl text-white/80">
-              Analyses de marché, stratégies d'investissement et décryptages réglementaires 
-              pour comprendre l'immobilier résidentiel structuré.
+            <p className="text-xl text-white/70">
+              Analyses de marché, guides d'investissement et stratégies patrimoniales par nos experts.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Filters */}
-      <section className="py-8 border-b border-slate-200 sticky top-20 bg-white z-40">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex gap-3 overflow-x-auto scrollbar-hide">
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2 rounded-full font-medium text-sm whitespace-nowrap transition-all ${
-                  selectedCategory === cat.id
-                    ? 'bg-[#1A3A52] text-white'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+        {/* Search and Filters */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-12">
+          <div className="flex flex-col md:flex-row gap-4 mb-8">
+            <div className="flex-1 relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-slate-400" />
+              <Input
+                type="text"
+                placeholder="Rechercher un article..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-10" />
+            </div>
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            {categories.map((cat) =>
+            <button
+              key={cat.id}
+              onClick={() => setSelectedCategory(cat.id)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              selectedCategory === cat.id ?
+              'bg-[#C9A961] text-[#1A3A52]' :
+              'bg-slate-100 text-slate-600 hover:bg-slate-200'}`
+              }>
+
                 {cat.label}
               </button>
-            ))}
+            )}
           </div>
-        </div>
-      </section>
+        </motion.div>
 
-      {/* Articles Grid */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12">
-            {filteredArticles.map((article, index) => (
-              <motion.article
-                key={article.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group"
-              >
-                <Link to={createPageUrl(`BlogArticle?id=${article.id}`)}>
-                  <div className="relative h-64 rounded-2xl overflow-hidden mb-6">
-                    <img
-                      src={article.image}
+        {/* Featured Article */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-16">
+          <Link to={createPageUrl(`BlogArticle?slug=${featuredArticle.slug}`)}>
+            <div className="bg-slate-50 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 group">
+              <div className="grid md:grid-cols-2 gap-0">
+                <div className="relative h-80 md:h-auto overflow-hidden">
+                  <img 
+                    src={featuredArticle.image} 
+                    alt={featuredArticle.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                  <div className="absolute top-6 left-6">
+                    <span className="bg-[#C9A961] text-[#1A3A52] px-4 py-2 rounded-full text-sm font-semibold">
+                      Article Phare
+                    </span>
+                  </div>
+                </div>
+                <div className="p-8 md:p-12 flex flex-col justify-center">
+                  <span className="text-[#C9A961] font-semibold text-sm mb-3">{featuredArticle.category}</span>
+                  <h2 className="text-3xl font-serif text-[#1A3A52] mb-4 group-hover:text-[#C9A961] transition-colors">
+                    {featuredArticle.title}
+                  </h2>
+                  <p className="text-slate-600 mb-6 leading-relaxed">
+                    {featuredArticle.excerpt}
+                  </p>
+                  <div className="flex items-center gap-4 text-sm text-slate-500 mb-6">
+                    <div className="flex items-center gap-2">
+                      <User className="h-4 w-4" />
+                      <span>{featuredArticle.author}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      <span>{featuredArticle.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="h-4 w-4" />
+                      <span>{featuredArticle.readTime}</span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 text-[#C9A961] font-semibold group-hover:gap-3 transition-all">
+                    Lire l'article
+                    <ArrowRight className="h-5 w-5" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </Link>
+        </motion.div>
+
+        {/* Articles Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {filteredArticles.slice(1).map((article, index) =>
+          <motion.div
+            key={article.id}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.1 }}>
+
+              <Link to={createPageUrl(`BlogArticle?slug=${article.slug}`)}>
+                <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 h-full flex flex-col group">
+                  <div className="relative h-48 overflow-hidden">
+                    <img 
+                      src={article.image} 
                       alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-[#C9A961] text-[#1A3A52] rounded-full text-xs font-semibold">
-                        {categories.find(c => c.id === article.category)?.label}
+                      <span className="bg-white/90 backdrop-blur-sm text-[#1A3A52] px-3 py-1 rounded-full text-xs font-semibold">
+                        {article.category}
                       </span>
                     </div>
                   </div>
-
-                  <div className="flex items-center gap-4 text-sm text-slate-500 mb-3">
-                    <div className="flex items-center gap-2">
-                      <Calendar className="h-4 w-4" />
-                      {article.date}
+                  <div className="p-6 flex-1 flex flex-col">
+                    <h3 className="text-xl font-serif text-[#1A3A52] mb-3 group-hover:text-[#C9A961] transition-colors">
+                      {article.title}
+                    </h3>
+                    <p className="text-slate-600 text-sm mb-4 leading-relaxed flex-1">
+                      {article.excerpt}
+                    </p>
+                    <div className="flex items-center justify-between text-xs text-slate-500 pt-4 border-t border-slate-100">
+                      <div className="flex items-center gap-2">
+                        <Calendar className="h-3 w-3" />
+                        <span>{article.date}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Clock className="h-3 w-3" />
+                        <span>{article.readTime}</span>
+                      </div>
                     </div>
-                    <span>•</span>
-                    <span>{article.readTime} de lecture</span>
                   </div>
-
-                  <h2 className="text-2xl font-serif text-[#1A3A52] mb-3 group-hover:text-[#C9A961] transition-colors">
-                    {article.title}
-                  </h2>
-
-                  <p className="text-slate-600 mb-4 line-clamp-3">
-                    {article.excerpt}
-                  </p>
-
-                  <div className="flex items-center gap-2 text-[#C9A961] font-semibold group-hover:gap-3 transition-all">
-                    Lire l'article
-                    <ArrowRight className="h-4 w-4" />
-                  </div>
-                </Link>
-              </motion.article>
-            ))}
-          </div>
-
-          {filteredArticles.length === 0 && (
-            <div className="text-center py-16">
-              <p className="text-slate-500">Aucun article dans cette catégorie pour le moment.</p>
-            </div>
+                </div>
+              </Link>
+            </motion.div>
           )}
         </div>
-      </section>
 
-      {/* CTA */}
-      <section className="py-16 bg-[#1A3A52]">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
-            Envie d'en savoir plus sur notre stratégie ?
+        {filteredArticles.length === 0 &&
+        <div className="text-center py-16">
+            <p className="text-slate-500 text-lg">Aucun article ne correspond à votre recherche.</p>
+          </div>
+        }
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mt-20 bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] rounded-3xl p-12 text-center">
+
+          <h2 className="text-3xl font-serif text-white mb-4">
+            Vous souhaitez en savoir plus ?
           </h2>
-          <p className="text-white/70 mb-8">
-            Découvrez comment La Foncière Patrimoniale met en œuvre ces principes 
-            pour créer de la valeur patrimoniale durable.
+          <p className="text-white/70 mb-8 max-w-2xl mx-auto">
+            Découvrez notre stratégie d'investissement et comment devenir associé de La Foncière Patrimoniale.
           </p>
-          <div className="flex flex-wrap justify-center gap-4">
-            <Link to={createPageUrl("Contact")}>
-              <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 font-semibold">
-                Entrer en relation
-                <ArrowRight className="ml-2 h-5 w-5" />
+          <div className="flex flex-wrap gap-4 justify-center">
+            <Link to={createPageUrl("StrategyPerformance")}>
+              <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold px-8">
+                Notre Stratégie
               </Button>
             </Link>
-            <Link to={createPageUrl("StrategyPerformance")}>
-              <Button variant="outline" className="border-white/30 text-white hover:bg-white/10 px-8 py-6 font-semibold">
-                Notre stratégie
+            <Link to={createPageUrl("Contact")}>
+              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-[#1A3A52] font-semibold px-8">
+                Nous Contacter
               </Button>
             </Link>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </div>
     </div>
   );
 }
