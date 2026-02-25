@@ -128,7 +128,7 @@ export default function Layout({ children, currentPageName }) {
           <div className="grid md:grid-cols-4 gap-12">
             {/* Brand */}
             <div className="md:col-span-2">
-              <div className="bg-slate-800 mb-6">
+              <div className="bg-slate-900 mb-6">
                 <img
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
                   alt="La Foncière Patrimoniale"
