@@ -51,6 +51,8 @@ import Contact from './pages/Contact';
 import Durabilite from './pages/Durabilite';
 import Equipe from './pages/Equipe';
 import EspaceAssocie from './pages/EspaceAssocie';
+import GererAcces from './pages/GererAcces';
+import GestionPhotos from './pages/GestionPhotos';
 import Home from './pages/Home';
 import MentionsLegales from './pages/MentionsLegales';
 import Partenaires from './pages/Partenaires';
@@ -59,8 +61,8 @@ import Realisations from './pages/Realisations';
 import Services from './pages/Services';
 import StrategyPerformance from './pages/StrategyPerformance';
 import Team from './pages/Team';
-import GestionPhotos from './pages/GestionPhotos';
-import GererAcces from './pages/GererAcces';
+import Blog from './pages/Blog';
+import BlogArticle from './pages/BlogArticle';
 import __Layout from './Layout.jsx';
 
 
@@ -69,6 +71,8 @@ export const PAGES = {
     "Durabilite": Durabilite,
     "Equipe": Equipe,
     "EspaceAssocie": EspaceAssocie,
+    "GererAcces": GererAcces,
+    "GestionPhotos": GestionPhotos,
     "Home": Home,
     "MentionsLegales": MentionsLegales,
     "Partenaires": Partenaires,
@@ -77,8 +81,8 @@ export const PAGES = {
     "Services": Services,
     "StrategyPerformance": StrategyPerformance,
     "Team": Team,
-    "GestionPhotos": GestionPhotos,
-    "GererAcces": GererAcces,
+    "Blog": Blog,
+    "BlogArticle": BlogArticle,
 }
 
 export const pagesConfig = {

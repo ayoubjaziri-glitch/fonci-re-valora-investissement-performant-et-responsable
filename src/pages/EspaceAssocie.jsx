@@ -207,12 +207,12 @@ export default function EspaceAssocie() {
     detail: "TRI net de frais"
   },
   {
-    label: "Ratio LTV",
+    label: "Ratio LTC",
     value: "68%",
     change: "-2%",
     positive: true,
     icon: Percent,
-    detail: "Loan To Value"
+    detail: "Loan To Cost"
   },
   {
     label: "Loyers Annuels",
