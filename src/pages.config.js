@@ -48,33 +48,33 @@
  * The mainPage value must match a key in the PAGES object exactly.
  */
 import Contact from './pages/Contact';
+import Durabilite from './pages/Durabilite';
 import Equipe from './pages/Equipe';
+import EspaceAssocie from './pages/EspaceAssocie';
+import Home from './pages/Home';
+import MentionsLegales from './pages/MentionsLegales';
 import Partenaires from './pages/Partenaires';
+import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
+import Realisations from './pages/Realisations';
 import Services from './pages/Services';
 import StrategyPerformance from './pages/StrategyPerformance';
 import Team from './pages/Team';
-import Durabilite from './pages/Durabilite';
-import Realisations from './pages/Realisations';
-import Home from './pages/Home';
-import MentionsLegales from './pages/MentionsLegales';
-import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
-import EspaceAssocie from './pages/EspaceAssocie';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
     "Contact": Contact,
+    "Durabilite": Durabilite,
     "Equipe": Equipe,
+    "EspaceAssocie": EspaceAssocie,
+    "Home": Home,
+    "MentionsLegales": MentionsLegales,
     "Partenaires": Partenaires,
+    "PolitiqueConfidentialite": PolitiqueConfidentialite,
+    "Realisations": Realisations,
     "Services": Services,
     "StrategyPerformance": StrategyPerformance,
     "Team": Team,
-    "Durabilite": Durabilite,
-    "Realisations": Realisations,
-    "Home": Home,
-    "MentionsLegales": MentionsLegales,
-    "PolitiqueConfidentialite": PolitiqueConfidentialite,
-    "EspaceAssocie": EspaceAssocie,
 }
 
 export const pagesConfig = {

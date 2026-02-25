@@ -560,28 +560,7 @@ export default function StrategyPerformance() {
         </div>
       </section>
 
-      {/* Simulator */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Projetez la valorisation de vos parts
-            </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Simulez l'évolution de votre engagement sur l'horizon de détention souhaité.
-            </p>
-          </motion.div>
 
-          <div className="max-w-2xl mx-auto">
-            <InvestmentSimulator />
-          </div>
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="py-16 bg-[#1A3A52]">

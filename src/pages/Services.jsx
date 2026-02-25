@@ -207,14 +207,14 @@ export default function Services() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10 text-center"
+              className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
             >
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Shield className="h-8 w-8 text-[#1E3A5F]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Zéro gestion</h3>
+              <h3 className="text-xl font-semibold text-white mb-3 text-center">Gestion intégrée</h3>
               <p className="text-white/70">
-                Nous nous occupons de tout, de A à Z. Vous profitez des revenus sans les contraintes.
+                La Foncière Patrimoniale assure le pilotage global des opérations immobilières : sélection, structuration, suivi et valorisation dans une logique patrimoniale de long terme.
               </p>
             </motion.div>
 
@@ -223,15 +223,14 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10 text-center"
+              className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
             >
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <FileText className="h-8 w-8 text-[#1E3A5F]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Information & Gouvernance</h3>
+              <h3 className="text-xl font-semibold text-white mb-3 text-center">Information & Gouvernance</h3>
               <p className="text-white/70">
-                Une communication périodique claire et une organisation de la gouvernance pensée pour offrir 
-                aux investisseurs une vision précise de l'évolution du portefeuille.
+                Une communication périodique et une organisation de la gouvernance permettent aux partenaires concernés de suivre l'évolution des opérations et les orientations stratégiques.
               </p>
             </motion.div>
 
@@ -240,18 +239,31 @@ export default function Services() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10 text-center"
+              className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10"
             >
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Users className="h-8 w-8 text-[#1E3A5F]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Pilotage opérationnel</h3>
+              <h3 className="text-xl font-semibold text-white mb-3 text-center">Pilotage opérationnel</h3>
               <p className="text-white/70">
-                Une organisation structurée réunissant des compétences complémentaires au service 
-                de la stratégie patrimoniale.
+                Une organisation structurée réunissant des compétences complémentaires au service du développement et de la gestion des actifs.
               </p>
             </motion.div>
           </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mt-12 text-center"
+          >
+            <p className="text-xl text-white/90 italic font-serif">
+              Aux côtés de La Foncière Patrimoniale
+            </p>
+            <p className="text-white/70 mt-4 max-w-3xl mx-auto">
+              Découvrez une approche immobilière fondée sur un pilotage professionnel, une vision durable et un cadre de collaboration défini au cas par cas.
+            </p>
+          </motion.div>
         </div>
       </section>
 

@@ -52,6 +52,10 @@ export default function Contact() {
     {
       id: "partenariat",
       title: "Partenariat"
+    },
+    {
+      id: "autre",
+      title: "Autre"
     }
   ];
 
@@ -210,17 +214,7 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Investment Options */}
-                <div className="bg-[#F8F9FA] rounded-2xl p-6">
-                  <h3 className="font-semibold text-[#1A3A52] mb-4">Options d'investissement</h3>
-                  <div className="space-y-2">
-                    {investmentOptions.map((option) => (
-                      <div key={option.id} className="bg-white rounded-xl p-3 border border-slate-200">
-                        <span className="font-semibold text-[#1A3A52]">{option.title}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+
               </motion.div>
             </div>
 
@@ -299,26 +293,15 @@ export default function Contact() {
                   </div>
 
                   <div>
-                    <Label htmlFor="amount">Montant envisagé (€)</Label>
-                    <Input
-                      id="amount"
-                      type="text"
-                      placeholder="Ex: 25 000 €"
-                      value={formData.amount}
-                      onChange={(e) => setFormData({...formData, amount: e.target.value})}
-                      className="mt-1"
-                    />
-                  </div>
-
-                  <div>
-                    <Label htmlFor="message">Message</Label>
+                    <Label htmlFor="message">Objet du message</Label>
                     <Textarea
                       id="message"
                       rows={4}
-                      placeholder="Décrivez votre projet d'investissement..."
+                      placeholder="Décrivez votre demande..."
                       value={formData.message}
                       onChange={(e) => setFormData({...formData, message: e.target.value})}
                       className="mt-1"
+                      required
                     />
                   </div>
 
@@ -330,9 +313,14 @@ export default function Contact() {
                     <Send className="ml-2 h-5 w-5" />
                   </Button>
 
-                  <p className="text-xs text-gray-500 text-center">
-                    En soumettant ce formulaire, vous acceptez d'être contacté par notre équipe.
-                  </p>
+                  <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mt-4">
+                    <p className="text-xs text-slate-700 leading-relaxed">
+                      <strong>Le formulaire présent sur ce site vise uniquement à faciliter une mise en relation avec les personnes souhaitant en savoir davantage.</strong> Les échanges s'inscrivent ensuite dans un cadre confidentiel et personnalisé, adapté à chaque situation.
+                    </p>
+                    <p className="text-xs text-slate-700 leading-relaxed mt-2">
+                      <strong>AVERTISSEMENT :</strong> Les éléments communiqués sur ce site sont fournis à titre de présentation générale. Chaque personne intéressée est invitée à apprécier l'opportunité d'une éventuelle participation au regard de sa situation propre, sans que ce contenu puisse être assimilé à un conseil individualisé.
+                    </p>
+                  </div>
                 </form>
               </div>
             </motion.div>
