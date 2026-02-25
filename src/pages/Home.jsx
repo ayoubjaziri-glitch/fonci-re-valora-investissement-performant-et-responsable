@@ -26,6 +26,7 @@ import {
 import { Button } from "@/components/ui/button";
 import RealisationsGallery from "../components/RealisationsGallery";
 import InterventionMap from "../components/InterventionMap";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
   const stats = [
@@ -39,22 +40,19 @@ export default function Home() {
   {
     title: "Souscription au capital",
     description: "Devenez associé de La Foncière Patrimoniale et participez à des opérations d'acquisition structurées. Bénéficiez d'un véhicule d'investissement collectif avec une stratégie de valorisation patrimoniale éprouvée.",
-    // MODIFIEZ LA PHOTO CI-DESSOUS pour le service Souscription
-    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/5c0c78345_pa00083251-bordeaux-immeuble.jpg",
+    imageKey: "service_souscription",
     icon: Key
   },
   {
     title: "Sourcing et due diligence",
     description: "Notre équipe identifie des actifs à fort potentiel de revalorisation. Chaque acquisition fait l'objet d'une analyse approfondie : rentabilité locative, décote à l'achat, potentiel de réhabilitation.",
-    // MODIFIEZ LA PHOTO CI-DESSOUS pour le service Sourcing
-    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/6612247a6_immeuble_bordeaux__098875700_1532_22022018.jpg",
+    imageKey: "service_sourcing",
     icon: Search
   },
   {
     title: "Asset management et arbitrage",
     description: "Gestion locative intégrée, suivi des flux de trésorerie, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur et le TRI de vos parts.",
-    // MODIFIEZ LA PHOTO CI-DESSOUS pour le service Asset management
-    image: "https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg",
+    imageKey: "service_asset",
     icon: BarChart3
   }];
 
@@ -100,11 +98,10 @@ export default function Home() {
     <div className="min-h-screen bg-white">
       {/* Hero Section - Inspired by Orion */}
       <section className="relative min-h-screen flex items-center overflow-hidden">
-        {/* MODIFIEZ LA PHOTO DE FOND DU HERO CI-DESSOUS */}
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: "url('https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg')"
+            backgroundImage: `url('${getImageUrl('hero_home', 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg')}')`
           }} />
 
         <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/85 to-slate-900/70" />
@@ -312,9 +309,8 @@ export default function Home() {
               viewport={{ once: true }}
               className="relative">
 
-              {/* MODIFIEZ LA PHOTO DE LA SECTION DURABILITÉ CI-DESSOUS */}
               <img
-                src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg"
+                src={getImageUrl('durabilite_home', 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg')}
                 alt="Rénovation durable"
                 className="rounded-3xl shadow-2xl w-full h-80 object-cover" />
 
@@ -472,7 +468,7 @@ export default function Home() {
                 <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-500 h-full hover:-translate-y-2">
                   <div className="relative h-72 overflow-hidden">
                     <img
-                    src={service.image}
+                    src={getImageUrl(service.imageKey, service.image)}
                     alt={service.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
 
@@ -528,10 +524,9 @@ export default function Home() {
               viewport={{ once: true }}
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
-              {/* MODIFIEZ L'URL DE LA PHOTO CI-DESSOUS pour Ayoub Jaziri */}
               <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
                 <img 
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" 
+                  src={getImageUrl('photo_ayoub', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80')}
                   alt="Ayoub Jaziri"
                   className="w-full h-full object-cover"
                 />
@@ -548,10 +543,9 @@ export default function Home() {
               transition={{ delay: 0.1 }}
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
-              {/* MODIFIEZ L'URL DE LA PHOTO CI-DESSOUS pour Sophian Naili */}
               <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
                 <img 
-                  src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80" 
+                  src={getImageUrl('photo_sophian', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80')}
                   alt="Sophian Naili"
                   className="w-full h-full object-cover"
                 />
@@ -568,10 +562,9 @@ export default function Home() {
               transition={{ delay: 0.2 }}
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
-              {/* MODIFIEZ L'URL DE LA PHOTO CI-DESSOUS pour Renaud Marchand */}
               <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
                 <img 
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80" 
+                  src={getImageUrl('photo_renaud', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80')}
                   alt="Renaud Marchand"
                   className="w-full h-full object-cover"
                 />

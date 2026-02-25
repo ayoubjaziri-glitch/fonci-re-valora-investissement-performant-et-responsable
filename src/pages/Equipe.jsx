@@ -7,8 +7,20 @@ import {
   Briefcase, Award, Network, Lightbulb
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from '@/api/base44Client';
 
 export default function Equipe() {
+  const { data: images = [] } = useQuery({
+    queryKey: ['site-images'],
+    queryFn: () => base44.entities.SiteImage.list(),
+    initialData: [],
+  });
+
+  const getImageUrl = (key, fallback) => {
+    const image = images.find(img => img.key === key);
+    return image?.url || fallback;
+  };
   const founders = [
     {
       name: "Ayoub Jaziri",
@@ -16,8 +28,7 @@ export default function Equipe() {
       focus: "Vision opérationnelle",
       description: "Ayoub Jaziri porte la vision opérationnelle de la foncière et accompagne la mise en œuvre concrète des projets immobiliers.",
       experience: "Il intervient sur l'architecture financière des opérations, la relation avec les partenaires investisseurs et clients, ainsi que la coordination des acteurs impliqués dans le développement et la valorisation des actifs. Son action s'inscrit dans une logique de structuration durable et de suivi opérationnel des projets.",
-      // MODIFIEZ LA PHOTO CI-DESSOUS pour Ayoub Jaziri
-      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
+      imageKey: "photo_ayoub"
     },
     {
       name: "Sofhian Naili",
@@ -25,8 +36,7 @@ export default function Equipe() {
       focus: "Gouvernance juridique & Vision stratégique",
       description: "De formation juridique, Sofhian Naili est également fondateur du Groupe Auvergne et Patrimoine, actif dans la structuration et la valorisation d'actifs immobiliers depuis 2008.",
       experience: "Il assure la gouvernance juridique et la vision stratégique de la foncière, veille à la structuration statutaire, à l'équilibre entre les associés et au respect des principes d'éthique et de loyauté, tout en sécurisant la trajectoire de développement dans une logique patrimoniale de long terme. Il anime également, aux côtés d'Ayoub Jaziri, la relation avec les investisseurs et les partenaires stratégiques.",
-      // MODIFIEZ LA PHOTO CI-DESSOUS pour Sofhian Naili
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80"
+      imageKey: "photo_sophian"
     }
   ];
 
@@ -36,48 +46,42 @@ export default function Equipe() {
       role: "Investisseur stratégique",
       focus: "Expertise technique BTP",
       description: "Ingénieur BTP, président de SCABB, apporte son expertise technique sur les projets de réhabilitation.",
-      // MODIFIEZ LA PHOTO CI-DESSOUS pour Renaud Marchand
-      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80"
+      imageKey: "photo_renaud"
     },
     {
       name: "Christophe Gironde",
       role: "Directeur administratif",
       focus: "Coordination opérationnelle",
       description: "Assure la direction administrative et la coordination des opérations au sein de la société Gabriel.",
-      // MODIFIEZ LA PHOTO CI-DESSOUS pour Christophe Gironde
-      image: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=400&q=80"
+      imageKey: "photo_christophe"
     },
     {
       name: "Marie Dupont",
       role: "Responsable gestion locative",
       focus: "Relations locataires",
       description: "Pilote la gestion locative, le suivi des occupants et l'optimisation du taux d'occupation.",
-      // MODIFIEZ LA PHOTO CI-DESSOUS pour Marie Dupont
-      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80"
+      imageKey: "photo_marie"
     },
     {
       name: "Thomas Laurent",
       role: "Chargé de financement",
       focus: "Structuration bancaire",
       description: "Gère les relations bancaires, montages financiers et optimisation de l'effet de levier.",
-      // MODIFIEZ LA PHOTO CI-DESSOUS pour Thomas Laurent
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80"
+      imageKey: "photo_thomas"
     },
     {
       name: "Sophie Martin",
       role: "Comptable",
       focus: "Reporting financier",
       description: "Assure la comptabilité, le reporting financier et le suivi des indicateurs de performance.",
-      // MODIFIEZ LA PHOTO CI-DESSOUS pour Sophie Martin
-      image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=400&q=80"
+      imageKey: "photo_sophie"
     },
     {
       name: "Lucas Mercier",
       role: "Chargé d'acquisition",
       focus: "Sourcing & négociation",
       description: "Identifie et négocie les opportunités d'acquisition off-market auprès des notaires et agents.",
-      // MODIFIEZ LA PHOTO CI-DESSOUS pour Lucas Mercier
-      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80"
+      imageKey: "photo_lucas"
     }
   ];
 
@@ -174,7 +178,7 @@ export default function Equipe() {
               >
                 <div className="relative h-56">
                   <img 
-                    src={founder.image} 
+                    src={getImageUrl(founder.imageKey, founder.image)} 
                     alt={founder.name}
                     className="w-full h-full object-cover"
                   />
@@ -209,7 +213,7 @@ export default function Equipe() {
               >
                 <div className="relative h-40">
                   <img 
-                    src={member.image} 
+                    src={getImageUrl(member.imageKey, member.image)} 
                     alt={member.name}
                     className="w-full h-full object-cover"
                   />
