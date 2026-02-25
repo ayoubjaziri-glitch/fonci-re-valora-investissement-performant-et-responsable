@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Mail, 
-  Phone, 
-  MapPin, 
+import {
+  Mail,
+  Phone,
+  MapPin,
   Send,
   CheckCircle2,
   Building2,
   Users,
   Briefcase,
   ArrowRight,
-  Clock
-} from 'lucide-react';
+  Clock } from
+'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -37,35 +37,35 @@ export default function Contact() {
   };
 
   const investmentOptions = [
-    {
-      id: "investisseur",
-      title: "Associé Investisseur"
-    },
-    {
-      id: "obligataire",
-      title: "Obligataire"
-    },
-    {
-      id: "actif",
-      title: "Associé Actif"
-    },
-    {
-      id: "partenariat",
-      title: "Partenariat"
-    },
-    {
-      id: "autre",
-      title: "Autre"
-    }
-  ];
+  {
+    id: "investisseur",
+    title: "Associé Investisseur"
+  },
+  {
+    id: "obligataire",
+    title: "Obligataire"
+  },
+  {
+    id: "actif",
+    title: "Associé Actif"
+  },
+  {
+    id: "partenariat",
+    title: "Partenariat"
+  },
+  {
+    id: "autre",
+    title: "Autre"
+  }];
+
 
   const steps = [
-    { number: "1", title: "Prise de contact", desc: "Échange avec les fondateurs" },
-    { number: "2", title: "Questions / Réponses", desc: "Compréhension du modèle" },
-    { number: "3", title: "Souscription", desc: "Signature électronique" },
-    { number: "4", title: "Intégration", desc: "Accès plateforme" },
-    { number: "5", title: "Création de valeur", desc: "Participation active" }
-  ];
+  { number: "1", title: "Prise de contact", desc: "Échange avec les fondateurs" },
+  { number: "2", title: "Questions / Réponses", desc: "Compréhension du modèle" },
+  { number: "3", title: "Souscription", desc: "Signature électronique" },
+  { number: "4", title: "Intégration", desc: "Accès plateforme" },
+  { number: "5", title: "Création de valeur", desc: "Participation active" }];
+
 
   if (submitted) {
     return (
@@ -73,8 +73,8 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-2xl mx-auto"
-        >
+          className="max-w-2xl mx-auto">
+
           <div className="bg-white rounded-3xl p-12 shadow-xl border border-slate-100">
             <div className="w-20 h-20 bg-gradient-to-br from-[#C9A961] to-[#B8994F] rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="h-10 w-10 text-white" />
@@ -110,18 +110,18 @@ export default function Contact() {
             </div>
 
             <div className="flex gap-3 justify-center">
-              <Button 
+              <Button
                 onClick={() => setSubmitted(false)}
                 variant="outline"
-                className="border-[#1A3A52] text-[#1A3A52] hover:bg-[#1A3A52] hover:text-white font-semibold"
-              >
+                className="border-[#1A3A52] text-[#1A3A52] hover:bg-[#1A3A52] hover:text-white font-semibold">
+
                 Envoyer un nouveau message
               </Button>
             </div>
           </div>
         </motion.div>
-      </div>
-    );
+      </div>);
+
   }
 
   return (
@@ -135,8 +135,8 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
+            className="max-w-3xl">
+
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
@@ -162,8 +162,8 @@ export default function Contact() {
               <motion.div
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-              >
+                viewport={{ once: true }}>
+
                 <h2 className="text-2xl font-serif text-[#1E3A5F] mb-8">
                   Contactez-nous
                 </h2>
@@ -223,8 +223,8 @@ export default function Contact() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="lg:col-span-3"
-            >
+              className="lg:col-span-3">
+
               <div className="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
                 <h3 className="text-xl font-serif text-[#1A3A52] mb-6">Entrer en relation</h3>
                 
@@ -235,20 +235,20 @@ export default function Contact() {
                       <Input
                         id="firstName"
                         value={formData.firstName}
-                        onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                         className="mt-1"
-                        required
-                      />
+                        required />
+
                     </div>
                     <div>
                       <Label htmlFor="lastName">Nom</Label>
                       <Input
                         id="lastName"
                         value={formData.lastName}
-                        onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                         className="mt-1"
-                        required
-                      />
+                        required />
+
                     </div>
                   </div>
 
@@ -259,10 +259,10 @@ export default function Contact() {
                         id="email"
                         type="email"
                         value={formData.email}
-                        onChange={(e) => setFormData({...formData, email: e.target.value})}
+                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="mt-1"
-                        required
-                      />
+                        required />
+
                     </div>
                     <div>
                       <Label htmlFor="phone">Téléphone</Label>
@@ -270,9 +270,9 @@ export default function Contact() {
                         id="phone"
                         type="tel"
                         value={formData.phone}
-                        onChange={(e) => setFormData({...formData, phone: e.target.value})}
-                        className="mt-1"
-                      />
+                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                        className="mt-1" />
+
                     </div>
                   </div>
 
@@ -281,34 +281,34 @@ export default function Contact() {
                     <select
                       id="investmentType"
                       value={formData.investmentType}
-                      onChange={(e) => setFormData({...formData, investmentType: e.target.value})}
-                      className="w-full mt-2 px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent"
-                    >
-                      {investmentOptions.map((option) => (
-                        <option key={option.id} value={option.id}>
+                      onChange={(e) => setFormData({ ...formData, investmentType: e.target.value })}
+                      className="w-full mt-2 px-4 py-3 rounded-lg border border-slate-200 focus:ring-2 focus:ring-[#C9A961] focus:border-transparent">
+
+                      {investmentOptions.map((option) =>
+                      <option key={option.id} value={option.id}>
                           {option.title}
                         </option>
-                      ))}
+                      )}
                     </select>
                   </div>
 
                   <div>
-                    <Label htmlFor="message">Objet du message</Label>
+                    <Label htmlFor="message" className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Message</Label>
                     <Textarea
                       id="message"
                       rows={4}
                       placeholder="Décrivez votre demande..."
                       value={formData.message}
-                      onChange={(e) => setFormData({...formData, message: e.target.value})}
+                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       className="mt-1"
-                      required
-                    />
+                      required />
+
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] py-6 text-base font-semibold"
-                  >
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] py-6 text-base font-semibold">
+
                     Prendre contact
                     <Send className="ml-2 h-5 w-5" />
                   </Button>
@@ -317,9 +317,9 @@ export default function Contact() {
                     <p className="text-xs text-slate-700 leading-relaxed">
                       <strong>Le formulaire présent sur ce site vise uniquement à faciliter une mise en relation avec les personnes souhaitant en savoir davantage.</strong> Les échanges s'inscrivent ensuite dans un cadre confidentiel et personnalisé, adapté à chaque situation.
                     </p>
-                    <p className="text-xs text-slate-700 leading-relaxed mt-2">
-                      <strong>AVERTISSEMENT :</strong> Les éléments communiqués sur ce site sont fournis à titre de présentation générale. Chaque personne intéressée est invitée à apprécier l'opportunité d'une éventuelle participation au regard de sa situation propre, sans que ce contenu puisse être assimilé à un conseil individualisé.
-                    </p>
+                    
+
+
                   </div>
                 </form>
               </div>
@@ -335,8 +335,8 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+            className="text-center mb-16">
+
             <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-4">
               Votre parcours vers la création de valeur
             </h2>
@@ -346,15 +346,15 @@ export default function Contact() {
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="flex items-center gap-4"
-              >
+            {steps.map((step, index) =>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="flex items-center gap-4">
+
                 <div className="bg-white rounded-2xl p-6 shadow-sm min-w-[160px] text-center border border-gray-100">
                   <div className="w-10 h-10 bg-[#C9A961] rounded-full flex items-center justify-center mx-auto mb-3">
                     <span className="text-[#1E3A5F] font-bold">{step.number}</span>
@@ -362,19 +362,19 @@ export default function Contact() {
                   <h4 className="font-semibold text-[#1E3A5F] mb-1">{step.title}</h4>
                   <p className="text-sm text-gray-500">{step.desc}</p>
                 </div>
-                {index < steps.length - 1 && (
-                  <ArrowRight className="h-5 w-5 text-[#C9A961] hidden md:block" />
-                )}
+                {index < steps.length - 1 &&
+              <ArrowRight className="h-5 w-5 text-[#C9A961] hidden md:block" />
+              }
               </motion.div>
-            ))}
+            )}
           </div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-16 bg-[#C9A961] rounded-2xl p-6 text-center"
-          >
+            className="mt-16 bg-[#C9A961] rounded-2xl p-6 text-center">
+
             <p className="text-[#1A3A52] font-medium text-sm">
               Ce formulaire a pour seul objet de permettre une prise de contact à l'initiative des personnes intéressées 
               et ne constitue pas une offre de titres financiers. La souscription éventuelle n'interviendra qu'après des échanges privés 
@@ -387,12 +387,12 @@ export default function Contact() {
       {/* Disclaimer */}
       <section className="py-8 bg-gray-100">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <p className="text-xs text-gray-500">
-            AVERTISSEMENT : Avant toute souscription, chaque associé doit prendre connaissance des statuts et du Pacte d'Associés. 
-            Ce document est à caractère promotionnel et ne constitue pas un conseil en investissement.
+          <p className="text-xs text-gray-500">AVERTISSEMENT : Avant toute souscription, chaque associé doit prendre connaissance des statuts et du Pacte d'Associés. Ce site est à caractère promotionnel et ne constitue pas un conseil en investissement.
+
+
           </p>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }
