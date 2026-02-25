@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
+import { useQuery } from "@tanstack/react-query";
+import { base44 } from '@/api/base44Client';
 import { 
   Leaf, TreePine, Thermometer, Zap, Droplets, Sun, Wind, 
   Building2, ArrowRight, CheckCircle2, Target, BarChart3,
@@ -10,6 +12,17 @@ import {
 import { Button } from "@/components/ui/button";
 
 export default function Durabilite() {
+  const { data: images = [] } = useQuery({
+    queryKey: ['site-images'],
+    queryFn: () => base44.entities.SiteImage.list(),
+    initialData: [],
+  });
+
+  const getImageUrl = (key, fallback) => {
+    const image = images.find(img => img.key === key);
+    return image?.url || fallback;
+  };
+
   const engagements = [
     {
       icon: Thermometer,
@@ -93,7 +106,7 @@ export default function Durabilite() {
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
         <div className="absolute inset-0 opacity-20">
           <img 
-            src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=1920&q=80"
+            src={getImageUrl('hero_durabilite', 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=1920&q=80')}
             alt=""
             className="w-full h-full object-cover"
           />
@@ -157,7 +170,7 @@ export default function Durabilite() {
               className="relative"
             >
               <img 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80"
+                src={getImageUrl('immeuble_durable', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')}
                 alt="Immeuble durable"
                 className="rounded-3xl shadow-2xl"
               />
