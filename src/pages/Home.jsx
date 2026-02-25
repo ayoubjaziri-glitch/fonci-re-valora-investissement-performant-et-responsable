@@ -189,7 +189,7 @@ export default function Home() {
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
                 La Foncière Patrimoniale développe et valorise des actifs résidentiels durables à travers 
-                une stratégie d'acquisition sélective, de réhabilitation BBC et de gestion active.
+                une stratégie d'acquisition sélective, de réhabilitation énergétique (DPE C minimum) et de gestion active.
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
                 Un modèle conçu pour offrir aux investisseurs une exposition structurée à l'immobilier, 
@@ -232,7 +232,7 @@ export default function Home() {
               </div>
               <div className="bg-[#C9A961] rounded-2xl p-6 text-center">
                 <Percent className="h-8 w-8 text-[#1A3A52] mx-auto mb-3" />
-                <p className="text-3xl font-bold text-[#1A3A52] mb-1">10,5%</p>
+                <p className="text-3xl font-bold text-[#1A3A52] mb-1">>7%</p>
                 <p className="text-sm text-[#1A3A52]/80">TRI net visé</p>
               </div>
               <div className="bg-[#1A3A52] rounded-2xl p-6 text-center">
@@ -809,7 +809,7 @@ export default function Home() {
                   Objectif Stratégique
                 </h3>
                 <p className="text-white/70 max-w-xl">
-                  Créer de la valeur durable par revalorisation technique (travaux BBC), 
+                  Créer de la valeur durable par amélioration de la performance énergétique (DPE C minimum), 
                   revalorisation locative, amortissement des prêts et plus-value à l'arbitrage.
                 </p>
               </div>

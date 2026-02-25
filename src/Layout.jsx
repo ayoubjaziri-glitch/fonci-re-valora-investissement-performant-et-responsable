@@ -109,7 +109,7 @@ export default function Layout({ children, currentPageName }) {
               className="block pt-4">
 
                 <Button className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-                  Le Club
+                  Espace Associés
                 </Button>
               </Link>
             </div>
