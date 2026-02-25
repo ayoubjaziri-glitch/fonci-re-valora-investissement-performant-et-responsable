@@ -14,36 +14,40 @@ L.Icon.Default.mergeOptions({
 
 const zones = [
   { 
-    name: "Lyon", 
+    name: "Immeuble Lyon Garibaldi", 
     lat: 45.764043, 
     lng: 4.835659,
-    description: "Métropole dynamique avec fort potentiel locatif",
-    actifs: "3 immeubles",
-    logements: "28 logements"
+    adresse: "12 Cours Gambetta, 69003 Lyon",
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=400&q=80",
+    logements: "12 logements",
+    dpe: "B"
   },
   { 
-    name: "Bordeaux", 
+    name: "Résidence Bordeaux Chartrons", 
     lat: 44.837789, 
     lng: -0.579180,
-    description: "Marché en croissance, forte demande résidentielle",
-    actifs: "2 immeubles",
-    logements: "16 logements"
+    adresse: "45 Rue Notre-Dame, 33000 Bordeaux",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=400&q=80",
+    logements: "8 logements",
+    dpe: "C"
   },
   { 
-    name: "Vichy", 
+    name: "Immeuble Vichy Centre", 
     lat: 46.127771, 
     lng: 3.425896,
-    description: "Ville thermale avec patrimoine architectural remarquable",
-    actifs: "4 immeubles",
-    logements: "32 logements"
+    adresse: "28 Boulevard des États-Unis, 03200 Vichy",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80",
+    logements: "14 logements",
+    dpe: "A"
   },
   { 
-    name: "Clermont-Ferrand", 
+    name: "Résidence Clermont Jaude", 
     lat: 45.777222, 
     lng: 3.087025,
-    description: "Capitale auvergnate, marché résilient",
-    actifs: "2 immeubles",
-    logements: "18 logements"
+    adresse: "8 Place de Jaude, 63000 Clermont-Ferrand",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=400&q=80",
+    logements: "8 logements",
+    dpe: "B"
   }
 ];
 
@@ -80,12 +84,28 @@ export default function InterventionMap() {
               icon={customIcon}
             >
               <Popup>
-                <div className="p-2 min-w-[200px]">
-                  <h4 className="font-bold text-slate-900 text-lg mb-2">{zone.name}</h4>
-                  <p className="text-slate-600 text-sm mb-3">{zone.description}</p>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-blue-600 font-medium">{zone.actifs}</span>
-                    <span className="text-slate-500">{zone.logements}</span>
+                <div className="p-0 min-w-[280px]">
+                  <img 
+                    src={zone.image} 
+                    alt={zone.name}
+                    className="w-full h-40 object-cover rounded-t-lg"
+                  />
+                  <div className="p-4">
+                    <h4 className="font-bold text-slate-900 text-base mb-2">{zone.name}</h4>
+                    <p className="text-slate-600 text-xs mb-3 flex items-start gap-1">
+                      <MapPin className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                      {zone.adresse}
+                    </p>
+                    <div className="flex justify-between items-center">
+                      <span className="text-slate-700 font-medium text-sm">{zone.logements}</span>
+                      <span className={`px-2 py-1 rounded text-xs font-bold text-white ${
+                        zone.dpe === 'A' ? 'bg-emerald-500' : 
+                        zone.dpe === 'B' ? 'bg-green-500' : 
+                        'bg-lime-500'
+                      }`}>
+                        DPE {zone.dpe}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </Popup>
@@ -96,10 +116,14 @@ export default function InterventionMap() {
 
       {/* Legend */}
       <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg z-[1000]">
-        <p className="text-xs text-slate-500 mb-2 font-medium">ZONES D'INTERVENTION</p>
+        <p className="text-xs text-slate-500 mb-2 font-medium">NOTRE PARC IMMOBILIER</p>
         <div className="flex items-center gap-2">
-          <div className="w-3 h-3 bg-blue-600 rounded-full"></div>
-          <span className="text-sm text-slate-700">Actifs en portefeuille</span>
+          <img 
+            src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-gold.png" 
+            alt="marker"
+            className="w-4 h-auto"
+          />
+          <span className="text-sm text-slate-700">Cliquez pour voir l'immeuble</span>
         </div>
       </div>
     </div>

@@ -165,28 +165,8 @@ export default function Realisations() {
         </div>
       </section>
 
-      {/* Map Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-12"
-          >
-            <h2 className="text-3xl font-serif text-[#1A3A52] mb-4">
-              Nos zones d'intervention
-            </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Découvrez la localisation de nos opérations de valorisation sur l'ensemble du territoire
-            </p>
-          </motion.div>
-          <InterventionMap />
-        </div>
-      </section>
-
       {/* Réalisations Grid */}
-      <section className="py-24 bg-slate-50">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12">
             {realisations.map((item, index) => (
@@ -270,6 +250,26 @@ export default function Realisations() {
               </motion.div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
+              Notre parc immobilier
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Découvrez la localisation géographique de nos immeubles résidentiels
+            </p>
+          </motion.div>
+          <InterventionMap />
         </div>
       </section>
 
