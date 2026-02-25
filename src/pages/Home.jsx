@@ -27,8 +27,20 @@ import { Button } from "@/components/ui/button";
 import RealisationsGallery from "../components/RealisationsGallery";
 import InterventionMap from "../components/InterventionMap";
 import { useQuery } from "@tanstack/react-query";
+import { base44 } from '@/api/base44Client';
 
 export default function Home() {
+  const { data: images = [] } = useQuery({
+    queryKey: ['site-images'],
+    queryFn: () => base44.entities.SiteImage.list(),
+    initialData: [],
+  });
+
+  const getImageUrl = (key, fallback) => {
+    const image = images.find(img => img.key === key);
+    return image?.url || fallback;
+  };
+
   const stats = [
   { value: "18 ans", label: "D'expertise immobilière", icon: Calendar },
   { value: "3 M€", label: "D'actifs sous gestion", icon: Building2 },

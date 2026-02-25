@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
 import { 
   TrendingUp, Building2, Percent, Shield, FileText, Users, 
   Eye, EyeOff, Lock, Mail, ArrowRight, BarChart3, Leaf, 
@@ -17,6 +18,17 @@ export default function EspaceAssocie() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [loginData, setLoginData] = useState({ email: '', password: '' });
+  const [loginError, setLoginError] = useState('');
+  const [associeName, setAssociateName] = useState('');
+
+  useEffect(() => {
+    const savedAuth = localStorage.getItem('associe_auth');
+    if (savedAuth) {
+      const auth = JSON.parse(savedAuth);
+      setIsLoggedIn(true);
+      setAssociateName(auth.nom);
+    }
+  }, []);
   const [montantSimulation, setMontantSimulation] = useState(25000);
   const [dureeSimulation, setDureeSimulation] = useState(5);
 
@@ -28,9 +40,39 @@ export default function EspaceAssocie() {
   const capitalFinal = montantSimulation * Math.pow(1 + triNet/100, dureeSimulation);
   const gainTotal = capitalFinal - montantSimulation;
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    setIsLoggedIn(true);
+    setLoginError('');
+    
+    try {
+      const associes = await base44.entities.AccesAssocie.filter({ 
+        email: loginData.email,
+        actif: true
+      });
+      
+      if (associes.length === 0) {
+        setLoginError('Email non reconnu');
+        return;
+      }
+      
+      const associe = associes[0];
+      if (associe.password !== loginData.password) {
+        setLoginError('Mot de passe incorrect');
+        return;
+      }
+      
+      setIsLoggedIn(true);
+      setAssociateName(associe.nom);
+      localStorage.setItem('associe_auth', JSON.stringify({ email: associe.email, nom: associe.nom }));
+    } catch (error) {
+      setLoginError('Erreur de connexion');
+    }
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setAssociateName('');
+    localStorage.removeItem('associe_auth');
   };
 
   if (!isLoggedIn) {
@@ -87,6 +129,13 @@ export default function EspaceAssocie() {
                   </button>
                 </div>
               </div>
+
+              {loginError && (
+                <div className="bg-red-50 border border-red-200 rounded-lg p-3 flex items-center gap-2">
+                  <AlertCircle className="h-4 w-4 text-red-600 flex-shrink-0" />
+                  <p className="text-sm text-red-800">{loginError}</p>
+                </div>
+              )}
 
               <Button type="submit" className="w-full bg-[#1A3A52] hover:bg-[#2A4A6F] text-white py-6 font-semibold">
                 Connexion sécurisée
@@ -249,10 +298,10 @@ export default function EspaceAssocie() {
           <div className="flex justify-between items-center">
             <div>
               <h1 className="text-2xl font-serif text-white mb-1">Espace Associés</h1>
-              <p className="text-white/60 text-sm">Dernière mise à jour : 24 Février 2026</p>
+              <p className="text-white/60 text-sm">Bienvenue {associeName} • Dernière mise à jour : 24 Février 2026</p>
             </div>
             <Button 
-              onClick={() => setIsLoggedIn(false)} 
+              onClick={handleLogout} 
               className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold"
             >
               Déconnexion
