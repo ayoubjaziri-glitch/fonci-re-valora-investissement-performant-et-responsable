@@ -46,7 +46,7 @@ export default function EspaceAssocie() {
               <div className="w-20 h-20 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-10 w-10 text-[#1A3A52]" />
               </div>
-              <h1 className="text-2xl font-serif text-[#1A3A52] mb-2">Le Club</h1>
+              <h1 className="text-2xl font-serif text-[#1A3A52] mb-2">Espace Associés</h1>
               <p className="text-slate-600">Accédez à votre tableau de bord sécurisé</p>
             </div>
 
@@ -227,11 +227,10 @@ export default function EspaceAssocie() {
 
   const roadmap = [
     { etape: "Levée de fonds Série A", date: "Q1 2026", statut: "en_cours", avancement: 75 },
-    { etape: "Acquisition Toulouse", date: "Q2 2026", statut: "en_cours", avancement: 65 },
-    { etape: "Livraison Lyon Garibaldi", date: "Q1 2026", statut: "en_cours", avancement: 75 },
-    { etape: "Acquisition Montpellier", date: "Q3 2026", statut: "planifie", avancement: 0 },
-    { etape: "Levée de fonds Série B", date: "Q4 2026", statut: "planifie", avancement: 0 },
-    { etape: "Expansion Marseille", date: "Q1 2027", statut: "planifie", avancement: 0 }
+    { etape: "Acquisition Vichy", date: "Q2 2026", statut: "en_cours", avancement: 60 },
+    { etape: "Acquisition Bordeaux", date: "Q3 2026", statut: "planifie", avancement: 0 },
+    { etape: "Acquisition Lyon", date: "Q4 2026", statut: "planifie", avancement: 0 },
+    { etape: "Levée de fonds Série B", date: "Q1 2027", statut: "planifie", avancement: 0 }
   ];
 
   const documentsFinanciers = [

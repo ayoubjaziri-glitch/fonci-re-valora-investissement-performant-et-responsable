@@ -31,7 +31,7 @@ export default function Home() {
   const stats = [
   { value: "18 ans", label: "D'expertise immobilière", icon: Calendar },
   { value: "3 M€", label: "D'actifs sous gestion", icon: Building2 },
-  { value: "10,5%", label: "TRI net visé", icon: Percent },
+  { value: ">7%", label: "TRI net visé", icon: Percent },
   { value: "20 M€", label: "Objectif 5 ans", icon: Target }];
 
 
@@ -232,7 +232,7 @@ export default function Home() {
               </div>
               <div className="bg-[#C9A961] rounded-2xl p-6 text-center">
                 <Percent className="h-8 w-8 text-[#1A3A52] mx-auto mb-3" />
-                <p className="text-3xl font-bold text-[#1A3A52] mb-1">10,5%</p>
+                <p className="text-3xl font-bold text-[#1A3A52] mb-1">&gt;7%</p>
                 <p className="text-sm text-[#1A3A52]/80">TRI net visé</p>
               </div>
               <div className="bg-[#1A3A52] rounded-2xl p-6 text-center">
@@ -274,8 +274,8 @@ export default function Home() {
               <div className="grid grid-cols-2 gap-4 mb-8">
                 <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
                   <Thermometer className="h-8 w-8 text-[#C9A961] mb-3" />
-                  <p className="font-semibold text-[#1A3A52] mb-1">Rénovation BBC</p>
-                  <p className="text-sm text-slate-600">Objectif DPE A ou B sur 100% du parc</p>
+                  <p className="font-semibold text-[#1A3A52] mb-1">Performance énergétique</p>
+                  <p className="text-sm text-slate-600">Objectif DPE C minimum sur 100% du parc</p>
                 </div>
                 <div className="bg-white rounded-2xl p-5 shadow-sm border border-slate-200">
                   <Zap className="h-8 w-8 text-[#C9A961] mb-3" />
@@ -315,7 +315,7 @@ export default function Home() {
 
               <div className="absolute -bottom-6 -left-6 bg-[#C9A961] text-[#1A3A52] rounded-2xl p-6 shadow-xl">
                 <p className="text-4xl font-bold mb-1">100%</p>
-                <p className="text-[#1A3A52]/80 text-sm">des actifs rénovés<br />aux normes BBC</p>
+                <p className="text-[#1A3A52]/80 text-sm">DPE C, B et A</p>
               </div>
             </motion.div>
           </div>
@@ -662,7 +662,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-4 mb-8">
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                     <p className="text-white/60 text-sm mb-1">TRI net visé</p>
-                    <p className="text-3xl font-bold text-[#C9A961]">10,5%</p>
+                    <p className="text-3xl font-bold text-[#C9A961]">&gt;7%</p>
                   </div>
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                     <p className="text-white/60 text-sm mb-1">Horizon recommandé</p>

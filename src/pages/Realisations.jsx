@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import BeforeAfterSlider from "../components/BeforeAfterSlider";
+import InterventionMap from "../components/InterventionMap";
 
 const realisations = [
   {
@@ -158,9 +159,29 @@ export default function Realisations() {
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-[#C9A961]">100%</p>
-              <p className="text-sm text-slate-600">DPE C</p>
+              <p className="text-sm text-slate-600">DPE C, B et A</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Map Section */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
+              Localisation de nos actifs
+            </h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Découvrez la répartition géographique de notre portefeuille immobilier
+            </p>
+          </motion.div>
+          <InterventionMap />
         </div>
       </section>
 
