@@ -246,7 +246,8 @@ export default function GestionPhotos() {
             Comment ça marche ?
           </h3>
           <ul className="space-y-2 text-sm text-amber-800">
-            <li>• <strong>Uploader une photo</strong> : Cliquez sur "Uploader une photo" et sélectionnez votre image</li>
+            <li>• <strong>Uploader une photo</strong> : Cliquez sur "Uploader une photo", puis recadrez l'image avant de valider</li>
+            <li>• <strong>Recadrage</strong> : Déplacez l'image avec la souris et zoomez pour ajuster le cadrage</li>
             <li>• <strong>Modifier l'URL</strong> : Cliquez sur "Modifier l'URL" pour coller une URL d'image existante</li>
             <li>• <strong>Changements instantanés</strong> : Les modifications sont appliquées immédiatement sur le site</li>
           </ul>
