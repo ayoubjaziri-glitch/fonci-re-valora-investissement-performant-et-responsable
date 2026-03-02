@@ -15,6 +15,7 @@ export default function GestionPhotos() {
   const [uploading, setUploading] = useState(false);
   const [editingImage, setEditingImage] = useState(null);
   const [newUrl, setNewUrl] = useState('');
+  const [cropModal, setCropModal] = useState(null); // { imageId, src }
   const queryClient = useQueryClient();
 
   const { data: images = [], isLoading } = useQuery({
