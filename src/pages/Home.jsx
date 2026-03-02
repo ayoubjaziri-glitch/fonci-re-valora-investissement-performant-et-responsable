@@ -51,7 +51,7 @@ export default function Home() {
   const services = [
   {
     title: "Souscription au capital",
-    description: "Devenez associé de La Foncière Patrimoniale et participez à des opérations d'acquisition structurées. Bénéficiez d'un véhicule d'investissement collectif avec une stratégie de valorisation patrimoniale éprouvée.",
+    description: "La Foncière Patrimoniale fonctionne selon un modèle associant des opérateurs aux projets immobiliers développés par la société. Ces partenaires, en lien avec leur compétence métier, interviennent dans la structuration, la réalisation ou le suivi des opérations. La valeur créée par leur contribution s'inscrit dans une logique de partage organisée au sein de la société, dans le respect du cadre statutaire et de la gouvernance définie.",
     imageKey: "service_souscription",
     icon: Key
   },
@@ -63,7 +63,7 @@ export default function Home() {
   },
   {
     title: "Asset management et arbitrage",
-    description: "Gestion locative intégrée, suivi des flux de trésorerie, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur et le TRI de vos parts.",
+    description: "Gestion locative intégrée, suivi des flux de trésorerie, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur et le taux de rentabilité interne des titres.",
     imageKey: "service_asset",
     icon: BarChart3
   }];
@@ -74,13 +74,13 @@ export default function Home() {
   "Allocation équilibrée entre revenus courants et création de valeur à long terme",
   "Gestion opérationnelle des actifs intégralement déléguée",
   "Véhicule d'investissement structuré, doté d'une gouvernance lisible",
-  "Ticket d'entrée accessible avec des mécanismes de liquidité encadrés",
+  "Accès sélectif : Identification anticipée d'actifs et déploiement opérationnel maîtrisé dans des zones à dynamique soutenue.",
   "Diversification géographique visant à atténuer l'exposition aux cycles locaux"];
 
 
   const valeurAjoutee = [
   "Objectif de TRI supérieur aux véhicules d'investissement collectifs traditionnels et à l'immobilier en direct",
-  "Chaîne de valeur intégrée : sourcing, acquisition, réhabilitation, gestion, cession",
+  "Chaîne de valeur intégrée : Du sourcing à l'acquisition, du financement à la réalisation des travaux (notamment BBC), puis à la mise en location et à l'arbitrage des actifs.",
   "Effet de levier bancaire optimisé (LTV 80%) démultipliant la performance",
   "Reporting régulier et transparence sur la valorisation des actifs",
   "Création de valeur via la rénovation énergétique et l'amélioration du DPE"];
@@ -435,8 +435,7 @@ export default function Home() {
             className="text-center bg-[#1A3A52] rounded-2xl p-8">
 
             <p className="text-white text-lg">
-              <strong className="text-[#C9A961]">Un modèle unique</strong> : 0€ de frais d'entrée • 
-              Rémunération à la performance • Alignement total des intérêts
+              <strong className="text-[#C9A961]">Un modèle structuré</strong> : absence de frais d'entrée • rémunération indexée sur la création de valeur • convergence durable des intérêts entre associés
             </p>
           </motion.div>
         </div>
@@ -525,7 +524,7 @@ export default function Home() {
               Associés opérationnels & Gouvernance
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur
+              18 années de trajectoire — Une expérience consolidée dans l'immobilier résidentiel, fondée sur une pratique continue de l'acquisition et de la valorisation d'actifs.
             </p>
           </motion.div>
 
