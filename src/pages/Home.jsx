@@ -856,13 +856,13 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
 
-            <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">
-              Investir aux côtés de La Foncière Patrimoniale
+            <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">Bâtir votre patrimoine en vous associant à notre Foncière
+
             </h2>
-            <p className="text-white/70 mb-8 max-w-2xl mx-auto">
-              Foncière résidentielle spécialisée dans l'acquisition et la réhabilitation d'actifs à fort 
-              potentiel de valorisation, principalement situés sur des marchés locatifs tendus.
-            </p>
+            
+
+
+
             <div className="flex flex-wrap justify-center gap-4">
               <Link to={createPageUrl("Contact")}>
                 <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 text-base font-semibold">
