@@ -33,11 +33,11 @@ export default function Home() {
   const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
     queryFn: () => base44.entities.SiteImage.list(),
-    initialData: [],
+    initialData: []
   });
 
   const getImageUrl = (key, fallback) => {
-    const image = images.find(img => img.key === key);
+    const image = images.find((img) => img.key === key);
     return image?.url || fallback;
   };
 
@@ -140,12 +140,12 @@ export default function Home() {
               <span className="text-[#C9A961]">DURABLEMENT</span>
             </h1>
             
-            <p className="text-xl text-white/80 mb-10 max-w-2xl leading-relaxed">
-              Depuis 2008, le Groupe Auvergne et Patrimoine développe une expertise pointue 
-              dans l'acquisition et la valorisation d'actifs résidentiels. Aujourd'hui, 
-              <strong className="text-[#C9A961]"> La Foncière Patrimoniale</strong> vous permet 
-              d'accéder à cette stratégie éprouvée : un portefeuille immobilier performant, 
-              géré par des experts, avec <strong className="text-white">zéro contrainte de gestion</strong>.
+            <p className="text-xl text-white/80 mb-10 max-w-2xl leading-relaxed">Depuis 2008, le Groupe Auvergne et Patrimoine développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels. 
+La Foncière Patrimoniale s’inscrit dans cette continuité en offrant un cadre structuré d’association autour d’une vision patrimoniale de long terme.
+Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets,  dans le respect de l’organisation et de la gouvernance définies par la société.
+
+
+
             </p>
 
             <div className="flex flex-wrap gap-4">
@@ -536,11 +536,11 @@ export default function Home() {
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
               <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
-                <img 
+                <img
                   src={getImageUrl('photo_ayoub', 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80')}
                   alt="Ayoub Jaziri"
-                  className="w-full h-full object-cover"
-                />
+                  className="w-full h-full object-cover" />
+
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Ayoub Jaziri</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
@@ -555,11 +555,11 @@ export default function Home() {
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
               <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
-                <img 
+                <img
                   src={getImageUrl('photo_sophian', 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80')}
                   alt="Sophian Naili"
-                  className="w-full h-full object-cover"
-                />
+                  className="w-full h-full object-cover" />
+
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Sophian Naili</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
@@ -574,11 +574,11 @@ export default function Home() {
               className="bg-white rounded-2xl p-8 text-center border border-slate-200">
 
               <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
-                <img 
+                <img
                   src={getImageUrl('photo_renaud', 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80')}
                   alt="Renaud Marchand"
-                  className="w-full h-full object-cover"
-                />
+                  className="w-full h-full object-cover" />
+
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Renaud Marchand</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Associé</p>
