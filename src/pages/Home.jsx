@@ -151,7 +151,7 @@ export default function Home() {
                 Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets, dans le respect de l'organisation et de la gouvernance définies par la société.
               </p>
             </div>
-            {/* XSTARTX développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels.
+            {/* développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels.
  La Foncière Patrimoniale s’inscrit dans cette continuité en offrant un cadre structuré d’association autour d’une vision patrimoniale de long terme. Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets, dans le respect de l’organisation et de la gouvernance définies par la société.
 
 
