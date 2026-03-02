@@ -33,9 +33,20 @@ export default function GestionPhotos() {
   });
 
   const handleFileUpload = async (imageId, file) => {
+    // Show cropper first
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setCropModal({ imageId, src: e.target.result, originalFile: file });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCropComplete = async (croppedFile) => {
+    const { imageId } = cropModal;
+    setCropModal(null);
     setUploading(true);
     try {
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
+      const { file_url } = await base44.integrations.Core.UploadFile({ file: croppedFile });
       await updateImageMutation.mutateAsync({ id: imageId, url: file_url });
     } catch (error) {
       alert('Erreur lors de l\'upload: ' + error.message);
