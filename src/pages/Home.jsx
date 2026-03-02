@@ -151,7 +151,7 @@ export default function Home() {
                 Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets, dans le respect de l'organisation et de la gouvernance définies par la société.
               </p>
             </div>
-            <div className="CLEANUP">
+            <div className="DO-NOT-RENDER" style={{display:'none'}}>
               <p>PLACEHOLDER
                 Depuis 2008, le <span className="text-[#C9A961] font-semibold">Groupe Auvergne et Patrimoine</span> développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels.
  La Foncière Patrimoniale s’inscrit dans cette continuité en offrant un cadre structuré d’association autour d’une vision patrimoniale de long terme. Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets, dans le respect de l’organisation et de la gouvernance définies par la société.
