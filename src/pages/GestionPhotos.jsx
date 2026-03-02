@@ -220,6 +220,26 @@ export default function GestionPhotos() {
           ))}
         </Tabs>
 
+        {/* Crop Modal */}
+        <Dialog open={!!cropModal} onOpenChange={(open) => { if (!open) setCropModal(null); }}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2 text-[#1A3A52]">
+                <Crop className="w-5 h-5 text-[#C9A961]" />
+                Recadrer l'image
+              </DialogTitle>
+            </DialogHeader>
+            {cropModal && (
+              <ImageCropper
+                imageSrc={cropModal.src}
+                onCropComplete={handleCropComplete}
+                onCancel={() => setCropModal(null)}
+                aspectRatio={16/9}
+              />
+            )}
+          </DialogContent>
+        </Dialog>
+
         <div className="mt-12 bg-amber-50 border border-amber-200 rounded-xl p-6">
           <h3 className="font-semibold text-amber-900 mb-2 flex items-center gap-2">
             <ImageIcon className="w-5 h-5" />
