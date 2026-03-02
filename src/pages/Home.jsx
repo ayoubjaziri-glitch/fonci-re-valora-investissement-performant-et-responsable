@@ -140,18 +140,7 @@ export default function Home() {
               <span className="text-[#C9A961]">DURABLEMENT</span>
             </h1>
             
-            <div className="mb-10 max-w-2xl space-y-5">
-              <p className="text-lg text-white/85 leading-relaxed">
-                Depuis 2008, le <span className="text-[#C9A961] font-semibold">Groupe Auvergne et Patrimoine</span> développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels.
-              </p>
-              <p className="text-lg text-white/75 leading-relaxed pl-4 border-l-2 border-[#C9A961]/70">
-                La Foncière Patrimoniale s'inscrit dans cette continuité en offrant un <span className="text-white font-medium">cadre structuré d'association</span> autour d'une vision patrimoniale de long terme.
-              </p>
-              <p className="text-sm text-white/55 leading-relaxed">
-                Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets, dans le respect de l'organisation et de la gouvernance définies par la société.
-              </p>
-            </div>
-            {/* développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels.
+            <p className="text-xl text-white/80 mb-10 max-w-2xl leading-relaxed">Depuis 2008, le Groupe Auvergne et Patrimoine développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels.
  La Foncière Patrimoniale s’inscrit dans cette continuité en offrant un cadre structuré d’association autour d’une vision patrimoniale de long terme. Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets, dans le respect de l’organisation et de la gouvernance définies par la société.
 
 
