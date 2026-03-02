@@ -134,11 +134,23 @@ export default function Home() {
             </div>
 
             {/* Main Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-6">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-8">
               <span className="text-white">INVESTIR & VALORISER</span>
               <br />
               <span className="text-[#C9A961]">DURABLEMENT</span>
             </h1>
+            
+            <div className="mb-10 max-w-2xl space-y-4">
+              <p className="text-xs text-white/40 uppercase tracking-[0.25em] font-semibold border-l-2 border-[#C9A961] pl-4 leading-relaxed">
+                Depuis 2008, le Groupe Auvergne et Patrimoine développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels.
+              </p>
+              <p className="text-lg text-white/90 leading-relaxed font-light">
+                La Foncière Patrimoniale s'inscrit dans cette continuité en offrant un cadre structuré d'association autour d'une <span className="text-[#C9A961] font-semibold">vision patrimoniale de long terme</span>.
+              </p>
+              <p className="text-sm text-white/55 leading-relaxed">
+                Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets, dans le respect de l'organisation et de la gouvernance définies par la société.
+              </p>
+            </div>
             
             <div className="mb-10 max-w-2xl space-y-5">
               <p className="text-xs text-white/40 uppercase tracking-[0.25em] font-semibold border-l-2 border-[#C9A961] pl-4 leading-relaxed">
