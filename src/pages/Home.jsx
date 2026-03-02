@@ -200,13 +200,14 @@ export default function Home() {
               <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
                 Une foncière indépendante au service d'une vision patrimoniale exigeante
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-6">
-                La Foncière Patrimoniale développe et valorise des actifs résidentiels durables à travers 
-                une stratégie d'acquisition sélective, de réhabilitation énergétique (DPE C minimum) et de gestion active.
+              <p className="text-slate-600 leading-relaxed mb-4">
+                Depuis 2008, le Groupe Auvergne & Patrimoine développe une expertise dans l'acquisition et la valorisation d'actifs résidentiels.
+              </p>
+              <p className="text-slate-600 leading-relaxed mb-4">
+                La Foncière Patrimoniale s'inscrit dans cette continuité en offrant un cadre structuré d'association autour d'une vision patrimoniale de long terme.
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Un modèle conçu pour offrir aux investisseurs une exposition structurée à l'immobilier, 
-                avec effet de levier maîtrisé, gouvernance alignée et gestion intégralement déléguée.
+                Nos associés et partenaires contribuent, selon leur rôle et leurs compétences, au développement et à la valorisation des projets, dans le respect de l'organisation et de la gouvernance définies par la société.
               </p>
               
               {/* Key Benefits */}
