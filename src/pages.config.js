@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
 import Contact from './pages/Contact';
 import Durabilite from './pages/Durabilite';
@@ -54,6 +55,7 @@ import Equipe from './pages/Equipe';
 import EspaceAssocie from './pages/EspaceAssocie';
 import GererAcces from './pages/GererAcces';
 import GestionPhotos from './pages/GestionPhotos';
+import Home from './pages/Home';
 import InvestirDansFonciere from './pages/InvestirDansFonciere';
 import MentionsLegales from './pages/MentionsLegales';
 import Partenaires from './pages/Partenaires';
@@ -62,12 +64,11 @@ import Realisations from './pages/Realisations';
 import Services from './pages/Services';
 import StrategyPerformance from './pages/StrategyPerformance';
 import Team from './pages/Team';
-import Blog from './pages/Blog';
-import Home from './pages/Home';
 import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "Blog": Blog,
     "BlogArticle": BlogArticle,
     "Contact": Contact,
     "Durabilite": Durabilite,
@@ -75,6 +76,7 @@ export const PAGES = {
     "EspaceAssocie": EspaceAssocie,
     "GererAcces": GererAcces,
     "GestionPhotos": GestionPhotos,
+    "Home": Home,
     "InvestirDansFonciere": InvestirDansFonciere,
     "MentionsLegales": MentionsLegales,
     "Partenaires": Partenaires,
@@ -83,8 +85,6 @@ export const PAGES = {
     "Services": Services,
     "StrategyPerformance": StrategyPerformance,
     "Team": Team,
-    "Blog": Blog,
-    "Home": Home,
 }
 
 export const pagesConfig = {
