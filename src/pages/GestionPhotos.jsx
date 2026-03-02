@@ -6,8 +6,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Upload, Save, Image as ImageIcon, Trash2, Edit2 } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Upload, Save, Image as ImageIcon, Edit2, Crop } from 'lucide-react';
 import { motion } from 'framer-motion';
+import ImageCropper from '../components/ImageCropper';
 
 export default function GestionPhotos() {
   const [uploading, setUploading] = useState(false);
