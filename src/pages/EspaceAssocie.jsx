@@ -107,6 +107,19 @@ export default function EspaceAssocie() {
     localStorage.removeItem('associe_auth');
   };
 
+  // Fetch dynamic data
+  const { data: configs = [] } = useQuery({ queryKey: ['ea-config'], queryFn: () => base44.entities.EspaceAssocieConfig.list(), enabled: isLoggedIn });
+  const { data: docsDb = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => base44.entities.DocumentAssocie.filter({actif: true}, '-date_document'), enabled: isLoggedIn });
+  const { data: actuDb = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => base44.entities.ActualiteAssocie.filter({actif: true}, '-date_publication', 5), enabled: isLoggedIn });
+  const { data: acqDb = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => base44.entities.AcquisitionAssocie.list(), enabled: isLoggedIn });
+  const { data: roadmapDb = [] } = useQuery({ queryKey: ['roadmap-associe'], queryFn: () => base44.entities.RoadmapAssocie.list('ordre'), enabled: isLoggedIn });
+
+  const getConfig = (key, fallback) => {
+    const found = configs.find(c => c.cle === key);
+    if (found) { try { return JSON.parse(found.donnees); } catch { return fallback; } }
+    return fallback;
+  };
+
   if (!isLoggedIn) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-[#0A192F] via-[#1A3A52] to-[#0A192F] flex items-center justify-center p-6">
