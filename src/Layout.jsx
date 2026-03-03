@@ -147,10 +147,10 @@ export default function Layout({ children, currentPageName }) {
           <div className="grid md:grid-cols-4 gap-12">
             {/* Brand */}
             <div className="md:col-span-2">
-              <div className="bg-slate-900 mb-6">
+              <div className="bg-slate-900 mb-6 opacity-100">
                 <LogoImage />
               </div>
-              <p className="text-white/60 mb-6 max-w-sm">Foncière résidentielle dédiée à l'acquisition, à la réhabilitation BB et à la valorisation d'immeubles présentant un potentiel de création de valeur au sein de marchés résidentiels dynamiqu
+              <p className="text-white/60 mb-6 max-w-sm">Foncière résidentielle dédiée à l'acquisition, à la réhabilitation  et à la valorisation d'immeubles présentant un potentiel de création de valeur au sein de marchés résidentiels dynamique
 
 
               </p>
