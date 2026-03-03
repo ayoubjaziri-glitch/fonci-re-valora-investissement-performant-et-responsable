@@ -64,6 +64,7 @@ import Realisations from './pages/Realisations';
 import Services from './pages/Services';
 import StrategyPerformance from './pages/StrategyPerformance';
 import Team from './pages/Team';
+import AdminEspaceAssocie from './pages/AdminEspaceAssocie';
 import __Layout from './Layout.jsx';
 
 
@@ -85,6 +86,7 @@ export const PAGES = {
     "Services": Services,
     "StrategyPerformance": StrategyPerformance,
     "Team": Team,
+    "AdminEspaceAssocie": AdminEspaceAssocie,
 }
 
 export const pagesConfig = {
