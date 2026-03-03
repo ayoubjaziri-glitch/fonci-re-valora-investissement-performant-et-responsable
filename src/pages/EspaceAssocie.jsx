@@ -706,9 +706,11 @@ export default function EspaceAssocie() {
                         <span className="text-xs text-slate-400">• {doc.size}</span>
                       </div>
                     </div>
-                    <button className="text-[#C9A961] hover:text-[#B8994F]">
-                      <Download className="h-5 w-5" />
-                    </button>
+                    {doc.url ? (
+                      <a href={doc.url} target="_blank" rel="noreferrer" className="text-[#C9A961] hover:text-[#B8994F]"><Download className="h-5 w-5" /></a>
+                    ) : (
+                      <button className="text-slate-300 cursor-not-allowed"><Download className="h-5 w-5" /></button>
+                    )}
                   </div>
                 )}
               </div>
