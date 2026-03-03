@@ -49,12 +49,6 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Durabilité', page: 'Durabilite' },
   { name: 'Nos biens', page: 'Realisations' }];
 
-  const adminPages = [
-  { name: 'Gérer les accès', page: 'GererAcces' },
-  { name: 'Gérer les photos', page: 'GestionPhotos' },
-  { name: 'Back-office Associés', page: 'AdminEspaceAssocie' }];
-
-
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}

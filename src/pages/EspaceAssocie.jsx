@@ -188,10 +188,6 @@ export default function EspaceAssocie() {
               </Button>
             </form>
 
-            <div className="mt-6 text-center">
-              <a href="#" className="text-sm text-slate-600 hover:text-[#C9A961]">Mot de passe oublié ?</a>
-            </div>
-
             <div className="mt-8 pt-6 border-t border-slate-200">
               <p className="text-xs text-slate-500 text-center">
                 Connexion sécurisée par chiffrement SSL. Authentification à deux facteurs disponible.
@@ -835,9 +831,10 @@ export default function EspaceAssocie() {
           </div>
         </div>
 
-        {/* Avertissement */}
-        
-
+        {/* Avertissement légal */}
+        <div className="mt-8 bg-amber-50 border border-amber-200 rounded-xl p-4 text-center">
+          <p className="text-xs text-slate-600">Les données présentées dans cet espace sont confidentielles et réservées aux associés. Toute diffusion est strictement interdite.</p>
+        </div>
 
 
 
