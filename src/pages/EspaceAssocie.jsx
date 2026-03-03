@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
+import { useQuery } from '@tanstack/react-query';
 import {
   TrendingUp, Building2, Percent, Shield, FileText, Users,
   Eye, EyeOff, Lock, Mail, ArrowRight, BarChart3, Leaf,
