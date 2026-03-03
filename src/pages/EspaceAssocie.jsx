@@ -188,6 +188,12 @@ export default function EspaceAssocie() {
               </Button>
             </form>
 
+            <div className="mt-6 text-center">
+              <a href="mailto:ayoubjaziri@gmail.com?subject=Mot de passe oublié - Espace Associés" className="text-sm text-slate-600 hover:text-[#C9A961] transition-colors">
+                Mot de passe oublié ? Contacter l'administrateur
+              </a>
+            </div>
+
             <div className="mt-8 pt-6 border-t border-slate-200">
               <p className="text-xs text-slate-500 text-center">
                 Connexion sécurisée par chiffrement SSL. Authentification à deux facteurs disponible.
