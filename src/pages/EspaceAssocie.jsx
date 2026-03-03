@@ -490,16 +490,16 @@ export default function EspaceAssocie() {
               </div>
 
               <div className="mt-6 pt-6 border-t border-slate-200 grid grid-cols-2 gap-4">
-                <div className="bg-emerald-50 rounded-xl p-4">
-                  <Leaf className="h-6 w-6 text-emerald-600 mb-2" />
-                  <p className="text-2xl font-bold text-emerald-900">-450t</p>
-                  <p className="text-xs text-emerald-700">CO₂ économisées/an</p>
-                </div>
-                <div className="bg-blue-50 rounded-xl p-4">
-                  <Zap className="h-6 w-6 text-blue-600 mb-2" />
-                  <p className="text-2xl font-bold text-blue-900">-42%</p>
-                  <p className="text-xs text-blue-700">Conso énergétique</p>
-                </div>
+              <div className="bg-emerald-50 rounded-xl p-4">
+                <Leaf className="h-6 w-6 text-emerald-600 mb-2" />
+                <p className="text-2xl font-bold text-emerald-900">{energieRaw.co2}</p>
+                <p className="text-xs text-emerald-700">CO₂ économisées/an</p>
+              </div>
+              <div className="bg-blue-50 rounded-xl p-4">
+                <Zap className="h-6 w-6 text-blue-600 mb-2" />
+                <p className="text-2xl font-bold text-blue-900">{energieRaw.conso}</p>
+                <p className="text-xs text-blue-700">Conso énergétique</p>
+              </div>
               </div>
             </motion.div>
 
