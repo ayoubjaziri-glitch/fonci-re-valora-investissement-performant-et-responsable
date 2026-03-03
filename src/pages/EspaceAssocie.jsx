@@ -787,23 +787,23 @@ export default function EspaceAssocie() {
               <div className="space-y-3">
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-slate-600">Taux d'occupation</span>
-                  <span className="font-bold text-emerald-600">93,5%</span>
+                  <span className="font-bold text-emerald-600">{indicRaw.occupation}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-slate-600">Délai moyen de location</span>
-                  <span className="font-bold text-slate-900">18 jours</span>
+                  <span className="font-bold text-slate-900">{indicRaw.delaiLocation}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-slate-600">Dette résiduelle</span>
-                  <span className="font-bold text-slate-900">2 180 000 €</span>
+                  <span className="font-bold text-slate-900">{indicRaw.dette}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-slate-600">Nombre d'actifs</span>
-                  <span className="font-bold text-slate-900">4 immeubles</span>
+                  <span className="font-bold text-slate-900">{indicRaw.nbActifs}</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-sm text-slate-600">Total lots</span>
-                  <span className="font-bold text-slate-900">42 lots</span>
+                  <span className="font-bold text-slate-900">{indicRaw.totalLots}</span>
                 </div>
               </div>
             </motion.div>
