@@ -315,7 +315,7 @@ export default function EspaceAssocie() {
           <div className="grid md:grid-cols-4 gap-6">
             <div>
               <p className="text-white/60 text-sm mb-1">Valorisation Globale</p>
-              <p className="text-3xl font-bold text-[#C9A961]">{valorisationSociete.valeurActuelle.toLocaleString()} €</p>
+              <p className="text-3xl font-bold text-[#C9A961]">{typeof valorisationSociete.valeurActuelle === 'number' ? valorisationSociete.valeurActuelle.toLocaleString() : valorisationSociete.valeurActuelle} €</p>
               <p className="text-emerald-400 text-sm mt-1">{valorisationSociete.evolution} vs {valorisationSociete.dateValo}</p>
             </div>
             <div>
@@ -325,12 +325,12 @@ export default function EspaceAssocie() {
             </div>
             <div>
               <p className="text-white/60 text-sm mb-1">Nombre d'Actions</p>
-              <p className="text-3xl font-bold text-white">{valorisationSociete.nombreActions.toLocaleString()}</p>
+              <p className="text-3xl font-bold text-white">{typeof valorisationSociete.nombreActions === 'number' ? valorisationSociete.nombreActions.toLocaleString() : valorisationSociete.nombreActions}</p>
               <p className="text-white/40 text-sm mt-1">Actions émises</p>
             </div>
             <div>
               <p className="text-white/60 text-sm mb-1">Plus-value Réalisée</p>
-              <p className="text-3xl font-bold text-[#C9A961]">+250 000 €</p>
+              <p className="text-3xl font-bold text-[#C9A961]">+{typeof valorisationSociete.plusValueTotal === 'number' ? valorisationSociete.plusValueTotal.toLocaleString() : valorisationSociete.plusValueTotal || '250 000'} €</p>
               <p className="text-emerald-400 text-sm mt-1">Sur période 2024-2025</p>
             </div>
           </div>
