@@ -203,136 +203,85 @@ export default function EspaceAssocie() {
 
   }
 
-  const kpis = [
-  {
-    label: "Valeur du Patrimoine",
-    value: "3 200 000 €",
-    change: "+8,5%",
-    positive: true,
-    icon: Building2,
-    detail: "Gross Asset Value réactualisée"
-  },
-  {
-    label: "Rendement Net Annuel",
-    value: "10,2%",
-    change: "+0,7 pts",
-    positive: true,
-    icon: TrendingUp,
-    detail: "TRI net de frais"
-  },
-  {
-    label: "Ratio LTC",
-    value: "68%",
-    change: "-2%",
-    positive: true,
-    icon: Percent,
-    detail: "Loan To Cost"
-  },
-  {
-    label: "Loyers Annuels",
-    value: "185 000 €",
-    change: "+12%",
-    positive: true,
-    icon: Euro,
-    detail: "Revenus locatifs bruts"
-  }];
+  // Dynamic data with fallbacks
+  const kpisRaw = getConfig('kpis', [
+    { label: "Valeur du Patrimoine", value: "3 200 000 €", change: "+8,5%", positive: true, detail: "Gross Asset Value réactualisée" },
+    { label: "Rendement Net Annuel", value: "10,2%", change: "+0,7 pts", positive: true, detail: "TRI net de frais" },
+    { label: "Ratio LTC", value: "68%", change: "-2%", positive: true, detail: "Loan To Cost" },
+    { label: "Loyers Annuels", value: "185 000 €", change: "+12%", positive: true, detail: "Revenus locatifs bruts" },
+  ]);
+  const kpiIcons = [Building2, TrendingUp, Percent, Euro];
+  const kpis = kpisRaw.map((k, i) => ({ ...k, icon: kpiIcons[i] || BarChart3 }));
 
+  const dpeData = [{ classe: "C", count: 42, color: "bg-lime-500", percentage: 100 }];
 
-  const dpeData = [
-  { classe: "C", count: 42, color: "bg-lime-500", percentage: 100 }];
+  const leveeRaw = getConfig('levee_fonds', { objectif: 250000, collecte: 187500, souscripteurs: 12, dateCloture: '31 Mars 2026' });
+  const leveeEnCours = { ...leveeRaw, pourcentage: Math.round((leveeRaw.collecte / leveeRaw.objectif) * 100) };
 
+  const valorisationRaw = getConfig('valorisation', { valeurActuelle: 3200000, evolution: '+8.5%', nombreActions: 32000, valeurAction: 100, plusValueAction: '+8.5%', dateValo: '31 Déc 2025', plusValueTotal: 250000 });
+  const valorisationSociete = valorisationRaw;
 
-  const documents = [
-  { name: "Statuts de la société", date: "2025-01-15", type: "public", category: "Juridique" },
-  { name: "Rapport annuel ESG 2025", date: "2025-12-31", type: "public", category: "ESG" },
-  { name: "Pacte d'associés", date: "2025-02-01", type: "privé", category: "Juridique" },
-  { name: "Bulletin de souscription", date: "2025-03-20", type: "privé", category: "Investissement" },
-  { name: "Relevé fiscal annuel 2025", date: "2026-01-10", type: "privé", category: "Fiscal" },
-  { name: "PV Assemblée Générale 2025", date: "2025-12-15", type: "public", category: "Gouvernance" }];
+  const indicRaw = getConfig('indicateurs', { occupation: '93,5%', delaiLocation: '18 jours', dette: '2 180 000 €', nbActifs: '4 immeubles', totalLots: '42 lots' });
+  const energieRaw = getConfig('energie', { co2: '-450t', conso: '-42%' });
+  const resultatsRaw = getConfig('resultats', { loyers: '185 000 €', tauxOccupation: '93,5%', resultatNet: '32 500 €', datePub: '15 janvier 2026', prochainResultat: '≈ 28 000 €', dateProchaineResult: '15 avril 2026' });
 
+  // DB data with fallbacks
+  const patrimoine = acqDb.filter(a => a.type === 'patrimoine').length > 0
+    ? acqDb.filter(a => a.type === 'patrimoine').map(a => ({ nom: a.ville, lots: a.lots, valeur: a.valeur, dpe: a.dpe, occupation: a.occupation }))
+    : [
+        { nom: "Lyon 3ème - Garibaldi", lots: 8, valeur: "980 000 €", dpe: "C", occupation: "87%" },
+        { nom: "Bordeaux Centre", lots: 12, valeur: "1 450 000 €", dpe: "C", occupation: "100%" },
+        { nom: "Vichy - Boulevard Kennedy", lots: 6, valeur: "420 000 €", dpe: "C", occupation: "92%" },
+        { nom: "Clermont-Ferrand", lots: 16, valeur: "1 350 000 €", dpe: "C", occupation: "95%" },
+      ];
 
-  const actualites = [
-  {
-    date: "15 Fév 2026",
-    title: "Acquisition d'un immeuble à Lyon 3ème",
-    desc: "Signature notariée d'un actif de 1,25 M€ avec potentiel de valorisation de 25%",
-    type: "acquisition"
-  },
-  {
-    date: "10 Fév 2026",
-    title: "Fin des travaux - Bordeaux Centre",
-    desc: "12 lots rénovés avec passage DPE F → C. Mise en location immédiate.",
-    type: "travaux"
-  },
-  {
-    date: "5 Fév 2026",
-    title: "Note du Président - Marché T1 2026",
-    desc: "Perspectives encourageantes sur les marchés secondaires avec tensions locatives soutenues.",
-    type: "note"
-  }];
+  const acquisitionsEnCours = acqDb.filter(a => a.type === 'acquisition_en_cours').length > 0
+    ? acqDb.filter(a => a.type === 'acquisition_en_cours')
+    : [
+        { ville: "Toulouse - Capitole", prix: "1 850 000 €", lots: 14, dpe: "F → B", statut: "Due Diligence", avancement: 65, livraison: "Juin 2026" },
+        { ville: "Montpellier Centre", prix: "950 000 €", lots: 8, dpe: "E → C", statut: "Négociation", avancement: 40, livraison: "Septembre 2026" },
+      ];
 
+  const chantiers = acqDb.filter(a => a.type === 'chantier');
 
-  const leveeEnCours = {
-    objectif: 250000,
-    collecte: 187500,
-    pourcentage: 75,
-    souscripteurs: 12,
-    dateCloture: "31 Mars 2026"
-  };
+  const roadmap = roadmapDb.length > 0 ? roadmapDb.map(r => ({ etape: r.etape, date: r.date_prevue, statut: r.statut, avancement: r.avancement || 0 }))
+    : [
+        { etape: "Levée de fonds Série A", date: "Q1 2026", statut: "en_cours", avancement: 75 },
+        { etape: "Acquisition Vichy", date: "Q2 2026", statut: "en_cours", avancement: 65 },
+        { etape: "Acquisition Bordeaux", date: "Q3 2026", statut: "en_cours", avancement: 45 },
+        { etape: "Acquisition Lyon", date: "Q4 2026", statut: "planifie", avancement: 0 },
+        { etape: "Levée de fonds Série B", date: "Q1 2027", statut: "planifie", avancement: 0 },
+        { etape: "Expansion zones cibles", date: "Q2 2027", statut: "planifie", avancement: 0 },
+      ];
 
-  const patrimoine = [
-  { nom: "Lyon 3ème - Garibaldi", lots: 8, valeur: "980 000 €", dpe: "C", occupation: "87%" },
-  { nom: "Bordeaux Centre", lots: 12, valeur: "1 450 000 €", dpe: "C", occupation: "100%" },
-  { nom: "Vichy - Boulevard Kennedy", lots: 6, valeur: "420 000 €", dpe: "C", occupation: "92%" },
-  { nom: "Clermont-Ferrand", lots: 16, valeur: "1 350 000 €", dpe: "C", occupation: "95%" }];
+  const actualites = actuDb.length > 0
+    ? actuDb.map(a => ({ date: a.date_publication, title: a.titre, desc: a.description, type: a.type }))
+    : [
+        { date: "15 Fév 2026", title: "Acquisition d'un immeuble à Lyon 3ème", desc: "Signature notariée d'un actif de 1,25 M€ avec potentiel de valorisation de 25%", type: "acquisition" },
+        { date: "10 Fév 2026", title: "Fin des travaux - Bordeaux Centre", desc: "12 lots rénovés avec passage DPE F → C. Mise en location immédiate.", type: "travaux" },
+        { date: "5 Fév 2026", title: "Note du Président - Marché T1 2026", desc: "Perspectives encourageantes sur les marchés secondaires avec tensions locatives soutenues.", type: "note" },
+      ];
 
+  const allDocs = docsDb.length > 0 ? docsDb : [];
+  const documentsFinanciers = allDocs.filter(d => d.categorie === 'Financier' || d.categorie === 'Fiscal').length > 0
+    ? allDocs.filter(d => d.categorie === 'Financier' || d.categorie === 'Fiscal').map(d => ({ name: d.nom, type: d.categorie, date: d.date_document || '', size: d.taille || '', url: d.file_url }))
+    : [
+        { name: "Bilan comptable 2025", type: "Bilan", date: "2025-12-31", size: "2.4 MB" },
+        { name: "Compte de résultat 2025", type: "Compte de résultat", date: "2025-12-31", size: "1.8 MB" },
+        { name: "Annexes comptables 2025", type: "Annexes", date: "2025-12-31", size: "3.2 MB" },
+        { name: "Rapport du commissaire aux comptes", type: "Audit", date: "2026-01-15", size: "1.5 MB" },
+      ];
 
-  const valorisationSociete = {
-    valeurActuelle: 3200000,
-    valeurPrecedente: 2950000,
-    evolution: "+8.5%",
-    nombreActions: 32000,
-    valeurAction: 100,
-    valeurActionPrecedente: 92.19,
-    plusValueAction: "+8.5%",
-    dateValo: "31 Déc 2025"
-  };
-
-  const acquisitionsEnCours = [
-  {
-    ville: "Toulouse - Capitole",
-    prix: "1 850 000 €",
-    lots: 14,
-    dpe: "F → B",
-    statut: "Due Diligence",
-    avancement: 65,
-    livraison: "Juin 2026"
-  },
-  {
-    ville: "Montpellier Centre",
-    prix: "950 000 €",
-    lots: 8,
-    dpe: "E → C",
-    statut: "Négociation",
-    avancement: 40,
-    livraison: "Septembre 2026"
-  }];
-
-
-  const roadmap = [
-  { etape: "Levée de fonds Série A", date: "Q1 2026", statut: "en_cours", avancement: 75 },
-  { etape: "Acquisition Vichy", date: "Q2 2026", statut: "en_cours", avancement: 65 },
-  { etape: "Acquisition Bordeaux", date: "Q3 2026", statut: "en_cours", avancement: 45 },
-  { etape: "Acquisition Lyon", date: "Q4 2026", statut: "planifie", avancement: 0 },
-  { etape: "Levée de fonds Série B", date: "Q1 2027", statut: "planifie", avancement: 0 },
-  { etape: "Expansion zones cibles", date: "Q2 2027", statut: "planifie", avancement: 0 }];
-
-
-  const documentsFinanciers = [
-  { name: "Bilan comptable 2025", type: "Bilan", date: "2025-12-31", size: "2.4 MB" },
-  { name: "Compte de résultat 2025", type: "Compte de résultat", date: "2025-12-31", size: "1.8 MB" },
-  { name: "Annexes comptables 2025", type: "Annexes", date: "2025-12-31", size: "3.2 MB" },
-  { name: "Rapport du commissaire aux comptes", type: "Audit", date: "2026-01-15", size: "1.5 MB" }];
+  const documents = allDocs.filter(d => d.categorie !== 'Financier' && d.categorie !== 'Fiscal').length > 0
+    ? allDocs.filter(d => d.categorie !== 'Financier' && d.categorie !== 'Fiscal').map(d => ({ name: d.nom, date: d.date_document || '', type: d.type_acces, category: d.categorie, url: d.file_url }))
+    : [
+        { name: "Statuts de la société", date: "2025-01-15", type: "public", category: "Juridique" },
+        { name: "Rapport annuel ESG 2025", date: "2025-12-31", type: "public", category: "ESG" },
+        { name: "Pacte d'associés", date: "2025-02-01", type: "privé", category: "Juridique" },
+        { name: "Bulletin de souscription", date: "2025-03-20", type: "privé", category: "Investissement" },
+        { name: "Relevé fiscal annuel 2025", date: "2026-01-10", type: "privé", category: "Fiscal" },
+        { name: "PV Assemblée Générale 2025", date: "2025-12-15", type: "public", category: "Gouvernance" },
+      ];
 
 
   return (
