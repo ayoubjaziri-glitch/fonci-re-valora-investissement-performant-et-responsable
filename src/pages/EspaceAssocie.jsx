@@ -531,6 +531,7 @@ export default function EspaceAssocie() {
             </motion.div>
 
             {/* Chantiers en cours */}
+            {(chantiers.length > 0) && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -538,37 +539,23 @@ export default function EspaceAssocie() {
               className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
 
               <h3 className="text-lg font-semibold text-slate-900 mb-6">Chantiers en Cours</h3>
-              
               <div className="space-y-4">
-                <div className="border-l-4 border-[#C9A961] pl-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-semibold text-slate-900">Lyon 3ème - Rue Garibaldi</h4>
-                      <p className="text-sm text-slate-600">8 lots • DPE G → C</p>
+                {chantiers.map((c, i) => (
+                  <div key={i} className="border-l-4 border-[#C9A961] pl-4">
+                    <div className="flex justify-between items-start mb-2">
+                      <div>
+                        <h4 className="font-semibold text-slate-900">{c.ville}</h4>
+                        <p className="text-sm text-slate-600">{c.lots} lots {c.dpe ? `• DPE ${c.dpe}` : ''}</p>
+                      </div>
+                      <span className="text-sm font-semibold text-[#C9A961]">{c.avancement}%</span>
                     </div>
-                    <span className="text-sm font-semibold text-[#C9A961]">75%</span>
+                    <div className="h-2 bg-slate-100 rounded-full overflow-hidden"><div className="h-full bg-[#C9A961]" style={{ width: `${c.avancement}%` }} /></div>
+                    {c.livraison && <p className="text-xs text-slate-500 mt-2">Livraison prévue : {c.livraison}</p>}
                   </div>
-                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-[#C9A961]" style={{ width: '75%' }} />
-                  </div>
-                  <p className="text-xs text-slate-500 mt-2">Livraison prévue : Mars 2026</p>
-                </div>
-
-                <div className="border-l-4 border-blue-500 pl-4">
-                  <div className="flex justify-between items-start mb-2">
-                    <div>
-                      <h4 className="font-semibold text-slate-900">Vichy Centre - Boulevard Kennedy</h4>
-                      <p className="text-sm text-slate-600">6 lots • DPE F → C</p>
-                    </div>
-                    <span className="text-sm font-semibold text-blue-600">45%</span>
-                  </div>
-                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <div className="h-full bg-blue-500" style={{ width: '45%' }} />
-                  </div>
-                  <p className="text-xs text-slate-500 mt-2">Livraison prévue : Mai 2026</p>
-                </div>
+                ))}
               </div>
             </motion.div>
+            )}
 
             {/* Acquisitions en Cours */}
             <motion.div
