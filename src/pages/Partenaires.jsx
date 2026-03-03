@@ -96,7 +96,7 @@ export default function Partenaires() {
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-0 right-0 w-96 h-96 border border-white/20 rounded-full" />
+          
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
@@ -113,7 +113,7 @@ export default function Partenaires() {
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
               Écosystème de partenaires
             </h1>
-            <p className="text-xl text-white/70">La Foncière Patrimoniale fédère un écosystème d’experts — architectes, maîtres d’œuvre et conseillers en gestion de patrimoine — directement associés au capital de l’entreprise. Cet alignement total des intérêts garantit une maîtrise absolue de chaque étape de valorisation et sécurise durablement la performance des actifs de nos investisseurs.
+            <p className="text-xl text-white/70">Plus qu’une équipe, un modèle d’engagement : nous intégrons nos partenaires techniques et patrimoniaux au cœur de notre structure capitalistique. En alliant leurs expertises à nos objectifs de croissance, nous assurons une réexécution fluide et une création de valeur optimisée à chaque cycle d'investissement
 
 
             </p>
