@@ -654,26 +654,26 @@ export default function EspaceAssocie() {
               <div className="space-y-4">
                 <div className="flex justify-between items-center p-4 bg-emerald-50 rounded-xl">
                   <div>
-                    <p className="text-sm text-slate-600 mb-1">Revenus locatifs 2025</p>
-                    <p className="text-xs text-slate-500">Taux d'occupation moyen : 93,5%</p>
+                    <p className="text-sm text-slate-600 mb-1">Revenus locatifs annuels</p>
+                    <p className="text-xs text-slate-500">Taux d'occupation moyen : {resultatsRaw.tauxOccupation}</p>
                   </div>
-                  <span className="text-2xl font-bold text-emerald-700">185 000 €</span>
+                  <span className="text-2xl font-bold text-emerald-700">{resultatsRaw.loyers}</span>
                 </div>
 
                 <div className="flex justify-between items-center p-4 bg-blue-50 rounded-xl">
                   <div>
-                    <p className="text-sm text-slate-600 mb-1">Résultat Net T4 2025</p>
-                    <p className="text-xs text-slate-500">Publié le 15 janvier 2026</p>
+                    <p className="text-sm text-slate-600 mb-1">Résultat Net (dernier trimestre)</p>
+                    <p className="text-xs text-slate-500">Publié le {resultatsRaw.datePub}</p>
                   </div>
-                  <span className="text-2xl font-bold text-blue-700">32 500 €</span>
+                  <span className="text-2xl font-bold text-blue-700">{resultatsRaw.resultatNet}</span>
                 </div>
 
                 <div className="flex justify-between items-center p-4 bg-slate-50 rounded-xl border border-slate-200">
                   <div>
                     <p className="text-sm text-slate-600 mb-1">Prochain résultat net</p>
-                    <p className="text-xs text-slate-500">Prévu : 15 avril 2026</p>
+                    <p className="text-xs text-slate-500">Prévu : {resultatsRaw.dateProchaineResult}</p>
                   </div>
-                  <span className="text-lg font-bold text-slate-900">≈ 28 000 €</span>
+                  <span className="text-lg font-bold text-slate-900">{resultatsRaw.prochainResultat}</span>
                 </div>
               </div>
             </motion.div>
