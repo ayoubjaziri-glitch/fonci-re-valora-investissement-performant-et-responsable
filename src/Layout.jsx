@@ -242,6 +242,9 @@ export default function Layout({ children, currentPageName }) {
                 <Link to={createPageUrl("PolitiqueConfidentialite")} className="text-white/40 hover:text-white/70 text-sm transition-colors">
                   Politique de confidentialité
                 </Link>
+                <Link to={createPageUrl("AdminEspaceAssocie")} className="text-white/20 hover:text-white/50 text-xs transition-colors">
+                  Back-office
+                </Link>
               </div>
             </div>
             
