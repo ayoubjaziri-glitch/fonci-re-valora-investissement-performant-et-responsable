@@ -150,9 +150,9 @@ export default function Layout({ children, currentPageName }) {
               <div className="bg-slate-900 mb-6">
                 <LogoImage />
               </div>
-              <p className="text-white/60 mb-6 max-w-sm">
-                Foncière résidentielle dédiée à l'acquisition, à la réhabilitation BBC et à la valorisation 
-                d'immeubles présentant un potentiel de création de valeur au sein de marchés résidentiels dynamiques.
+              <p className="text-white/60 mb-6 max-w-sm">Foncière résidentielle dédiée à l'acquisition, à la réhabilitation BB et à la valorisation d'immeubles présentant un potentiel de création de valeur au sein de marchés résidentiels dynamiqu
+
+
               </p>
               <p className="text-white/40 text-sm mb-4">
                 Groupe Auvergne et Patrimoine — Fondé en 2008
