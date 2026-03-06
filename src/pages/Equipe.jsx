@@ -423,7 +423,7 @@ export default function Equipe() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-16 bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] rounded-2xl p-8 text-center">
+            className="mt-16 bg-gradient-to-r from-[#0f172a] to-[#1A3A52] rounded-2xl p-8 text-center">
 
             <div className="flex items-center justify-center gap-3 mb-4">
               <Target className="h-6 w-6 text-[#C9A961]" />
@@ -436,21 +436,21 @@ export default function Equipe() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="py-16 bg-[#0f172a]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
-
-            <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
+            <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
+            <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
               Rejoignez une équipe d'experts
             </h2>
-            <p className="text-[#1A3A52]/80 mb-8">
+            <p className="text-white/70 mb-8">
               Portée par un groupe solide depuis 2008, contribuez à la création de valeur patrimoniale durable.
             </p>
             <Link to={createPageUrl("Contact")}>
-              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+              <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#0f172a] px-8 py-6 font-semibold">
                 Devenir associé
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>

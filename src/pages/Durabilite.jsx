@@ -368,24 +368,25 @@ export default function Durabilite() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="py-16 bg-[#0f172a]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
+          <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
+          <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
             Investir aux côtés de La Foncière Patrimoniale
           </h2>
-          <p className="text-[#1A3A52]/80 mb-8">
+          <p className="text-white/70 mb-8">
             Participez à une approche patrimoniale intégrant les enjeux de durabilité 
             au sein d'une stratégie structurée.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to={createPageUrl("Contact")}>
-              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+              <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#0f172a] px-8 py-6 font-semibold">
                 Entrer en relation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
             </Link>
             <Link to={createPageUrl("Realisations")}>
-              <Button variant="outline" className="border-[#1A3A52]/30 text-[#1A3A52] hover:bg-[#1A3A52]/10 px-8 py-6 font-semibold">
+              <Button variant="outline" className="border-[#C9A961]/50 text-[#C9A961] hover:bg-[#C9A961]/10 px-8 py-6 font-semibold">
                 Voir nos réalisations
               </Button>
             </Link>

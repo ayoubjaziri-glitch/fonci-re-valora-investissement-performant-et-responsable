@@ -573,7 +573,7 @@ export default function StrategyPerformance() {
 
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-slate-600 text-slate-50 px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
+            <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#0f172a] px-8 py-6 font-semibold text-base">
               Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

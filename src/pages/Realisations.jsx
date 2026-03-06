@@ -114,7 +114,7 @@ export default function Realisations() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative py-24 bg-slate-900 overflow-hidden">
+      <section className="relative py-24 bg-[#0f172a] overflow-hidden">
         {/* MODIFIEZ LA PHOTO DE FOND DU HERO CI-DESSOUS */}
         <div className="absolute inset-0 opacity-20">
           <img 
@@ -279,16 +279,17 @@ export default function Realisations() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="py-16 bg-[#0f172a]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
+          <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
+          <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
             Investir aux côtés de La Foncière Patrimoniale
           </h2>
-          <p className="text-[#1A3A52]/80 mb-8">
+          <p className="text-white/70 mb-8">
             Accédez à une exposition immobilière structurée et à un pilotage professionnel.
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+            <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#0f172a] px-8 py-6 font-semibold">
               Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>

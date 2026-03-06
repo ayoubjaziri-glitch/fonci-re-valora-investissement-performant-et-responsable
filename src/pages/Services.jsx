@@ -68,8 +68,8 @@ export default function Services() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
-      <section className="relative py-24 bg-[#1E3A5F] overflow-hidden">
-        <div className="bg-[#1A3A52] opacity-10 absolute inset-0">
+      <section className="relative py-24 bg-[#0f172a] overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
           <div className="absolute bottom-0 left-0 w-96 h-96 border border-white/20 rounded-full transform -translate-x-1/2 translate-y-1/2" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -151,7 +151,7 @@ export default function Services() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-4">
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
               Nos domaines d'expertise
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
@@ -189,7 +189,7 @@ export default function Services() {
       </section>
 
       {/* Advantages */}
-      <section className="py-24 bg-[#1E3A5F]">
+      <section className="py-24 bg-[#0f172a]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -210,7 +210,7 @@ export default function Services() {
               className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
 
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Shield className="h-8 w-8 text-[#1E3A5F]" />
+                <Shield className="h-8 w-8 text-[#0f172a]" />
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 text-center">Gestion intégrée</h3>
               <p className="text-white/70">
@@ -226,7 +226,7 @@ export default function Services() {
               className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
 
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <FileText className="h-8 w-8 text-[#1E3A5F]" />
+                <FileText className="h-8 w-8 text-[#0f172a]" />
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 text-center">Information & Gouvernance</h3>
               <p className="text-white/70">
@@ -242,7 +242,7 @@ export default function Services() {
               className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/10">
 
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                <Users className="h-8 w-8 text-[#1E3A5F]" />
+                <Users className="h-8 w-8 text-[#0f172a]" />
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 text-center">Pilotage opérationnel</h3>
               <p className="text-white/70">
@@ -268,16 +268,17 @@ export default function Services() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="py-16 bg-[#0f172a]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
+          <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
+          <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">
             Investir aux côtés de La Foncière Patrimoniale
           </h2>
-          <p className="text-[#1A3A52]/80 mb-8">
+          <p className="text-white/70 mb-8">
             Accédez à une exposition immobilière organisée autour d'un pilotage professionnel et d'une gouvernance claire.
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+            <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#0f172a] px-8 py-6 font-semibold">
               Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
