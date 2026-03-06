@@ -139,7 +139,7 @@ export default function StrategyPerformance() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Le Contexte</p>
-                  <h3 className="text-2xl font-serif text-[#1A3A52]">Les enjeux structurants</h3>
+                  <h3 className="text-slate-900 text-2xl font-serif">Les enjeux structurants</h3>
                 </div>
               </div>
               <p className="text-slate-600 mb-6 leading-relaxed">
@@ -204,8 +204,8 @@ export default function StrategyPerformance() {
             viewport={{ once: true }}
             className="text-center mb-16">
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Les piliers de l'acquisition
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Les piliers de l'acquisition
+
             </h2>
           </motion.div>
 
@@ -239,8 +239,8 @@ export default function StrategyPerformance() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}>
 
-              <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
-                Zones à Fort Potentiel
+              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Zones à Fort Potentiel
+
               </h2>
               <p className="text-gray-600 mb-8 leading-relaxed">
                 La stratégie d'investissement s'oriente vers des territoires présentant des perspectives 
@@ -311,8 +311,8 @@ export default function StrategyPerformance() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Alignement total des intérêts
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Alignement total des intérêts
+
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               Le modèle privilégie un alignement durable entre associés, indépendamment de la taille 
@@ -380,8 +380,8 @@ export default function StrategyPerformance() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Comparatif — 3 modèles d'investissement
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Comparatif — 3 modèles d'investissement
+
             </h2>
           </motion.div>
 
@@ -427,8 +427,8 @@ export default function StrategyPerformance() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}>
 
-              <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
-                Évolution du capital
+              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Évolution du capital
+
               </h2>
               <p className="text-slate-600 mb-8">
                 Exemple de projection : 10 000 € investis lors de la première levée.
