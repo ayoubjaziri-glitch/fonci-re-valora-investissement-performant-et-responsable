@@ -104,8 +104,8 @@ export default function Services() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Processus d'investissement structuré
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Processus d'investissement structuré
+
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               Six étapes maîtrisées pour maximiser la création de valeur patrimoniale
@@ -151,8 +151,8 @@ export default function Services() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1E3A5F] mb-4">
-              Nos domaines d'expertise
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Nos domaines d'expertise
+
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               Une chaîne de valeur intégrée pour maximiser la performance de vos investissements
@@ -277,7 +277,7 @@ export default function Services() {
             Accédez à une exposition immobilière organisée autour d'un pilotage professionnel et d'une gouvernance claire.
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
+            <Button className="bg-slate-800 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
               Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
