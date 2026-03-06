@@ -88,19 +88,19 @@ export default function Home() {
 
   const testimonials = [
   {
-    text: "Grâce à La Foncière Patrimoniale, j'ai pu optimiser mon patrimoine et réaliser des investissements judicieux. Leur expertise est un atout précieux.",
-    author: "Sophie M.",
-    role: "Investisseur depuis 2022"
+    text: "Ce qui m'a convaincu, c'est la transparence du modèle : 0€ de frais d'entrée, une rémunération indexée sur la performance réelle, et une équipe qui investit elle-même dans les mêmes actifs.",
+    author: "François B.",
+    role: "Chef d'entreprise — Associé depuis 2024"
   },
   {
-    text: "Un accompagnement personnalisé et une écoute attentive de mes besoins. La Foncière Patrimoniale est un partenaire de confiance pour la gestion de mon patrimoine.",
-    author: "Jean-Pierre D.",
-    role: "Associé fondateur"
+    text: "J'ai cherché pendant longtemps un véhicule d'investissement immobilier sans les contraintes de la gestion directe. La Foncière Patrimoniale correspond exactement à ce que je cherchais.",
+    author: "Isabelle R.",
+    role: "Médecin libéral — Associée depuis 2025"
   },
   {
-    text: "La Foncière Patrimoniale m'a permis de mieux comprendre les enjeux de la gestion de patrimoine et de prendre des décisions éclairées pour mon avenir financier.",
-    author: "Marie L.",
-    role: "Investisseur"
+    text: "Le reporting est clair, les fondateurs sont accessibles et répondent en 24h. C'est rare de trouver cette qualité de relation dans l'investissement immobilier structuré.",
+    author: "Marc D.",
+    role: "Cadre supérieur — Associé depuis 2024"
   }];
 
 
@@ -706,6 +706,16 @@ export default function Home() {
                   <p className="text-[#C9A961] text-sm font-medium mb-2">Objectif de la levée</p>
                   <p className="text-6xl font-bold text-white mb-2">250 000 €</p>
                   <p className="text-white/60 text-sm">Première opération à 1,25 M€</p>
+                  <div className="mt-4">
+                    <div className="flex justify-between text-xs text-white/50 mb-1">
+                      <span>Avancement</span>
+                      <span>38%</span>
+                    </div>
+                    <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#C9A961] rounded-full" style={{ width: '38%' }} />
+                    </div>
+                    <p className="text-[#C9A961] text-xs mt-2 font-medium">95 000 € souscrits sur 250 000 €</p>
+                  </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4 mb-6">
@@ -749,12 +759,16 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16">
 
+            <div className="flex items-center justify-center gap-3 mb-6">
+              <div className="w-12 h-1 bg-[#C9A961]" />
+              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">Témoignages</span>
+              <div className="w-12 h-1 bg-[#C9A961]" />
+            </div>
             <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Ce que nos clients disent de nous
+              Ce que nos associés disent de nous
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Découvrez les témoignages de nos clients satisfaits et voyez comment La Foncière Patrimoniale 
-              a contribué à leur succès financier.
+              Des investisseurs engagés qui partagent leur expérience avec La Foncière Patrimoniale.
             </p>
           </motion.div>
 
