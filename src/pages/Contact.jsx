@@ -60,8 +60,96 @@ export default function Contact() {
     try {
       await base44.integrations.Core.SendEmail({
         to: 'Ayoubcontact33@gmail.com',
-        subject: `Nouvelle demande de contact - ${typeLabel}`,
-        body: `Nouvelle demande de contact recue via le site web.\n\nPrenom : ${formData.firstName}\nNom : ${formData.lastName}\nEmail : ${formData.email}\nTelephone : ${formData.phone || 'Non renseigne'}\nType de demande : ${typeLabel}\n\nMESSAGE :\n${formData.message}\n\nRecu le ${dateStr}`
+        subject: `📩 Nouvelle demande - ${typeLabel} | La Foncière Patrimoniale`,
+        body: `<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"></head>
+<body style="margin:0;padding:0;background:#f4f4f4;font-family:Arial,sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f4;padding:40px 0;">
+    <tr><td align="center">
+      <table width="600" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.08);">
+        
+        <!-- Header -->
+        <tr>
+          <td style="background:#1A3A52;padding:32px 40px;text-align:center;">
+            <h1 style="color:#C9A961;font-size:22px;margin:0;font-weight:bold;letter-spacing:1px;">LA FONCIÈRE PATRIMONIALE</h1>
+            <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:8px 0 0;">Nouvelle demande de contact reçue</p>
+          </td>
+        </tr>
+
+        <!-- Badge type -->
+        <tr>
+          <td style="padding:24px 40px 0;text-align:center;">
+            <span style="background:#C9A961;color:#1A3A52;font-weight:bold;font-size:13px;padding:6px 20px;border-radius:20px;display:inline-block;">${typeLabel}</span>
+          </td>
+        </tr>
+
+        <!-- Infos contact -->
+        <tr>
+          <td style="padding:28px 40px 0;">
+            <h2 style="color:#1A3A52;font-size:16px;margin:0 0 16px;border-bottom:2px solid #C9A961;padding-bottom:10px;">Coordonnées du contact</h2>
+            <table width="100%" cellpadding="0" cellspacing="0">
+              <tr>
+                <td style="padding:8px 0;width:40%;">
+                  <span style="color:#888;font-size:13px;">👤 Prénom &amp; Nom</span>
+                </td>
+                <td style="padding:8px 0;">
+                  <strong style="color:#1A3A52;font-size:14px;">${formData.firstName} ${formData.lastName}</strong>
+                </td>
+              </tr>
+              <tr style="background:#f9f9f9;">
+                <td style="padding:8px 12px;border-radius:6px;">
+                  <span style="color:#888;font-size:13px;">✉️ Email</span>
+                </td>
+                <td style="padding:8px 12px;">
+                  <a href="mailto:${formData.email}" style="color:#C9A961;font-size:14px;text-decoration:none;font-weight:bold;">${formData.email}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding:8px 0;">
+                  <span style="color:#888;font-size:13px;">📞 Téléphone</span>
+                </td>
+                <td style="padding:8px 0;">
+                  <strong style="color:#1A3A52;font-size:14px;">${formData.phone || 'Non renseigné'}</strong>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <!-- Message -->
+        <tr>
+          <td style="padding:28px 40px 0;">
+            <h2 style="color:#1A3A52;font-size:16px;margin:0 0 12px;border-bottom:2px solid #C9A961;padding-bottom:10px;">Message</h2>
+            <div style="background:#f8f6f1;border-left:4px solid #C9A961;border-radius:6px;padding:20px;color:#333;font-size:14px;line-height:1.7;">
+              ${formData.message.replace(/\n/g, '<br>')}
+            </div>
+          </td>
+        </tr>
+
+        <!-- CTA Répondre -->
+        <tr>
+          <td style="padding:28px 40px;text-align:center;">
+            <a href="mailto:${formData.email}?subject=Re: ${typeLabel} - La Foncière Patrimoniale" 
+               style="background:#C9A961;color:#1A3A52;font-weight:bold;font-size:14px;padding:14px 32px;border-radius:8px;text-decoration:none;display:inline-block;">
+              ↩ Répondre à ${formData.firstName}
+            </a>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="background:#f4f4f4;padding:20px 40px;text-align:center;border-top:1px solid #e0e0e0;">
+            <p style="color:#aaa;font-size:12px;margin:0;">Reçu le ${dateStr} via lafoncierepatrimoniale.com</p>
+            <p style="color:#aaa;font-size:11px;margin:6px 0 0;">16 Rue de la Laure, 03200 Vichy — La Foncière Patrimoniale</p>
+          </td>
+        </tr>
+
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>`
       });
     } catch (err) {
       console.error('Email send error:', err);
