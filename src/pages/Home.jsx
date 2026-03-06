@@ -870,7 +870,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
             <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
-            <h2 className="text-white mb-2 text-2xl font-serif md:text-3xl">Bâtissez votre patrimoine avec notre Foncière</h2>
+            <h2 className="text-white mb-2 px-1 text-2xl font-serif md:text-3xl">Bâtissez votre patrimoine avec notre Foncière</h2>
             <p className="text-[#1A3A52] mb-8 text-base leading-relaxed">Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.
 
             </p>
@@ -883,7 +883,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link to={createPageUrl("StrategyPerformance")}>
-                <Button variant="outline" className="bg-slate-900 text-white px-8 py-6 text-base font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:text-accent-foreground h-9 border-white/30 hover:bg-white/10">
+                <Button variant="outline" className="bg-slate-50 text-slate-900 px-8 py-6 text-base font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:text-accent-foreground h-9 border-white/30 hover:bg-white/10">
                   Stratégie & Performance
                 </Button>
               </Link>
