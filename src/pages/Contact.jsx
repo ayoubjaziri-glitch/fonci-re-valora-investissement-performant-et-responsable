@@ -44,31 +44,19 @@ export default function Contact() {
 
     const typeLabel = investmentOptions.find(o => o.id === formData.investmentType)?.title || formData.investmentType;
 
-    await base44.integrations.Core.SendEmail({
-      to: 'ayoubjaziri@gmail.com',
-      from_name: 'La Foncière Patrimoniale — Site Web',
-      subject: `Nouvelle demande de contact — ${typeLabel}`,
-      body: `
-Nouvelle demande de contact reçue via le site web.
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-INFORMATIONS DU CONTACT
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Prénom : ${formData.firstName}
-Nom : ${formData.lastName}
-Email : ${formData.email}
-Téléphone : ${formData.phone || 'Non renseigné'}
-Type de demande : ${typeLabel}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-MESSAGE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-${formData.message}
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Reçu le ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
-      `.trim()
-    });
+    try {
+      await Promise.race([
+        base44.integrations.Core.SendEmail({
+          to: 'ayoubjaziri@gmail.com',
+          from_name: 'La Foncière Patrimoniale — Site Web',
+          subject: `Nouvelle demande de contact — ${typeLabel}`,
+          body: `Nouvelle demande de contact reçue via le site web.\n\nPrénom : ${formData.firstName}\nNom : ${formData.lastName}\nEmail : ${formData.email}\nTéléphone : ${formData.phone || 'Non renseigné'}\nType de demande : ${typeLabel}\n\nMESSAGE :\n${formData.message}\n\nReçu le ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`
+        }),
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000))
+      ]);
+    } catch (err) {
+      console.error('Email send error:', err);
+    }
 
     setSending(false);
     setSubmitted(true);

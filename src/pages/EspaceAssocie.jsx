@@ -54,13 +54,10 @@ export default function EspaceAssocie() {
   }, []);
   const [montantSimulation, setMontantSimulation] = useState(25000);
   const [dureeSimulation, setDureeSimulation] = useState(5);
+  const [triCible, setTriCible] = useState(10);
 
   // Calculs simulateur intégré
-  const leverageRatio = 4;
-  const montantEmprunte = montantSimulation * leverageRatio;
-  const valeurTotaleActif = montantSimulation + montantEmprunte;
-  const triNet = 10.5;
-  const capitalFinal = montantSimulation * Math.pow(1 + triNet / 100, dureeSimulation);
+  const capitalFinal = montantSimulation * Math.pow(1 + triCible / 100, dureeSimulation);
   const gainTotal = capitalFinal - montantSimulation;
 
   const handleLogin = async (e) => {
