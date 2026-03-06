@@ -116,7 +116,7 @@ export default function Home() {
             backgroundImage: `url('${getImageUrl('hero_home', 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/0a169e079_france-paris-haussmann-la-facade-de-l-immeuble-e2dnpy.jpg')}')`
           }} />
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0f172a]/95 via-[#0f172a]/85 to-[#0f172a]/70" />
+        <div className="absolute inset-0 bg-gradient-to-r from-slate-900/95 via-slate-900/85 to-slate-900/70" />
         
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 py-32">
           <motion.div
@@ -432,7 +432,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center bg-[#0f172a] rounded-2xl p-8">
+            className="text-center bg-[#1A3A52] rounded-2xl p-8">
 
             <p className="text-white text-lg">
               <strong className="text-[#C9A961]">Un modèle structuré</strong> : absence de frais d'entrée • rémunération indexée sur la création de valeur • convergence durable des intérêts entre associés
@@ -598,7 +598,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-[#0f172a]">
+      <section className="py-16 bg-[#1A3A52]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) =>
@@ -660,7 +660,7 @@ export default function Home() {
       </section>
 
       {/* Levée en cours - Moved down and enhanced */}
-      <section className="py-24 bg-gradient-to-br from-[#0f172a] via-[#1A3A52] to-[#0f172a]">
+      <section className="py-24 bg-gradient-to-br from-[#1A3A52] via-[#2A4A6F] to-[#1A3A52]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -839,7 +839,7 @@ export default function Home() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mt-16 bg-[#0f172a] rounded-2xl p-8 md:p-12">
+            className="mt-16 bg-[#1A3A52] rounded-2xl p-8 md:p-12">
 
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
@@ -879,13 +879,13 @@ export default function Home() {
 
             <div className="flex flex-wrap justify-center gap-4">
               <Link to={createPageUrl("Contact")}>
-                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#0f172a] px-8 py-6 text-base font-semibold">
+                <Button className="bg-slate-900 text-slate-50 px-8 py-6 text-base font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
                   Entrer en relation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </Link>
               <Link to={createPageUrl("StrategyPerformance")}>
-                <Button variant="outline" className="border-2 border-[#C9A961]/60 text-[#C9A961] hover:bg-[#C9A961]/10 px-8 py-6 text-base font-semibold">
+                <Button variant="outline" className="bg-slate-800 text-white px-8 py-6 text-base font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:text-accent-foreground h-9 border-white/30 hover:bg-white/10">
                   Stratégie & Performance
                 </Button>
               </Link>

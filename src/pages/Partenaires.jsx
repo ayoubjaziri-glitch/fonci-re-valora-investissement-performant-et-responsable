@@ -191,21 +191,21 @@ export default function Partenaires() {
       </section>
 
       {/* CTA Contact */}
-      <section className="py-16 bg-[#0f172a]">
+      <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
-            <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
-            <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
+
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
               Entrer en relation
             </h2>
-            <p className="text-white/70 mb-8">
+            <p className="text-[#1A3A52]/80 mb-8">
               Les échanges se déroulent dans un cadre privé et confidentiel après qualification des interlocuteurs.
             </p>
             <Link to={createPageUrl("Contact")}>
-              <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#0f172a] px-8 py-6 font-semibold">
+              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
                 Nous contacter
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
