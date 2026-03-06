@@ -84,6 +84,7 @@ function KpisSection() {
   const [indic, setIndic] = useState(null);
   const [energie, setEnergie] = useState(null);
   const [resultats, setResultats] = useState(null);
+  const [gouvernance, setGouvernance] = useState(null);
 
   const lv = levee ?? getSection('levee_fonds');
   const va = valo ?? getSection('valorisation');
