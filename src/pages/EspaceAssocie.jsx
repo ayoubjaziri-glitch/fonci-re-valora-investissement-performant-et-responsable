@@ -127,7 +127,7 @@ export default function EspaceAssocie() {
 
           <div className="bg-white rounded-3xl p-8 shadow-2xl">
             <div className="text-center mb-8">
-              <div className="w-24 h-24 flex items-center justify-center mx-auto mb-4">
+              <div className="w-40 h-40 flex items-center justify-center mx-auto mb-4">
                 <img
                   src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
                   alt="La Foncière Patrimoniale"
