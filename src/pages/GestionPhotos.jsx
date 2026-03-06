@@ -11,6 +11,128 @@ import { Upload, Save, Image as ImageIcon, Edit2, Crop, MapPin, Plus, Trash2, X 
 import { motion } from 'framer-motion';
 import ImageCropper from '../components/ImageCropper';
 
+function MapLocationsSection() {
+  const qc = useQueryClient();
+  const [modal, setModal] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const emptyForm = { name: '', adresse: '', lat: '', lng: '', logements: '', dpe: '', image_url: '', actif: true };
+  const [form, setForm] = useState(emptyForm);
+
+  const { data: locations = [] } = useQuery({
+    queryKey: ['map-locations'],
+    queryFn: () => base44.entities.MapLocation.list(),
+  });
+
+  const saveMutation = useMutation({
+    mutationFn: (data) => {
+      const payload = { ...data, lat: parseFloat(data.lat), lng: parseFloat(data.lng) };
+      return editId ? base44.entities.MapLocation.update(editId, payload) : base44.entities.MapLocation.create(payload);
+    },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['map-locations'] }); setModal(false); setEditId(null); setForm(emptyForm); },
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: (id) => base44.entities.MapLocation.delete(id),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['map-locations'] }),
+  });
+
+  const toggleActive = useMutation({
+    mutationFn: ({ id, actif }) => base44.entities.MapLocation.update(id, { actif }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['map-locations'] }),
+  });
+
+  const handleFileUpload = async (file) => {
+    setUploading(true);
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    setForm(f => ({ ...f, image_url: file_url }));
+    setUploading(false);
+  };
+
+  const openEdit = (loc) => {
+    setEditId(loc.id);
+    setForm({ name: loc.name, adresse: loc.adresse, lat: loc.lat, lng: loc.lng, logements: loc.logements || '', dpe: loc.dpe || '', image_url: loc.image_url || '', actif: loc.actif });
+    setModal(true);
+  };
+
+  return (
+    <div>
+      <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center gap-3">
+          <MapPin className="h-6 w-6 text-[#C9A961]" />
+          <h2 className="text-xl font-semibold text-[#1A3A52]">Localisations sur la Carte</h2>
+        </div>
+        <Button onClick={() => { setEditId(null); setForm(emptyForm); setModal(true); }} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
+          <Plus className="h-4 w-4 mr-2" /> Ajouter un lieu
+        </Button>
+      </div>
+
+      <div className="grid md:grid-cols-2 gap-4">
+        {locations.map(loc => (
+          <Card key={loc.id} className={`p-4 ${!loc.actif ? 'opacity-50' : ''}`}>
+            <div className="flex gap-3">
+              {loc.image_url && (
+                <img src={loc.image_url} alt={loc.name} className="w-20 h-20 object-cover rounded-lg flex-shrink-0" />
+              )}
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-[#1A3A52] text-sm truncate">{loc.name}</h3>
+                <p className="text-xs text-slate-500 mt-1 truncate">{loc.adresse}</p>
+                <div className="flex items-center gap-2 mt-1">
+                  {loc.logements && <span className="text-xs bg-slate-100 px-2 py-0.5 rounded">{loc.logements}</span>}
+                  {loc.dpe && <span className="text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded font-bold">DPE {loc.dpe}</span>}
+                </div>
+                <p className="text-xs text-slate-400 mt-1">{loc.lat}, {loc.lng}</p>
+              </div>
+              <div className="flex flex-col gap-1 flex-shrink-0">
+                <button onClick={() => openEdit(loc)} className="text-slate-400 hover:text-[#1A3A52]"><Edit2 className="h-4 w-4" /></button>
+                <button onClick={() => toggleActive.mutate({ id: loc.id, actif: !loc.actif })} className={`text-xs px-1 py-0.5 rounded ${loc.actif ? 'text-emerald-600' : 'text-slate-400'}`}>{loc.actif ? '✓' : '○'}</button>
+                <button onClick={() => { if (confirm('Supprimer ?')) deleteMutation.mutate(loc.id); }} className="text-slate-400 hover:text-red-500"><Trash2 className="h-4 w-4" /></button>
+              </div>
+            </div>
+          </Card>
+        ))}
+        {locations.length === 0 && <p className="col-span-full text-center text-slate-400 py-8">Aucune localisation. Ajoutez-en une.</p>}
+      </div>
+
+      <Dialog open={modal} onOpenChange={setModal}>
+        <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
+          <DialogHeader><DialogTitle>{editId ? 'Modifier' : 'Ajouter'} une localisation</DialogTitle></DialogHeader>
+          <div className="space-y-4">
+            <div><Label>Nom de l'immeuble</Label><Input value={form.name} onChange={e => setForm({...form, name: e.target.value})} className="mt-1" /></div>
+            <div><Label>Adresse complète</Label><Input value={form.adresse} onChange={e => setForm({...form, adresse: e.target.value})} placeholder="12 Rue de la Paix, 75001 Paris" className="mt-1" /></div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><Label>Latitude</Label><Input type="number" step="0.000001" value={form.lat} onChange={e => setForm({...form, lat: e.target.value})} placeholder="48.8566" className="mt-1" /></div>
+              <div><Label>Longitude</Label><Input type="number" step="0.000001" value={form.lng} onChange={e => setForm({...form, lng: e.target.value})} placeholder="2.3522" className="mt-1" /></div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div><Label>Logements</Label><Input value={form.logements} onChange={e => setForm({...form, logements: e.target.value})} placeholder="12 logements" className="mt-1" /></div>
+              <div><Label>DPE</Label><Input value={form.dpe} onChange={e => setForm({...form, dpe: e.target.value})} placeholder="A, B, C..." className="mt-1" /></div>
+            </div>
+            <div>
+              <Label>Photo de l'immeuble</Label>
+              <div className="mt-1 space-y-2">
+                <Input value={form.image_url} onChange={e => setForm({...form, image_url: e.target.value})} placeholder="https://... ou uploader ci-dessous" />
+                <label className="flex items-center gap-3 p-3 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-[#C9A961] transition-colors">
+                  <Upload className="h-5 w-5 text-slate-400" />
+                  <span className="text-sm text-slate-600">{uploading ? 'Upload en cours...' : 'Uploader une photo'}</span>
+                  <input type="file" accept="image/*" className="hidden" onChange={e => { const f = e.target.files?.[0]; if (f) handleFileUpload(f); }} disabled={uploading} />
+                </label>
+                {form.image_url && <img src={form.image_url} alt="preview" className="w-full h-32 object-cover rounded-lg" />}
+              </div>
+            </div>
+            <div className="flex gap-2">
+              <Button onClick={() => saveMutation.mutate(form)} className="flex-1 bg-[#1A3A52] text-white" disabled={!form.name || !form.lat || !form.lng}>
+                <Save className="h-4 w-4 mr-2" />{editId ? 'Mettre à jour' : 'Créer'}
+              </Button>
+              <Button variant="outline" onClick={() => setModal(false)}><X className="h-4 w-4" /></Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
 export default function GestionPhotos() {
   const [uploading, setUploading] = useState(false);
   const [editingImage, setEditingImage] = useState(null);
