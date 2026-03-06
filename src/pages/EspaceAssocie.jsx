@@ -220,9 +220,10 @@ export default function EspaceAssocie() {
   const valorisationRaw = getConfig('valorisation', { valeurActuelle: 3200000, evolution: '+8.5%', nombreActions: 32000, valeurAction: 100, plusValueAction: '+8.5%', dateValo: '31 Déc 2025', plusValueTotal: 250000 });
   const valorisationSociete = valorisationRaw;
 
-  const indicRaw = getConfig('indicateurs', { occupation: '93,5%', delaiLocation: '18 jours', dette: '2 180 000 €', nbActifs: '4 immeubles', totalLots: '42 lots' });
+  const indicRaw = getConfig('indicateurs', { occupation: '93,5%', delaiLocation: '18 jours', dette: '2 180 000 €', nbActifs: '4 immeubles', totalLots: '42 lots', couvertureLoyers: '~1,4x', ltv: '68%' });
   const energieRaw = getConfig('energie', { co2: '-450t', conso: '-42%' });
   const resultatsRaw = getConfig('resultats', { loyers: '185 000 €', tauxOccupation: '93,5%', resultatNet: '32 500 €', datePub: '15 janvier 2026', prochainResultat: '≈ 28 000 €', dateProchaineResult: '15 avril 2026' });
+  const gouvernanceRaw = getConfig('gouvernance', { texte: "Accès réservé aux associés élus par les catégories B et C pour les décisions stratégiques (acquisitions, arbitrages, emprunts).", stratégieDette: "Amortissement progressif sur 20 ans. Effet de levier maîtrisé avec LTV cible ≤ 80% à l'acquisition." });
 
   // DB data with fallbacks
   const patrimoine = acqDb.filter((a) => a.type === 'patrimoine').length > 0 ?
