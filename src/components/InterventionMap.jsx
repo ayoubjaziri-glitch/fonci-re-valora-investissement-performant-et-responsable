@@ -27,6 +27,12 @@ const customIcon = new L.Icon({
 export default function InterventionMap() {
   const center = [45.8, 2.5]; // Centre de la France
 
+  const { data: zonesDb = [] } = useQuery({
+    queryKey: ['map-locations'],
+    queryFn: () => base44.entities.MapLocation.filter({ actif: true }),
+    initialData: []
+  });
+
   return (
     <div className="relative">
       <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200">
@@ -40,7 +46,7 @@ export default function InterventionMap() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {zones.map((zone, index) => (
+          {zonesDb.map((zone, index) => (
             <Marker 
               key={index} 
               position={[zone.lat, zone.lng]}
@@ -48,11 +54,13 @@ export default function InterventionMap() {
             >
               <Popup>
                 <div className="p-0 min-w-[280px]">
-                  <img 
-                    src={zone.image} 
-                    alt={zone.name}
-                    className="w-full h-40 object-cover rounded-t-lg"
-                  />
+                  {zone.image_url && (
+                    <img 
+                      src={zone.image_url} 
+                      alt={zone.name}
+                      className="w-full h-40 object-cover rounded-t-lg"
+                    />
+                  )}
                   <div className="p-4">
                     <h4 className="font-bold text-slate-900 text-base mb-2">{zone.name}</h4>
                     <p className="text-slate-600 text-xs mb-3 flex items-start gap-1">
@@ -61,13 +69,15 @@ export default function InterventionMap() {
                     </p>
                     <div className="flex justify-between items-center">
                       <span className="text-slate-700 font-medium text-sm">{zone.logements}</span>
-                      <span className={`px-2 py-1 rounded text-xs font-bold text-white ${
-                        zone.dpe === 'A' ? 'bg-emerald-500' : 
-                        zone.dpe === 'B' ? 'bg-green-500' : 
-                        'bg-lime-500'
-                      }`}>
-                        DPE {zone.dpe}
-                      </span>
+                      {zone.dpe && (
+                        <span className={`px-2 py-1 rounded text-xs font-bold text-white ${
+                          zone.dpe === 'A' ? 'bg-emerald-500' : 
+                          zone.dpe === 'B' ? 'bg-green-500' : 
+                          'bg-lime-500'
+                        }`}>
+                          DPE {zone.dpe}
+                        </span>
+                      )}
                     </div>
                   </div>
                 </div>
