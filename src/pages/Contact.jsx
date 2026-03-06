@@ -3,29 +3,29 @@ import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { useToast } from "@/components/ui/use-toast";
 import {
-  Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight, Clock, Loader2
-} from 'lucide-react';
+  Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight, Clock, Loader2 } from
+'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 
 const investmentOptions = [
-  { id: "information", title: "Demande d'informations" },
-  { id: "investisseur", title: "Associé Investisseur" },
-  { id: "obligataire", title: "Obligataire" },
-  { id: "operationnel", title: "Associé Opérationnel" },
-  { id: "partenariat", title: "Partenariat" },
-  { id: "autre", title: "Autre" },
-];
+{ id: "information", title: "Demande d'informations" },
+{ id: "investisseur", title: "Associé Investisseur" },
+{ id: "obligataire", title: "Obligataire" },
+{ id: "operationnel", title: "Associé Opérationnel" },
+{ id: "partenariat", title: "Partenariat" },
+{ id: "autre", title: "Autre" }];
+
 
 const steps = [
-  { number: "1", title: "Prise de contact", desc: "Échange avec les fondateurs" },
-  { number: "2", title: "Questions / Réponses", desc: "Compréhension du modèle" },
-  { number: "3", title: "Souscription", desc: "Signature électronique" },
-  { number: "4", title: "Intégration", desc: "Accès plateforme" },
-  { number: "5", title: "Création de valeur", desc: "Participation active" },
-];
+{ number: "1", title: "Prise de contact", desc: "Échange avec les fondateurs" },
+{ number: "2", title: "Questions / Réponses", desc: "Compréhension du modèle" },
+{ number: "3", title: "Souscription", desc: "Signature électronique" },
+{ number: "4", title: "Intégration", desc: "Accès plateforme" },
+{ number: "5", title: "Création de valeur", desc: "Participation active" }];
+
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -43,7 +43,7 @@ export default function Contact() {
     e.preventDefault();
     setSending(true);
 
-    const typeLabel = investmentOptions.find(o => o.id === formData.investmentType)?.title || formData.investmentType;
+    const typeLabel = investmentOptions.find((o) => o.id === formData.investmentType)?.title || formData.investmentType;
     const dateStr = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
     // 1. Sauvegarder la demande en base de données
@@ -53,7 +53,7 @@ export default function Contact() {
       email: formData.email,
       telephone: formData.phone || '',
       type_demande: typeLabel,
-      message: formData.message,
+      message: formData.message
     });
 
     // 2. Envoyer l'email de notification
@@ -175,14 +175,14 @@ export default function Contact() {
             <div className="bg-slate-50 rounded-2xl p-6 mb-8 text-left">
               <h3 className="font-semibold text-[#1A3A52] mb-4">Prochaines étapes</h3>
               <div className="space-y-3">
-                {["Étude de votre profil par notre équipe", "Prise de contact sous 48h ouvrées", "Échange détaillé sur votre projet"].map((step, i) => (
-                  <div key={i} className="flex items-center gap-3">
+                {["Étude de votre profil par notre équipe", "Prise de contact sous 48h ouvrées", "Échange détaillé sur votre projet"].map((step, i) =>
+                <div key={i} className="flex items-center gap-3">
                     <div className="w-7 h-7 bg-[#C9A961] rounded-full flex items-center justify-center flex-shrink-0">
                       <span className="text-white text-xs font-bold">{i + 1}</span>
                     </div>
                     <p className="text-sm text-slate-600">{step}</p>
                   </div>
-                ))}
+                )}
               </div>
             </div>
             <Button onClick={() => setSubmitted(false)} variant="outline" className="border-[#1A3A52] text-[#1A3A52] hover:bg-[#1A3A52] hover:text-white font-semibold">
@@ -190,15 +190,15 @@ export default function Contact() {
             </Button>
           </div>
         </motion.div>
-      </div>
-    );
+      </div>);
+
   }
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
-        <div className="absolute inset-0">
+        <div className="bg-slate-900 absolute inset-0">
           <div className="absolute top-0 right-0 w-96 h-96 bg-[#C9A961]/5 rounded-full transform translate-x-1/2 -translate-y-1/2" />
           <div className="absolute bottom-0 left-0 w-64 h-64 bg-white/5 rounded-full transform -translate-x-1/2 translate-y-1/2" />
         </div>
@@ -221,15 +221,15 @@ export default function Contact() {
             {/* Left Column - Info */}
             <div className="lg:col-span-2">
               <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-                <h2 className="text-2xl font-serif text-[#1A3A52] mb-8">Nous contacter</h2>
+                <h2 className="text-slate-900 mb-8 text-2xl font-serif">Nous contacter</h2>
                 <div className="space-y-5 mb-10">
                   {[
-                    { icon: Mail, label: 'Email', content: <a href="mailto:ayoubjaziri@gmail.com" className="text-slate-600 hover:text-[#C9A961] transition-colors">ayoubjaziri@gmail.com</a> },
-                    { icon: Phone, label: 'Téléphone', content: <a href="tel:+33758736580" className="text-slate-600 hover:text-[#C9A961] transition-colors">+33 7 58 73 65 80</a> },
-                    { icon: MapPin, label: 'Adresse', content: <p className="text-slate-600">16 Rue de la Laure<br />03200 Vichy</p> },
-                    { icon: Clock, label: 'Horaires', content: <p className="text-slate-600">Lun – Ven : 9h – 18h<br />Sam : 10h – 15h</p> },
-                  ].map(({ icon: Icon, label, content }) => (
-                    <div key={label} className="flex items-start gap-4">
+                  { icon: Mail, label: 'Email', content: <a href="mailto:ayoubjaziri@gmail.com" className="text-slate-600 hover:text-[#C9A961] transition-colors">ayoubjaziri@gmail.com</a> },
+                  { icon: Phone, label: 'Téléphone', content: <a href="tel:+33758736580" className="text-slate-600 hover:text-[#C9A961] transition-colors">+33 7 58 73 65 80</a> },
+                  { icon: MapPin, label: 'Adresse', content: <p className="text-slate-600">16 Rue de la Laure<br />03200 Vichy</p> },
+                  { icon: Clock, label: 'Horaires', content: <p className="text-slate-600">Lun – Ven : 9h – 18h<br />Sam : 10h – 15h</p> }].
+                  map(({ icon: Icon, label, content }) =>
+                  <div key={label} className="flex items-start gap-4">
                       <div className="w-11 h-11 bg-[#C9A961]/10 rounded-xl flex items-center justify-center flex-shrink-0">
                         <Icon className="h-5 w-5 text-[#C9A961]" />
                       </div>
@@ -238,7 +238,7 @@ export default function Contact() {
                         {content}
                       </div>
                     </div>
-                  ))}
+                  )}
                 </div>
 
                 {/* Réseaux sociaux */}
@@ -246,13 +246,13 @@ export default function Contact() {
                   <p className="font-semibold text-[#1A3A52] text-sm mb-4">Suivez-nous</p>
                   <div className="flex items-center gap-3">
                     <a href="https://www.linkedin.com/company/la-fonciere-patrimoniale" target="_blank" rel="noopener noreferrer"
-                      className="w-11 h-11 bg-[#C9A961]/10 hover:bg-[#C9A961] rounded-xl flex items-center justify-center transition-colors group">
+                    className="w-11 h-11 bg-[#C9A961]/10 hover:bg-[#C9A961] rounded-xl flex items-center justify-center transition-colors group">
                       <svg className="w-5 h-5 text-[#C9A961] group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" />
                       </svg>
                     </a>
                     <a href="https://www.instagram.com/lafoncierepatrimoniale" target="_blank" rel="noopener noreferrer"
-                      className="w-11 h-11 bg-[#C9A961]/10 hover:bg-[#C9A961] rounded-xl flex items-center justify-center transition-colors group">
+                    className="w-11 h-11 bg-[#C9A961]/10 hover:bg-[#C9A961] rounded-xl flex items-center justify-center transition-colors group">
                       <svg className="w-5 h-5 text-[#C9A961] group-hover:text-white transition-colors" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                       </svg>
@@ -261,7 +261,7 @@ export default function Contact() {
                 </div>
 
                 {/* Bloc confiance */}
-                <div className="mt-8 bg-[#1A3A52] rounded-2xl p-6">
+                <div className="bg-slate-900 mt-8 p-6 rounded-2xl">
                   <p className="text-[#C9A961] font-semibold text-sm mb-2">Réponse garantie sous 48h</p>
                   <p className="text-white/70 text-sm leading-relaxed">
                     Chaque demande est traitée personnellement par les fondateurs. Confidentialité et discrétion assurées.
@@ -274,7 +274,7 @@ export default function Contact() {
             <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="lg:col-span-3">
               <div className="bg-white rounded-3xl border border-slate-200 shadow-lg overflow-hidden">
                 {/* Form header */}
-                <div className="bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] px-8 py-6">
+                <div className="bg-slate-900 px-8 py-6 from-[#1A3A52] to-[#2A4A6F]">
                   <h3 className="text-xl font-serif text-white">Entrer en relation</h3>
                   <p className="text-white/60 text-sm mt-1">Remplissez ce formulaire, nous vous répondons rapidement.</p>
                 </div>
@@ -284,12 +284,12 @@ export default function Contact() {
                     <div>
                       <Label htmlFor="firstName" className="text-slate-700 font-medium text-sm">Prénom <span className="text-red-400">*</span></Label>
                       <Input id="firstName" value={formData.firstName} onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
-                        className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961]" placeholder="Votre prénom" required />
+                      className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961]" placeholder="Votre prénom" required />
                     </div>
                     <div>
                       <Label htmlFor="lastName" className="text-slate-700 font-medium text-sm">Nom <span className="text-red-400">*</span></Label>
                       <Input id="lastName" value={formData.lastName} onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
-                        className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961]" placeholder="Votre nom" required />
+                      className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961]" placeholder="Votre nom" required />
                     </div>
                   </div>
 
@@ -297,40 +297,40 @@ export default function Contact() {
                     <div>
                       <Label htmlFor="email" className="text-slate-700 font-medium text-sm">Email <span className="text-red-400">*</span></Label>
                       <Input id="email" type="email" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961]" placeholder="vous@email.com" required />
+                      className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961]" placeholder="vous@email.com" required />
                     </div>
                     <div>
                       <Label htmlFor="phone" className="text-slate-700 font-medium text-sm">Téléphone</Label>
                       <Input id="phone" type="tel" value={formData.phone} onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961]" placeholder="+33 6 00 00 00 00" />
+                      className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961]" placeholder="+33 6 00 00 00 00" />
                     </div>
                   </div>
 
                   <div>
                     <Label htmlFor="investmentType" className="text-slate-700 font-medium text-sm">Objet de votre demande <span className="text-red-400">*</span></Label>
                     <select id="investmentType" value={formData.investmentType}
-                      onChange={(e) => setFormData({ ...formData, investmentType: e.target.value })}
-                      className="w-full mt-1.5 px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#C9A961] focus:border-transparent text-slate-800 bg-white text-sm">
-                      {investmentOptions.map((option) => (
-                        <option key={option.id} value={option.id}>{option.title}</option>
-                      ))}
+                    onChange={(e) => setFormData({ ...formData, investmentType: e.target.value })}
+                    className="w-full mt-1.5 px-4 py-2.5 rounded-lg border border-slate-200 focus:outline-none focus:ring-2 focus:ring-[#C9A961] focus:border-transparent text-slate-800 bg-white text-sm">
+                      {investmentOptions.map((option) =>
+                      <option key={option.id} value={option.id}>{option.title}</option>
+                      )}
                     </select>
                   </div>
 
                   <div>
                     <Label htmlFor="message" className="text-slate-700 font-medium text-sm">Message <span className="text-red-400">*</span></Label>
                     <Textarea id="message" rows={5} placeholder="Décrivez votre projet, vos attentes ou vos questions..." value={formData.message}
-                      onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961] resize-none" required />
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    className="mt-1.5 border-slate-200 focus:border-[#C9A961] focus:ring-[#C9A961] resize-none" required />
                   </div>
 
                   <Button type="submit" disabled={sending}
-                    className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] py-6 text-base font-semibold rounded-xl transition-all duration-300 hover:shadow-lg">
-                    {sending ? (
-                      <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Envoi en cours...</>
-                    ) : (
-                      <><Send className="mr-2 h-5 w-5" /> Envoyer ma demande</>
-                    )}
+                  className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] py-6 text-base font-semibold rounded-xl transition-all duration-300 hover:shadow-lg">
+                    {sending ?
+                    <><Loader2 className="mr-2 h-5 w-5 animate-spin" /> Envoi en cours...</> :
+
+                    <><Send className="mr-2 h-5 w-5" /> Envoyer ma demande</>
+                    }
                   </Button>
 
                   <p className="text-xs text-slate-500 text-center leading-relaxed">
@@ -348,14 +348,14 @@ export default function Contact() {
       <section className="py-20 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-14">
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">Votre parcours vers la création de valeur</h2>
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Votre parcours vers la création de valeur</h2>
             <p className="text-slate-600">Un parcours en 5 étapes pour devenir associé et participer activement à la croissance</p>
           </motion.div>
 
           <div className="flex flex-wrap justify-center gap-4">
-            {steps.map((step, index) => (
-              <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }} className="flex items-center gap-4">
+            {steps.map((step, index) =>
+            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            transition={{ delay: index * 0.1 }} className="flex items-center gap-4">
                 <div className="bg-white rounded-2xl p-6 shadow-sm min-w-[150px] text-center border border-slate-100">
                   <div className="w-10 h-10 bg-[#C9A961] rounded-full flex items-center justify-center mx-auto mb-3">
                     <span className="text-[#1A3A52] font-bold text-sm">{step.number}</span>
@@ -365,11 +365,11 @@ export default function Contact() {
                 </div>
                 {index < steps.length - 1 && <ArrowRight className="h-5 w-5 text-[#C9A961] hidden md:block flex-shrink-0" />}
               </motion.div>
-            ))}
+            )}
           </div>
 
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="mt-12 bg-[#C9A961] rounded-2xl p-6 text-center">
+          className="mt-12 bg-[#C9A961] rounded-2xl p-6 text-center">
             <p className="text-[#1A3A52] font-medium text-sm">
               Ce formulaire a pour seul objet de permettre une prise de contact à l'initiative des personnes intéressées
               et ne constitue pas une offre de titres financiers.
@@ -384,6 +384,6 @@ export default function Contact() {
           <p className="text-xs text-slate-500">AVERTISSEMENT : Avant toute souscription, chaque associé doit prendre connaissance des statuts et du Pacte d'Associés. Ce site est à caractère promotionnel et ne constitue pas un conseil en investissement.</p>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }
