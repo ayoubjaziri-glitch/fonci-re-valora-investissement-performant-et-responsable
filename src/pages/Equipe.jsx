@@ -242,8 +242,8 @@ export default function Equipe() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Forces clés de l'équipe
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Forces clés de l'équipe
+
             </h2>
           </motion.div>
 
@@ -382,8 +382,8 @@ export default function Equipe() {
             viewport={{ once: true }}
             className="text-center mb-16">
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Trajectoire de développement
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Trajectoire de développement
+
             </h2>
             <p className="text-slate-600">La Foncière Patrimoniale — 5 ans de croissance</p>
           </motion.div>
@@ -443,8 +443,8 @@ export default function Equipe() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
 
-            <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
-              Rejoignez une équipe d'experts
+            <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">Rejoignez une équipe d'experts
+
             </h2>
             <p className="text-[#1A3A52]/80 mb-8">
               Portée par un groupe solide depuis 2008, contribuez à la création de valeur patrimoniale durable.
