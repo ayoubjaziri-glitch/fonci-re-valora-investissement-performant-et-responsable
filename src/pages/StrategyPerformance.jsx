@@ -563,7 +563,7 @@ export default function StrategyPerformance() {
 
 
       {/* CTA */}
-      <section className="bg-[#1A3A52] py-16">
+      <section className="bg-[#0f172a] py-16">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">S’associer à notre dynamique de valorisation
 
