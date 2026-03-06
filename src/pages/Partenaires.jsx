@@ -95,7 +95,7 @@ export default function Partenaires() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
-        <div className="bg-[#1A3A52] opacity-10 absolute inset-0">
+        <div className="bg-slate-900 opacity-100 absolute inset-0">
           
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -205,7 +205,7 @@ export default function Partenaires() {
               Les échanges se déroulent dans un cadre privé et confidentiel après qualification des interlocuteurs.
             </p>
             <Link to={createPageUrl("Contact")}>
-              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+              <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
                 Nous contacter
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
