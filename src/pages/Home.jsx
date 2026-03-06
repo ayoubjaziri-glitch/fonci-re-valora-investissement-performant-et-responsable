@@ -494,7 +494,7 @@ export default function Home() {
                   <div className="p-6">
                     <p className="text-slate-600 leading-relaxed mb-4">{service.description}</p>
                     <Link to={createPageUrl("Services")} className="inline-flex items-center text-[#C9A961] font-semibold hover:gap-3 transition-all group-hover:text-[#B8994F]">
-                      Découvrir <ArrowRight className="ml-2 h-4 w-4" />
+                      Nos missions <ArrowRight className="ml-2 h-4 w-4" />
                     </Link>
                   </div>
                 </div>
