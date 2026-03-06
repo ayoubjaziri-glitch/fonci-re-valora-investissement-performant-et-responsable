@@ -870,9 +870,9 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
             <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
-            <h2 className="text-white mb-3 text-2xl font-serif md:text-3xl">Bâtissez votre patrimoine avec notre Foncière</h2>
-            <p className="text-[#1A3A52] mb-8 text-lg leading-relaxed">
-              Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.
+            <h2 className="text-white mb-2 text-2xl font-serif md:text-3xl">Bâtissez votre patrimoine avec notre Foncière</h2>
+            <p className="text-[#1A3A52] mb-8 text-base leading-relaxed">Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.
+
             </p>
 
             <div className="flex flex-wrap justify-center gap-4">
