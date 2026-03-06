@@ -233,12 +233,12 @@ export default function Home() {
               viewport={{ once: true }}
               className="grid grid-cols-2 gap-6">
 
-              <div className="bg-[#1A3A52] rounded-2xl p-6 text-center">
+              <div className="bg-slate-900 p-6 text-center rounded-2xl">
                 <Calendar className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
                 <p className="text-3xl font-bold text-white mb-1">18 ans</p>
                 <p className="text-sm text-white/60">D'expertise immobilière</p>
               </div>
-              <div className="bg-[#1A3A52] rounded-2xl p-6 text-center">
+              <div className="bg-slate-900 p-6 text-center rounded-2xl">
                 <Building2 className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
                 <p className="text-3xl font-bold text-white mb-1">3 M€</p>
                 <p className="text-sm text-white/60">D'actifs sous gestion</p>
@@ -248,7 +248,7 @@ export default function Home() {
                 <p className="text-3xl font-bold text-[#1A3A52] mb-1">>7%</p>
                 <p className="text-sm text-[#1A3A52]/80">TRI net visé</p>
               </div>
-              <div className="bg-[#1A3A52] rounded-2xl p-6 text-center">
+              <div className="bg-slate-900 p-6 text-center rounded-2xl">
                 <Target className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
                 <p className="text-3xl font-bold text-white mb-1">20 M€</p>
                 <p className="text-sm text-white/80">Objectif 5 ans</p>
@@ -431,8 +431,8 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center bg-[#1A3A52] rounded-2xl p-8">
+            viewport={{ once: true }} className="bg-slate-900 p-8 text-center rounded-2xl">
+
 
             <p className="text-white text-lg">
               <strong className="text-[#C9A961]">Un modèle structuré</strong> : absence de frais d'entrée • rémunération indexée sur la création de valeur • convergence durable des intérêts entre associés
@@ -598,7 +598,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-[#1A3A52]">
+      <section className="bg-slate-900 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
             {stats.map((stat, index) =>
@@ -660,7 +660,7 @@ export default function Home() {
       </section>
 
       {/* Levée en cours - Moved down and enhanced */}
-      <section className="py-24 bg-gradient-to-br from-[#1A3A52] via-[#2A4A6F] to-[#1A3A52]">
+      <section className="bg-slate-900 py-24 from-[#1A3A52] via-[#2A4A6F] to-[#1A3A52]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -838,8 +838,8 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-16 bg-[#1A3A52] rounded-2xl p-8 md:p-12">
+            viewport={{ once: true }} className="bg-slate-900 mt-16 p-8 rounded-2xl md:p-12">
+
 
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
               <div>
@@ -863,7 +863,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#1A3A52] py-24">
+      <section className="bg-[#C9A961] py-24">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -885,7 +885,7 @@ export default function Home() {
                 </Button>
               </Link>
               <Link to={createPageUrl("StrategyPerformance")}>
-                <Button variant="outline" className="bg-slate-800 text-white px-8 py-6 text-base font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:text-accent-foreground h-9 border-white/30 hover:bg-white/10">
+                <Button variant="outline" className="bg-slate-900 text-white px-8 py-6 text-base font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm hover:text-accent-foreground h-9 border-white/30 hover:bg-white/10">
                   Stratégie & Performance
                 </Button>
               </Link>
