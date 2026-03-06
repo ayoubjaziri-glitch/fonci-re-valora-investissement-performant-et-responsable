@@ -106,20 +106,20 @@ export default function EspaceAssocie() {
 
   // Fetch dynamic data
   const { data: configs = [] } = useQuery({ queryKey: ['ea-config'], queryFn: () => base44.entities.EspaceAssocieConfig.list(), enabled: isLoggedIn });
-  const { data: docsDb = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => base44.entities.DocumentAssocie.filter({actif: true}, '-date_document'), enabled: isLoggedIn });
-  const { data: actuDb = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => base44.entities.ActualiteAssocie.filter({actif: true}, '-date_publication', 5), enabled: isLoggedIn });
+  const { data: docsDb = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => base44.entities.DocumentAssocie.filter({ actif: true }, '-date_document'), enabled: isLoggedIn });
+  const { data: actuDb = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => base44.entities.ActualiteAssocie.filter({ actif: true }, '-date_publication', 5), enabled: isLoggedIn });
   const { data: acqDb = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => base44.entities.AcquisitionAssocie.list(), enabled: isLoggedIn });
   const { data: roadmapDb = [] } = useQuery({ queryKey: ['roadmap-associe'], queryFn: () => base44.entities.RoadmapAssocie.list('ordre'), enabled: isLoggedIn });
 
   const getConfig = (key, fallback) => {
-    const found = configs.find(c => c.cle === key);
-    if (found) { try { return JSON.parse(found.donnees); } catch { return fallback; } }
+    const found = configs.find((c) => c.cle === key);
+    if (found) {try {return JSON.parse(found.donnees);} catch {return fallback;}}
     return fallback;
   };
 
   if (!isLoggedIn) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-[#0A192F] via-[#1A3A52] to-[#0A192F] flex items-center justify-center p-6">
+      <div className="bg-slate-900 p-6 min-h-screen from-[#0A192F] via-[#1A3A52] to-[#0A192F] flex items-center justify-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -128,7 +128,7 @@ export default function EspaceAssocie() {
           <div className="bg-white rounded-3xl p-8 shadow-2xl">
             <div className="text-center mb-8">
               <div className="w-20 h-20 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                <Shield className="h-10 w-10 text-[#1A3A52]" />
+                
               </div>
               <h1 className="text-2xl font-serif text-[#1A3A52] mb-2">Espace Associés</h1>
               <p className="text-slate-600">Accédez à votre tableau de bord sécurisé</p>
@@ -179,7 +179,7 @@ export default function EspaceAssocie() {
                 </div>
               }
 
-              <Button type="submit" className="w-full bg-[#1A3A52] hover:bg-[#2A4A6F] text-white py-6 font-semibold">
+              <Button type="submit" className="bg-slate-900 text-white px-4 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 w-full hover:bg-[#2A4A6F]">
                 Connexion sécurisée
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -204,18 +204,18 @@ export default function EspaceAssocie() {
 
   // Dynamic data with fallbacks
   const kpisRaw = getConfig('kpis', [
-    { label: "Valeur du Patrimoine", value: "3 200 000 €", change: "+8,5%", positive: true, detail: "Gross Asset Value réactualisée" },
-    { label: "Rendement Net Annuel", value: "10,2%", change: "+0,7 pts", positive: true, detail: "TRI net de frais" },
-    { label: "Ratio LTC", value: "68%", change: "-2%", positive: true, detail: "Loan To Cost" },
-    { label: "Loyers Annuels", value: "185 000 €", change: "+12%", positive: true, detail: "Revenus locatifs bruts" },
-  ]);
+  { label: "Valeur du Patrimoine", value: "3 200 000 €", change: "+8,5%", positive: true, detail: "Gross Asset Value réactualisée" },
+  { label: "Rendement Net Annuel", value: "10,2%", change: "+0,7 pts", positive: true, detail: "TRI net de frais" },
+  { label: "Ratio LTC", value: "68%", change: "-2%", positive: true, detail: "Loan To Cost" },
+  { label: "Loyers Annuels", value: "185 000 €", change: "+12%", positive: true, detail: "Revenus locatifs bruts" }]
+  );
   const kpiIcons = [Building2, TrendingUp, Percent, Euro];
   const kpis = kpisRaw.map((k, i) => ({ ...k, icon: kpiIcons[i] || BarChart3 }));
 
   const dpeData = [{ classe: "C", count: 42, color: "bg-lime-500", percentage: 100 }];
 
   const leveeRaw = getConfig('levee_fonds', { objectif: 250000, collecte: 187500, souscripteurs: 12, dateCloture: '31 Mars 2026' });
-  const leveeEnCours = { ...leveeRaw, pourcentage: Math.round((leveeRaw.collecte / leveeRaw.objectif) * 100) };
+  const leveeEnCours = { ...leveeRaw, pourcentage: Math.round(leveeRaw.collecte / leveeRaw.objectif * 100) };
 
   const valorisationRaw = getConfig('valorisation', { valeurActuelle: 3200000, evolution: '+8.5%', nombreActions: 32000, valeurAction: 100, plusValueAction: '+8.5%', dateValo: '31 Déc 2025', plusValueTotal: 250000 });
   const valorisationSociete = valorisationRaw;
@@ -225,62 +225,62 @@ export default function EspaceAssocie() {
   const resultatsRaw = getConfig('resultats', { loyers: '185 000 €', tauxOccupation: '93,5%', resultatNet: '32 500 €', datePub: '15 janvier 2026', prochainResultat: '≈ 28 000 €', dateProchaineResult: '15 avril 2026' });
 
   // DB data with fallbacks
-  const patrimoine = acqDb.filter(a => a.type === 'patrimoine').length > 0
-    ? acqDb.filter(a => a.type === 'patrimoine').map(a => ({ nom: a.ville, lots: a.lots, valeur: a.valeur, dpe: a.dpe, occupation: a.occupation }))
-    : [
-        { nom: "Lyon 3ème - Garibaldi", lots: 8, valeur: "980 000 €", dpe: "C", occupation: "87%" },
-        { nom: "Bordeaux Centre", lots: 12, valeur: "1 450 000 €", dpe: "C", occupation: "100%" },
-        { nom: "Vichy - Boulevard Kennedy", lots: 6, valeur: "420 000 €", dpe: "C", occupation: "92%" },
-        { nom: "Clermont-Ferrand", lots: 16, valeur: "1 350 000 €", dpe: "C", occupation: "95%" },
-      ];
+  const patrimoine = acqDb.filter((a) => a.type === 'patrimoine').length > 0 ?
+  acqDb.filter((a) => a.type === 'patrimoine').map((a) => ({ nom: a.ville, lots: a.lots, valeur: a.valeur, dpe: a.dpe, occupation: a.occupation })) :
+  [
+  { nom: "Lyon 3ème - Garibaldi", lots: 8, valeur: "980 000 €", dpe: "C", occupation: "87%" },
+  { nom: "Bordeaux Centre", lots: 12, valeur: "1 450 000 €", dpe: "C", occupation: "100%" },
+  { nom: "Vichy - Boulevard Kennedy", lots: 6, valeur: "420 000 €", dpe: "C", occupation: "92%" },
+  { nom: "Clermont-Ferrand", lots: 16, valeur: "1 350 000 €", dpe: "C", occupation: "95%" }];
 
-  const acquisitionsEnCours = acqDb.filter(a => a.type === 'acquisition_en_cours').length > 0
-    ? acqDb.filter(a => a.type === 'acquisition_en_cours')
-    : [
-        { ville: "Toulouse - Capitole", prix: "1 850 000 €", lots: 14, dpe: "F → B", statut: "Due Diligence", avancement: 65, livraison: "Juin 2026" },
-        { ville: "Montpellier Centre", prix: "950 000 €", lots: 8, dpe: "E → C", statut: "Négociation", avancement: 40, livraison: "Septembre 2026" },
-      ];
 
-  const chantiers = acqDb.filter(a => a.type === 'chantier');
+  const acquisitionsEnCours = acqDb.filter((a) => a.type === 'acquisition_en_cours').length > 0 ?
+  acqDb.filter((a) => a.type === 'acquisition_en_cours') :
+  [
+  { ville: "Toulouse - Capitole", prix: "1 850 000 €", lots: 14, dpe: "F → B", statut: "Due Diligence", avancement: 65, livraison: "Juin 2026" },
+  { ville: "Montpellier Centre", prix: "950 000 €", lots: 8, dpe: "E → C", statut: "Négociation", avancement: 40, livraison: "Septembre 2026" }];
 
-  const roadmap = roadmapDb.length > 0 ? roadmapDb.map(r => ({ etape: r.etape, date: r.date_prevue, statut: r.statut, avancement: r.avancement || 0 }))
-    : [
-        { etape: "Levée de fonds Série A", date: "Q1 2026", statut: "en_cours", avancement: 75 },
-        { etape: "Acquisition Vichy", date: "Q2 2026", statut: "en_cours", avancement: 65 },
-        { etape: "Acquisition Bordeaux", date: "Q3 2026", statut: "en_cours", avancement: 45 },
-        { etape: "Acquisition Lyon", date: "Q4 2026", statut: "planifie", avancement: 0 },
-        { etape: "Levée de fonds Série B", date: "Q1 2027", statut: "planifie", avancement: 0 },
-        { etape: "Expansion zones cibles", date: "Q2 2027", statut: "planifie", avancement: 0 },
-      ];
 
-  const actualites = actuDb.length > 0
-    ? actuDb.map(a => ({ date: a.date_publication, title: a.titre, desc: a.description, type: a.type }))
-    : [
-        { date: "15 Fév 2026", title: "Acquisition d'un immeuble à Lyon 3ème", desc: "Signature notariée d'un actif de 1,25 M€ avec potentiel de valorisation de 25%", type: "acquisition" },
-        { date: "10 Fév 2026", title: "Fin des travaux - Bordeaux Centre", desc: "12 lots rénovés avec passage DPE F → C. Mise en location immédiate.", type: "travaux" },
-        { date: "5 Fév 2026", title: "Note du Président - Marché T1 2026", desc: "Perspectives encourageantes sur les marchés secondaires avec tensions locatives soutenues.", type: "note" },
-      ];
+  const chantiers = acqDb.filter((a) => a.type === 'chantier');
+
+  const roadmap = roadmapDb.length > 0 ? roadmapDb.map((r) => ({ etape: r.etape, date: r.date_prevue, statut: r.statut, avancement: r.avancement || 0 })) :
+  [
+  { etape: "Levée de fonds Série A", date: "Q1 2026", statut: "en_cours", avancement: 75 },
+  { etape: "Acquisition Vichy", date: "Q2 2026", statut: "en_cours", avancement: 65 },
+  { etape: "Acquisition Bordeaux", date: "Q3 2026", statut: "en_cours", avancement: 45 },
+  { etape: "Acquisition Lyon", date: "Q4 2026", statut: "planifie", avancement: 0 },
+  { etape: "Levée de fonds Série B", date: "Q1 2027", statut: "planifie", avancement: 0 },
+  { etape: "Expansion zones cibles", date: "Q2 2027", statut: "planifie", avancement: 0 }];
+
+
+  const actualites = actuDb.length > 0 ?
+  actuDb.map((a) => ({ date: a.date_publication, title: a.titre, desc: a.description, type: a.type })) :
+  [
+  { date: "15 Fév 2026", title: "Acquisition d'un immeuble à Lyon 3ème", desc: "Signature notariée d'un actif de 1,25 M€ avec potentiel de valorisation de 25%", type: "acquisition" },
+  { date: "10 Fév 2026", title: "Fin des travaux - Bordeaux Centre", desc: "12 lots rénovés avec passage DPE F → C. Mise en location immédiate.", type: "travaux" },
+  { date: "5 Fév 2026", title: "Note du Président - Marché T1 2026", desc: "Perspectives encourageantes sur les marchés secondaires avec tensions locatives soutenues.", type: "note" }];
+
 
   const allDocs = docsDb.length > 0 ? docsDb : [];
-  const documentsFinanciers = allDocs.filter(d => d.categorie === 'Financier' || d.categorie === 'Fiscal').length > 0
-    ? allDocs.filter(d => d.categorie === 'Financier' || d.categorie === 'Fiscal').map(d => ({ name: d.nom, type: d.categorie, date: d.date_document || '', size: d.taille || '', url: d.file_url }))
-    : [
-        { name: "Bilan comptable 2025", type: "Bilan", date: "2025-12-31", size: "2.4 MB" },
-        { name: "Compte de résultat 2025", type: "Compte de résultat", date: "2025-12-31", size: "1.8 MB" },
-        { name: "Annexes comptables 2025", type: "Annexes", date: "2025-12-31", size: "3.2 MB" },
-        { name: "Rapport du commissaire aux comptes", type: "Audit", date: "2026-01-15", size: "1.5 MB" },
-      ];
+  const documentsFinanciers = allDocs.filter((d) => d.categorie === 'Financier' || d.categorie === 'Fiscal').length > 0 ?
+  allDocs.filter((d) => d.categorie === 'Financier' || d.categorie === 'Fiscal').map((d) => ({ name: d.nom, type: d.categorie, date: d.date_document || '', size: d.taille || '', url: d.file_url })) :
+  [
+  { name: "Bilan comptable 2025", type: "Bilan", date: "2025-12-31", size: "2.4 MB" },
+  { name: "Compte de résultat 2025", type: "Compte de résultat", date: "2025-12-31", size: "1.8 MB" },
+  { name: "Annexes comptables 2025", type: "Annexes", date: "2025-12-31", size: "3.2 MB" },
+  { name: "Rapport du commissaire aux comptes", type: "Audit", date: "2026-01-15", size: "1.5 MB" }];
 
-  const documents = allDocs.filter(d => d.categorie !== 'Financier' && d.categorie !== 'Fiscal').length > 0
-    ? allDocs.filter(d => d.categorie !== 'Financier' && d.categorie !== 'Fiscal').map(d => ({ name: d.nom, date: d.date_document || '', type: d.type_acces, category: d.categorie, url: d.file_url }))
-    : [
-        { name: "Statuts de la société", date: "2025-01-15", type: "public", category: "Juridique" },
-        { name: "Rapport annuel ESG 2025", date: "2025-12-31", type: "public", category: "ESG" },
-        { name: "Pacte d'associés", date: "2025-02-01", type: "privé", category: "Juridique" },
-        { name: "Bulletin de souscription", date: "2025-03-20", type: "privé", category: "Investissement" },
-        { name: "Relevé fiscal annuel 2025", date: "2026-01-10", type: "privé", category: "Fiscal" },
-        { name: "PV Assemblée Générale 2025", date: "2025-12-15", type: "public", category: "Gouvernance" },
-      ];
+
+  const documents = allDocs.filter((d) => d.categorie !== 'Financier' && d.categorie !== 'Fiscal').length > 0 ?
+  allDocs.filter((d) => d.categorie !== 'Financier' && d.categorie !== 'Fiscal').map((d) => ({ name: d.nom, date: d.date_document || '', type: d.type_acces, category: d.categorie, url: d.file_url })) :
+  [
+  { name: "Statuts de la société", date: "2025-01-15", type: "public", category: "Juridique" },
+  { name: "Rapport annuel ESG 2025", date: "2025-12-31", type: "public", category: "ESG" },
+  { name: "Pacte d'associés", date: "2025-02-01", type: "privé", category: "Juridique" },
+  { name: "Bulletin de souscription", date: "2025-03-20", type: "privé", category: "Investissement" },
+  { name: "Relevé fiscal annuel 2025", date: "2026-01-10", type: "privé", category: "Fiscal" },
+  { name: "PV Assemblée Générale 2025", date: "2025-12-15", type: "public", category: "Gouvernance" }];
+
 
 
   return (
@@ -526,7 +526,7 @@ export default function EspaceAssocie() {
             </motion.div>
 
             {/* Chantiers en cours */}
-            {(chantiers.length > 0) && (
+            {chantiers.length > 0 &&
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -535,8 +535,8 @@ export default function EspaceAssocie() {
 
               <h3 className="text-lg font-semibold text-slate-900 mb-6">Chantiers en Cours</h3>
               <div className="space-y-4">
-                {chantiers.map((c, i) => (
-                  <div key={i} className="border-l-4 border-[#C9A961] pl-4">
+                {chantiers.map((c, i) =>
+                <div key={i} className="border-l-4 border-[#C9A961] pl-4">
                     <div className="flex justify-between items-start mb-2">
                       <div>
                         <h4 className="font-semibold text-slate-900">{c.ville}</h4>
@@ -547,10 +547,10 @@ export default function EspaceAssocie() {
                     <div className="h-2 bg-slate-100 rounded-full overflow-hidden"><div className="h-full bg-[#C9A961]" style={{ width: `${c.avancement}%` }} /></div>
                     {c.livraison && <p className="text-xs text-slate-500 mt-2">Livraison prévue : {c.livraison}</p>}
                   </div>
-                ))}
+                )}
               </div>
             </motion.div>
-            )}
+            }
 
             {/* Acquisitions en Cours */}
             <motion.div
@@ -701,11 +701,11 @@ export default function EspaceAssocie() {
                         <span className="text-xs text-slate-400">• {doc.size}</span>
                       </div>
                     </div>
-                    {doc.url ? (
-                      <a href={doc.url} target="_blank" rel="noreferrer" className="text-[#C9A961] hover:text-[#B8994F]"><Download className="h-5 w-5" /></a>
-                    ) : (
-                      <button className="text-slate-300 cursor-not-allowed"><Download className="h-5 w-5" /></button>
-                    )}
+                    {doc.url ?
+                  <a href={doc.url} target="_blank" rel="noreferrer" className="text-[#C9A961] hover:text-[#B8994F]"><Download className="h-5 w-5" /></a> :
+
+                  <button className="text-slate-300 cursor-not-allowed"><Download className="h-5 w-5" /></button>
+                  }
                   </div>
                 )}
               </div>
@@ -735,18 +735,18 @@ export default function EspaceAssocie() {
                     <p className="text-sm font-medium text-slate-900">{doc.name}</p>
                     <div className="flex items-center gap-2 mt-1">
                       <span className={`text-xs px-2 py-0.5 rounded-full ${
-                    doc.type === 'public' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}`
-                    }>
+                      doc.type === 'public' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}`
+                      }>
                         {doc.type}
                       </span>
                       <span className="text-xs text-slate-500">{doc.date}</span>
                     </div>
                   </div>
-                  {doc.url ? (
-                    <a href={doc.url} target="_blank" rel="noreferrer" className="text-[#C9A961] hover:text-[#B8994F]"><Download className="h-5 w-5" /></a>
-                  ) : (
-                    <button className="text-slate-300 cursor-not-allowed"><Download className="h-5 w-5" /></button>
-                  )}
+                  {doc.url ?
+                  <a href={doc.url} target="_blank" rel="noreferrer" className="text-[#C9A961] hover:text-[#B8994F]"><Download className="h-5 w-5" /></a> :
+
+                  <button className="text-slate-300 cursor-not-allowed"><Download className="h-5 w-5" /></button>
+                  }
                 </div>
                 )}
               </div>
