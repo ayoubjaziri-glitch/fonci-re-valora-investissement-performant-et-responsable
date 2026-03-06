@@ -413,33 +413,29 @@ export default function EspaceAssocie() {
                 <h3 className="text-xl font-serif">Simulateur d'Investissement</h3>
               </div>
 
-              <div className="space-y-6 mb-6">
+              <div className="space-y-5 mb-6">
                 <div>
                   <div className="flex justify-between items-center mb-2">
-                    <label className="text-sm text-white/80">Montant</label>
-                    <span className="text-xl font-bold text-[#C9A961]">{montantSimulation.toLocaleString()} €</span>
+                    <label className="text-sm text-white/80">Montant investi</label>
+                    <span className="text-lg font-bold text-[#C9A961]">{montantSimulation.toLocaleString()} €</span>
                   </div>
-                  <Slider
-                    value={[montantSimulation]}
-                    onValueChange={(value) => setMontantSimulation(value[0])}
-                    min={10000}
-                    max={100000}
-                    step={5000} />
-
+                  <Slider value={[montantSimulation]} onValueChange={(value) => setMontantSimulation(value[0])} min={10000} max={100000} step={5000} />
                 </div>
 
                 <div>
                   <div className="flex justify-between items-center mb-2">
                     <label className="text-sm text-white/80">Durée</label>
-                    <span className="text-xl font-bold text-[#C9A961]">{dureeSimulation} ans</span>
+                    <span className="text-lg font-bold text-[#C9A961]">{dureeSimulation} ans</span>
                   </div>
-                  <Slider
-                    value={[dureeSimulation]}
-                    onValueChange={(value) => setDureeSimulation(value[0])}
-                    min={3}
-                    max={10}
-                    step={1} />
+                  <Slider value={[dureeSimulation]} onValueChange={(value) => setDureeSimulation(value[0])} min={3} max={10} step={1} />
+                </div>
 
+                <div>
+                  <div className="flex justify-between items-center mb-2">
+                    <label className="text-sm text-white/80">TRI cible</label>
+                    <span className="text-lg font-bold text-[#C9A961]">{triCible}%</span>
+                  </div>
+                  <Slider value={[triCible]} onValueChange={(value) => setTriCible(value[0])} min={1} max={100} step={0.5} />
                 </div>
               </div>
 
