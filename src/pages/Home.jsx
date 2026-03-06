@@ -849,7 +849,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-[#1A3A52]">
+      <section className="bg-[#C9A961] py-24">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -865,7 +865,7 @@ export default function Home() {
 
             <div className="flex flex-wrap justify-center gap-4">
               <Link to={createPageUrl("Contact")}>
-                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 text-base font-semibold">
+                <Button className="bg-slate-900 text-slate-50 px-8 py-6 text-base font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
                   Entrer en relation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
