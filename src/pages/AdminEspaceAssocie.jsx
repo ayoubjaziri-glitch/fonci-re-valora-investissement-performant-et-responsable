@@ -54,9 +54,10 @@ function KpisSection() {
       { label: 'Ratio LTC', value: '68%', change: '-2%', positive: true, detail: 'Loan To Cost' },
       { label: 'Loyers Annuels', value: '185 000 €', change: '+12%', positive: true, detail: 'Revenus locatifs bruts' },
     ],
-    indicateurs: { occupation: '93,5%', delaiLocation: '18 jours', dette: '2 180 000 €', nbActifs: '4 immeubles', totalLots: '42 lots' },
+    indicateurs: { occupation: '93,5%', delaiLocation: '18 jours', dette: '2 180 000 €', nbActifs: '4 immeubles', totalLots: '42 lots', couvertureLoyers: '~1,4x', ltv: '68%' },
     energie: { co2: '-450t', conso: '-42%' },
     resultats: { loyers: '185 000 €', tauxOccupation: '93,5%', resultatNet: '32 500 €', datePub: '15 janvier 2026', prochainResultat: '≈ 28 000 €', dateProchaineResult: '15 avril 2026' },
+    gouvernance: { texte: "Accès réservé aux associés élus par les catégories B et C pour les décisions stratégiques (acquisitions, arbitrages, emprunts).", stratégieDette: "Amortissement progressif sur 20 ans. Effet de levier maîtrisé avec LTV cible ≤ 80% à l'acquisition." },
   };
 
   const getSection = (key) => {
