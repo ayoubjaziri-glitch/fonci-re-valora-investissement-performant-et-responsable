@@ -10,6 +10,7 @@ import {
   Recycle, ShieldCheck, Users, Globe } from
 'lucide-react';
 import { Button } from "@/components/ui/button";
+import CO2Simulator from '../components/CO2Simulator';
 
 export default function Durabilite() {
   const { data: images = [] } = useQuery({
