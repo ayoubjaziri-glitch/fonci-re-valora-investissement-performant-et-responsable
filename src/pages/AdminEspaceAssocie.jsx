@@ -180,6 +180,8 @@ function KpisSection() {
             { key: 'dette', label: 'Dette résiduelle' },
             { key: 'nbActifs', label: 'Nombre d\'actifs' },
             { key: 'totalLots', label: 'Total lots' },
+            { key: 'couvertureLoyers', label: 'Couverture loyers/dette' },
+            { key: 'ltv', label: 'LTV (Loan to Value)' },
           ].map(f => (
             <div key={f.key}>
               <Label className="text-sm">{f.label}</Label>
