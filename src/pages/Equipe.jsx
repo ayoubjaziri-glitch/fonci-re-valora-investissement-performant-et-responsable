@@ -123,7 +123,7 @@ export default function Equipe() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
-        <div className="bg-[#1A3A52] opacity-10 absolute inset-0">
+        <div className="bg-slate-900 opacity-100 absolute inset-0">
           <div className="absolute top-0 left-0 w-96 h-96 border border-white/20 rounded-full transform -translate-x-1/2 -translate-y-1/2" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -269,7 +269,7 @@ export default function Equipe() {
       </section>
 
       {/* Group Structure */}
-      <section className="py-24 bg-[#1A3A52]">
+      <section className="bg-slate-900 py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -422,8 +422,8 @@ export default function Equipe() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-16 bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] rounded-2xl p-8 text-center">
+            viewport={{ once: true }} className="bg-slate-900 mt-16 p-8 text-center rounded-2xl from-[#1A3A52] to-[#2A4A6F]">
+
 
             <div className="flex items-center justify-center gap-3 mb-4">
               <Target className="h-6 w-6 text-[#C9A961]" />
@@ -450,7 +450,7 @@ export default function Equipe() {
               Portée par un groupe solide depuis 2008, contribuez à la création de valeur patrimoniale durable.
             </p>
             <Link to={createPageUrl("Contact")}>
-              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+              <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
                 Devenir associé
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
