@@ -225,6 +225,31 @@ function KpisSection() {
         <Button onClick={() => saveSection.mutate({ key: 'resultats', section: 'resultats', data: res })}
           className="mt-4 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white"><Save className="h-4 w-4 mr-2" /> Sauvegarder</Button>
       </div>
+
+      {/* Gouvernance */}
+      <div className="bg-white rounded-2xl p-6 border border-slate-200">
+        <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">🏛️ Gouvernance & Textes</h3>
+        <div className="space-y-4">
+          <div>
+            <Label className="text-sm">Texte Comité Opérationnel</Label>
+            <textarea
+              value={(gouvernance ?? getSection('gouvernance'))?.texte || ''}
+              onChange={e => setGouvernance({ ...(gouvernance ?? getSection('gouvernance')), texte: e.target.value })}
+              className="mt-1 w-full border border-slate-200 rounded-lg p-3 text-sm resize-none h-24"
+            />
+          </div>
+          <div>
+            <Label className="text-sm">Stratégie de la Dette (encart)</Label>
+            <textarea
+              value={(gouvernance ?? getSection('gouvernance'))?.stratégieDette || ''}
+              onChange={e => setGouvernance({ ...(gouvernance ?? getSection('gouvernance')), stratégieDette: e.target.value })}
+              className="mt-1 w-full border border-slate-200 rounded-lg p-3 text-sm resize-none h-20"
+            />
+          </div>
+        </div>
+        <Button onClick={() => saveSection.mutate({ key: 'gouvernance', section: 'resultats', data: gouvernance ?? getSection('gouvernance') })}
+          className="mt-4 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white"><Save className="h-4 w-4 mr-2" /> Sauvegarder</Button>
+      </div>
     </div>
   );
 }
