@@ -837,12 +837,12 @@ export default function EspaceAssocie() {
                   </div>
                   <div className="bg-blue-50 rounded-xl p-3 text-center">
                     <p className="text-xs text-slate-500 mb-1">Couverture loyers/dette</p>
-                    <p className="font-bold text-blue-700">~1,4x</p>
+                    <p className="font-bold text-blue-700">{indicRaw.couvertureLoyers || '~1,4x'}</p>
                   </div>
                 </div>
                 <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
                   <p className="text-xs text-amber-800 leading-relaxed">
-                    <strong>Stratégie :</strong> Amortissement progressif sur 20 ans. Effet de levier maîtrisé avec LTV cible ≤ 80% à l'acquisition.
+                    <strong>Stratégie :</strong> {gouvernanceRaw.stratégieDette}
                   </p>
                 </div>
               </div>
