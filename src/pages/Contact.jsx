@@ -59,7 +59,7 @@ export default function Contact() {
     // 2. Envoyer l'email de notification
     try {
       await base44.integrations.Core.SendEmail({
-        to: 'ayoubjaziri@gmail.com',
+        to: 'Ayoubcontact33@gmail.com',
         subject: `Nouvelle demande de contact - ${typeLabel}`,
         body: `Nouvelle demande de contact recue via le site web.\n\nPrenom : ${formData.firstName}\nNom : ${formData.lastName}\nEmail : ${formData.email}\nTelephone : ${formData.phone || 'Non renseigne'}\nType de demande : ${typeLabel}\n\nMESSAGE :\n${formData.message}\n\nRecu le ${dateStr}`
       });
