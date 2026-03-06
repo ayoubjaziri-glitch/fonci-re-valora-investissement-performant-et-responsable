@@ -225,7 +225,7 @@ export default function GestionPhotos() {
         </motion.div>
 
         <Tabs defaultValue="equipe" className="space-y-6">
-          <TabsList className="grid grid-cols-5 w-full max-w-3xl">
+          <TabsList className="grid grid-cols-6 w-full max-w-4xl">
             {Object.entries(categories).map(([key, { label, icon }]) => (
               <TabsTrigger key={key} value={key} className="flex items-center gap-2">
                 <span>{icon}</span>
