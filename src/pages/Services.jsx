@@ -81,11 +81,11 @@ export default function Services() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Nos services
+                Nos missions
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Solution intégrée de bout en bout
+              Nos missions
             </h1>
             <p className="text-xl text-white/70">
               Une gestion institutionnelle de l'acquisition à l'arbitrage, pilotée par une équipe 

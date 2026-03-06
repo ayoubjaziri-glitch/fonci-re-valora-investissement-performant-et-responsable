@@ -42,8 +42,8 @@ export default function Layout({ children, currentPageName }) {
 
   const navigation = [
   { name: 'Accueil', page: 'Home' },
-  { name: 'Stratégie & Performance', page: 'StrategyPerformance' },
-  { name: 'Nos Services', page: 'Services' },
+  { name: 'Stratégie', page: 'StrategyPerformance' },
+  { name: 'Nos Missions', page: 'Services' },
   { name: 'Notre histoire', page: 'Equipe' },
   { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },

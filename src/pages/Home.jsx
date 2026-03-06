@@ -453,7 +453,7 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Notre Expertise
+                Nos Missions
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
