@@ -275,8 +275,8 @@ export default function Home() {
                   Durabilité
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
-                La Foncière Responsable
+              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">La Foncière Responsable
+
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
                 La durabilité, la qualité de la gouvernance et l'attention portée aux enjeux sociaux structurent 
@@ -351,8 +351,8 @@ export default function Home() {
               </span>
               <div className="w-16 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-4xl md:text-5xl font-serif text-[#1A3A52] mb-6">
-              Les atouts d'une foncière structurée
+            <h2 className="text-slate-900 mb-6 text-4xl font-serif md:text-5xl">Les atouts d'une foncière structurée
+
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
               À la différence des véhicules fortement mutualisés ou d'un investissement immobilier 
@@ -637,8 +637,8 @@ export default function Home() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Nos opérations de valorisation
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Nos opérations de valorisation
+
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               Découvrez nos actifs restructurés : chaque acquisition fait l'objet d'une 
@@ -764,8 +764,8 @@ export default function Home() {
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">Témoignages</span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Ce que nos associés disent de nous
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Ce que nos associés disent de nous
+
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               Des investisseurs engagés qui partagent leur expérience avec La Foncière Patrimoniale.
@@ -817,8 +817,8 @@ export default function Home() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Des marchés à fort potentiel
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Des marchés à fort potentiel
+
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               La stratégie d'investissement s'oriente vers des territoires présentant des perspectives 
@@ -870,7 +870,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
             <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
-            <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Bâtissez votre patrimoine avec notre Foncière
+            <h2 className="text-white mb-3 text-3xl font-serif md:text-4xl">Bâtissez votre patrimoine avec notre Foncière
 
             </h2>
             
