@@ -807,6 +807,46 @@ export default function EspaceAssocie() {
               </div>
             </motion.div>
 
+            {/* État de la dette */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.38 }}
+              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+              <h3 className="text-lg font-semibold text-slate-900 mb-5">État de la Dette</h3>
+              <div className="space-y-4">
+                <div className="flex justify-between items-center p-3 bg-slate-50 rounded-xl">
+                  <span className="text-sm text-slate-600">Dette totale résiduelle</span>
+                  <span className="font-bold text-slate-900">{indicRaw.dette}</span>
+                </div>
+                <div>
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="text-slate-600">LTV (Loan to Value)</span>
+                    <span className="font-semibold text-slate-900">{kpis[2]?.value || '68%'}</span>
+                  </div>
+                  <div className="h-2.5 bg-slate-100 rounded-full overflow-hidden">
+                    <div className="h-full bg-gradient-to-r from-emerald-400 to-[#C9A961] rounded-full" style={{ width: kpis[2]?.value || '68%' }} />
+                  </div>
+                  <p className="text-xs text-slate-400 mt-1">Seuil cible ≤ 80%</p>
+                </div>
+                <div className="grid grid-cols-2 gap-3 pt-2">
+                  <div className="bg-emerald-50 rounded-xl p-3 text-center">
+                    <p className="text-xs text-slate-500 mb-1">Actifs financés</p>
+                    <p className="font-bold text-emerald-700">{indicRaw.nbActifs}</p>
+                  </div>
+                  <div className="bg-blue-50 rounded-xl p-3 text-center">
+                    <p className="text-xs text-slate-500 mb-1">Couverture loyers/dette</p>
+                    <p className="font-bold text-blue-700">~1,4x</p>
+                  </div>
+                </div>
+                <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
+                  <p className="text-xs text-amber-800 leading-relaxed">
+                    <strong>Stratégie :</strong> Amortissement progressif sur 20 ans. Effet de levier maîtrisé avec LTV cible ≤ 80% à l'acquisition.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
+
             {/* Gouvernance */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
