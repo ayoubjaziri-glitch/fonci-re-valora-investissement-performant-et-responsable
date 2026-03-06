@@ -44,12 +44,24 @@ export default function Contact() {
     setSending(true);
 
     const typeLabel = investmentOptions.find(o => o.id === formData.investmentType)?.title || formData.investmentType;
+    const dateStr = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
+    // 1. Sauvegarder la demande en base de données
+    await base44.entities.ContactRequest.create({
+      prenom: formData.firstName,
+      nom: formData.lastName,
+      email: formData.email,
+      telephone: formData.phone || '',
+      type_demande: typeLabel,
+      message: formData.message,
+    });
+
+    // 2. Envoyer l'email de notification
     try {
       await base44.integrations.Core.SendEmail({
         to: 'ayoubjaziri@gmail.com',
-        subject: `[Foncière] Nouvelle demande — ${typeLabel}`,
-        body: `Nouvelle demande de contact reçue via le site web.\n\nPrenom : ${formData.firstName}\nNom : ${formData.lastName}\nEmail : ${formData.email}\nTelephone : ${formData.phone || 'Non renseigne'}\nType de demande : ${typeLabel}\n\nMESSAGE :\n${formData.message}\n\nRecu le ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`
+        subject: `Nouvelle demande de contact - ${typeLabel}`,
+        body: `Nouvelle demande de contact recue via le site web.\n\nPrenom : ${formData.firstName}\nNom : ${formData.lastName}\nEmail : ${formData.email}\nTelephone : ${formData.phone || 'Non renseigne'}\nType de demande : ${typeLabel}\n\nMESSAGE :\n${formData.message}\n\nRecu le ${dateStr}`
       });
     } catch (err) {
       console.error('Email send error:', err);
