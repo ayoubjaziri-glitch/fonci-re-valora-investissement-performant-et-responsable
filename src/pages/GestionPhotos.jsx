@@ -344,11 +344,10 @@ export default function GestionPhotos() {
               </div>
             </TabsContent>
           ))}
-        </Tabs>
-
           <TabsContent value="carte">
             <MapLocationsSection />
           </TabsContent>
+        </Tabs>
 
         {/* Crop Modal */}
         <Dialog open={!!cropModal} onOpenChange={(open) => { if (!open) setCropModal(null); }}>
