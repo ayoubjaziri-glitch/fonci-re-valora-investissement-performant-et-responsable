@@ -232,6 +232,10 @@ export default function GestionPhotos() {
                 <span className="hidden md:inline">{label}</span>
               </TabsTrigger>
             ))}
+            <TabsTrigger value="carte" className="flex items-center gap-2">
+              <span>🗺️</span>
+              <span className="hidden md:inline">Carte</span>
+            </TabsTrigger>
           </TabsList>
 
           {Object.entries(categories).map(([categoryKey, { label }]) => (
