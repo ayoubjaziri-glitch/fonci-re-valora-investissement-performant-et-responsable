@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
+import { useToast } from "@/components/ui/use-toast";
 import {
   Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight, Clock, Loader2
 } from 'lucide-react';
