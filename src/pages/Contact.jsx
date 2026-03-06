@@ -45,15 +45,11 @@ export default function Contact() {
     const typeLabel = investmentOptions.find(o => o.id === formData.investmentType)?.title || formData.investmentType;
 
     try {
-      await Promise.race([
-        base44.integrations.Core.SendEmail({
-          to: 'ayoubjaziri@gmail.com',
-          from_name: 'La Foncière Patrimoniale — Site Web',
-          subject: `Nouvelle demande de contact — ${typeLabel}`,
-          body: `Nouvelle demande de contact reçue via le site web.\n\nPrénom : ${formData.firstName}\nNom : ${formData.lastName}\nEmail : ${formData.email}\nTéléphone : ${formData.phone || 'Non renseigné'}\nType de demande : ${typeLabel}\n\nMESSAGE :\n${formData.message}\n\nReçu le ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`
-        }),
-        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 15000))
-      ]);
+      await base44.integrations.Core.SendEmail({
+        to: 'ayoubjaziri@gmail.com',
+        subject: `[Foncière] Nouvelle demande — ${typeLabel}`,
+        body: `Nouvelle demande de contact reçue via le site web.\n\nPrenom : ${formData.firstName}\nNom : ${formData.lastName}\nEmail : ${formData.email}\nTelephone : ${formData.phone || 'Non renseigne'}\nType de demande : ${typeLabel}\n\nMESSAGE :\n${formData.message}\n\nRecu le ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}`
+      });
     } catch (err) {
       console.error('Email send error:', err);
     }

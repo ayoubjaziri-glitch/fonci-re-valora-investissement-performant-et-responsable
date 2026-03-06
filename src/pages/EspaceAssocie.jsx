@@ -435,7 +435,7 @@ export default function EspaceAssocie() {
                     <label className="text-sm text-white/80">TRI cible</label>
                     <span className="text-lg font-bold text-[#C9A961]">{triCible}%</span>
                   </div>
-                  <Slider value={[triCible]} onValueChange={(value) => setTriCible(value[0])} min={1} max={100} step={0.5} />
+                  <Slider value={[triCible]} onValueChange={(value) => setTriCible(value[0])} min={0.5} max={35} step={0.5} />
                 </div>
               </div>
 
