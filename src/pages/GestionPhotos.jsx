@@ -346,6 +346,10 @@ export default function GestionPhotos() {
           ))}
         </Tabs>
 
+          <TabsContent value="carte">
+            <MapLocationsSection />
+          </TabsContent>
+
         {/* Crop Modal */}
         <Dialog open={!!cropModal} onOpenChange={(open) => { if (!open) setCropModal(null); }}>
           <DialogContent className="max-w-2xl">
