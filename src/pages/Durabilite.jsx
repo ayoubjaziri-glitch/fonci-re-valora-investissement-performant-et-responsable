@@ -4,119 +4,119 @@ import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from '@/api/base44Client';
-import { 
-  Leaf, TreePine, Thermometer, Zap, Droplets, Sun, Wind, 
+import {
+  Leaf, TreePine, Thermometer, Zap, Droplets, Sun, Wind,
   Building2, ArrowRight, CheckCircle2, Target, BarChart3,
-  Recycle, ShieldCheck, Users, Globe
-} from 'lucide-react';
+  Recycle, ShieldCheck, Users, Globe } from
+'lucide-react';
 import { Button } from "@/components/ui/button";
 
 export default function Durabilite() {
   const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
     queryFn: () => base44.entities.SiteImage.list(),
-    initialData: [],
+    initialData: []
   });
 
   const getImageUrl = (key, fallback) => {
-    const image = images.find(img => img.key === key);
+    const image = images.find((img) => img.key === key);
     return image?.url || fallback;
   };
 
   const engagements = [
-    {
-      icon: Thermometer,
-      title: "Objectif DPE C, B ou A",
-      description: "Nous visons systématiquement un DPE C minimum. L'objectif DPE B ou A est poursuivi lorsque le rapport coût/valorisation le permet et que la configuration du bien s'y prête.",
-      metric: "DPE C, B ou A",
-      metricLabel: "Selon opportunité"
-    },
-    {
-      icon: Zap,
-      title: "Réduction énergétique",
-      description: "Objectif de réduction moyenne de 40% de la consommation énergétique après réhabilitation, contribuant à l'amélioration du confort et à la baisse des charges.",
-      metric: "-40%",
-      metricLabel: "consommation"
-    },
-    {
-      icon: Target,
-      title: "Éradication passoires",
-      description: "100% du parc hors des classes E, F et G d'ici 2027, assurant la conformité réglementaire et la louabilité pérenne des actifs.",
-      metric: "100%",
-      metricLabel: "hors E/F/G"
-    },
-    {
-      icon: Droplets,
-      title: "Gestion de l'eau",
-      description: "Installation de mousseurs et chasses d'eau double flux pour réduire les charges d'eau des occupants et limiter l'impact environnemental.",
-      metric: "-20%",
-      metricLabel: "conso eau"
-    }
-  ];
+  {
+    icon: Thermometer,
+    title: "Objectif DPE C, B ou A",
+    description: "Nous visons systématiquement un DPE C minimum. L'objectif DPE B ou A est poursuivi lorsque le rapport coût/valorisation le permet et que la configuration du bien s'y prête.",
+    metric: "DPE C, B ou A",
+    metricLabel: "Selon opportunité"
+  },
+  {
+    icon: Zap,
+    title: "Réduction énergétique",
+    description: "Objectif de réduction moyenne de 40% de la consommation énergétique après réhabilitation, contribuant à l'amélioration du confort et à la baisse des charges.",
+    metric: "-40%",
+    metricLabel: "consommation"
+  },
+  {
+    icon: Target,
+    title: "Éradication passoires",
+    description: "100% du parc hors des classes E, F et G d'ici 2027, assurant la conformité réglementaire et la louabilité pérenne des actifs.",
+    metric: "100%",
+    metricLabel: "hors E/F/G"
+  },
+  {
+    icon: Droplets,
+    title: "Gestion de l'eau",
+    description: "Installation de mousseurs et chasses d'eau double flux pour réduire les charges d'eau des occupants et limiter l'impact environnemental.",
+    metric: "-20%",
+    metricLabel: "conso eau"
+  }];
+
 
   const piliers = [
-    {
-      title: "Environnement (E)",
-      icon: Globe,
-      color: "emerald",
-      items: [
-        "Transformation de passoires thermiques en actifs performants (achat F/G, livraison C minimum)",
-        "Isolation systématique des combles et planchers bas",
-        "Remplacement des chaudières fioul/gaz par des systèmes performants (PAC si pertinent)",
-        "Utilisation de matériaux à faible impact (laine de roche, métisse)",
-        "Gestion responsable des déchets de chantier"
-      ]
-    },
-    {
-      title: "Social (S)",
-      icon: Users,
-      color: "blue",
-      items: [
-        "Logements sains : VMC performante pour éviter l'humidité",
-        "Réduction des charges locatives grâce à l'efficacité énergétique",
-        "Confort thermique été comme hiver",
-        "Partenariats avec entreprises locales",
-        "Équipements modernes : bornes de recharge véhicules électriques si opportun"
-      ]
-    },
-    {
-      title: "Gouvernance (G)",
-      icon: ShieldCheck,
-      color: "slate",
-      items: [
-        "Rapport annuel sur l'évolution du DPE moyen du parc",
-        "Transparence totale avec les investisseurs",
-        "Budgets de travaux maîtrisés et prévisibles",
-        "Respect des réglementations thermiques",
-        "Audit énergétique systématique avant acquisition"
-      ]
-    }
-  ];
+  {
+    title: "Environnement (E)",
+    icon: Globe,
+    color: "emerald",
+    items: [
+    "Transformation de passoires thermiques en actifs performants (achat F/G, livraison C minimum)",
+    "Isolation systématique des combles et planchers bas",
+    "Remplacement des chaudières fioul/gaz par des systèmes performants (PAC si pertinent)",
+    "Utilisation de matériaux à faible impact (laine de roche, métisse)",
+    "Gestion responsable des déchets de chantier"]
+
+  },
+  {
+    title: "Social (S)",
+    icon: Users,
+    color: "blue",
+    items: [
+    "Logements sains : VMC performante pour éviter l'humidité",
+    "Réduction des charges locatives grâce à l'efficacité énergétique",
+    "Confort thermique été comme hiver",
+    "Partenariats avec entreprises locales",
+    "Équipements modernes : bornes de recharge véhicules électriques si opportun"]
+
+  },
+  {
+    title: "Gouvernance (G)",
+    icon: ShieldCheck,
+    color: "slate",
+    items: [
+    "Rapport annuel sur l'évolution du DPE moyen du parc",
+    "Transparence totale avec les investisseurs",
+    "Budgets de travaux maîtrisés et prévisibles",
+    "Respect des réglementations thermiques",
+    "Audit énergétique systématique avant acquisition"]
+
+  }];
+
 
   const trajectoire = [
-    { year: "2026", objectif: "100%", desc: "DPE C minimum" },
-    { year: "2027", objectif: "80%", desc: "DPE B ou A" },
-    { year: "2028", objectif: "90%", desc: "DPE B ou A" },
-    { year: "2030", objectif: "95%", desc: "DPE B ou A" }
-  ];
+  { year: "2026", objectif: "100%", desc: "DPE C minimum" },
+  { year: "2027", objectif: "80%", desc: "DPE B ou A" },
+  { year: "2028", objectif: "90%", desc: "DPE B ou A" },
+  { year: "2030", objectif: "95%", desc: "DPE B ou A" }];
+
 
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <img 
+          <img
             src={getImageUrl('hero_durabilite', 'https://images.unsplash.com/photo-1518005020951-eccb494ad742?w=1920&q=80')}
-            alt=""
-            className="w-full h-full object-cover"
-          />
+            alt="" className="opacity-100 w-full h-full object-cover" />
+
+
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
-          >
+            className="max-w-3xl">
+
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
@@ -142,8 +142,8 @@ export default function Durabilite() {
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-            >
+              viewport={{ once: true }}>
+
               <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
                 Une stratégie pragmatique et durable
               </h2>
@@ -167,13 +167,13 @@ export default function Durabilite() {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="relative"
-            >
-              <img 
+              className="relative">
+
+              <img
                 src={getImageUrl('immeuble_durable', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80')}
                 alt="Immeuble durable"
-                className="rounded-3xl shadow-2xl"
-              />
+                className="rounded-3xl shadow-2xl" />
+
               <div className="absolute -bottom-8 -left-8 bg-white rounded-2xl p-6 shadow-xl border border-slate-100">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-[#C9A961]/20 rounded-2xl flex items-center justify-center">
@@ -197,8 +197,8 @@ export default function Durabilite() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+            className="text-center mb-16">
+
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
               Nos engagements concrets
             </h2>
@@ -209,15 +209,15 @@ export default function Durabilite() {
           </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {engagements.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100"
-              >
+            {engagements.map((item, index) =>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100">
+
                 <div className="w-14 h-14 bg-[#C9A961]/20 rounded-2xl flex items-center justify-center mb-4">
                   <item.icon className="h-7 w-7 text-[#C9A961]" />
                 </div>
@@ -228,7 +228,7 @@ export default function Durabilite() {
                   <p className="text-xs text-slate-500">{item.metricLabel}</p>
                 </div>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -240,50 +240,50 @@ export default function Durabilite() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+            className="text-center mb-16">
+
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
               Les 3 piliers de notre démarche ESG
             </h2>
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {piliers.map((pilier, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="rounded-3xl p-8 bg-white border border-slate-200"
-              >
+            {piliers.map((pilier, index) =>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="rounded-3xl p-8 bg-white border border-slate-200">
+
                 <div className="w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-[#C9A961]/20">
                   <pilier.icon className="h-7 w-7 text-[#C9A961]" />
                 </div>
                 <h3 className="text-xl font-semibold text-[#1A3A52] mb-4">{pilier.title}</h3>
                 <ul className="space-y-3">
-                  {pilier.items.map((item, idx) => (
-                    <li key={idx} className="flex items-start gap-2">
+                  {pilier.items.map((item, idx) =>
+                <li key={idx} className="flex items-start gap-2">
                       <CheckCircle2 className="h-5 w-5 mt-0.5 flex-shrink-0 text-[#C9A961]" />
                       <span className="text-slate-700 text-sm">{item}</span>
                     </li>
-                  ))}
+                )}
                 </ul>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
 
       {/* Trajectoire */}
-      <section className="py-24 bg-[#1A3A52]">
+      <section className="bg-slate-900 py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+            className="text-center mb-16">
+
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
               Notre trajectoire de valorisation
             </h2>
@@ -294,20 +294,20 @@ export default function Durabilite() {
           </motion.div>
 
           <div className="grid md:grid-cols-4 gap-6">
-            {trajectoire.map((item, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20"
-              >
+            {trajectoire.map((item, index) =>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/20">
+
                 <p className="text-[#C9A961] font-medium mb-2">{item.year}</p>
                 <p className="text-4xl font-bold text-white mb-2">{item.objectif}</p>
                 <p className="text-white/70 text-sm">{item.desc}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -319,8 +319,8 @@ export default function Durabilite() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
-          >
+            className="text-center mb-16">
+
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
               Nos interventions techniques
             </h2>
@@ -379,7 +379,7 @@ export default function Durabilite() {
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to={createPageUrl("Contact")}>
-              <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+              <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
                 Entrer en relation
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Button>
@@ -392,6 +392,6 @@ export default function Durabilite() {
           </div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }
