@@ -97,7 +97,7 @@ export default function StrategyPerformance() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
-        <div className="bg-[#1A3A52] opacity-10 absolute inset-0">
+        <div className="bg-[#0f172a] opacity-100 absolute inset-0">
           <div className="absolute top-0 right-0 w-96 h-96 border border-white/20 rounded-full" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
@@ -165,8 +165,8 @@ export default function StrategyPerformance() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-[#1A3A52] rounded-3xl p-8">
+              viewport={{ once: true }} className="bg-[#0f172a] p-8 rounded-3xl">
+
 
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 bg-[#C9A961] rounded-full flex items-center justify-center">
@@ -264,8 +264,8 @@ export default function StrategyPerformance() {
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-[#1A3A52] rounded-3xl p-8">
+              viewport={{ once: true }} className="bg-[#0f172a] p-8 rounded-3xl">
+
 
               <h3 className="text-xl font-serif text-white mb-6">Objectifs clés</h3>
               <div className="space-y-6">
@@ -434,7 +434,7 @@ export default function StrategyPerformance() {
                 Exemple de projection : 10 000 € investis lors de la première levée.
               </p>
               
-              <div className="bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] rounded-2xl p-6 mb-6">
+              <div className="bg-[#0f172a] mb-6 p-6 rounded-2xl from-[#1A3A52] to-[#2A4A6F]">
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
                     <p className="text-white/60 text-sm">Souscription</p>
@@ -505,8 +505,8 @@ export default function StrategyPerformance() {
       </section>
 
       {/* Fiscal PEA-PME */}
-      <section className="py-16 bg-[#1A3A52]">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+      <section className="bg-gray-900 py-16">
+        <div className="bg-[#0f172a] mx-auto px-6 max-w-7xl lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -563,7 +563,7 @@ export default function StrategyPerformance() {
 
 
       {/* CTA */}
-      <section className="bg-[#1A3A52] py-16">
+      <section className="bg-[#C9A961] py-16">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-2xl md:text-3xl font-serif text-white mb-4">S’associer à notre dynamique de valorisation
 
@@ -573,7 +573,7 @@ export default function StrategyPerformance() {
 
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-slate-600 text-slate-50 px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
+            <Button className="bg-[#0f172a] text-slate-50 px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
               Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
