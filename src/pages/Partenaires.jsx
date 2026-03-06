@@ -146,8 +146,8 @@ export default function Partenaires() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Nos partenaires
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Nos partenaires
+
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               Des acteurs qualifiés intervenant sur l'ensemble du cycle de valorisation.
