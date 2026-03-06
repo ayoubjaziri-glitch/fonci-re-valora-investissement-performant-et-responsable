@@ -95,7 +95,7 @@ export default function Partenaires() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
+        <div className="bg-[#1A3A52] opacity-10 absolute inset-0">
           
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
