@@ -863,14 +863,14 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#C9A961] py-24">
+      <section className="bg-[#1A3A52] py-24">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
-
-            <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">Bâtir votre patrimoine en vous associant à notre Foncière
+            <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
+            <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">Bâtissez votre patrimoine avec notre Foncière
 
             </h2>
             
