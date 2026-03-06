@@ -860,8 +860,7 @@ export default function EspaceAssocie() {
                 <h3 className="text-lg font-semibold text-white">Comité Opérationnel</h3>
               </div>
               <p className="text-white/70 text-sm mb-4">
-                Accès réservé aux associés élus par les catégories B et C pour les décisions stratégiques 
-                (acquisitions, arbitrages, emprunts).
+                {gouvernanceRaw.texte}
               </p>
               <Button className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
                 Accéder au Comité
