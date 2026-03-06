@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Upload, Save, Image as ImageIcon, Edit2, Crop } from 'lucide-react';
+import { Upload, Save, Image as ImageIcon, Edit2, Crop, MapPin, Plus, Trash2, X } from 'lucide-react';
 import { motion } from 'framer-motion';
 import ImageCropper from '../components/ImageCropper';
 
