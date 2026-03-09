@@ -198,11 +198,11 @@ export default function Partenaires() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Entrer en relation
+            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">Partenaires et opérateurs
+
             </h2>
-            <p className="text-[#1A3A52]/80 mb-8">
-              Les échanges se déroulent dans un cadre privé et confidentiel après qualification des interlocuteurs.
+            <p className="text-[#1A3A52]/80 mb-8">La foncière développe ses projets avec des partenaires : investisseurs privés, architectes, entreprises de construction et experts immobiliers.
+
             </p>
             <Link to={createPageUrl("Contact")}>
               <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
