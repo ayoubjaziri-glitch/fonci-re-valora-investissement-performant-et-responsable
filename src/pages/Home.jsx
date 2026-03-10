@@ -863,7 +863,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#C9A961] py-6">
+      <section className="bg-[#C9A961] px-3 py-20">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
