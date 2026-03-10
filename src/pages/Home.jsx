@@ -336,7 +336,7 @@ export default function Home() {
       </section>
 
       {/* Atouts & Valeur Ajoutée Section - MOVED UP AND ENHANCED */}
-      <section className="py-32 bg-gradient-to-br from-slate-50 via-white to-slate-50">
+      <section className="bg-gradient-to-br py-20 from-slate-50 via-white to-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
