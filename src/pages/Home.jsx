@@ -261,7 +261,7 @@ export default function Home() {
 
 
       {/* Durabilité Section */}
-      <section className="py-24 bg-slate-50">
+      <section className="bg-slate-50 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <motion.div
@@ -442,7 +442,7 @@ export default function Home() {
       </section>
 
       {/* Nos Services Section - Enhanced */}
-      <section className="py-24 bg-white">
+      <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -863,7 +863,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-[#C9A961] px-3 py-20">
+      <section className="bg-[#C9A961] px-3 py-12">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
