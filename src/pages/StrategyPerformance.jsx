@@ -565,7 +565,7 @@ export default function StrategyPerformance() {
       {/* CTA */}
       <section className="bg-[#C9A961] py-16">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-slate-800 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
+          <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
 
           </h2>
           <p className="text-slate-800 mb-8">Rejoignez un cercle d'associés unis par une stratégie immobilière maîtrisée, une exécution professionnelle et une gouvernance exemplaire.
