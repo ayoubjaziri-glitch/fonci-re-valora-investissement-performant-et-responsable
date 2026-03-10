@@ -26,8 +26,8 @@ function LogoImage() {
   return (
     <img
       src={logoUrl}
-      alt="La Foncière Patrimoniale"
-      className="rounded-[10px] h-24 w-auto" />);
+      alt="La Foncière Patrimoniale" className="opacity-100 rounded-[10px] h-24 w-auto" />);
+
 
 
 }
@@ -67,12 +67,12 @@ export default function Layout({ children, currentPageName }) {
               {navigation.map((item) =>
               <Link
                 key={item.page}
-                to={createPageUrl(item.page)}
-                className={`text-sm font-medium transition-colors ${
-                currentPageName === item.page ?
-                'text-amber-600' :
-                'text-slate-600 hover:text-slate-900'}`
-                }>
+                to={createPageUrl(item.page)} className="text-slate-900 text-sm font-medium transition-colors hover:text-slate-900">
+
+
+
+
+
 
                   {item.name}
                 </Link>
@@ -82,7 +82,7 @@ export default function Layout({ children, currentPageName }) {
             {/* CTA + Mobile Menu */}
             <div className="flex items-center gap-4">
               <Link to={createPageUrl("Contact")} className="hidden md:block">
-                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
+                <Button className="bg-[#C9A961] text-slate-900 px-4 py-2 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
                   Nous contacter
                 </Button>
               </Link>
