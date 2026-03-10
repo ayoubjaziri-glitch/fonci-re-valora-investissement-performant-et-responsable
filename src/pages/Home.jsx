@@ -240,7 +240,7 @@ export default function Home() {
               </div>
               <div className="bg-slate-900 p-6 text-center rounded-2xl">
                 <Building2 className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
-                <p className="text-3xl font-bold text-white mb-1">3 M€</p>
+                <p className="text-3xl font-bold text-white mb-1">3.7 M€</p>
                 <p className="text-sm text-white/60">D'actifs sous gestion</p>
               </div>
               <div className="bg-[#C9A961] rounded-2xl p-6 text-center">
@@ -675,13 +675,13 @@ export default function Home() {
                     Levée en cours
                   </span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Notre première levée des fonds
+                <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Notre levée de fonds inaugurale
 
                 </h2>
-                <p className="text-xl text-white/80 mb-8 leading-relaxed">
-                  Participez à notre levée inaugurale et bénéficiez d'un positionnement stratégique 
-                  dans une foncière résidentielle à fort potentiel. 100% de votre apport investi 
-                  dans les actifs, <strong className="text-[#C9A961]">0€ de frais d'entrée</strong>.
+                <p className="text-xl text-white/80 mb-8 leading-relaxed">Cette opération permet de soutenir le développement d'une foncière résidentielle à fort potentiel. La structure se distingue par une optimisation maximale des capitaux : 100 % de l'apport est investi dans les actifs, sans aucun frais d'entrée.
+
+
+
                 </p>
                 <div className="grid grid-cols-2 gap-4 mb-8">
                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
