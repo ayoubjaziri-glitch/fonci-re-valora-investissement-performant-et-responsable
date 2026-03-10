@@ -305,7 +305,7 @@ export default function Equipe() {
                   <p className="text-white/60 text-sm">D'expertise</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4">
-                  <p className="text-2xl font-bold text-[#C9A961]">3 M€</p>
+                  <p className="text-2xl font-bold text-[#C9A961]">3.7 M€</p>
                   <p className="text-white/60 text-sm">Valorisation</p>
                 </div>
               </div>
