@@ -200,9 +200,9 @@ export default function Home() {
               <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Une foncière indépendante au service d'une vision patrimoniale exigeante
 
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-6">
-                La Foncière Patrimoniale développe et valorise des actifs résidentiels durables à travers 
-                une stratégie d'acquisition sélective, de réhabilitation énergétique (DPE C minimum) et de gestion active.
+              <p className="text-slate-600 leading-relaxed mb-6">La Foncière Patrimoniale développe et valorise des actifs résidentiels durables à travers une stratégie d'acquisition sélective, de réhabilitation énergétique BBC et de gestion active.
+
+
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
                 Un modèle conçu pour offrir aux investisseurs une exposition structurée à l'immobilier, 
@@ -245,7 +245,7 @@ export default function Home() {
               </div>
               <div className="bg-[#C9A961] rounded-2xl p-6 text-center">
                 <Percent className="h-8 w-8 text-[#1A3A52] mx-auto mb-3" />
-                <p className="text-3xl font-bold text-[#1A3A52] mb-1">>7%</p>
+                <p className="text-3xl font-bold text-[#1A3A52] mb-1">Supérieur à 7%</p>
                 <p className="text-sm text-[#1A3A52]/80">TRI net visé</p>
               </div>
               <div className="bg-slate-900 p-6 text-center rounded-2xl">
@@ -308,7 +308,7 @@ export default function Home() {
               </div>
 
               <Link to={createPageUrl("Durabilite")}>
-                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
+                <Button className="bg-[#C9A961] text-slate-900 px-4 py-2 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
                   Découvrir notre engagement ESG
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
@@ -327,7 +327,7 @@ export default function Home() {
                 className="rounded-3xl shadow-2xl w-full h-80 object-cover" />
 
               <div className="absolute -bottom-6 -left-6 bg-[#C9A961] text-[#1A3A52] rounded-2xl p-6 shadow-xl">
-                <p className="text-4xl font-bold mb-1">100%</p>
+                <p className="text-slate-900 mb-1 text-4xl font-bold">100%</p>
                 <p className="text-[#1A3A52]/80 text-sm">DPE C, B et A</p>
               </div>
             </motion.div>
