@@ -270,8 +270,8 @@ export default function Services() {
       {/* CTA */}
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-2xl md:text-3xl font-serif text-[#1A3A52] mb-4">
-            Investir aux côtés de La Foncière Patrimoniale
+          <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">Investir aux côtés de La Foncière Patrimoniale
+
           </h2>
           <p className="text-[#1A3A52]/80 mb-8">
             Accédez à une exposition immobilière organisée autour d'un pilotage professionnel et d'une gouvernance claire.
