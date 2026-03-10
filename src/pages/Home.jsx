@@ -563,7 +563,7 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Sophian Naili</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
-              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • 3 M€ de patrimoine</p>
+              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • 3.7 M€ de patrimoine</p>
             </motion.div>
 
             <motion.div
@@ -675,8 +675,8 @@ export default function Home() {
                     Levée en cours
                   </span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">
-                  Rejoignez la première levée
+                <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Notre première levée des fonds
+
                 </h2>
                 <p className="text-xl text-white/80 mb-8 leading-relaxed">
                   Participez à notre levée inaugurale et bénéficiez d'un positionnement stratégique 
