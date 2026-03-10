@@ -197,8 +197,8 @@ export default function Home() {
                   Qui sommes-nous
                 </span>
               </div>
-              <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
-                Une foncière indépendante au service d'une vision patrimoniale exigeante
+              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Une foncière indépendante au service d'une vision patrimoniale exigeante
+
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
                 La Foncière Patrimoniale développe et valorise des actifs résidentiels durables à travers 
@@ -374,11 +374,11 @@ export default function Home() {
               viewport={{ once: true }}
               className="bg-white rounded-3xl p-10 border-2 border-[#1A3A52] shadow-xl">
 
-              <div className="flex items-center gap-4 mb-8">
+              <div className="text-slate-900 mb-8 flex items-center gap-4">
                 <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center">
                   <Shield className="h-9 w-9 text-[#C9A961]" />
                 </div>
-                <h3 className="text-3xl font-serif text-[#1A3A52]">Atouts</h3>
+                <h3 className="text-slate-900 text-3xl font-serif">Atouts</h3>
               </div>
               <ul className="space-y-5">
                 {atouts.map((atout, index) =>
@@ -408,7 +408,7 @@ export default function Home() {
                 <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center">
                   <TrendingUp className="h-9 w-9 text-[#C9A961]" />
                 </div>
-                <h3 className="text-3xl font-serif text-[#1A3A52]">Valeur ajoutée</h3>
+                <h3 className="text-slate-900 text-3xl font-serif">Valeur ajoutée</h3>
               </div>
               <ul className="space-y-5">
                 {valeurAjoutee.map((item, index) =>
@@ -457,8 +457,8 @@ export default function Home() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-6">
-              Solution intégrée de bout en bout
+            <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Solution intégrée de bout en bout
+
             </h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg leading-relaxed">
               Une gestion structurée, de l'acquisition à l'arbitrage, portée par une équipe 
@@ -520,8 +520,8 @@ export default function Home() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Associés opérationnels & Gouvernance
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Associés opérationnels & Gouvernance
+
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               18 années de trajectoire — Une expérience consolidée dans l'immobilier résidentiel, fondée sur une pratique continue de l'acquisition et de la valorisation d'actifs.
