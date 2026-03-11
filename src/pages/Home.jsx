@@ -150,7 +150,7 @@ export default function Home() {
 
             <div className="flex flex-wrap gap-4">
               <Link to={createPageUrl("Contact")}>
-                <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] px-8 py-6 text-base font-semibold border-2 border-[#C9A961]">
+                <Button className="bg-[#C9A961] text-slate-900 px-8 py-6 text-base font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F] border-2 border-[#C9A961]">
                   Entrer en relation
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
