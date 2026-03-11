@@ -563,7 +563,7 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Sophian Naili</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
-              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • 3.7 M€ de patrimoine</p>
+              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • 3.7 M€ de patrimoine immobilier.</p>
             </motion.div>
 
             <motion.div
