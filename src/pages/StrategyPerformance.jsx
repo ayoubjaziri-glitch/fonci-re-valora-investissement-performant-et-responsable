@@ -97,7 +97,7 @@ export default function StrategyPerformance() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
-        <div className="bg-[#0f172a] opacity-100 absolute inset-0">
+        <div className="bg-slate-900 opacity-100 absolute inset-0">
           <div className="absolute top-0 right-0 w-96 h-96 border border-white/20 rounded-full" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
