@@ -350,7 +350,7 @@ export default function Equipe() {
                 <div className="w-12 h-12 bg-[#1A3A52] rounded-xl flex items-center justify-center mx-auto mb-3">
                   <TrendingUp className="h-6 w-6 text-[#C9A961]" />
                 </div>
-                <h4 className="text-[#1A3A52] font-bold mb-2">La Foncière Patrimoniale</h4>
+                <h4 className="text-[#1A3A52] font-bold mb-2"> Foncière Valora</h4>
                 <p className="text-[#1A3A52]/80 text-sm">Objet de cette présentation</p>
               </motion.div>
             </div>
