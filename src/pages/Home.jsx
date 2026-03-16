@@ -544,7 +544,7 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Ayoub Jaziri</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
-              <p className="text-slate-600 text-sm">Stratégie d'acquisition, suivi des travaux, financement et gouvernance</p>
+              <p className="text-slate-600 text-sm">Stratégie d'acquisition, suivi des travaux, financement et gouvernance. porte la vision opérationnelle de la foncière et accompagne la mise en œuvre concrète des projets immobiliers.</p>
             </motion.div>
 
             <motion.div
@@ -563,7 +563,7 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Sophian Naili</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Cofondateur</p>
-              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • 3.7 M€ de patrimoine immobilier.</p>
+              <p className="text-slate-600 text-sm">Investissement, sourcing off-market et arbitrages • assure la gouvernance juridique et la vision stratégique de la foncière</p>
             </motion.div>
 
             <motion.div
@@ -582,7 +582,7 @@ export default function Home() {
               </div>
               <h3 className="font-semibold text-[#1A3A52] mb-2">Renaud Marchand</h3>
               <p className="text-[#C9A961] text-sm font-medium mb-3">Associé</p>
-              <p className="text-slate-600 text-sm">Travaux & rénovation, pilotage des chantiers • Ingénieur BTP • 40+ biens</p>
+              <p className="text-slate-600 text-sm">Travaux & rénovation, pilotage des chantiers • Ingénieur BTP • apporte son expertise technique sur les projets de réhabilitation.</p>
             </motion.div>
           </div>
 
