@@ -279,16 +279,16 @@ export default function Realisations() {
       </section>
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="bg-[#C9A961] py-12">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">Investir aux côtés de La Foncière Valora
 
           </h2>
-          <p className="text-[#1A3A52]/80 mb-8">
-            Accédez à une exposition immobilière structurée et à un pilotage professionnel.
+          <p className="text-slate-900 mb-8">Accédez à une exposition immobilière structurée et à un pilotage professionnel.
+
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white px-8 py-6 font-semibold">
+            <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
               Entrer en relation
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
