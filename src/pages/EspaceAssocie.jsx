@@ -128,11 +128,11 @@ export default function EspaceAssocie() {
           <div className="bg-white rounded-3xl p-8 shadow-2xl">
             <div className="text-center mb-8">
               <div className="w-40 h-40 flex items-center justify-center mx-auto mb-4">
-                <img
-                  src="https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png"
-                  alt="La Foncière Patrimoniale"
-                  className="h-full w-auto object-contain rounded-xl"
-                />
+                <img src="https://media.base44.com/images/public/699460f1b03f6285dc8513a7/a176d3ceb_logo2.png"
+
+                alt="La Foncière Patrimoniale" className="h-full w-auto object-contain rounded-xl" />
+
+
               </div>
               <h1 className="text-2xl font-serif text-[#1A3A52] mb-2">Espace Associés</h1>
               <p className="text-slate-600">Accédez à votre tableau de bord sécurisé</p>
