@@ -140,7 +140,7 @@ export default function Home() {
               <span className="text-[#C9A961]">DURABLEMENT</span>
             </h1>
             
-            <p className="text-xl text-white/80 mb-10 max-w-2xl leading-relaxed">Depuis 2008, le Groupe Auvergne et Patrimoine développe un savoir faire dans l'acquisition et la valorisation d'actifs résidentiels. La Foncière Patrimoniale s’inscrit dans cette continuité en offrant un cadre structuré d’association autour d’une vision patrimoniale de long terme. 
+            <p className="text-xl text-white/80 mb-10 max-w-2xl leading-relaxed">Depuis 2008, le Groupe Auvergne et Patrimoine développe un savoir faire dans l'acquisition et la valorisation d'actifs résidentiels. La Foncière Valora s’inscrit dans cette continuité en offrant un cadre structuré d’association autour d’une vision patrimoniale de long terme.
 
 
 
@@ -200,7 +200,7 @@ export default function Home() {
               <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Une foncière indépendante au service d'une vision patrimoniale exigeante
 
               </h2>
-              <p className="text-slate-600 leading-relaxed mb-6">La Foncière Patrimoniale développe et valorise des actifs résidentiels durables à travers une stratégie d'acquisition sélective, de réhabilitation énergétique BBC et de gestion active.
+              <p className="text-slate-600 leading-relaxed mb-6">La Foncière Valora développe et valorise des actifs résidentiels durables à travers une stratégie d'acquisition sélective, de réhabilitation énergétique BBC et de gestion active.
 
 
               </p>
@@ -767,8 +767,8 @@ export default function Home() {
             <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Ce que nos associés disent de nous
 
             </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Des investisseurs engagés qui partagent leur expérience avec La Foncière Patrimoniale.
+            <p className="text-slate-600 max-w-2xl mx-auto">Des investisseurs engagés qui partagent leur expérience avec La Foncière Valora.
+
             </p>
           </motion.div>
 
