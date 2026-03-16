@@ -198,7 +198,7 @@ export default function Partenaires() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
 
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">Partenaires et opérateurs
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Partenaires et opérateurs
 
             </h2>
             <p className="text-[#1A3A52]/80 mb-8">La foncière développe ses projets avec des partenaires : investisseurs privés, architectes, entreprises de construction et experts immobiliers.
