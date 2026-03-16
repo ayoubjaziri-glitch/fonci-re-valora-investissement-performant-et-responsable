@@ -694,7 +694,7 @@ export default function Home() {
                   </div>
                 </div>
                 <Link to={createPageUrl("Contact")}>
-                  <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-bold px-10 py-7 text-lg">
+                  <Button className="bg-[#C9A961] text-gray-900 px-10 py-7 text-lg font-bold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
                     Entrer en relation
                     <ArrowRight className="ml-2 h-6 w-6" />
                   </Button>
@@ -738,8 +738,8 @@ export default function Home() {
                 </div>
 
                 <div className="bg-[#C9A961] rounded-xl p-4 text-center">
-                  <p className="text-[#1A3A52] font-semibold">
-                    Investissement aligné • Rémunération à la performance
+                  <p className="text-slate-900 font-semibold">Investissement aligné • Rémunération à la performance
+
                   </p>
                 </div>
               </div>
