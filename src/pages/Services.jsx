@@ -213,8 +213,8 @@ export default function Services() {
                 <Shield className="h-8 w-8 text-[#1E3A5F]" />
               </div>
               <h3 className="text-xl font-semibold text-white mb-3 text-center">Gestion intégrée</h3>
-              <p className="text-white/70">
-                La Foncière Patrimoniale assure le pilotage global des opérations immobilières : sélection, structuration, suivi et valorisation dans une logique patrimoniale de long terme.
+              <p className="text-white/70">La Foncière Valora assure le pilotage global des opérations immobilières : sélection, structuration, suivi et valorisation dans une logique patrimoniale de long terme.
+
               </p>
             </motion.div>
 
@@ -257,8 +257,8 @@ export default function Services() {
             viewport={{ once: true }}
             className="mt-12 text-center">
 
-            <p className="text-xl text-white/90 italic font-serif">
-              Aux côtés de La Foncière Patrimoniale
+            <p className="text-xl text-white/90 italic font-serif">Aux côtés de La Foncière Valora
+
             </p>
             <p className="text-white/70 mt-4 max-w-3xl mx-auto">
               Découvrez une approche immobilière fondée sur un pilotage professionnel, une vision durable et un cadre de collaboration défini au cas par cas.
