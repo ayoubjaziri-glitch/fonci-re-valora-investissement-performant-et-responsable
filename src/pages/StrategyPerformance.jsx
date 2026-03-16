@@ -174,7 +174,7 @@ export default function StrategyPerformance() {
                 </div>
                 <div>
                   <p className="text-sm text-[#C9A961]">Notre approche</p>
-                  <h3 className="text-2xl font-serif text-white">La Foncière Patrimoniale</h3>
+                  <h3 className="text-2xl font-serif text-white">La Foncière Valora</h3>
                 </div>
               </div>
               <div className="space-y-4">
