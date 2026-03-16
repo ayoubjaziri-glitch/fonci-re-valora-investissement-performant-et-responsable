@@ -226,7 +226,7 @@ export default function Layout({ children, currentPageName }) {
 
           <div className="border-t border-white/10 mt-12 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-4">
-              <p className="text-white/40 text-sm">© 2026 La Foncière Patrimoniale. Tous droits réservés.
+              <p className="text-white/40 text-sm">© 2026  Foncière Valora. Tous droits réservés.
 
               </p>
               <div className="flex flex-wrap justify-center gap-4">
