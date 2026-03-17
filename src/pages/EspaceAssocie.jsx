@@ -230,13 +230,7 @@ export default function EspaceAssocie() {
   const gouvernanceRaw = getConfig('gouvernance', { texte: "Accès réservé aux associés élus par les catégories B et C pour les décisions stratégiques (acquisitions, arbitrages, emprunts).", stratégieDette: "Amortissement progressif sur 20 ans. Effet de levier maîtrisé avec LTV cible ≤ 80% à l'acquisition." });
 
   // DB data with fallbacks
-  const patrimoine = acqDb.filter((a) => a.type === 'patrimoine').length > 0 ?
-  acqDb.filter((a) => a.type === 'patrimoine').map((a) => ({ nom: a.ville, lots: a.lots, valeur: a.valeur, dpe: a.dpe, occupation: a.occupation })) :
-  [
-  { nom: "Lyon 3ème - Garibaldi", lots: 8, valeur: "980 000 €", dpe: "C", occupation: "87%" },
-  { nom: "Bordeaux Centre", lots: 12, valeur: "1 450 000 €", dpe: "C", occupation: "100%" },
-  { nom: "Vichy - Boulevard Kennedy", lots: 6, valeur: "420 000 €", dpe: "C", occupation: "92%" },
-  { nom: "Clermont-Ferrand", lots: 16, valeur: "1 350 000 €", dpe: "C", occupation: "95%" }];
+  const patrimoine = acqDb.filter((a) => a.type === 'patrimoine').map((a) => ({ nom: a.ville, lots: a.lots, valeur: a.valeur, dpe: a.dpe, occupation: a.occupation }));
 
 
   const acquisitionsEnCours = acqDb.filter((a) => a.type === 'acquisition_en_cours').length > 0 ?

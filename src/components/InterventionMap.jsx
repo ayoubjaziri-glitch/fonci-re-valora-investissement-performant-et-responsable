@@ -25,7 +25,9 @@ const customIcon = new L.Icon({
 });
 
 export default function InterventionMap() {
-  const center = [45.8, 2.5]; // Centre de la France
+  // Centré sur Vichy
+  const center = [46.1313, 3.4304]; // Vichy coordinates
+  const defaultZoom = 8; // Zoom pour voir Vichy et ses environs
 
   // Récupère les biens actifs des Réalisations
   const { data: realisations = [] } = useQuery({
@@ -40,31 +42,49 @@ export default function InterventionMap() {
     initialData: []
   });
 
-  // Fusionner zones manuelles + biens actifs des réalisations
-   const allZones = [
-     ...zonesDb,
-     ...realisations.filter(b => b.actif && b.location && b.lat && b.lng).map(b => ({
-       id: `real-${b.id}`,
-       name: b.titre,
-       adresse: b.location,
-       lat: b.lat,
-       lng: b.lng,
-       dpe: b.dpe_apres,
-       logements: b.logements,
-       image_url: b.image_apres,
-       actif: true
-     }))
-   ];
+  // Récupère les acquisitions (patrimoine) de l'espace associé
+  const { data: acquisitions = [] } = useQuery({
+    queryKey: ['acq-associe'],
+    queryFn: () => base44.entities.AcquisitionAssocie.filter({ type: 'patrimoine' }),
+    initialData: []
+  });
 
-  // Dédupliquer par nom
-  const uniqueZones = Array.from(new Map(allZones.map(z => [z.name, z])).values());
+  // Fusionner zones manuelles + biens actifs des réalisations + acquisitions
+  const allZones = [
+    ...zonesDb,
+    ...realisations.filter(b => b.actif && b.location && b.lat && b.lng).map(b => ({
+      id: `real-${b.id}`,
+      name: b.titre,
+      adresse: b.location,
+      lat: b.lat,
+      lng: b.lng,
+      dpe: b.dpe_apres,
+      logements: b.logements,
+      image_url: b.image_apres,
+      actif: true
+    })),
+    ...acquisitions.filter(a => a.ville).map((a, idx) => ({
+      id: `acq-${a.id}-${idx}`,
+      name: a.ville,
+      adresse: a.ville,
+      lat: 46.1313 + (Math.random() * 0.5 - 0.25), // Petite variation autour de Vichy
+      lng: 3.4304 + (Math.random() * 0.5 - 0.25),
+      dpe: a.dpe,
+      logements: a.lots ? `${a.lots} lots` : '',
+      image_url: null,
+      actif: true
+    }))
+  ];
+
+  // Ne pas dédupliquer par nom pour voir tous les biens même à la même adresse
+  const uniqueZones = allZones;
 
   return (
     <div className="relative">
       <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200">
         <MapContainer 
           center={center} 
-          zoom={6} 
+          zoom={defaultZoom} 
           style={{ height: '500px', width: '100%' }}
           scrollWheelZoom={false}
         >
