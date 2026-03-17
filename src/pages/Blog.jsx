@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 import {
   Calendar, User, ArrowRight, Search, TrendingUp,
   Building2, Euro, Target, Briefcase, Award, FileText,
@@ -13,6 +15,26 @@ import { Input } from "@/components/ui/input";
 export default function Blog() {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('tous');
+
+  const { data: articlesDB = [] } = useQuery({
+    queryKey: ['blog-articles'],
+    queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 100),
+    initialData: []
+  });
+
+  // Adapter les champs BDD au format utilisé dans le JSX
+  const articlesFromDB = articlesDB.filter(a => a.publie).map(a => ({
+    id: a.id,
+    title: a.titre,
+    slug: a.slug,
+    excerpt: a.extrait,
+    category: a.categorie,
+    author: a.auteur,
+    date: a.date_publication ? new Date(a.date_publication).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : '',
+    readTime: a.temps_lecture || '5 min',
+    image: a.image_url || 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
+    content: a.contenu || ''
+  }));
 
   const articles = [
   {
