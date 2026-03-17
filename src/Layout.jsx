@@ -14,22 +14,24 @@ import { useQuery } from "@tanstack/react-query";
 import { base44 } from '@/api/base44Client';
 
 function LogoImage() {
-  const { data: images = [] } = useQuery({
+  const { data: images = [], isLoading } = useQuery({
     queryKey: ['site-images'],
     queryFn: () => base44.entities.SiteImage.list(),
     initialData: []
   });
 
   const logoImage = images.find((img) => img.key === 'logo');
-  const logoUrl = logoImage?.url || 'https://qtrypzzcjebvfcihiynt.supabase.co/storage/v1/object/public/base44-prod/public/699460f1b03f6285dc8513a7/42737eb60_logosansar.png';
+
+  if (isLoading || !logoImage?.url) {
+    return <div className="h-14 w-32" />;
+  }
 
   return (
     <img
-      src={logoUrl}
-      alt="La Foncière Valora" className="h-14 w-auto border-0" />);
-
-
-
+      src={logoImage.url}
+      alt="La Foncière Valora"
+      className="h-14 w-auto border-0" />
+  );
 }
 
 export default function Layout({ children, currentPageName }) {
