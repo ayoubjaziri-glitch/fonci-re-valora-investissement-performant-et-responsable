@@ -36,9 +36,26 @@ export default function Home() {
     initialData: []
   });
 
+  const { data: levees = [] } = useQuery({
+    queryKey: ['levees-fonds'],
+    queryFn: () => base44.entities.LeveeFonds.list('-created_date', 100),
+    initialData: []
+  });
+
   const getImageUrl = (key, fallback) => {
     const image = images.find((img) => img.key === key);
     return image?.url || fallback;
+  };
+
+  // Récupérer la première levée active
+  const currentLevy = levees.find(l => l.actif && l.statut === 'Ouverte') || levees.find(l => l.statut === 'Ouverte') || {
+    nom: 'Notre levée de fonds inaugurale',
+    objectif: '250 000 €',
+    collecte: '95 000 €',
+    avancement: 38,
+    ticket_min: '10 000 €',
+    rendement_cible: '>10%',
+    description: 'Cette opération permet de soutenir le développement d\'une foncière résidentielle à fort potentiel. La structure se distingue par une optimisation maximale des capitaux : 100 % de l\'apport est investi dans les actifs, sans aucun frais d\'entrée.'
   };
 
   const stats = [
