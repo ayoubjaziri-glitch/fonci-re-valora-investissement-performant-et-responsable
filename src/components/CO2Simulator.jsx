@@ -131,11 +131,11 @@ export default function CO2Simulator() {
     const avant = DPE_DATA[dpeAvant];
     const apres = DPE_DATA[dpeApres];
 
-    const ep_avant = avant.minEP * surface;    // kWh/an
+    const ep_avant = avant.minEP * surface;
     const ep_apres = apres.minEP * surface;
     const ep_economie = ep_avant - ep_apres;
 
-    const co2_avant = avant.co2 * surface;     // kgCO2/an
+    const co2_avant = avant.co2 * surface;
     const co2_apres = apres.co2 * surface;
     const co2_economie = co2_avant - co2_apres;
 
@@ -149,15 +149,27 @@ export default function CO2Simulator() {
     const pct_ep = ep_avant > 0 ? Math.round((ep_economie / ep_avant) * 100) : 0;
     const pct_co2 = co2_avant > 0 ? Math.round((co2_economie / co2_avant) * 100) : 0;
 
-    return { ep_avant, ep_apres, ep_economie, co2_avant, co2_apres, co2_economie, cout_avant, cout_apres, cout_economie, arbres, km_voiture, pct_ep, pct_co2 };
+    const cle = `${dpeAvant}_${dpeApres}`;
+    const cout_m2 = COUT_TRAVAUX_M2[cle] || 300;
+    const cout_travaux_min = Math.round(cout_m2 * 0.85 * surface);
+    const cout_travaux_max = Math.round(cout_m2 * 1.15 * surface);
+    const cout_travaux_moy = Math.round(cout_m2 * surface);
+    const niveau = getNiveauRenovation(dpeAvant, dpeApres);
+    const postes = POSTES_TRAVAUX[niveau];
+    const aides = AIDES[niveau];
+    // Retour sur investissement (économies énergie / coût travaux)
+    const roi_ans = cout_economie > 0 ? Math.round(cout_travaux_moy / cout_economie) : null;
+
+    return { ep_avant, ep_apres, ep_economie, co2_avant, co2_apres, co2_economie, cout_avant, cout_apres, cout_economie, arbres, km_voiture, pct_ep, pct_co2, cout_travaux_min, cout_travaux_max, cout_travaux_moy, cout_m2, niveau, postes, aides, roi_ans };
   }, [surface, dpeAvant, dpeApres]);
 
-  const chartData = DPE_ORDER.map(dpe => ({
-    dpe,
-    'CO₂ (kg/m²/an)': DPE_DATA[dpe].co2,
-    'Énergie (kWhEP/10)': Math.round(DPE_DATA[dpe].minEP / 10),
-    fill: DPE_DATA[dpe].color,
-  }));
+  // Données graphique coût par poste
+  const chartData = calc.postes ? calc.postes.map(p => ({
+    name: p.poste,
+    montant: Math.round(p.pct / 100 * calc.cout_travaux_moy),
+    pct: p.pct,
+    fill: '#C9A961',
+  })) : [];
 
   const scenariosRapides = [
     { label: 'Passoire → Décent', av: 'F', ap: 'C', desc: 'Rénovation standard' },
