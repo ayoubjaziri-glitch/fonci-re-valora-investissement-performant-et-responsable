@@ -687,29 +687,29 @@ export default function Home() {
             <div className="grid lg:grid-cols-2 gap-16 items-center">
               <div>
                 <div className="flex items-center gap-3 mb-6">
-                  <span className="w-3 h-3 bg-[#C9A961] rounded-full animate-pulse" />
-                  <span className="text-[#C9A961] font-bold uppercase tracking-wider text-sm">
-                    Levée en cours
-                  </span>
-                </div>
-                <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">Notre levée de fonds inaugurale
+                   <span className="w-3 h-3 bg-[#C9A961] rounded-full animate-pulse" />
+                   <span className="text-[#C9A961] font-bold uppercase tracking-wider text-sm">
+                     Levée en cours
+                   </span>
+                 </div>
+                 <h2 className="text-4xl md:text-5xl font-serif text-white mb-6">{currentLevy.nom}
 
-                </h2>
-                <p className="text-xl text-white/80 mb-8 leading-relaxed">Cette opération permet de soutenir le développement d'une foncière résidentielle à fort potentiel. La structure se distingue par une optimisation maximale des capitaux : 100 % de l'apport est investi dans les actifs, sans aucun frais d'entrée.
+                 </h2>
+                 <p className="text-xl text-white/80 mb-8 leading-relaxed">{currentLevy.description}
 
 
 
-                </p>
-                <div className="grid grid-cols-2 gap-4 mb-8">
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                    <p className="text-white/60 text-sm mb-1">TRI net visé</p>
-                    <p className="text-3xl font-bold text-[#C9A961]">>10%</p>
-                  </div>
-                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                    <p className="text-white/60 text-sm mb-1">Horizon recommandé</p>
-                    <p className="text-3xl font-bold text-white">5 ans</p>
-                  </div>
-                </div>
+                 </p>
+                 <div className="grid grid-cols-2 gap-4 mb-8">
+                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                     <p className="text-white/60 text-sm mb-1">TRI net visé</p>
+                     <p className="text-3xl font-bold text-[#C9A961]">{currentLevy.rendement_cible}</p>
+                   </div>
+                   <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                     <p className="text-white/60 text-sm mb-1">Horizon recommandé</p>
+                     <p className="text-3xl font-bold text-white">5 ans</p>
+                   </div>
+                 </div>
                 <Link to={createPageUrl("Contact")}>
                   <Button className="bg-[#C9A961] text-gray-900 px-10 py-7 text-lg font-bold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">
                     Entrer en relation
