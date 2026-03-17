@@ -378,9 +378,14 @@ export default function AdminBackOffice() {
           {activeTab === 'levees' && <AdminLeveeFonds />}
           {activeTab === 'realisations' && <AdminRealisationsPlus />}
           {activeTab === 'acces' && (
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
-              <GererAcces embedded />
-            </div>
+           <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+             <GererAcces embedded />
+           </div>
+          )}
+          {activeTab === 'admin' && (
+           <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+             <AdminAcces />
+           </div>
           )}
           {activeTab === 'kpis' && <EspaceAssocieTabWrapper tab="kpis" />}
           {activeTab === 'docs' && <EspaceAssocieTabWrapper tab="docs" />}
