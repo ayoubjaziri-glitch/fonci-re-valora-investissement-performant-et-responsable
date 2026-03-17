@@ -27,11 +27,37 @@ const customIcon = new L.Icon({
 export default function InterventionMap() {
   const center = [45.8, 2.5]; // Centre de la France
 
+  // Récupère les biens actifs des Réalisations
+  const { data: realisations = [] } = useQuery({
+    queryKey: ['realisations-biens'],
+    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
+    initialData: []
+  });
+
   const { data: zonesDb = [] } = useQuery({
     queryKey: ['map-locations'],
     queryFn: () => base44.entities.MapLocation.filter({ actif: true }),
     initialData: []
   });
+
+  // Fusionner zones manuelles + biens actifs des réalisations
+  const allZones = [
+    ...zonesDb,
+    ...realisations.filter(b => b.actif && b.location).map(b => ({
+      id: `real-${b.id}`,
+      name: b.titre,
+      adresse: b.location,
+      lat: zonesDb.find(z => z.adresse?.includes(b.location.split(',')[0]))?.lat || 45.8,
+      lng: zonesDb.find(z => z.adresse?.includes(b.location.split(',')[0]))?.lng || 2.5,
+      dpe: b.dpe_apres,
+      logements: b.logements,
+      image_url: b.image_apres,
+      actif: true
+    }))
+  ];
+
+  // Dédupliquer par nom
+  const uniqueZones = Array.from(new Map(allZones.map(z => [z.name, z])).values());
 
   return (
     <div className="relative">
