@@ -299,40 +299,6 @@ export default function CO2Simulator() {
           >
             {isValid ? (
               <>
-                {/* KPIs principaux */}
-                <div className="grid grid-cols-2 gap-4">
-                  <MetricCard
-                    icon={Leaf}
-                    label="Réduction CO₂"
-                    value={Math.round(calc.co2_economie).toLocaleString('fr-FR')}
-                    unit="kg/an"
-                    sub={`−${calc.pct_co2}% des émissions`}
-                    highlight
-                  />
-                  <MetricCard
-                    icon={Zap}
-                    label="Économie d'énergie"
-                    value={Math.round(calc.ep_economie / 1000).toLocaleString('fr-FR')}
-                    unit="MWh/an"
-                    sub={`−${calc.pct_ep}% de consommation`}
-                  />
-                  <MetricCard
-                    icon={TrendingDown}
-                    label="Économie financière"
-                    value={Math.round(calc.cout_economie).toLocaleString('fr-FR')}
-                    unit="€/an"
-                    sub={`avant → après : ${Math.round(calc.cout_avant).toLocaleString('fr-FR')} → ${Math.round(calc.cout_apres).toLocaleString('fr-FR')} €`}
-                  />
-                  <MetricCard
-                    icon={Euro}
-                    label="Coût travaux estimé"
-                    value={calc.cout_travaux_moy.toLocaleString('fr-FR')}
-                    unit="€"
-                    sub={`${calc.cout_m2} €/m² · Rénovation ${calc.niveau}`}
-                    color="#C9A961"
-                  />
-                </div>
-
                 {/* Comparaison avant / après + barre */}
                 <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
                   <h4 className="font-semibold text-[#1A3A52] mb-3 text-sm">Comparaison Avant / Après</h4>
