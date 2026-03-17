@@ -66,7 +66,7 @@ function DpeSelector({ label, value, onChange }) {
   return (
     <div>
       <p className="text-slate-600 mt-1 mb-3 text-sm font-semibold">{label}</p>
-      <div className="flex gap-2 flex-wrap">
+      <div className="flex gap-1 flex-nowrap">
         {DPE_ORDER.map((dpe) =>
         <button
           key={dpe}
