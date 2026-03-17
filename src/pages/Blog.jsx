@@ -16,6 +16,18 @@ export default function Blog() {
 
   const articles = [
   {
+    id: 19,
+    title: "Top 5 des villes françaises où l'investissement locatif est le plus rentable en 2026",
+    slug: "top-5-villes-investissement-locatif-rentable-2026-fonciere-valora",
+    excerpt: "Vichy, Clermont-Ferrand, Bordeaux, Lyon, Toulouse... La Foncière Valora dévoile son classement des 5 marchés immobiliers les plus performants en 2026, avec rendements, prix et stratégies à la clé.",
+    category: "Marché",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "6 min",
+    image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80",
+    content: ``
+  },
+  {
     id: 18,
     title: "Taxe Foncière 2026 : Mode de Calcul, Exonérations et Réductions",
     slug: "taxe-fonciere-2026-calcul-exonerations-reductions",

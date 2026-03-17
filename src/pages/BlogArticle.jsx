@@ -20,6 +20,101 @@ export default function BlogArticle() {
 
   const articles = [
     {
+      id: 19,
+      title: "Top 5 des villes françaises où l'investissement locatif est le plus rentable en 2026",
+      slug: "top-5-villes-investissement-locatif-rentable-2026-fonciere-valora",
+      excerpt: "Vichy, Clermont-Ferrand, Bordeaux, Lyon, Toulouse... La Foncière Valora dévoile son classement des 5 marchés immobiliers les plus performants en 2026, avec rendements, prix et stratégies à la clé.",
+      category: "Marché",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "6 min",
+      image: "https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80",
+      content: `
+# Top 5 des villes françaises où l'investissement locatif est le plus rentable en 2026 : L'Analyse de la Foncière Valora
+
+L'année 2026 marque l'entrée dans une phase de maturité pour le marché immobilier tricolore. Avec des taux d'intérêt stabilisés entre 3,25 % et 4,20 % et un durcissement des normes énergétiques, l'investisseur doit désormais privilégier la "valeur verte" et la tension locative. Pour la Foncière Valora, la rentabilité ne se cherche plus dans la spéculation, mais dans une sélection géographique rigoureuse et une ingénierie de rénovation BBC performante.
+
+Voici les cinq métropoles et villes moyennes identifiées par la Foncière Valora comme les gisements de performance les plus solides cette année.
+
+## 1. Vichy : La pépite du haut rendement selon la Foncière Valora
+
+Inscrite au patrimoine mondial de l'UNESCO, Vichy est devenue en 2026 le terrain d'excellence de la Foncière Valora. Avec un prix moyen au m² d'environ **1 930 €**, la cité thermale offre des rendements bruts dépassant souvent les **9 %**.
+
+La Foncière Valora concentre ses acquisitions sur le parc ancien dégradé pour y déployer une rénovation BBC systématique. Cette stratégie permet de capter une demande locative forte, alimentée par le pôle universitaire médical (kinésithérapie) et le projet de ville "AGIR 2035". En transformant des passoires thermiques en actifs DPE A ou B, la Foncière Valora sécurise une **plus-value latente immédiate de +10 % à +15 %**.
+
+| Indicateur | Valeur Vichy 2026 |
+|---|---|
+| Prix moyen m² | ~1 930 € |
+| Rendement brut cible | > 9 % |
+| Profil locatif dominant | Étudiants, actifs médicaux, saisonniers thermaux |
+| Atout majeur | UNESCO + projet AGIR 2035 |
+
+## 2. Clermont-Ferrand : Le dynamisme étudiant au cœur de la stratégie Valora
+
+Capitale auvergnate et berceau industriel, Clermont-Ferrand affiche en 2026 une résilience remarquable avec un prix médian des appartements anciens stabilisé autour de **2 100 €/m²**. Pour la Foncière Valora, le potentiel réside dans le bassin étudiant massif (20,2 % de la population) et l'inauguration du nouveau réseau de transport InspiRe.
+
+La Foncière Valora identifie des opportunités majeures dans les quartiers universitaires (Carnot, Saint-Jacques) où la rentabilité brute avoisine les **7,2 %**. L'expertise de la Foncière Valora dans la rénovation énergétique est ici cruciale pour répondre aux exigences des jeunes actifs tout en optimisant la fiscalité via le **dispositif Jeanbrun**.
+
+| Indicateur | Valeur Clermont 2026 |
+|---|---|
+| Prix moyen m² | ~2 100 € |
+| Rendement brut cible | ~7,2 % |
+| Profil locatif dominant | Étudiants, jeunes actifs |
+| Atout majeur | Bassin industriel stable + réseau InspiRe |
+
+## 3. Bordeaux : La valeur refuge patrimoniale de la Foncière Valora
+
+Après une phase de correction nécessaire, le marché bordelais retrouve de la fluidité en 2026 avec un prix médian de **4 240 €/m²**. La Foncière Valora privilégie Bordeaux pour sa solidité patrimoniale et les projets d'infrastructure structurants comme le **RER Métropolitain** et le Grand Projet Sud-Ouest (GPSO).
+
+La Foncière Valora cible prioritairement des immeubles de rapport en périphérie immédiate (Cenon, Lormont) où le potentiel de revalorisation est amplifié par les nouvelles dessertes. En alliant un sourcing "Off-Market" et un levier bancaire optimisé à 80 % LTC, la Foncière Valora permet à ses associés de viser un **TRI supérieur à 10 % net** sur ce marché premium.
+
+| Indicateur | Valeur Bordeaux 2026 |
+|---|---|
+| Prix moyen m² | ~4 240 € |
+| TRI cible net | > 10 % |
+| Profil locatif dominant | Cadres, étudiants, familles |
+| Atout majeur | RER Métropolitain + GPSO |
+
+## 4. Lyon : La tension locative extrême maîtrisée par la Foncière Valora
+
+À Lyon, la demande de logements reste structurellement supérieure à l'offre, avec un prix médian autour de **4 600 €/m²** en 2026. La Foncière Valora analyse ce marché sous le prisme de la Zone à Faibles Émissions (ZFE) et de la transition énergétique, qui redéfinissent l'attractivité des quartiers.
+
+La Foncière Valora investit dans des secteurs en mutation comme le 8e et le 9e arrondissement, captant une "prime à la centralité" tout en rénovant des actifs énergivores en logements BBC de haute qualité. Ce modèle permet à la Foncière Valora de maintenir un **taux d'occupation cible supérieur à 98 %**, garantissant des flux de revenus stables et pérennes.
+
+| Indicateur | Valeur Lyon 2026 |
+|---|---|
+| Prix moyen m² | ~4 600 € |
+| Taux d'occupation cible | > 98 % |
+| Profil locatif dominant | Cadres, étudiants, familles |
+| Atout majeur | ZFE + tension locative structurelle |
+
+## 5. Toulouse : L'effet LGV anticipé par la Foncière Valora
+
+Surnommée la "Ville Rose", Toulouse confirme son attractivité en 2026 avec une croissance démographique soutenue et un prix au m² d'environ **3 749 €**. La Foncière Valora surveille de près l'avancement de la **ligne LGV Bordeaux-Toulouse**, qui placera la ville à seulement 3h10 de Paris.
+
+La Foncière Valora recommande Toulouse pour une stratégie mixte alliant rendement immédiat (environ **4,9 % net**) et forte perspective de plus-value à terme. L'ingénierie financière de la Foncière Valora et son absence de frais d'entrée (0 €) permettent de maximiser l'effet de capitalisation dès le premier jour d'investissement.
+
+| Indicateur | Valeur Toulouse 2026 |
+|---|---|
+| Prix moyen m² | ~3 749 € |
+| Rendement net cible | ~4,9 % |
+| Profil locatif dominant | Étudiants, ingénieurs aéronautique |
+| Atout majeur | LGV Bordeaux-Toulouse + croissance démographique |
+
+## Pourquoi choisir la Foncière Valora pour vos investissements en 2026 ?
+
+Investir en direct ou via des SCPI classiques en 2026 comporte des limites : frais d'entrée élevés (8 à 12 %) et gestion complexe des normes BBC. La Foncière Valora révolutionne ce modèle avec :
+
+- **0 € de frais d'entrée :** 100 % de votre capital est investi dans l'actif dès le départ.
+- **Performance alignée :** la direction ne perçoit sa rémunération qu'après avoir versé un rendement prioritaire de **6,5 % par an** aux associés.
+- **Fiscalité optimisée :** les titres de la Foncière Valora sont éligibles au **PEA-PME**, offrant une exonération totale d'impôt sur le revenu après 5 ans.
+
+Bâtissez votre patrimoine résidentiel de demain avec la Foncière Valora. Rejoignez notre cercle d'associés dès aujourd'hui pour accéder à nos opportunités Off-Market.
+
+*Contactez notre équipe pour découvrir nos prochaines acquisitions disponibles.*
+      `
+    },
+    {
       id: 18,
       title: "Taxe Foncière 2026 : Mode de Calcul, Exonérations et Réductions",
       slug: "taxe-fonciere-2026-calcul-exonerations-reductions",
