@@ -25,6 +25,43 @@ const ARBRES_PAR_TONNE = 40;
 // Km voiture par kgCO2
 const KM_PAR_KG_CO2 = 6.5;
 
+// Coût estimatif travaux par m² selon scénario de rénovation (source: ADEME, ANAH 2024)
+// clé = dpeAvant_dpeApres
+const COUT_TRAVAUX_M2 = {
+  'G_F': 80,  'G_E': 160, 'G_D': 280, 'G_C': 420, 'G_B': 600, 'G_A': 800,
+  'F_E': 100, 'F_D': 200, 'F_C': 350, 'F_B': 520, 'F_A': 720,
+  'E_D': 120, 'E_C': 260, 'E_B': 420, 'E_A': 620,
+  'D_C': 150, 'D_B': 300, 'D_A': 500,
+  'C_B': 180, 'C_A': 380,
+  'B_A': 220,
+};
+
+// Détail des postes de travaux selon le niveau de rénovation
+const POSTES_TRAVAUX = {
+  léger:    [{ poste: 'Isolation combles', pct: 30 }, { poste: 'Menuiseries', pct: 35 }, { poste: 'Régulation chauffage', pct: 20 }, { poste: 'Ventilation', pct: 15 }],
+  moyen:    [{ poste: 'Isolation (ITE/ITI)', pct: 35 }, { poste: 'Menuiseries', pct: 20 }, { poste: 'Chauffage (PAC/poêle)', pct: 30 }, { poste: 'VMC double flux', pct: 15 }],
+  complet:  [{ poste: 'Isolation globale', pct: 30 }, { poste: 'PAC haute perf.', pct: 25 }, { poste: 'VMC double flux', pct: 10 }, { poste: 'Menuiseries triple vitrage', pct: 20 }, { poste: 'Solaire thermique', pct: 15 }],
+  total:    [{ poste: 'Isolation + ITE', pct: 28 }, { poste: 'PAC géothermique', pct: 22 }, { poste: 'VMC double flux', pct: 10 }, { poste: 'Menuiseries AAA', pct: 18 }, { poste: 'Solaire PV', pct: 12 }, { poste: 'Second œuvre', pct: 10 }],
+};
+
+function getNiveauRenovation(dpeAvant, dpeApres) {
+  const avant = DPE_ORDER.indexOf(dpeAvant);
+  const apres = DPE_ORDER.indexOf(dpeApres);
+  const saut = apres - avant;
+  if (saut <= 1) return 'léger';
+  if (saut <= 2) return 'moyen';
+  if (saut <= 3) return 'complet';
+  return 'total';
+}
+
+// Aides disponibles selon le niveau
+const AIDES = {
+  léger:   [{ nom: 'MaPrimeRénov\'', montant: '25%' }, { nom: 'CEE', montant: '5–10%' }],
+  moyen:   [{ nom: 'MaPrimeRénov\'', montant: '35%' }, { nom: 'CEE', montant: '10%' }, { nom: 'Éco-PTZ', montant: '30 000 €' }],
+  complet: [{ nom: 'MaPrimeRénov\'', montant: '50%' }, { nom: 'CEE', montant: '12%' }, { nom: 'Éco-PTZ', montant: '50 000 €' }],
+  total:   [{ nom: 'MaPrimeRénov\' Sérénité', montant: '50–70%' }, { nom: 'CEE', montant: '15%' }, { nom: 'Éco-PTZ', montant: '50 000 €' }, { nom: 'ANAH', montant: 'selon revenu' }],
+};
+
 function DpeSelector({ label, value, onChange }) {
   return (
     <div>
