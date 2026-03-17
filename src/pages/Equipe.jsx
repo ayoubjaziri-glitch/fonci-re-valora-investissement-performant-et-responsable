@@ -17,72 +17,53 @@ export default function Equipe() {
     initialData: []
   });
 
+  const { data: membresDB = [] } = useQuery({
+    queryKey: ['membres-equipe'],
+    queryFn: () => base44.entities.MembreEquipe.list('ordre', 100),
+    initialData: []
+  });
+
   const getImageUrl = (key, fallback) => {
     const image = images.find((img) => img.key === key);
     return image?.url || fallback;
   };
-  const founders = [
+
+  // Données statiques de fallback si la BDD est vide
+  const staticFounders = [
   {
-    name: "Ayoub Jaziri",
-    role: "Cofondateur",
-    focus: "Vision opérationnelle",
+    name: "Ayoub Jaziri", role: "Cofondateur", focus: "Vision opérationnelle",
     description: "Ayoub Jaziri porte la vision opérationnelle de la foncière et accompagne la mise en œuvre concrète des projets immobiliers.",
-    experience: "Il intervient sur l'architecture financière des opérations, la relation avec les partenaires investisseurs et clients, ainsi que la coordination des acteurs impliqués dans le développement et la valorisation des actifs. Son action s'inscrit dans une logique de structuration durable et de suivi opérationnel des projets.",
+    experience: "Il intervient sur l'architecture financière des opérations, la relation avec les partenaires investisseurs et clients, ainsi que la coordination des acteurs impliqués dans le développement et la valorisation des actifs.",
     imageKey: "photo_ayoub"
   },
   {
-    name: "Sofhian Naili",
-    role: "Cofondateur",
-    focus: "Gouvernance juridique & Vision stratégique",
+    name: "Sofhian Naili", role: "Cofondateur", focus: "Gouvernance juridique & Vision stratégique",
     description: "De formation juridique, Sofhian Naili est également fondateur du Groupe Auvergne et Patrimoine, actif dans la structuration et la valorisation d'actifs immobiliers depuis 2008.",
-    experience: "Il assure la gouvernance juridique et la vision stratégique de la foncière, veille à la structuration statutaire, à l'équilibre entre les associés et au respect des principes d'éthique et de loyauté, tout en sécurisant la trajectoire de développement dans une logique patrimoniale de long terme. Il anime également, aux côtés d'Ayoub Jaziri, la relation avec les investisseurs et les partenaires stratégiques.",
+    experience: "Il assure la gouvernance juridique et la vision stratégique de la foncière, veille à la structuration statutaire, à l'équilibre entre les associés et au respect des principes d'éthique et de loyauté.",
     imageKey: "photo_sophian"
   }];
 
+  const staticTeam = [
+  { name: "Renaud Marchand", role: "Investisseur stratégique", focus: "Expertise technique BTP", description: "Ingénieur BTP, président de SCABB, apporte son expertise technique sur les projets de réhabilitation.", imageKey: "photo_renaud" },
+  { name: "Christophe Gironde", role: "Directeur administratif", focus: "Coordination opérationnelle", description: "Assure la direction administrative et la coordination des opérations au sein de la société Gabriel.", imageKey: "photo_christophe" },
+  { name: "Marie Dupont", role: "Responsable gestion locative", focus: "Relations locataires", description: "Pilote la gestion locative, le suivi des occupants et l'optimisation du taux d'occupation.", imageKey: "photo_marie" },
+  { name: "Thomas Laurent", role: "Chargé de financement", focus: "Structuration bancaire", description: "Gère les relations bancaires, montages financiers et optimisation de l'effet de levier.", imageKey: "photo_thomas" },
+  { name: "Sophie Martin", role: "Comptable", focus: "Reporting financier", description: "Assure la comptabilité, le reporting financier et le suivi des indicateurs de performance.", imageKey: "photo_sophie" },
+  { name: "Lucas Mercier", role: "Chargé d'acquisition", focus: "Sourcing & négociation", description: "Identifie et négocie les opportunités d'acquisition off-market auprès des notaires et agents.", imageKey: "photo_lucas" }
+  ];
 
-  const team = [
-  {
-    name: "Renaud Marchand",
-    role: "Investisseur stratégique",
-    focus: "Expertise technique BTP",
-    description: "Ingénieur BTP, président de SCABB, apporte son expertise technique sur les projets de réhabilitation.",
-    imageKey: "photo_renaud"
-  },
-  {
-    name: "Christophe Gironde",
-    role: "Directeur administratif",
-    focus: "Coordination opérationnelle",
-    description: "Assure la direction administrative et la coordination des opérations au sein de la société Gabriel.",
-    imageKey: "photo_christophe"
-  },
-  {
-    name: "Marie Dupont",
-    role: "Responsable gestion locative",
-    focus: "Relations locataires",
-    description: "Pilote la gestion locative, le suivi des occupants et l'optimisation du taux d'occupation.",
-    imageKey: "photo_marie"
-  },
-  {
-    name: "Thomas Laurent",
-    role: "Chargé de financement",
-    focus: "Structuration bancaire",
-    description: "Gère les relations bancaires, montages financiers et optimisation de l'effet de levier.",
-    imageKey: "photo_thomas"
-  },
-  {
-    name: "Sophie Martin",
-    role: "Comptable",
-    focus: "Reporting financier",
-    description: "Assure la comptabilité, le reporting financier et le suivi des indicateurs de performance.",
-    imageKey: "photo_sophie"
-  },
-  {
-    name: "Lucas Mercier",
-    role: "Chargé d'acquisition",
-    focus: "Sourcing & négociation",
-    description: "Identifie et négocie les opportunités d'acquisition off-market auprès des notaires et agents.",
-    imageKey: "photo_lucas"
-  }];
+  const activeMembers = membresDB.filter(m => m.actif);
+  const dbFounders = activeMembers.filter(m => m.type === 'fondateur');
+  const dbTeam = activeMembers.filter(m => m.type === 'membre');
+
+  // Utilise la BDD si elle contient des données, sinon fallback statique
+  const founders = dbFounders.length > 0 ? dbFounders.map(m => ({
+    name: m.nom, role: m.role, focus: m.focus, description: m.description, experience: m.experience, image: m.image_url
+  })) : staticFounders;
+
+  const team = dbTeam.length > 0 ? dbTeam.map(m => ({
+    name: m.nom, role: m.role, focus: m.focus, description: m.description, image: m.image_url
+  })) : staticTeam;
 
 
   const strengths = [
