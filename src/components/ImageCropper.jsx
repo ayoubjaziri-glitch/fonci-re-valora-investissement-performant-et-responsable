@@ -150,7 +150,7 @@ export default function ImageCropper({ imageSrc, onCropComplete, onCancel, aspec
 
       <div
         ref={containerRef}
-        className="relative overflow-hidden rounded-lg border-2 border-[#C9A961] cursor-move select-none"
+        className="relative overflow-hidden rounded-lg cursor-move select-none"
         style={{ width: cw, height: ch, maxWidth: '100%' }}
       >
         <canvas
