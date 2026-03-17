@@ -230,112 +230,11 @@ export default function GestionPhotos({ embedded = false }) {
             </TabsTrigger>
           </TabsList>
 
-          {Object.entries(categories).map(([categoryKey, { label }]) => (
-            <TabsContent key={categoryKey} value={categoryKey}>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {groupedImages[categoryKey]?.map((image) => (
-                  <motion.div
-                    key={image.id}
-                    initial={{ opacity: 0, scale: 0.95 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                  >
-                    <Card className="p-6 space-y-4 hover:shadow-lg transition-shadow">
-                      <div className="aspect-video relative rounded-lg overflow-hidden bg-slate-200">
-                        <img
-                          src={image.url}
-                          alt={image.description}
-                          className="w-full h-full object-cover"
-                          onError={(e) => {
-                            e.target.src = 'https://via.placeholder.com/400x300?text=Image+non+disponible';
-                          }}
-                        />
-                      </div>
-
-                      <div>
-                        <h3 className="font-semibold text-[#1A3A52] mb-1">
-                          {image.description}
-                        </h3>
-                        <p className="text-xs text-slate-500 break-all">{image.key}</p>
-                      </div>
-
-                      {editingImage === image.id ? (
-                        <div className="space-y-3">
-                          <div>
-                            <Label>Nouvelle URL</Label>
-                            <Input
-                              value={newUrl}
-                              onChange={(e) => setNewUrl(e.target.value)}
-                              placeholder="https://..."
-                              className="mt-1"
-                            />
-                          </div>
-                          <div className="flex gap-2">
-                            <Button
-                              onClick={() => handleUrlUpdate(image.id)}
-                              className="flex-1 bg-[#C9A961] hover:bg-[#B8994F]"
-                              disabled={!newUrl.trim()}
-                            >
-                              <Save className="w-4 h-4 mr-2" />
-                              Enregistrer
-                            </Button>
-                            <Button
-                              onClick={() => {
-                                setEditingImage(null);
-                                setNewUrl('');
-                              }}
-                              variant="outline"
-                            >
-                              Annuler
-                            </Button>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="space-y-2">
-                          <Button
-                            onClick={() => {
-                              setEditingImage(image.id);
-                              setNewUrl(image.url);
-                            }}
-                            variant="outline"
-                            className="w-full"
-                          >
-                            <Edit2 className="w-4 h-4 mr-2" />
-                            Modifier l'URL
-                          </Button>
-
-                          <div className="relative">
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) handleFileUpload(image.id, file);
-                              }}
-                              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                              disabled={uploading}
-                            />
-                            <Button
-                              className="w-full bg-[#1A3A52] hover:bg-[#2A4A6F]"
-                              disabled={uploading}
-                            >
-                              <Upload className="w-4 h-4 mr-2" />
-                              {uploading ? 'Upload en cours...' : 'Uploader une photo'}
-                            </Button>
-                          </div>
-                        </div>
-                      )}
-                    </Card>
-                  </motion.div>
-                ))}
-
-                {(!groupedImages[categoryKey] || groupedImages[categoryKey].length === 0) && (
-                  <div className="col-span-full text-center py-12 text-slate-500">
-                    Aucune image dans cette catégorie
-                  </div>
-                )}
-              </div>
-            </TabsContent>
-          ))}
+          <CategoryTab categoryKey="hero" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
+          <CategoryTab categoryKey="equipe" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
+          <CategoryTab categoryKey="realisations" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
+          <CategoryTab categoryKey="services" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
+          <CategoryTab categoryKey="autres" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
           <TabsContent value="carte">
             <MapLocationsSection />
           </TabsContent>
