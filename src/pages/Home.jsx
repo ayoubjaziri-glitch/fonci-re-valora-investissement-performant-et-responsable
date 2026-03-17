@@ -48,7 +48,7 @@ export default function Home() {
   };
 
   // Récupérer la première levée active
-  const currentLevy = levees.find(l => l.actif && l.statut === 'Ouverte') || levees.find(l => l.statut === 'Ouverte') || {
+  const currentLevy = levees.find(l => l.actif && (l.statut === 'Ouverte' || l.statut === 'En cours')) || levees.find(l => (l.statut === 'Ouverte' || l.statut === 'En cours')) || {
     nom: 'Notre levée de fonds inaugurale',
     objectif: '250 000 €',
     collecte: '95 000 €',
