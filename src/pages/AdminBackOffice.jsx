@@ -15,6 +15,9 @@ import { Badge } from "@/components/ui/badge";
 import GestionPhotos from './GestionPhotos';
 import GererAcces from './GererAcces';
 import AdminEspaceAssocie from './AdminEspaceAssocie';
+import AdminEquipe from '../components/admin/AdminEquipe';
+import AdminBlog from '../components/admin/AdminBlog';
+import AdminLeveeFonds from '../components/admin/AdminLeveeFonds';
 
 const ADMIN_PASSWORD = 'ValorAdmin2026!';
 
