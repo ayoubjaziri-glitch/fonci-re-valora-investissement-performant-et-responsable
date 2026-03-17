@@ -121,7 +121,7 @@ export default function GestionPhotos({ embedded = false }) {
   const categories = {
     hero: { label: "Images Hero", icon: "🎯" },
     equipe: { label: "Photos Équipe", icon: "👥" },
-    services: { label: "Photos Services", icon: "⚙️" },
+    services: { label: "Durabilité & Services", icon: "🌱" },
     autres: { label: "Autres Photos", icon: "📸" }
   };
 
