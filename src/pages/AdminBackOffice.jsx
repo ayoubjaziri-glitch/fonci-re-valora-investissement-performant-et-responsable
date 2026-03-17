@@ -6,7 +6,7 @@ import {
   Lock, Eye, EyeOff, Settings, Image, Users, BarChart3, Newspaper,
   Building2, Rocket, MapPin, LogOut, Shield, LayoutDashboard,
   FileText, Mail, TrendingUp, Euro, MessageSquare, CheckCircle2,
-  Clock, AlertCircle, ChevronRight, Globe, Phone, Star, Trash2
+  Clock, AlertCircle, ChevronRight, Globe, Phone, Star, Trash2, ImageIcon
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
