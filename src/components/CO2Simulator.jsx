@@ -247,28 +247,47 @@ export default function CO2Simulator() {
               )}
             </div>
 
-            {/* Scénarios rapides */}
-            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
-              <h3 className="font-semibold text-[#1A3A52] mb-3 text-xs">⚡ Scénarios rapides</h3>
-              <div className="space-y-1.5">
-                {scenariosRapides.map((s, i) => (
-                  <button
-                    key={i}
-                    onClick={() => { setDpeAvant(s.av); setDpeApres(s.ap); }}
-                    className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all border ${
-                      dpeAvant === s.av && dpeApres === s.ap
-                        ? 'bg-[#1A3A52] text-white border-[#1A3A52]'
-                        : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-[#C9A961]'
-                    }`}
-                  >
-                    <span className="font-semibold">{s.av} → {s.ap}</span>
-                    <span className={`ml-2 ${dpeAvant === s.av && dpeApres === s.ap ? 'text-white/70' : 'text-slate-400'}`}>
-                      {s.label}
-                    </span>
-                  </button>
-                ))}
+            {/* KPIs compacts */}
+            {isValid && (
+              <div className="space-y-2">
+                <div className="bg-[#1A3A52] rounded-xl p-3 border border-[#1A3A52] text-white flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-[#C9A961]/20 flex-shrink-0">
+                    <TrendingDown className="h-4 w-4 text-[#C9A961]" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-white/70 text-xs">Économie financière</p>
+                    <p className="text-base font-bold leading-tight">{Math.round(calc.cout_economie).toLocaleString('fr-FR')} <span className="text-sm font-normal text-[#C9A961]">€/an</span></p>
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl p-3 border border-slate-200 flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-100 flex-shrink-0">
+                    <Leaf className="h-4 w-4 text-emerald-600" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-slate-500 text-xs">Réduction CO₂</p>
+                    <p className="text-base font-bold text-[#1A3A52] leading-tight">{Math.round(calc.co2_economie).toLocaleString('fr-FR')} <span className="text-sm font-normal text-slate-400">kg/an</span></p>
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl p-3 border border-slate-200 flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-100 flex-shrink-0">
+                    <Zap className="h-4 w-4 text-blue-500" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-slate-500 text-xs">Économie d'énergie</p>
+                    <p className="text-base font-bold text-[#1A3A52] leading-tight">{Math.round(calc.ep_economie / 1000).toLocaleString('fr-FR')} <span className="text-sm font-normal text-slate-400">MWh/an</span></p>
+                  </div>
+                </div>
+                <div className="bg-white rounded-xl p-3 border border-slate-200 flex items-center gap-2">
+                  <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-slate-100 flex-shrink-0">
+                    <Euro className="h-4 w-4 text-[#C9A961]" />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="text-slate-500 text-xs">Coût travaux estimé</p>
+                    <p className="text-base font-bold text-[#1A3A52] leading-tight">{calc.cout_travaux_moy.toLocaleString('fr-FR')} <span className="text-sm font-normal text-slate-400">€</span></p>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </motion.div>
 
           {/* Résultats */}
