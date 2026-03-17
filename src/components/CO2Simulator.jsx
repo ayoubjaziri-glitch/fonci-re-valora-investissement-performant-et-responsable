@@ -119,7 +119,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function CO2Simulator() {
-  const [surface, setSurface] = useState(200);
+  const [surface, setSurface] = useState(300);
   const [dpeAvant, setDpeAvant] = useState('F');
   const [dpeApres, setDpeApres] = useState('C');
 
