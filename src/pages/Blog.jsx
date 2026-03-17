@@ -16,6 +16,18 @@ export default function Blog() {
 
   const articles = [
   {
+    id: 18,
+    title: "Taxe Foncière 2026 : Mode de Calcul, Exonérations et Réductions",
+    slug: "taxe-fonciere-2026-calcul-exonerations-reductions",
+    excerpt: "Propriétaire, savez-vous vraiment comment est calculée votre taxe foncière ? Découvrez les mécanismes de calcul, les exonérations totales et les dégrèvements auxquels vous pouvez prétendre.",
+    category: "Fiscalité",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "7 min",
+    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&q=80",
+    content: ``
+  },
+  {
     id: 17,
     title: "Société Foncière : Comment Créer et Financer un Projet Immobilier ?",
     slug: "societe-fonciere-comment-creer-financer-projet-immobilier",

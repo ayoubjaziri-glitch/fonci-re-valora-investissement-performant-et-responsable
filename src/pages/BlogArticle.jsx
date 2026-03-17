@@ -20,6 +20,134 @@ export default function BlogArticle() {
 
   const articles = [
     {
+      id: 18,
+      title: "Taxe Foncière 2026 : Mode de Calcul, Exonérations et Réductions",
+      slug: "taxe-fonciere-2026-calcul-exonerations-reductions",
+      excerpt: "Propriétaire, savez-vous vraiment comment est calculée votre taxe foncière ? Découvrez les mécanismes de calcul, les exonérations totales et les dégrèvements auxquels vous pouvez prétendre.",
+      category: "Fiscalité",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "7 min",
+      image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&q=80",
+      content: `
+# Taxe Foncière 2026 : Mode de Calcul, Exonérations et Réductions
+
+En tant que propriétaire, la taxe foncière est votre participation directe au financement des services publics de votre commune (écoles, voirie, parcs...). La Foncière Valora vous explique comment elle est calculée et comment vous pouvez, sous conditions, en réduire le montant.
+
+## Qui est concerné par la taxe foncière ?
+
+En tant que particulier, vous devez payer la taxe foncière si vous êtes **propriétaire (ou usufruitier) d'un logement au 1er janvier**. Cette taxe est due même si votre logement est loué.
+
+> **Bon à savoir :** pour les investisseurs en foncière résidentielle, la taxe foncière est une charge déductible des revenus fonciers, ce qui réduit l'assiette imposable.
+
+## Quelles sont les propriétés concernées ?
+
+Pour être soumise à cette taxe, une propriété doit remplir deux critères :
+
+- Être **fixée au sol** (avec impossibilité de la déplacer sans la démolir)
+- Présenter le **caractère de véritable bâtiment**, y compris les aménagements faisant corps avec elle
+
+Les biens immobiliers concernés sont notamment :
+
+- Maison ou appartement
+- Parking
+- Sol des bâtiments et terrains formant une dépendance indispensable d'une construction
+- Bateau utilisé en un point fixe et aménagé pour l'habitation ou le commerce
+- Bâtiment commercial, industriel ou professionnel
+- Installation industrielle ou commerciale (hangar, atelier, cave...)
+- Terrain à usage commercial ou industriel
+
+## Comment est calculée la taxe foncière ?
+
+La taxe foncière sur les propriétés bâties est établie **pour l'année entière**, d'après la situation au 1er janvier de l'année d'imposition.
+
+Le montant est calculé en multipliant deux paramètres :
+
+**1. La valeur locative cadastrale**
+
+Elle correspond à un loyer annuel théorique que le propriétaire pourrait tirer du bien s'il était loué. Cette valeur est actualisée chaque année. Un **abattement forfaitaire de 50 %** est appliqué pour tenir compte des frais de gestion, d'assurance, d'amortissement, d'entretien et de réparation.
+
+**2. Le taux d'imposition**
+
+Voté au sein de chaque collectivité territoriale. Il varie donc significativement d'une commune à l'autre.
+
+> **À savoir :** si en cours d'année vous réalisez des travaux augmentant la valeur du bien, l'augmentation de la valeur locative ne sera prise en compte qu'au **1er janvier de l'année suivante**.
+
+## Les exonérations et réductions possibles
+
+Il existe plusieurs cas où vous pouvez être totalement ou partiellement exonéré. Ces dispositifs dépendent de votre âge, de vos revenus et du type de bien.
+
+### Exonération totale pour les personnes âgées ou handicapées modestes
+
+Vous pouvez être **totalement exonéré** de taxe foncière pour votre habitation principale si vous remplissez les conditions suivantes :
+
+**Conditions relatives à l'occupant :**
+- Titulaires de l'allocation de solidarité aux personnes âgées (ASPA) ou de l'allocation supplémentaire d'invalidité (ASI)
+- Redevables âgés de **plus de 75 ans** au 1er janvier, sous conditions de ressources
+- Titulaires de l'allocation aux adultes handicapés (AAH), sous conditions de ressources
+
+**Condition de ressources :**
+Votre revenu fiscal de référence (RFR) doit être inférieur aux limites fixées par l'article 1417-I du Code général des impôts.
+
+Aucune démarche n'est nécessaire si vous remplissez ces conditions : l'exonération est accordée automatiquement.
+
+> **Attention :** cette exonération ne s'étend pas à la taxe d'enlèvement des ordures ménagères (TEOM), qui reste à la charge du propriétaire.
+
+### Exonération temporaire de 2 ans pour les constructions nouvelles
+
+Certains changements ouvrent droit à une **exonération temporaire de 2 ans** à partir de leur réalisation définitive :
+
+- Constructions nouvelles ou reconstructions
+- Additions de constructions
+- Certains changements d'affectation (conversion d'un bâtiment rural en habitation avec travaux importants, par exemple)
+
+Vous devez adresser une demande d'exonération au centre des impôts **dans les 90 jours** suivant l'achèvement des travaux.
+
+### Exonération temporaire de 3 ans pour les travaux d'économie d'énergie
+
+Certaines collectivités territoriales peuvent, sur délibération, exonérer **totalement ou partiellement** de taxe foncière pendant 3 ans les propriétaires réalisant des **travaux d'économie d'énergie**.
+
+C'est un levier particulièrement intéressant pour les investisseurs qui rénovent des logements vers une meilleure classe DPE, comme le pratique systématiquement la Foncière Valora dans le cadre de ses réhabilitations BBC.
+
+### Dégrèvement d'office de 100 € pour les 65-75 ans
+
+Si vous avez **entre 65 et 75 ans** au 1er janvier et que votre revenu fiscal de référence ne dépasse pas les limites légales, vous bénéficiez automatiquement d'un **dégrèvement de 100 €** sur la taxe foncière de votre habitation principale.
+
+Les personnes hébergées en maison de retraite peuvent également en bénéficier si leur ancienne habitation principale reste libre de toute occupation.
+
+Aucune démarche n'est requise : ce dégrèvement est effectué d'office par l'administration fiscale.
+
+### Plafonnement de la taxe foncière en fonction des revenus
+
+Il existe un mécanisme de **plafonnement** de la taxe foncière sur la résidence principale pour les contribuables dont les revenus n'excèdent pas certains plafonds.
+
+En 2026, votre revenu fiscal de référence 2024 ne doit pas dépasser :
+- **29 815 €** pour la première part de quotient familial
+- Majoré de **6 966 €** pour la première demi-part supplémentaire
+- Et de **5 484 €** à compter de la deuxième demi-part
+
+Ce dispositif permet aux contribuables éligibles de bénéficier d'un dégrèvement sur la cotisation de taxe foncière **supérieure à 50 % de leurs revenus**. La demande doit être adressée au centre des finances publiques, au plus tard avant le **31 décembre de l'année suivante**.
+
+### Dégrèvement pour logements inoccupés
+
+En cas de local inoccupé, un dégrèvement est possible sous trois conditions cumulatives :
+
+1. La vacance est **indépendante de votre volonté**
+2. Elle dure **au moins 3 mois**
+3. Elle affecte **la totalité de l'immeuble** ou une partie susceptible de location séparée
+
+Le dégrèvement est calculé mois par mois, du premier jour au dernier jour de l'inexploitation. Il n'est **pas accordé d'office** : vous devez en faire la demande au centre des Finances publiques, au plus tard le **31 décembre de l'année suivante**.
+
+## Ce que cela change pour un investisseur en foncière
+
+Pour un investisseur détenant des parts dans une structure comme la Foncière Valora, la taxe foncière est une charge opérationnelle intégrée à la gestion des actifs. Elle vient en déduction des revenus fonciers imposables, réduisant ainsi l'assiette taxable.
+
+Combinée au **dispositif Jeanbrun** (amortissement des biens) et à l'**éligibilité PEA-PME**, la structuration fiscale globale permet à la Foncière Valora de maximiser le rendement net pour ses associés, en optimisant chaque poste de charge — y compris la taxe foncière.
+
+*Vous souhaitez en savoir plus sur l'optimisation fiscale de votre patrimoine immobilier ? Contactez notre équipe.*
+      `
+    },
+    {
       id: 17,
       title: "Société Foncière : Comment Créer et Financer un Projet Immobilier ?",
       slug: "societe-fonciere-comment-creer-financer-projet-immobilier",
