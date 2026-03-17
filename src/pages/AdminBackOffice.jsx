@@ -373,7 +373,7 @@ export default function AdminBackOffice() {
           {activeTab === 'equipe' && <AdminEquipe />}
           {activeTab === 'blog' && <AdminBlog />}
           {activeTab === 'levees' && <AdminLeveeFonds />}
-          {activeTab === 'realisations' && <AdminRealisations />}
+          {activeTab === 'realisations' && <AdminRealisationsPlus />}
           {activeTab === 'acces' && (
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
               <GererAcces embedded />
