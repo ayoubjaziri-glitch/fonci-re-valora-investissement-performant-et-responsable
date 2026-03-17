@@ -4,7 +4,9 @@ import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Pencil, Trash2, X, Save, Users, Upload, Loader2 } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, Save, Users, Upload, Loader2, Crop } from 'lucide-react';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import ImageCropper from '../ImageCropper';
 
 const EMPTY = { nom: '', role: '', focus: '', description: '', experience: '', image_url: '', type: 'membre', ordre: 0, actif: true };
 
@@ -13,6 +15,7 @@ export default function AdminEquipe() {
   const [editing, setEditing] = useState(null); // null | 'new' | {id,...}
   const [form, setForm] = useState(EMPTY);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [cropModal, setCropModal] = useState(null); // { src, originalFile }
 
   const { data: membres = [] } = useQuery({
     queryKey: ['membres-equipe'],
@@ -31,12 +34,21 @@ export default function AdminEquipe() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['membres-equipe'] }),
   });
 
-  const handlePhotoUpload = async (e) => {
+  const handlePhotoUpload = (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      setCropModal({ src: event.target.result, originalFile: file });
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCropComplete = async (croppedFile) => {
+    setCropModal(null);
     setUploadingPhoto(true);
     try {
-      const res = await base44.integrations.Core.UploadFile({ file });
+      const res = await base44.integrations.Core.UploadFile({ file: croppedFile });
       setForm({ ...form, image_url: res.file_url });
     } catch (err) {
       console.error('Upload échoué:', err);
@@ -120,6 +132,24 @@ export default function AdminEquipe() {
                   {form.image_url && <img src={form.image_url} alt="preview" className="w-16 h-16 object-cover rounded-lg flex-shrink-0" />}
                 </div>
               </div>
+              {cropModal && (
+                <Dialog open={!!cropModal} onOpenChange={(open) => { if (!open) setCropModal(null); }}>
+                  <DialogContent className="max-w-2xl">
+                    <DialogHeader>
+                      <DialogTitle className="flex items-center gap-2 text-[#1A3A52]">
+                        <Crop className="w-5 h-5 text-[#C9A961]" />
+                        Recadrer la photo du membre
+                      </DialogTitle>
+                    </DialogHeader>
+                    <ImageCropper
+                      imageSrc={cropModal.src}
+                      onCropComplete={handleCropComplete}
+                      onCancel={() => setCropModal(null)}
+                      aspectRatio={1}
+                    />
+                  </DialogContent>
+                </Dialog>
+              )}
               <div>
                 <label className="text-sm font-medium text-slate-700 block mb-1">Description courte</label>
                 <Textarea rows={2} value={form.description} onChange={e => setForm({...form, description: e.target.value})} />

@@ -268,9 +268,9 @@ export default function GestionPhotos({ embedded = false }) {
           <p className="text-slate-600">Modifiez facilement toutes les photos du site sans toucher au code</p>
         </div>}
 
-        <Tabs defaultValue="equipe" className="space-y-6">
-          <TabsList className="grid grid-cols-6 w-full max-w-4xl">
-            {Object.entries(categories).map(([key, { label, icon }]) => (
+        <Tabs defaultValue="hero" className="space-y-6">
+          <TabsList className="grid grid-cols-5 w-full max-w-4xl">
+            {Object.entries(categories).filter(([key]) => key !== 'equipe').map(([key, { label, icon }]) => (
               <TabsTrigger key={key} value={key} className="flex items-center gap-2">
                 <span>{icon}</span>
                 <span className="hidden md:inline">{label}</span>
@@ -283,10 +283,9 @@ export default function GestionPhotos({ embedded = false }) {
           </TabsList>
 
           <CategoryTab categoryKey="hero" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
-          <CategoryTab categoryKey="equipe" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
           <CategoryTab categoryKey="realisations" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
           <CategoryTab categoryKey="services" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
-          <CategoryTab categoryKey="autres" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
+          <CategoryTab categoryKey="autres" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleFileUpload} uploading={uploading} />
           <TabsContent value="carte">
             <MapLocationsSection />
           </TabsContent>
