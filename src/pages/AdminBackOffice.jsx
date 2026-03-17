@@ -299,6 +299,7 @@ export default function AdminBackOffice() {
     levees: 'Levées de Fonds',
     realisations: 'Nos Biens & Réalisations',
     acces: 'Accès Associés',
+    admin: 'Accès Admin',
     kpis: 'KPIs & Métriques',
     docs: 'Documents',
     actu: 'Actualités',
