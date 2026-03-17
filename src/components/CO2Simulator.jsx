@@ -179,30 +179,29 @@ export default function CO2Simulator() {
   ];
 
   return (
-    <section className="py-24 bg-gradient-to-b from-slate-50 to-white">
+    <section className="py-12 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <div className="w-12 h-1 bg-[#C9A961]" />
-            <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">Outil interactif</span>
-            <div className="w-12 h-1 bg-[#C9A961]" />
+          <div className="flex items-center justify-center gap-3 mb-3">
+            <div className="w-8 h-0.5 bg-[#C9A961]" />
+            <span className="text-[#C9A961] font-medium tracking-wider uppercase text-xs">Outil interactif</span>
+            <div className="w-8 h-0.5 bg-[#C9A961]" />
           </div>
-          <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
+          <h2 className="text-2xl md:text-3xl font-serif text-slate-900 mb-2">
             Simulateur d'Impact Énergétique & CO₂
           </h2>
-          <p className="text-slate-600 max-w-2xl mx-auto">
-            Estimez les économies d'énergie et la réduction des émissions CO₂ lors d'une réhabilitation. 
-            Ajustez la surface et les classes DPE pour simuler différents scénarios.
+          <p className="text-slate-500 text-sm max-w-xl mx-auto">
+            Estimez les économies d'énergie et la réduction des émissions CO₂ lors d'une réhabilitation.
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
+        <div className="grid lg:grid-cols-3 gap-6">
           {/* Panneau de contrôle */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
