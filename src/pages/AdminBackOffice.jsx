@@ -249,6 +249,7 @@ const navGroups = [
     items: [
       { id: 'photos', label: 'Photos & Carte', icon: Image },
       { id: 'equipe', label: 'Équipe', icon: Users },
+      { id: 'realisations', label: 'Nos Biens', icon: Building2 },
       { id: 'blog', label: 'Blog & Articles', icon: Newspaper },
       { id: 'levees', label: 'Levées de Fonds', icon: TrendingUp },
     ]
