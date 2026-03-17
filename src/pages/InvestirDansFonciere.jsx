@@ -61,9 +61,25 @@ export default function InvestirDansFonciere() {
       {/* Main Content */}
       <article className="py-16">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
-          
-          {/* Section 1: Définition */}
-          <section id="definition" className="mb-20">
+          <div className="prose prose-lg max-w-none mb-16">
+            <ReactMarkdown
+              components={{
+                h2: ({node, ...props}) => <h2 className="text-4xl font-serif text-[#1A3A52] mb-8 mt-12" {...props} />,
+                h3: ({node, ...props}) => <h3 className="text-2xl font-serif text-[#1A3A52] mb-6 mt-10" {...props} />,
+                p: ({node, ...props}) => <p className="text-lg text-slate-700 leading-relaxed mb-6" {...props} />,
+                ul: ({node, ...props}) => <ul className="space-y-3 mb-8 list-disc list-inside" {...props} />,
+                li: ({node, ...props}) => <li className="text-slate-700" {...props} />,
+                strong: ({node, ...props}) => <strong className="text-[#1A3A52] font-semibold" {...props} />,
+                code: ({node, inline, ...props}) => inline ? 
+                  <code className="bg-[#C9A961]/10 text-[#C9A961] px-2 py-1 rounded" {...props} /> :
+                  <code className="bg-slate-100 p-4 rounded block mb-6" {...props} />,
+              }}
+            >
+              {article.contenu}
+            </ReactMarkdown>
+          </div>
+        </div>
+      </article>
             <h2 className="text-4xl font-serif text-[#1A3A52] mb-8">Qu'est-ce qu'une Foncière Immobilière ?</h2>
             
             <div className="prose prose-lg max-w-none mb-8">
