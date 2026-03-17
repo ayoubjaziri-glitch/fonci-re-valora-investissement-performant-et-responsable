@@ -1489,7 +1489,7 @@ Le PEA-PME est une **enveloppe fiscale** créée en 2014 pour orienter l'épargn
     );
   }
 
-  const relatedArticles = articles.filter(a => a.id !== article.id && a.category === article.category).slice(0, 2);
+  const relatedArticles = allArticles.filter(a => a.id !== article.id && a.category === article.category).slice(0, 2);
 
   const handleShare = (platform) => {
     const url = window.location.href;
