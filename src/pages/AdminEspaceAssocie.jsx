@@ -704,5 +704,3 @@ export default function AdminEspaceAssocie({ defaultTab = 'kpis', embedded = fal
     </div>
   );
 }
-
-// Also fix the embedded content (remove duplicate tabs render)
