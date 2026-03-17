@@ -16,6 +16,18 @@ export default function Blog() {
 
   const articles = [
   {
+    id: 16,
+    title: "0€ de Frais d'Entrée : Pourquoi la Foncière Valora révolutionne l'Investissement Immobilier en 2026",
+    slug: "zero-frais-entree-fonciere-valora-revolutionne-investissement-immobilier-2026",
+    excerpt: "Là où les SCPI amputent votre capital dès le premier jour, la Foncière Valora garantit que 100% de votre apport est injecté dans l'actif. Découvrez le modèle qui redéfinit les standards de l'investissement résidentiel.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "6 min",
+    image: "https://images.unsplash.com/photo-1563986768609-322da13575f3?w=800&q=80",
+    content: ``
+  },
+  {
     id: 1,
     title: "Marché Immobilier 2026 : Opportunités et Perspectives pour les Investisseurs",
     slug: "marche-immobilier-2026-opportunites",
