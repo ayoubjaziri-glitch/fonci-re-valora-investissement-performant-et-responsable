@@ -46,7 +46,7 @@ function KpisSection() {
 
   // Default config structure
   const defaultConfig = {
-    levee_fonds: { objectif: 250000, collecte: 187500, souscripteurs: 12, dateCloture: '31 Mars 2026' },
+    levee_fonds: { titre: 'Série A — Levée de Fonds Inaugurale', description: 'Levée de fonds pour le financement de nos premières acquisitions résidentielles en zones tendues.', objectif: 250000, collecte: 187500, souscripteurs: 12, dateCloture: '31 Mars 2026', ticketMinimum: '10 000 €', typeTitre: 'Actions ordinaires PEA-PME' },
     valorisation: { valeurActuelle: 3200000, evolution: '+8.5%', nombreActions: 32000, valeurAction: 100, plusValueAction: '+8.5%', dateValo: '31 Déc 2025', plusValueTotal: 250000 },
     kpis: [
       { label: 'Valeur du Patrimoine', value: '3 200 000 €', change: '+8,5%', positive: true, detail: 'Gross Asset Value réactualisée' },
