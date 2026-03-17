@@ -59,6 +59,7 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
+      <Route path="/admin" element={<AdminBackOffice />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
