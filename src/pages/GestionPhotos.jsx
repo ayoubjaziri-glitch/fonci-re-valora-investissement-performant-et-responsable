@@ -283,9 +283,8 @@ export default function GestionPhotos({ embedded = false }) {
           </TabsList>
 
           <CategoryTab categoryKey="hero" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
-          <CategoryTab categoryKey="realisations" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
-          <CategoryTab categoryKey="services" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
-          <CategoryTab categoryKey="autres" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleFileUpload} uploading={uploading} />
+           <CategoryTab categoryKey="services" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleUrlUpdate} handleFileUpload={handleFileUpload} uploading={uploading} />
+           <CategoryTab categoryKey="autres" groupedImages={groupedImages} editingImage={editingImage} newUrl={newUrl} setNewUrl={setNewUrl} setEditingImage={setEditingImage} handleUrlUpdate={handleFileUpload} uploading={uploading} />
           <TabsContent value="carte">
             <MapLocationsSection />
           </TabsContent>
