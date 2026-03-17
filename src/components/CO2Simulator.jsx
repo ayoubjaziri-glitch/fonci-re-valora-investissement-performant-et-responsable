@@ -207,24 +207,24 @@ export default function CO2Simulator() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-1 space-y-6"
+            className="lg:col-span-1 space-y-4"
           >
             {/* Surface */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-              <h3 className="font-semibold text-[#1A3A52] mb-5 flex items-center gap-2">
-                <BarChart3 className="h-5 w-5 text-[#C9A961]" /> Paramètres de simulation
+            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 className="font-semibold text-[#1A3A52] mb-4 text-sm flex items-center gap-2">
+                <BarChart3 className="h-4 w-4 text-[#C9A961]" /> Paramètres
               </h3>
 
-              <div className="mb-6">
-                <div className="flex justify-between items-center mb-2">
-                  <label className="text-sm font-semibold text-slate-600">Surface habitable</label>
-                  <span className="text-lg font-bold text-[#1A3A52]">{surface} m²</span>
+              <div className="mb-4">
+                <div className="flex justify-between items-center mb-1.5">
+                  <label className="text-xs font-semibold text-slate-600">Surface habitable</label>
+                  <span className="text-sm font-bold text-[#1A3A52]">{surface} m²</span>
                 </div>
                 <Slider
                   value={[surface]}
                   onValueChange={([v]) => setSurface(v)}
                   min={100} max={1000} step={10}
-                  className="mt-2"
+                  className="mt-1"
                 />
                 <div className="flex justify-between text-xs text-slate-400 mt-1">
                   <span>100 m²</span><span>1 000 m²</span>
@@ -232,15 +232,15 @@ export default function CO2Simulator() {
               </div>
 
               <DpeSelector label="DPE avant travaux" value={dpeAvant} onChange={setDpeAvant} />
-              <div className="my-4 flex items-center gap-2 text-slate-400">
+              <div className="my-3 flex items-center gap-2 text-slate-400">
                 <div className="flex-1 h-px bg-slate-200" />
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-3 w-3" />
                 <div className="flex-1 h-px bg-slate-200" />
               </div>
               <DpeSelector label="DPE après travaux" value={dpeApres} onChange={setDpeApres} />
 
               {!isValid && (
-                <div className="mt-4 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl p-3">
+                <div className="mt-3 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl p-2.5">
                   <Info className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-amber-700">Sélectionnez un DPE après travaux meilleur que le DPE initial.</p>
                 </div>
@@ -248,21 +248,21 @@ export default function CO2Simulator() {
             </div>
 
             {/* Scénarios rapides */}
-            <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-              <h3 className="font-semibold text-[#1A3A52] mb-4 text-sm">⚡ Scénarios rapides</h3>
-              <div className="space-y-2">
+            <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
+              <h3 className="font-semibold text-[#1A3A52] mb-3 text-xs">⚡ Scénarios rapides</h3>
+              <div className="space-y-1.5">
                 {scenariosRapides.map((s, i) => (
                   <button
                     key={i}
                     onClick={() => { setDpeAvant(s.av); setDpeApres(s.ap); }}
-                    className={`w-full text-left px-4 py-3 rounded-xl text-sm transition-all border ${
+                    className={`w-full text-left px-3 py-2 rounded-xl text-xs transition-all border ${
                       dpeAvant === s.av && dpeApres === s.ap
                         ? 'bg-[#1A3A52] text-white border-[#1A3A52]'
                         : 'bg-slate-50 text-slate-700 border-slate-200 hover:border-[#C9A961]'
                     }`}
                   >
                     <span className="font-semibold">{s.av} → {s.ap}</span>
-                    <span className={`text-xs ml-2 ${dpeAvant === s.av && dpeApres === s.ap ? 'text-white/70' : 'text-slate-400'}`}>
+                    <span className={`ml-2 ${dpeAvant === s.av && dpeApres === s.ap ? 'text-white/70' : 'text-slate-400'}`}>
                       {s.label}
                     </span>
                   </button>
