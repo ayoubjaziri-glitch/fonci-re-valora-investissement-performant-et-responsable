@@ -92,6 +92,25 @@ export default function AdminRealisationsPlus() {
     }
   };
 
+  const handleGeocodeAddress = async (address) => {
+    if (!address.trim()) return;
+    setGeocoding(true);
+    setGeoError('');
+    try {
+      const response = await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json`);
+      const data = await response.json();
+      if (data && data[0]) {
+        setForm({ ...form, lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) });
+      } else {
+        setGeoError('Adresse non trouvée. Essayez une localisation plus précise.');
+      }
+    } catch (err) {
+      setGeoError('Erreur lors de la géocodification');
+    } finally {
+      setGeocoding(false);
+    }
+  };
+
   const openEdit = (bien) => {
     setForm(bien);
     setEditId(bien.id);
