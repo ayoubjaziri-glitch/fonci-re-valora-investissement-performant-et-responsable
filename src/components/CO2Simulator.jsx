@@ -2,7 +2,8 @@ import React, { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { Slider } from "@/components/ui/slider";
 import { Zap, Leaf, Thermometer, TrendingDown, BarChart3, ArrowRight, Info } from 'lucide-react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, RadialBarChart, RadialBar, Cell } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell } from 'recharts';
+import { Euro } from 'lucide-react';
 
 // DPE data: kWhEP/m²/an (énergie primaire) et kgCO2eq/m²/an
 const DPE_DATA = {
