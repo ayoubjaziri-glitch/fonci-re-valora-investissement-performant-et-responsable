@@ -60,7 +60,7 @@ export default function Contact() {
     try {
       await base44.integrations.Core.SendEmail({
         to: 'Ayoubcontact33@gmail.com',
-        subject: `📩 Nouvelle demande - ${typeLabel} | La Foncière Patrimoniale`,
+        subject: `📩 Nouvelle demande - ${typeLabel} | La Foncière Valora`,
         body: `<!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
@@ -72,7 +72,7 @@ export default function Contact() {
         <!-- Header -->
         <tr>
           <td style="background:#1A3A52;padding:32px 40px;text-align:center;">
-            <h1 style="color:#C9A961;font-size:22px;margin:0;font-weight:bold;letter-spacing:1px;">LA FONCIÈRE PATRIMONIALE</h1>
+            <h1 style="color:#C9A961;font-size:22px;margin:0;font-weight:bold;letter-spacing:1px;">LA FONCIÈRE VALORA</h1>
             <p style="color:rgba(255,255,255,0.6);font-size:13px;margin:8px 0 0;">Nouvelle demande de contact reçue</p>
           </td>
         </tr>
@@ -130,7 +130,7 @@ export default function Contact() {
         <!-- CTA Répondre -->
         <tr>
           <td style="padding:28px 40px;text-align:center;">
-            <a href="mailto:${formData.email}?subject=Re: ${typeLabel} - La Foncière Patrimoniale" 
+            <a href="mailto:${formData.email}?subject=Re: ${typeLabel} - La Foncière Valora" 
                style="background:#C9A961;color:#1A3A52;font-weight:bold;font-size:14px;padding:14px 32px;border-radius:8px;text-decoration:none;display:inline-block;">
               ↩ Répondre à ${formData.firstName}
             </a>
@@ -141,7 +141,7 @@ export default function Contact() {
         <tr>
           <td style="background:#f4f4f4;padding:20px 40px;text-align:center;border-top:1px solid #e0e0e0;">
             <p style="color:#aaa;font-size:12px;margin:0;">Reçu le ${dateStr} via lafoncierepatrimoniale.com</p>
-            <p style="color:#aaa;font-size:11px;margin:6px 0 0;">16 Rue de la Laure, 03200 Vichy — La Foncière Patrimoniale</p>
+            <p style="color:#aaa;font-size:11px;margin:6px 0 0;">16 Rue de la Laure, 03200 Vichy — La Foncière Valora</p>
           </td>
         </tr>
 

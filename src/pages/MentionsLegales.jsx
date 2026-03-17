@@ -43,7 +43,7 @@ export default function MentionsLegales() {
           <Section number="1" title="Identification de l'éditeur">
             <p>Le présent site internet, accessible à l'adresse <strong>www.lafoncierepatrimoniale.com</strong>, est édité par :</p>
             <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 text-sm space-y-1.5">
-              <p><strong>Dénomination sociale :</strong> La Foncière Patrimoniale</p>
+              <p><strong>Dénomination sociale :</strong> La Foncière Valora</p>
               <p><strong>Forme juridique :</strong> Société par Actions Simplifiée (SAS)</p>
               <p><strong>Siège social :</strong> 16 Rue de la Laure, 03200 Vichy, France</p>
               <p><strong>Groupe :</strong> Auvergne et Patrimoine — fondé en 2008</p>
@@ -53,7 +53,7 @@ export default function MentionsLegales() {
           </Section>
 
           <Section number="2" title="Directeur de la publication">
-            <p>Le directeur de la publication est <strong>Monsieur Ayoub Jaziri</strong>, en sa qualité de cofondateur et dirigeant de La Foncière Patrimoniale, responsable éditorial au sens de l'article 6-III-1° de la LCEN.</p>
+            <p>Le directeur de la publication est <strong>Monsieur Ayoub Jaziri</strong>, en sa qualité de cofondateur et dirigeant de La Foncière Valora, responsable éditorial au sens de l'article 6-III-1° de la LCEN.</p>
           </Section>
 
           <Section number="3" title="Hébergement du site">
@@ -66,13 +66,13 @@ export default function MentionsLegales() {
 
           <Section number="4" title="Propriété intellectuelle et droits d'auteur">
             <p>
-              L'ensemble des éléments constituant ce site internet — notamment, mais non limitativement, les textes, articles, études, photographies, illustrations, logos, marques, dénominations sociales, données, bases de données, logiciels, architectures et tout autre contenu — sont la propriété exclusive de La Foncière Patrimoniale ou font l'objet d'une autorisation d'utilisation accordée à cette dernière.
+              L'ensemble des éléments constituant ce site internet — notamment, mais non limitativement, les textes, articles, études, photographies, illustrations, logos, marques, dénominations sociales, données, bases de données, logiciels, architectures et tout autre contenu — sont la propriété exclusive de La Foncière Valora ou font l'objet d'une autorisation d'utilisation accordée à cette dernière.
             </p>
             <p>
               Ces éléments sont protégés par les dispositions du Code de la propriété intellectuelle et, notamment, par le droit d'auteur (articles L. 111-1 et suivants), le droit des marques (articles L. 711-1 et suivants) et le droit sui generis sur les bases de données (articles L. 341-1 et suivants).
             </p>
             <p>
-              Toute reproduction, représentation, modification, adaptation, traduction, extraction, réutilisation, totale ou partielle, par quelque procédé que ce soit, sans l'autorisation préalable et écrite de La Foncière Patrimoniale, est strictement interdite et constituerait une contrefaçon sanctionnée pénalement et civilement.
+              Toute reproduction, représentation, modification, adaptation, traduction, extraction, réutilisation, totale ou partielle, par quelque procédé que ce soit, sans l'autorisation préalable et écrite de La Foncière Valora, est strictement interdite et constituerait une contrefaçon sanctionnée pénalement et civilement.
             </p>
           </Section>
 
@@ -96,19 +96,19 @@ export default function MentionsLegales() {
 
           <Section number="6" title="Limitation de responsabilité">
             <p>
-              La Foncière Patrimoniale s'efforce d'assurer l'exactitude, la complétude et la mise à jour régulière des informations diffusées sur ce site. Toutefois, elle ne saurait garantir l'exhaustivité ou la parfaite exactitude des informations publiées et se réserve le droit de les modifier à tout moment, sans préavis et sans engagement.
+              La Foncière Valora s'efforce d'assurer l'exactitude, la complétude et la mise à jour régulière des informations diffusées sur ce site. Toutefois, elle ne saurait garantir l'exhaustivité ou la parfaite exactitude des informations publiées et se réserve le droit de les modifier à tout moment, sans préavis et sans engagement.
             </p>
             <p>
-              La responsabilité de La Foncière Patrimoniale ne saurait être engagée en cas de dommages directs ou indirects résultant de l'utilisation du site, d'une indisponibilité temporaire du service, ou de la présence de virus ou d'éléments malveillants sur les sites tiers vers lesquels des liens hypertextes pourraient être établis.
+              La responsabilité de La Foncière Valora ne saurait être engagée en cas de dommages directs ou indirects résultant de l'utilisation du site, d'une indisponibilité temporaire du service, ou de la présence de virus ou d'éléments malveillants sur les sites tiers vers lesquels des liens hypertextes pourraient être établis.
             </p>
           </Section>
 
           <Section number="7" title="Liens hypertextes">
             <p>
-              Ce site peut contenir des liens vers des sites internet tiers. La Foncière Patrimoniale n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu, à leur disponibilité ou à leurs pratiques en matière de protection des données personnelles.
+              Ce site peut contenir des liens vers des sites internet tiers. La Foncière Valora n'exerce aucun contrôle sur ces sites et décline toute responsabilité quant à leur contenu, à leur disponibilité ou à leurs pratiques en matière de protection des données personnelles.
             </p>
             <p>
-              La création de liens hypertextes pointant vers ce site est soumise à l'accord préalable et écrit de La Foncière Patrimoniale.
+              La création de liens hypertextes pointant vers ce site est soumise à l'accord préalable et écrit de La Foncière Valora.
             </p>
           </Section>
 
@@ -128,7 +128,7 @@ export default function MentionsLegales() {
           </Section>
 
           <div className="pt-4 text-sm text-slate-400 border-t border-slate-100">
-            Dernière mise à jour : 6 mars 2026 — La Foncière Patrimoniale © 2026. Tous droits réservés.
+            Dernière mise à jour : 6 mars 2026 — La Foncière Valora © 2026. Tous droits réservés.
           </div>
         </div>
       </section>

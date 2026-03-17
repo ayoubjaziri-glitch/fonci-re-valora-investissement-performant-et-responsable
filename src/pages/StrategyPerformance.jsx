@@ -75,7 +75,7 @@ export default function StrategyPerformance() {
 
   },
   {
-    title: "La Foncière Patrimoniale",
+    title: "La Foncière Valora",
     highlight: true,
     items: [
     { label: "Frais d'entrée", value: "0 €", positive: true },

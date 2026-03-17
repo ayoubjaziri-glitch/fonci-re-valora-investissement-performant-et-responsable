@@ -51,7 +51,7 @@ export default function Home() {
   const services = [
   {
     title: "Souscription au capital",
-    description: "La Foncière Patrimoniale fonctionne selon un modèle associant des opérateurs aux projets immobiliers développés par la société. Ces partenaires, en lien avec leur compétence métier, interviennent dans la structuration, la réalisation ou le suivi des opérations. La valeur créée par leur contribution s'inscrit dans une logique de partage organisée au sein de la société, dans le respect du cadre statutaire et de la gouvernance définie.",
+    description: "La Foncière Valora fonctionne selon un modèle associant des opérateurs aux projets immobiliers développés par la société. Ces partenaires, en lien avec leur compétence métier, interviennent dans la structuration, la réalisation ou le suivi des opérations. La valeur créée par leur contribution s'inscrit dans une logique de partage organisée au sein de la société, dans le respect du cadre statutaire et de la gouvernance définie.",
     imageKey: "service_souscription",
     icon: Key
   },
@@ -93,7 +93,7 @@ export default function Home() {
     role: "Chef d'entreprise — Associé depuis 2024"
   },
   {
-    text: "J'ai cherché pendant longtemps un véhicule d'investissement immobilier sans les contraintes de la gestion directe. La Foncière Patrimoniale correspond exactement à ce que je cherchais.",
+    text: "J'ai cherché pendant longtemps un véhicule d'investissement immobilier sans les contraintes de la gestion directe. La Foncière Valora correspond exactement à ce que je cherchais.",
     author: "Isabelle R.",
     role: "Médecin libéral — Associée depuis 2025"
   },

@@ -41,7 +41,7 @@ export default function PolitiqueConfidentialite() {
         <div className="max-w-3xl mx-auto px-6 lg:px-8">
           <div className="bg-white rounded-xl border border-[#C9A961]/30 p-6 shadow-sm">
             <p className="text-slate-700 leading-relaxed text-sm">
-              La Foncière Patrimoniale, en sa qualité de <strong>responsable de traitement</strong> au sens de l'article 4(7) du RGPD, attache une importance fondamentale à la protection de la vie privée et des données à caractère personnel de toute personne avec laquelle elle est en relation. La présente politique a pour objet d'informer de manière transparente les personnes concernées sur les modalités de collecte, de traitement, de conservation et de protection de leurs données personnelles.
+              La Foncière Valora, en sa qualité de <strong>responsable de traitement</strong> au sens de l'article 4(7) du RGPD, attache une importance fondamentale à la protection de la vie privée et des données à caractère personnel de toute personne avec laquelle elle est en relation. La présente politique a pour objet d'informer de manière transparente les personnes concernées sur les modalités de collecte, de traitement, de conservation et de protection de leurs données personnelles.
             </p>
           </div>
         </div>
@@ -53,7 +53,7 @@ export default function PolitiqueConfidentialite() {
 
           <Section number="1" title="Identité et coordonnées du responsable de traitement">
             <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 text-sm space-y-1.5">
-              <p><strong>Responsable de traitement :</strong> La Foncière Patrimoniale (SAS)</p>
+              <p><strong>Responsable de traitement :</strong> La Foncière Valora (SAS)</p>
               <p><strong>Siège social :</strong> 16 Rue de la Laure, 03200 Vichy, France</p>
               <p><strong>Représentant légal :</strong> Monsieur Ayoub Jaziri, Cofondateur</p>
               <p><strong>Contact :</strong> <a href="mailto:ayoubjaziri@gmail.com" className="text-[#C9A961] hover:underline">ayoubjaziri@gmail.com</a></p>
@@ -62,7 +62,7 @@ export default function PolitiqueConfidentialite() {
           </Section>
 
           <Section number="2" title="Catégories de données collectées">
-            <p>Dans le cadre de ses activités, La Foncière Patrimoniale est susceptible de collecter et traiter les catégories de données suivantes :</p>
+            <p>Dans le cadre de ses activités, La Foncière Valora est susceptible de collecter et traiter les catégories de données suivantes :</p>
             <div className="space-y-3">
               {[
                 { label: "Données d'identification", detail: "Nom, prénom, civilité" },
@@ -76,7 +76,7 @@ export default function PolitiqueConfidentialite() {
                 </div>
               ))}
             </div>
-            <p className="text-sm italic">La Foncière Patrimoniale ne collecte aucune donnée sensible au sens de l'article 9 du RGPD (données de santé, origines ethniques, convictions religieuses, etc.).</p>
+            <p className="text-sm italic">La Foncière Valora ne collecte aucune donnée sensible au sens de l'article 9 du RGPD (données de santé, origines ethniques, convictions religieuses, etc.).</p>
           </Section>
 
           <Section number="3" title="Finalités et bases légales des traitements">
@@ -108,7 +108,7 @@ export default function PolitiqueConfidentialite() {
           </Section>
 
           <Section number="4" title="Destinataires des données">
-            <p>Les données à caractère personnel collectées sont destinées exclusivement aux membres habilités de l'équipe interne de La Foncière Patrimoniale ayant besoin d'y accéder dans le cadre de leurs fonctions.</p>
+            <p>Les données à caractère personnel collectées sont destinées exclusivement aux membres habilités de l'équipe interne de La Foncière Valora ayant besoin d'y accéder dans le cadre de leurs fonctions.</p>
             <p>Elles ne font l'objet d'aucune cession, vente ou communication à des tiers à des fins commerciales. Elles peuvent cependant être communiquées, dans le strict respect du cadre légal, aux catégories de destinataires suivantes :</p>
             <ul className="list-disc list-inside space-y-1 pl-2 text-sm">
               <li>Prestataires techniques d'hébergement et de maintenance informatique (sous-traitants au sens du RGPD) ;</li>
@@ -166,14 +166,14 @@ export default function PolitiqueConfidentialite() {
           </Section>
 
           <Section number="7" title="Sécurité des données">
-            <p>La Foncière Patrimoniale met en œuvre des mesures techniques et organisationnelles appropriées et proportionnées aux risques identifiés, afin de garantir la confidentialité, l'intégrité et la disponibilité des données à caractère personnel, notamment :</p>
+            <p>La Foncière Valora met en œuvre des mesures techniques et organisationnelles appropriées et proportionnées aux risques identifiés, afin de garantir la confidentialité, l'intégrité et la disponibilité des données à caractère personnel, notamment :</p>
             <ul className="list-disc list-inside space-y-1 pl-2 text-sm">
               <li>Chiffrement des données en transit (protocole TLS/HTTPS) ;</li>
               <li>Accès restreint aux données sur la base du principe du moindre privilège ;</li>
               <li>Hébergement sécurisé chez un prestataire certifié ;</li>
               <li>Procédures internes de gestion des incidents de sécurité.</li>
             </ul>
-            <p className="text-sm">En cas de violation de données susceptible d'engendrer un risque élevé pour vos droits et libertés, La Foncière Patrimoniale s'engage à vous en informer dans les meilleurs délais, conformément à l'article 34 du RGPD.</p>
+            <p className="text-sm">En cas de violation de données susceptible d'engendrer un risque élevé pour vos droits et libertés, La Foncière Valora s'engage à vous en informer dans les meilleurs délais, conformément à l'article 34 du RGPD.</p>
           </Section>
 
           <Section number="8" title="Gestion des cookies">
@@ -183,11 +183,11 @@ export default function PolitiqueConfidentialite() {
           </Section>
 
           <Section number="9" title="Transferts de données hors Union européenne">
-            <p>Les données à caractère personnel collectées sont traitées et stockées au sein de l'Union européenne. En cas de transfert vers un pays tiers, La Foncière Patrimoniale s'assure que des garanties appropriées sont mises en place (clauses contractuelles types de la Commission européenne, décision d'adéquation, etc.), conformément aux articles 44 à 49 du RGPD.</p>
+            <p>Les données à caractère personnel collectées sont traitées et stockées au sein de l'Union européenne. En cas de transfert vers un pays tiers, La Foncière Valora s'assure que des garanties appropriées sont mises en place (clauses contractuelles types de la Commission européenne, décision d'adéquation, etc.), conformément aux articles 44 à 49 du RGPD.</p>
           </Section>
 
           <Section number="10" title="Droit d'introduire une réclamation auprès de la CNIL">
-            <p>Si vous estimez que le traitement de vos données personnelles par La Foncière Patrimoniale n'est pas conforme à la réglementation applicable, vous disposez du droit d'introduire une réclamation auprès de l'autorité de contrôle compétente :</p>
+            <p>Si vous estimez que le traitement de vos données personnelles par La Foncière Valora n'est pas conforme à la réglementation applicable, vous disposez du droit d'introduire une réclamation auprès de l'autorité de contrôle compétente :</p>
             <div className="bg-slate-50 rounded-xl p-5 border border-slate-200 text-sm space-y-1.5">
               <p><strong>Commission Nationale de l'Informatique et des Libertés (CNIL)</strong></p>
               <p>3 Place de Fontenoy – TSA 80715 – 75334 Paris Cedex 07</p>
@@ -202,7 +202,7 @@ export default function PolitiqueConfidentialite() {
           </Section>
 
           <div className="pt-4 text-sm text-slate-400 border-t border-slate-100">
-            Dernière mise à jour : 6 mars 2026 — La Foncière Patrimoniale © 2026. Tous droits réservés.
+            Dernière mise à jour : 6 mars 2026 — La Foncière Valora © 2026. Tous droits réservés.
           </div>
         </div>
       </section>

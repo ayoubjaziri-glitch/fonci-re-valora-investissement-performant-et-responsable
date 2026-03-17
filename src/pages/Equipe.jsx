@@ -385,7 +385,7 @@ export default function Equipe() {
             <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Trajectoire de développement
 
             </h2>
-            <p className="text-slate-600">La Foncière Patrimoniale — 5 ans de croissance</p>
+            <p className="text-slate-600">La Foncière Valora — 5 ans de croissance</p>
           </motion.div>
 
           <div className="relative">
