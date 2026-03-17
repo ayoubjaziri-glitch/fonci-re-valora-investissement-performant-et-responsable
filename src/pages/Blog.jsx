@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
-import { 
-  Calendar, User, ArrowRight, Search, TrendingUp, 
+import {
+  Calendar, User, ArrowRight, Search, TrendingUp,
   Building2, Euro, Target, Briefcase, Award, FileText,
-  ChevronRight, Clock, Tag
-} from 'lucide-react';
+  ChevronRight, Clock, Tag } from
+'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -15,17 +15,17 @@ export default function Blog() {
   const [selectedCategory, setSelectedCategory] = useState('tous');
 
   const articles = [
-    {
-      id: 1,
-      title: "Marché Immobilier 2026 : Opportunités et Perspectives pour les Investisseurs",
-      slug: "marche-immobilier-2026-opportunites",
-      excerpt: "Analyse approfondie du marché immobilier français en 2026, tendances des prix, zones à fort potentiel et stratégies d'investissement.",
-      category: "Marché",
-      author: "Ayoub Jaziri",
-      date: "20 Février 2026",
-      readTime: "8 min",
-      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
-      content: `
+  {
+    id: 1,
+    title: "Marché Immobilier 2026 : Opportunités et Perspectives pour les Investisseurs",
+    slug: "marche-immobilier-2026-opportunites",
+    excerpt: "Analyse approfondie du marché immobilier français en 2026, tendances des prix, zones à fort potentiel et stratégies d'investissement.",
+    category: "Marché",
+    author: "Ayoub Jaziri",
+    date: "20 Février 2026",
+    readTime: "8 min",
+    image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+    content: `
 # Marché Immobilier 2026 : Opportunités et Perspectives pour les Investisseurs
 
 Le marché immobilier français connaît en 2026 une transformation profonde, portée par la baisse progressive des taux d'intérêt et le retour de la confiance des ménages. Pour les investisseurs avisés, c'est le moment idéal pour se positionner sur des actifs à fort potentiel de valorisation.
@@ -82,18 +82,18 @@ Pour les investisseurs, le message est clair : **2026 est une année charnière*
 
 *Vous souhaitez investir dans l'immobilier résidentiel avec une approche professionnelle et structurée ? Découvrez notre stratégie d'investissement.*
       `
-    },
-    {
-      id: 2,
-      title: "Foncière Immobilière : Comprendre ce Véhicule d'Investissement Structuré",
-      slug: "fonciere-immobiliere-vehicule-investissement",
-      excerpt: "Guide complet sur les foncières immobilières, leur fonctionnement, leurs avantages fiscaux et comment elles créent de la valeur pour leurs associés.",
-      category: "Investissement",
-      author: "La Foncière Valora",
-      date: "15 Février 2026",
-      readTime: "10 min",
-      image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
-      content: `
+  },
+  {
+    id: 2,
+    title: "Foncière Immobilière : Comprendre ce Véhicule d'Investissement Structuré",
+    slug: "fonciere-immobiliere-vehicule-investissement",
+    excerpt: "Guide complet sur les foncières immobilières, leur fonctionnement, leurs avantages fiscaux et comment elles créent de la valeur pour leurs associés.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "15 Février 2026",
+    readTime: "10 min",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
+    content: `
 # Foncière Immobilière : Comprendre ce Véhicule d'Investissement Structuré
 
 Une foncière immobilière est une société dédiée à l'acquisition, la gestion et la valorisation d'actifs immobiliers. Contrairement à l'investissement en direct, elle offre une approche professionnelle, mutualisée et optimisée fiscalement.
@@ -218,18 +218,18 @@ Les foncières immobilières offrent une alternative performante à l'investisse
 
 *Intéressé par notre approche ? Contactez-nous pour échanger sur votre projet d'investissement.*
       `
-    },
-    {
-      id: 3,
-      title: "Carried Interest et Alignement des Intérêts : La Clé d'une Foncière Performante",
-      slug: "carried-interest-alignement-interets",
-      excerpt: "Découvrez comment le mécanisme du carried interest aligne parfaitement les intérêts des gérants et des investisseurs dans une foncière immobilière.",
-      category: "Gouvernance",
-      author: "Ayoub Jaziri",
-      date: "10 Février 2026",
-      readTime: "7 min",
-      image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
-      content: `
+  },
+  {
+    id: 3,
+    title: "Carried Interest et Alignement des Intérêts : La Clé d'une Foncière Performante",
+    slug: "carried-interest-alignement-interets",
+    excerpt: "Découvrez comment le mécanisme du carried interest aligne parfaitement les intérêts des gérants et des investisseurs dans une foncière immobilière.",
+    category: "Gouvernance",
+    author: "Ayoub Jaziri",
+    date: "10 Février 2026",
+    readTime: "7 min",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80",
+    content: `
 # Carried Interest et Alignement des Intérêts : La Clé d'une Foncière Performante
 
 Dans le monde de l'investissement immobilier structuré, le **carried interest** (ou "intéressement à la performance") est un mécanisme fondamental qui garantit l'alignement parfait entre les intérêts des gérants et ceux des investisseurs.
@@ -353,18 +353,18 @@ Chez **La Foncière Valora**, nous sommes convaincus que la performance durable 
 
 *Questions sur notre modèle de gouvernance ? Contactez-nous pour un échange personnalisé.*
       `
-    },
-    {
-      id: 4,
-      title: "Réhabilitation BBC : Transformer les Passoires Thermiques en Actifs Performants",
-      slug: "rehabilitation-bbc-passoires-thermiques",
-      excerpt: "Guide pratique de la réhabilitation Bâtiment Basse Consommation : techniques, coûts, rentabilité et impact ESG.",
-      category: "Rénovation",
-      author: "La Foncière Valora",
-      date: "5 Février 2026",
-      readTime: "9 min",
-      image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
-      content: `
+  },
+  {
+    id: 4,
+    title: "Réhabilitation BBC : Transformer les Passoires Thermiques en Actifs Performants",
+    slug: "rehabilitation-bbc-passoires-thermiques",
+    excerpt: "Guide pratique de la réhabilitation Bâtiment Basse Consommation : techniques, coûts, rentabilité et impact ESG.",
+    category: "Rénovation",
+    author: "La Foncière Valora",
+    date: "5 Février 2026",
+    readTime: "9 min",
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    content: `
 # Réhabilitation BBC : Transformer les Passoires Thermiques en Actifs Performants
 
 La rénovation énergétique n'est plus une option : c'est une **obligation réglementaire** et une **opportunité d'investissement** majeure. Découvrez comment transformer des passoires thermiques (DPE F-G) en actifs performants (DPE B-C).
@@ -540,18 +540,18 @@ C'est cette expertise qui fait de **La Foncière Valora** un acteur de référen
 
 *Découvrez nos réalisations et notre approche en détail.*
       `
-    },
-    {
-      id: 5,
-      title: "PEA-PME et Immobilier : Optimiser sa Fiscalité en Investissant dans une Foncière",
-      slug: "pea-pme-immobilier-fiscalite",
-      excerpt: "Comment investir dans l'immobilier via un PEA-PME et bénéficier d'une fiscalité ultra-avantageuse tout en diversifiant son patrimoine.",
-      category: "Fiscalité",
-      author: "La Foncière Valora",
-      date: "1 Février 2026",
-      readTime: "6 min",
-      image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
-      content: `
+  },
+  {
+    id: 5,
+    title: "PEA-PME et Immobilier : Optimiser sa Fiscalité en Investissant dans une Foncière",
+    slug: "pea-pme-immobilier-fiscalite",
+    excerpt: "Comment investir dans l'immobilier via un PEA-PME et bénéficier d'une fiscalité ultra-avantageuse tout en diversifiant son patrimoine.",
+    category: "Fiscalité",
+    author: "La Foncière Valora",
+    date: "1 Février 2026",
+    readTime: "6 min",
+    image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
+    content: `
 # PEA-PME et Immobilier : Optimiser sa Fiscalité en Investissant dans une Foncière
 
 Le PEA-PME (Plan d'Épargne en Actions destiné aux PME) est un outil fiscal méconnu qui permet d'investir dans des foncières patrimoniales tout en bénéficiant d'une **exonération totale d'impôt** après 5 ans de détention.
@@ -695,22 +695,22 @@ Pour les investisseurs avisés, c'est une stratégie patrimoniale de premier ord
 
 *Souhaitez-vous en savoir plus sur notre éligibilité PEA-PME ? Contactez-nous.*
       `
-    }
-  ];
+  }];
+
 
   const categories = [
-    { id: 'tous', label: 'Tous les articles' },
-    { id: 'Marché', label: 'Marché' },
-    { id: 'Investissement', label: 'Investissement' },
-    { id: 'Gouvernance', label: 'Gouvernance' },
-    { id: 'Rénovation', label: 'Rénovation' },
-    { id: 'Fiscalité', label: 'Fiscalité' }
-  ];
+  { id: 'tous', label: 'Tous les articles' },
+  { id: 'Marché', label: 'Marché' },
+  { id: 'Investissement', label: 'Investissement' },
+  { id: 'Gouvernance', label: 'Gouvernance' },
+  { id: 'Rénovation', label: 'Rénovation' },
+  { id: 'Fiscalité', label: 'Fiscalité' }];
 
-  const filteredArticles = articles.filter(article => {
+
+  const filteredArticles = articles.filter((article) => {
     const matchesCategory = selectedCategory === 'tous' || article.category === selectedCategory;
     const matchesSearch = article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
+    article.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
@@ -786,8 +786,8 @@ Pour les investisseurs avisés, c'est une stratégie patrimoniale de premier ord
             <div className="bg-slate-50 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 group">
               <div className="grid md:grid-cols-2 gap-0">
                 <div className="relative h-80 md:h-auto overflow-hidden">
-                  <img 
-                    src={featuredArticle.image} 
+                  <img
+                    src={featuredArticle.image}
                     alt={featuredArticle.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-6 left-6">
@@ -840,10 +840,10 @@ Pour les investisseurs avisés, c'est une stratégie patrimoniale de premier ord
               <Link to={createPageUrl(`BlogArticle?slug=${article.slug}`)}>
                 <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 h-full flex flex-col group">
                   <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={article.image} 
-                      alt={article.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <img
+                    src={article.image}
+                    alt={article.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                     <div className="absolute top-4 left-4">
                       <span className="bg-white/90 backdrop-blur-sm text-[#1A3A52] px-3 py-1 rounded-full text-xs font-semibold">
                         {article.category}
@@ -900,13 +900,13 @@ Pour les investisseurs avisés, c'est une stratégie patrimoniale de premier ord
               </Button>
             </Link>
             <Link to={createPageUrl("Contact")}>
-              <Button variant="outline" className="border-white text-white hover:bg-white hover:text-[#1A3A52] font-semibold px-8">
+              <Button variant="outline" className="bg-background text-slate-900 px-8 py-2 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border shadow-sm h-9 border-white hover:bg-white hover:text-[#1A3A52]">
                 Nous Contacter
               </Button>
             </Link>
           </div>
         </motion.div>
       </div>
-    </div>
-  );
+    </div>);
+
 }
