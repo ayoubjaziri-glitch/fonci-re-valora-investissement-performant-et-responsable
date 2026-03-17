@@ -208,7 +208,13 @@ export default function GestionPhotos({ embedded = false }) {
     );
   }
 
-  const inner = (
+  return (
+    <div className={embedded ? '' : 'min-h-screen bg-slate-50 py-12'}>
+      <div className={embedded ? '' : 'max-w-7xl mx-auto px-6 lg:px-8'}>
+        {!embedded && <div className="mb-8">
+          <h1 className="text-3xl font-serif text-[#1A3A52] mb-2">Gestion des Photos du Site</h1>
+          <p className="text-slate-600">Modifiez facilement toutes les photos du site sans toucher au code</p>
+        </div>}
 
         <Tabs defaultValue="equipe" className="space-y-6">
           <TabsList className="grid grid-cols-6 w-full max-w-4xl">
