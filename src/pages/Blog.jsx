@@ -18,7 +18,7 @@ export default function Blog() {
 
   const { data: articlesDB = [] } = useQuery({
     queryKey: ['blog-articles'],
-    queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 500),
+    queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 100),
     initialData: []
   });
 

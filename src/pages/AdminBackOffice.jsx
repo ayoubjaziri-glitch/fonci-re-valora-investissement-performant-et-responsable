@@ -247,6 +247,7 @@ const navGroups = [
   {
     label: 'Contenu du Site',
     items: [
+      { id: 'photos', label: 'Photos & Carte', icon: Image },
       { id: 'equipe', label: 'Équipe', icon: Users },
       { id: 'realisations', label: 'Nos Biens', icon: Building2 },
       { id: 'blog', label: 'Blog & Articles', icon: Newspaper },
@@ -289,6 +290,7 @@ export default function AdminBackOffice() {
   const tabTitles = {
     dashboard: 'Dashboard',
     contacts: 'Demandes de Contact',
+    photos: 'Photos & Carte',
     equipe: 'Équipe',
     blog: 'Blog & Articles',
     levees: 'Levées de Fonds',
@@ -366,6 +368,7 @@ export default function AdminBackOffice() {
         <div className="flex-1 p-6 lg:p-8">
           {activeTab === 'dashboard' && <DashboardSection />}
           {activeTab === 'contacts' && <DemandesContactSection />}
+          {activeTab === 'photos' && <GestionPhotos embedded />}
           {activeTab === 'equipe' && <AdminEquipe />}
           {activeTab === 'blog' && <AdminBlog />}
           {activeTab === 'levees' && <AdminLeveeFonds />}
