@@ -13,22 +13,21 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from '@/api/base44Client';
 
+const LOGO_URL = 'https://base44.app/api/apps/699460f1b03f6285dc8513a7/files/mp/public/699460f1b03f6285dc8513a7/eb47cc5e5_cropped.jpg';
+
 function LogoImage() {
-  const { data: images = [], isLoading } = useQuery({
+  const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
     queryFn: () => base44.entities.SiteImage.list(),
     initialData: []
   });
 
   const logoImage = images.find((img) => img.key === 'logo');
-
-  if (isLoading || !logoImage?.url) {
-    return <div className="h-14 w-32" />;
-  }
+  const logoUrl = logoImage?.url || LOGO_URL;
 
   return (
     <img
-      src={logoImage.url}
+      src={logoUrl}
       alt="La Foncière Valora"
       className="h-14 w-auto border-0" />
   );
