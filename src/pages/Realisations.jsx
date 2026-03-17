@@ -29,6 +29,33 @@ const getDPEColor = (dpe) => {
 export default function Realisations() {
   const [selectedId, setSelectedId] = useState(null);
   const [showAfter, setShowAfter] = useState({});
+
+  const { data: biensDB = [] } = useQuery({
+    queryKey: ['realisations-biens'],
+    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
+    initialData: []
+  });
+
+  // Adapter les champs BDD au format utilisé dans le JSX
+  const realisations = biensDB.filter(b => b.actif).map(b => ({
+    id: b.id,
+    title: b.titre,
+    location: b.location,
+    year: b.annee,
+    imageAvant: b.image_avant || '',
+    imageApres: b.image_apres || '',
+    surface: b.surface,
+    logements: b.logements,
+    investissement: b.investissement,
+    dpeAvant: b.dpe_avant,
+    dpeApres: b.dpe_apres,
+    descriptionAvant: b.description_avant,
+    descriptionApres: b.description_apres,
+    travaux: b.travaux ? b.travaux.split(',').map(t => t.trim()) : [],
+    rendementBrut: b.rendement_brut,
+    plusValue: b.plus_value,
+  }));
+
   const selectedRealisation = realisations.find((r) => r.id === selectedId);
 
   const toggleImage = (id) => {
