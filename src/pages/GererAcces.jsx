@@ -8,7 +8,7 @@ import { Card } from "@/components/ui/card";
 import { UserPlus, Trash2, Key, Users, Eye, EyeOff, CheckCircle2 } from 'lucide-react';
 import { motion } from 'framer-motion';
 
-export default function GererAcces() {
+export default function GererAcces({ embedded = false }) {
   const [newAccess, setNewAccess] = useState({ email: '', password: '', nom: '' });
   const [showPasswords, setShowPasswords] = useState({});
   const queryClient = useQueryClient();
@@ -63,20 +63,12 @@ export default function GererAcces() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 py-12">
-      <div className="max-w-5xl mx-auto px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <h1 className="text-3xl font-serif text-[#1A3A52] mb-2">
-            Gestion des Accès - Espace Associés
-          </h1>
-          <p className="text-slate-600">
-            Gérez les accès sécurisés à l'Espace Associés
-          </p>
-        </motion.div>
+    <div className={embedded ? '' : 'min-h-screen bg-slate-50 py-12'}>
+      <div className={embedded ? '' : 'max-w-5xl mx-auto px-6 lg:px-8'}>
+        {!embedded && <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
+          <h1 className="text-3xl font-serif text-[#1A3A52] mb-2">Gestion des Accès - Espace Associés</h1>
+          <p className="text-slate-600">Gérez les accès sécurisés à l'Espace Associés</p>
+        </motion.div>}
 
         {/* Formulaire ajout */}
         <motion.div
