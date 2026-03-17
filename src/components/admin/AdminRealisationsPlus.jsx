@@ -19,9 +19,11 @@ export default function AdminRealisationsPlus() {
   const [modal, setModal] = useState(false);
   const [editId, setEditId] = useState(null);
   const [form, setForm] = useState({
-    titre: '', location: '', lat: '', lng: '', annee: '', image_avant: '', image_apres: '', surface: '', logements: '', investissement: '', 
+    titre: '', location: '', lat: null, lng: null, annee: '', image_avant: '', image_apres: '', surface: '', logements: '', investissement: '', 
     dpe_avant: 'D', dpe_apres: 'B', description_avant: '', description_apres: '', travaux: '', rendement_brut: '', plus_value: '', ordre: 0, actif: true
   });
+  const [geoError, setGeoError] = useState('');
+  const [geocoding, setGeocoding] = useState(false);
   const [cropModal, setCropModal] = useState(null);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [photoType, setPhotoType] = useState('avant');
