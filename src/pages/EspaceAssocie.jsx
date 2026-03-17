@@ -218,7 +218,7 @@ export default function EspaceAssocie() {
 
   const dpeData = [{ classe: "C", count: 42, color: "bg-lime-500", percentage: 100 }];
 
-  const leveeRaw = getConfig('levee_fonds', { objectif: 250000, collecte: 187500, souscripteurs: 12, dateCloture: '31 Mars 2026' });
+  const leveeRaw = getConfig('levee_fonds', { titre: 'Série A — Levée de Fonds Inaugurale', description: 'Levée de fonds pour le financement de nos premières acquisitions résidentielles en zones tendues.', objectif: 250000, collecte: 187500, souscripteurs: 12, dateCloture: '31 Mars 2026', ticketMinimum: '10 000 €', typeTitre: 'Actions ordinaires PEA-PME' });
   const leveeEnCours = { ...leveeRaw, pourcentage: Math.round(leveeRaw.collecte / leveeRaw.objectif * 100) };
 
   const valorisationRaw = getConfig('valorisation', { valeurActuelle: 3200000, evolution: '+8.5%', nombreActions: 32000, valeurAction: 100, plusValueAction: '+8.5%', dateValo: '31 Déc 2025', plusValueTotal: 250000 });
