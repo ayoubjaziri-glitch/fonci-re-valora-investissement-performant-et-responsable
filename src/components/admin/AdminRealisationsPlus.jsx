@@ -97,7 +97,7 @@ export default function AdminRealisationsPlus() {
   };
 
   const openNew = () => {
-    setForm({ titre: '', location: '', annee: '', image_avant: '', image_apres: '', surface: '', logements: '', investissement: '', 
+    setForm({ titre: '', location: '', lat: '', lng: '', annee: '', image_avant: '', image_apres: '', surface: '', logements: '', investissement: '', 
       dpe_avant: 'D', dpe_apres: 'B', description_avant: '', description_apres: '', travaux: '', rendement_brut: '', plus_value: '', ordre: 0, actif: true });
     setEditId(null);
     setModal(true);
