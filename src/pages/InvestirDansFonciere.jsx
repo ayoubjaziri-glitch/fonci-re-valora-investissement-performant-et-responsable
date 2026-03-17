@@ -440,7 +440,7 @@ export default function InvestirDansFonciere() {
                       Avantages
                     </h4>
                     <ul className="space-y-2 text-sm text-slate-600">
-                      <li>• Rendements cibles élevés (8-12% TRI)</li>
+                       <li>• Rendements cibles élevés (10-12% TRI)</li>
                       <li>• Création de valeur active (value-add)</li>
                       <li>• Alignement fort gérants/investisseurs</li>
                       <li>• Stratégie ciblée et différenciante</li>
