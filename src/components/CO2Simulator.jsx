@@ -410,7 +410,7 @@ export default function CO2Simulator() {
         </div>
 
         {/* Note méthodologique */}
-        <div className="mt-8 bg-slate-100 rounded-2xl px-6 py-4 flex items-start gap-3">
+        <div className="mt-6 bg-slate-100 rounded-xl px-4 py-3 flex items-start gap-2">
           <Info className="h-4 w-4 text-slate-400 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-slate-500">
             <strong>Méthodologie :</strong> Simulation basée sur les seuils DPE RE2020, les facteurs d'émission ADEME et les barèmes de coûts travaux ANAH/ADEME 2024 (€/m²). 
