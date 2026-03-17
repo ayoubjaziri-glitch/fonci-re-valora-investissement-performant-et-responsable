@@ -455,8 +455,8 @@ export default function CO2Simulator() {
         <div className="mt-8 bg-slate-100 rounded-2xl px-6 py-4 flex items-start gap-3">
           <Info className="h-4 w-4 text-slate-400 flex-shrink-0 mt-0.5" />
           <p className="text-xs text-slate-500">
-            <strong>Méthodologie :</strong> Simulation basée sur les seuils DPE RE2020 (kWhEP/m²/an) et les facteurs d'émission ADEME (kgCO₂eq/m²/an). 
-            Coût énergétique estimé à 0,13 €/kWh. Les résultats sont indicatifs et dépendent des caractéristiques réelles du bâtiment, du mix énergétique et des conditions d'usage.
+            <strong>Méthodologie :</strong> Simulation basée sur les seuils DPE RE2020, les facteurs d'émission ADEME et les barèmes de coûts travaux ANAH/ADEME 2024 (€/m²). 
+            Coût énergétique estimé à 0,13 €/kWh. Les coûts de travaux sont indicatifs (±15%) et varient selon l'état du bâti, les matériaux et les prestataires. Les aides sont données à titre indicatif et dépendent des revenus et conditions d'éligibilité.
           </p>
         </div>
       </div>
