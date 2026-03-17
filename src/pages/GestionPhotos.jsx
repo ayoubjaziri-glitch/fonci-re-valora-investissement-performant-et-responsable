@@ -113,13 +113,8 @@ export default function GestionPhotos({ embedded = false }) {
   };
 
   const groupedImages = images.reduce((acc, img) => {
-    let category = img.category;
-    // Pour les images avec des clés commençant par "service_", les placer dans la catégorie "services"
-    if (img.key?.startsWith('service_')) {
-      category = 'services';
-    }
-    if (!acc[category]) acc[category] = [];
-    acc[category].push(img);
+    if (!acc[img.category]) acc[img.category] = [];
+    acc[img.category].push(img);
     return acc;
   }, {});
 
