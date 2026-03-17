@@ -72,7 +72,7 @@ export default function InterventionMap() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {zonesDb.map((zone, index) => (
+          {uniqueZones.map((zone, index) => (
             <Marker 
               key={index} 
               position={[zone.lat, zone.lng]}
