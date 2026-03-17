@@ -61,8 +61,9 @@ export default function AdminRealisationsPlus() {
       qc.invalidateQueries({ queryKey: ['realisations-biens'] }); 
       setModal(false); 
       setEditId(null);
-      setForm({ titre: '', location: '', lat: '', lng: '', annee: '', image_avant: '', image_apres: '', surface: '', logements: '', investissement: '', 
+      setForm({ titre: '', location: '', lat: null, lng: null, annee: '', image_avant: '', image_apres: '', surface: '', logements: '', investissement: '', 
         dpe_avant: 'D', dpe_apres: 'B', description_avant: '', description_apres: '', travaux: '', rendement_brut: '', plus_value: '', ordre: 0, actif: true });
+      setGeoError('');
     },
   });
 
