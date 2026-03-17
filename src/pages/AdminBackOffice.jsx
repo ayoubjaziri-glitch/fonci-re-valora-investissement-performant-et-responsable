@@ -291,6 +291,7 @@ export default function AdminBackOffice() {
   const tabTitles = {
     dashboard: 'Dashboard',
     contacts: 'Demandes de Contact',
+    photos: 'Photos & Média',
     equipe: 'Équipe',
     blog: 'Blog & Articles',
     levees: 'Levées de Fonds',
