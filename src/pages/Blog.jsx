@@ -16,6 +16,18 @@ export default function Blog() {
 
   const articles = [
   {
+    id: 20,
+    title: "Investissement Immobilier 2026 : Le Guide Stratégique de la Foncière Valora",
+    slug: "investissement-immobilier-2026-guide-strategique-fonciere-valora",
+    excerpt: "Rendement résilient, valeur verte, effet de levier... La Foncière Valora décrypte les leviers clés pour transformer les mutations du marché 2026 en opportunités de croissance durable.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "8 min",
+    image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
+    content: ``
+  },
+  {
     id: 19,
     title: "Top 5 des villes françaises où l'investissement locatif est le plus rentable en 2026",
     slug: "top-5-villes-investissement-locatif-rentable-2026-fonciere-valora",
