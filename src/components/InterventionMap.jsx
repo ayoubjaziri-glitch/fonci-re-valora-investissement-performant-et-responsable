@@ -120,82 +120,58 @@ export default function InterventionMap() {
           center={center} 
           zoom={defaultZoom} 
           style={{ height: '500px', width: '100%' }}
-          scrollWheelZoom={false}
+          scrollWheelZoom={true}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {uniqueZones.map((zone, index) => (
+          <ClusterMarkerHandler clusters={clusterMarkers} mapRef={mapRef} />
+          
+          {clusterMarkers.map((cluster) => (
             <Marker 
-              key={index} 
-              position={[zone.lat, zone.lng]}
+              key={cluster.id} 
+              position={[cluster.lat, cluster.lng]}
               icon={customIcon}
+              eventHandlers={{
+                click: () => handleClusterClick(cluster.items)
+              }}
             >
               <Popup>
-                <div className="p-0 min-w-[280px]">
-                  {zone.isCluster ? (
-                    // Popup pour le cluster Vichy
-                    <div className="p-4">
-                      <h4 className="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
-                        📍 {zone.name}
-                      </h4>
-                      <div className="space-y-2 max-h-64 overflow-y-auto">
-                        {zone.clusterItems.map((item, idx) => (
-                          <div key={idx} className="border-l-2 border-[#C9A961] pl-3 py-1">
-                            <p className="font-semibold text-slate-800 text-sm">{item.name}</p>
-                            <p className="text-slate-600 text-xs flex items-center gap-1">
-                              <MapPin className="h-3 w-3" />
-                              {item.adresse}
-                            </p>
-                            {item.logements && (
-                              <p className="text-slate-600 text-xs mt-1">{item.logements}</p>
-                            )}
-                            {item.dpe && (
-                              <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-bold text-white ${
-                                item.dpe === 'A' ? 'bg-emerald-500' : 
-                                item.dpe === 'B' ? 'bg-green-500' : 
-                                item.dpe === 'C' ? 'bg-lime-500' :
-                                'bg-amber-500'
-                              }`}>
-                                DPE {item.dpe}
-                              </span>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  ) : (
-                    // Popup pour les markers individuels
-                    <>
-                      {zone.image_url && (
-                        <img 
-                          src={zone.image_url} 
-                          alt={zone.name}
-                          className="w-full h-40 object-cover rounded-t-lg"
-                        />
-                      )}
-                      <div className="p-4">
-                        <h4 className="font-bold text-slate-900 text-base mb-2">{zone.name}</h4>
-                        <p className="text-slate-600 text-xs mb-3 flex items-start gap-1">
-                          <MapPin className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                          {zone.adresse}
+                <div className="p-4 min-w-[300px]">
+                  <h4 className="font-bold text-slate-900 text-base mb-4 flex items-center gap-2">
+                    📍 {cluster.name}
+                  </h4>
+                  <div className="space-y-3 max-h-80 overflow-y-auto">
+                    {cluster.items.map((item, idx) => (
+                      <div key={idx} className="border-l-2 border-[#C9A961] pl-3 py-2">
+                        <p className="font-semibold text-slate-800 text-sm">{item.name}</p>
+                        <p className="text-slate-600 text-xs flex items-center gap-1 mt-1">
+                          <MapPin className="h-3 w-3" />
+                          {item.adresse}
                         </p>
-                        <div className="flex justify-between items-center">
-                          <span className="text-slate-700 font-medium text-sm">{zone.logements}</span>
-                          {zone.dpe && (
-                            <span className={`px-2 py-1 rounded text-xs font-bold text-white ${
-                              zone.dpe === 'A' ? 'bg-emerald-500' : 
-                              zone.dpe === 'B' ? 'bg-green-500' : 
-                              'bg-lime-500'
-                            }`}>
-                              DPE {zone.dpe}
-                            </span>
-                          )}
-                        </div>
+                        {item.logements && (
+                          <p className="text-slate-600 text-xs mt-1">{item.logements}</p>
+                        )}
+                        {item.dpe && (
+                          <span className={`inline-block mt-1.5 px-2 py-0.5 rounded text-xs font-bold text-white ${
+                            item.dpe === 'A' ? 'bg-emerald-500' : 
+                            item.dpe === 'B' ? 'bg-green-500' : 
+                            item.dpe === 'C' ? 'bg-lime-500' :
+                            'bg-amber-500'
+                          }`}>
+                            DPE {item.dpe}
+                          </span>
+                        )}
                       </div>
-                    </>
-                  )}
+                    ))}
+                  </div>
+                  <button
+                    onClick={() => handleClusterClick(cluster.items)}
+                    className="mt-4 w-full bg-[#C9A961] hover:bg-[#B8994F] text-slate-900 py-2 rounded-lg text-sm font-semibold transition-colors"
+                  >
+                    Zoomer sur {cluster.items.length} bien{cluster.items.length > 1 ? 's' : ''}
+                  </button>
                 </div>
               </Popup>
             </Marker>
@@ -205,14 +181,17 @@ export default function InterventionMap() {
 
       {/* Legend */}
       <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg z-[1000]">
-        <p className="text-xs text-slate-500 mb-2 font-medium">NOTRE PARC IMMOBILIER</p>
-        <div className="flex items-center gap-2">
-          <img 
-            src="https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-gold.png" 
-            alt="marker"
-            className="w-4 h-auto"
-          />
-          <span className="text-sm text-slate-700">Cliquez pour voir l'immeuble</span>
+        <p className="text-xs text-slate-500 mb-3 font-medium">PARC IMMOBILIER</p>
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold text-slate-700">Vichy</span>
+            <span className="bg-[#C9A961] text-white text-xs px-2 py-0.5 rounded-full font-bold">{groupedByCity.vichy.length}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="text-sm font-semibold text-slate-700">Clermont-Fd</span>
+            <span className="bg-[#C9A961] text-white text-xs px-2 py-0.5 rounded-full font-bold">{groupedByCity.clermont.length}</span>
+          </div>
+          <p className="text-xs text-slate-500 mt-2">Cliquez sur un cluster pour zoomer</p>
         </div>
       </div>
     </div>
