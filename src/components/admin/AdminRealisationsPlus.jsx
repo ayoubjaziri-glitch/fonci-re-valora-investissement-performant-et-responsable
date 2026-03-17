@@ -126,26 +126,37 @@ export default function AdminRealisationsPlus() {
 
             <div className="space-y-4">
               <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm font-medium">Titre *</Label>
-                  <Input value={form.titre} onChange={e => setForm({...form, titre: e.target.value})} placeholder="Ex: Vichy Rénov" />
-                </div>
-                <div>
-                  <Label className="text-sm font-medium">Localisation *</Label>
-                  <Input value={form.location} onChange={e => setForm({...form, location: e.target.value})} placeholder="Ex: Vichy, Allier" />
-                </div>
-              </div>
+                 <div>
+                   <Label className="text-sm font-medium">Titre *</Label>
+                   <Input value={form.titre} onChange={e => setForm({...form, titre: e.target.value})} placeholder="Ex: Vichy Rénov" />
+                 </div>
+                 <div>
+                   <Label className="text-sm font-medium">Localisation *</Label>
+                   <Input value={form.location} onChange={e => setForm({...form, location: e.target.value})} placeholder="Ex: Vichy, Allier" />
+                 </div>
+               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <Label className="text-sm font-medium">Année</Label>
-                  <Input type="number" value={form.annee} onChange={e => setForm({...form, annee: e.target.value})} placeholder="2025" />
-                </div>
-                <div>
-                  <Label className="text-sm font-medium">Surface</Label>
-                  <Input value={form.surface} onChange={e => setForm({...form, surface: e.target.value})} placeholder="1 200 m²" />
-                </div>
-              </div>
+               <div className="grid grid-cols-2 gap-4">
+                 <div>
+                   <Label className="text-sm font-medium">Latitude (pour la carte)</Label>
+                   <Input type="number" step="0.000001" value={form.lat} onChange={e => setForm({...form, lat: e.target.value})} placeholder="48.8566" />
+                 </div>
+                 <div>
+                   <Label className="text-sm font-medium">Longitude (pour la carte)</Label>
+                   <Input type="number" step="0.000001" value={form.lng} onChange={e => setForm({...form, lng: e.target.value})} placeholder="2.3522" />
+                 </div>
+               </div>
+
+               <div className="grid grid-cols-2 gap-4">
+                 <div>
+                   <Label className="text-sm font-medium">Année</Label>
+                   <Input type="number" value={form.annee} onChange={e => setForm({...form, annee: e.target.value})} placeholder="2025" />
+                 </div>
+                 <div>
+                   <Label className="text-sm font-medium">Surface</Label>
+                   <Input value={form.surface} onChange={e => setForm({...form, surface: e.target.value})} placeholder="1 200 m²" />
+                 </div>
+               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
