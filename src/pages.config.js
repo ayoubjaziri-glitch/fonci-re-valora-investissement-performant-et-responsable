@@ -69,6 +69,7 @@ import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
+    "AdminBackOffice": AdminBackOffice,
     "AdminEspaceAssocie": AdminEspaceAssocie,
     "Blog": Blog,
     "BlogArticle": BlogArticle,
