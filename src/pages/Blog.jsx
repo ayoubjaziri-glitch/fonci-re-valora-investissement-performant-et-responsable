@@ -16,6 +16,18 @@ export default function Blog() {
 
   const articles = [
   {
+    id: 17,
+    title: "Société Foncière : Comment Créer et Financer un Projet Immobilier ?",
+    slug: "societe-fonciere-comment-creer-financer-projet-immobilier",
+    excerpt: "Structure, avantages, fiscalité, formes juridiques, étapes de création... Tout ce qu'il faut savoir pour lancer votre société foncière et optimiser votre patrimoine immobilier.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "5 min",
+    image: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=800&q=80",
+    content: ``
+  },
+  {
     id: 16,
     title: "0€ de Frais d'Entrée : Pourquoi la Foncière Valora révolutionne l'Investissement Immobilier en 2026",
     slug: "zero-frais-entree-fonciere-valora-revolutionne-investissement-immobilier-2026",

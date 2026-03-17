@@ -20,6 +20,172 @@ export default function BlogArticle() {
 
   const articles = [
     {
+      id: 17,
+      title: "Société Foncière : Comment Créer et Financer un Projet Immobilier ?",
+      slug: "societe-fonciere-comment-creer-financer-projet-immobilier",
+      excerpt: "Structure, avantages, fiscalité, formes juridiques, étapes de création... Tout ce qu'il faut savoir pour lancer votre société foncière et optimiser votre patrimoine immobilier.",
+      category: "Investissement",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "5 min",
+      image: "https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=800&q=80",
+      content: `
+# Société Foncière : Comment Créer et Financer un Projet Immobilier ?
+
+Une société foncière est une structure spécialisée dans l'acquisition, la gestion et la valorisation de biens immobiliers. Son objectif principal est de générer des revenus locatifs réguliers et d'augmenter la valeur de son patrimoine à long terme. Adaptée aussi bien aux particuliers qu'aux investisseurs institutionnels, elle joue un rôle clé sur le marché immobilier. La Foncière Valora vous explique tout.
+
+## Qu'est-ce qu'une foncière ?
+
+Une foncière, ou société foncière, est une entreprise spécialisée dans l'acquisition, la gestion et la valorisation d'un patrimoine immobilier. Elle génère principalement des revenus en louant les biens qu'elle détient, mais elle peut également en assurer la revente après valorisation.
+
+En pratique, la société foncière peut exercer une activité plus large et parfois commerciale (achat, revente, location à grande échelle), tandis que la SCI reste une société civile, adaptée à la gestion patrimoniale ou familiale.
+
+Son portefeuille est souvent diversifié et inclut plusieurs types d'actifs immobiliers :
+
+- Les logements résidentiels
+- Les bureaux
+- Les entrepôts industriels
+- Les parkings
+- Ou encore les résidences gérées
+
+> **Bon à savoir :** en investissant dans une foncière immobilière, les actionnaires ne possèdent pas directement les biens immobiliers, mais des parts de l'entreprise. Cela permet d'accéder aux revenus issus des loyers ou des plus-values générées par le portefeuille immobilier.
+
+## Pourquoi créer une société foncière ?
+
+### Les avantages de la foncière
+
+Créer une société foncière présente de nombreux atouts pour optimiser ses investissements immobiliers :
+
+**Diversification du patrimoine immobilier**
+
+En rejoignant une société foncière, les investisseurs bénéficient d'une répartition stratégique des actifs. Ces sociétés détiennent généralement des biens variés, permettant de limiter l'exposition à un seul segment du marché. Si une catégorie d'actifs est impactée, d'autres peuvent équilibrer les pertes et stabiliser le rendement global.
+
+**Mutualisation des risques**
+
+Investir à plusieurs au sein d'une société foncière permet de réduire les risques financiers. Le marché locatif est marqué par des imprévus (loyers impayés, dégradations, vacance). Dans ce cadre, les impacts négatifs sont partagés entre les associés, assurant une meilleure protection financière.
+
+**Effet de levier immobilier**
+
+Grâce à la capacité d'emprunt collective, une foncière peut acquérir un patrimoine de 3 à 4 fois supérieur aux capitaux apportés par les associés. Cet effet de levier amplifie la rentabilité tout en maîtrisant le ratio LTC (Loan To Cost).
+
+**Optimisation de la fiscalité**
+
+La fiscalité appliquée aux sociétés foncières est particulièrement attractive. Selon la structure choisie, les associés peuvent bénéficier de l'amortissement des biens, de la déductibilité des intérêts d'emprunt et d'un cadre fiscal avantageux (PEA-PME, IS réduit).
+
+**Accès à une gestion professionnelle**
+
+En confiant son capital à une société foncière, l'investisseur bénéficie de l'expertise de professionnels spécialisés. Ces équipes assurent l'acquisition, l'entretien et la location des biens, permettant de profiter des bénéfices du marché immobilier sans les contraintes d'une gestion directe.
+
+### Les inconvénients de la foncière
+
+Créer une société foncière présente également quelques contraintes à prendre en compte :
+
+- **Moins de contrôle individuel :** les décisions stratégiques sont collectives, ce qui peut limiter la liberté d'action de chaque associé.
+- **Sensibilité aux taux d'intérêt :** la dépendance au financement bancaire rend la rentabilité sensible aux hausses de taux.
+- **Frais de structure :** les coûts de gestion (comptabilité, juridique, pilotage) peuvent peser sur le rendement net si le patrimoine est insuffisant.
+- **Rendement lié au marché locatif :** la performance dépend directement des revenus locatifs ; une dégradation du marché se répercute sur les distributions.
+
+### Tableau récapitulatif
+
+| Caractéristique | Avantages | Points de vigilance |
+|---|---|---|
+| Diversification | Répartition des risques sur plusieurs actifs | Complexité de gestion d'un portefeuille diversifié |
+| Mutualisation | Partage des pertes et imprévus entre associés | Moins de contrôle individuel |
+| Effet de levier | Financement amplifié sans mobiliser plus de fonds propres | Sensibilité aux taux d'intérêt |
+| Fiscalité | IS, amortissements, PEA-PME, déficit foncier | Imposition des dividendes perçus par les associés |
+| Gestion professionnelle | Expertise déléguée, optimisation des actifs | Frais de structure à anticiper |
+
+## Quel est le régime fiscal d'une foncière ?
+
+En tant que société de capitaux, une foncière est par défaut soumise à l'**Impôt sur les Sociétés (IS)**. Les bénéfices réalisés, qu'ils proviennent des loyers ou des ventes, sont imposés au taux en vigueur après déduction des charges, amortissements et intérêts d'emprunt.
+
+En 2026, le **dispositif Jeanbrun** introduit un mécanisme d'amortissement comptable sur la location nue, permettant de déduire entre 3,5 % et 5,5 % de la valeur du bâti chaque année. Ce levier fiscal peut ramener l'imposition sur les revenus locatifs à zéro pendant plusieurs années.
+
+Pour les associés détenant leurs parts via un **PEA-PME**, les gains capitalisés sont exonérés d'impôt sur le revenu (12,8 %) après 5 ans de détention — seuls les prélèvements sociaux de 17,2 % restent dus.
+
+> **À retenir :** la combinaison IS + amortissement Jeanbrun + PEA-PME constitue le triptyque fiscal le plus performant pour une foncière résidentielle en 2026.
+
+## Quelle forme juridique pour une foncière ?
+
+Plusieurs formes sont adaptées à la création d'une société foncière :
+
+**La SAS immobilière (Société par Actions Simplifiée)**
+
+C'est la forme la plus flexible, idéale pour des projets d'investissement patrimonial ambitieux. Elle permet :
+- Une structure ouverte facilitant l'entrée d'investisseurs
+- Moins de restrictions sur la cession et l'acquisition des parts
+- Des statuts adaptables aux besoins des associés
+- L'éligibilité au PEA-PME
+
+C'est la structure choisie par la Foncière Valora pour maximiser la flexibilité et l'attractivité fiscale pour ses associés.
+
+**La SARL immobilière**
+
+Adaptée aux projets familiaux ou patrimoniaux, elle limite la responsabilité des associés à leurs apports. Les parts sont toutefois moins facilement cessibles, ce qui peut réduire la liquidité.
+
+**La SCI (Société Civile Immobilière)**
+
+La SCI est adaptée à la gestion patrimoniale ou familiale. Son objet est civil (pas d'activité commerciale), ce qui la rend moins adaptée aux projets de foncière à grande échelle.
+
+**La SIIC (Société d'Investissement Immobilier Cotée)**
+
+La SIIC est cotée en bourse. Elle offre une grande liquidité des parts mais est soumise aux fluctuations des marchés financiers et exige un capital social minimum de **15 millions d'euros**.
+
+## Comment créer une foncière ?
+
+La création d'une société foncière nécessite de suivre plusieurs étapes :
+
+**1. Choisir la forme juridique adaptée**
+
+Sélectionnez le statut le plus approprié selon votre projet, votre profil d'investisseur et vos objectifs fiscaux (SAS, SARL, SCI).
+
+**2. Rédiger les statuts de la société**
+
+Les statuts définissent les règles de fonctionnement et doivent inclure :
+- L'objet social (acquisition, gestion, valorisation de biens immobiliers)
+- La répartition des parts entre associés
+- Les modalités de cession des parts
+- Les règles de prise de décision et les pouvoirs des dirigeants
+- Les obligations financières (distribution des bénéfices)
+
+**3. Déposer le capital social**
+
+Les fonds sont déposés sur un compte bancaire professionnel dédié. Pour une SAS ou SARL, il n'y a pas de minimum légal, mais un capital cohérent avec l'ambition du projet est recommandé (généralement à partir de 10 000 €).
+
+**4. Immatriculer la société au RCS**
+
+L'immatriculation au Registre du Commerce et des Sociétés (RCS) permet à la société d'exister légalement. Elle nécessite le dépôt des statuts signés, la publication d'un avis de constitution dans un journal d'annonces légales et le dépôt du formulaire d'immatriculation.
+
+**5. Organiser l'acquisition et la gestion des biens**
+
+Une fois créée, la société peut acquérir ses premiers actifs :
+- Sélection des biens selon les objectifs (résidentiel, bureaux, commerces)
+- Financement via emprunts bancaires, apports des associés ou levées de fonds
+- Mise en location pour générer des revenus locatifs
+- Rénovation et valorisation pour optimiser le patrimoine
+
+**6. Assurer la gestion continue**
+
+Une gestion efficace repose sur l'entretien régulier des actifs, une stratégie d'optimisation (rénovation, amélioration énergétique) et une évaluation régulière des biens pour anticiper les évolutions du marché.
+
+## FAQ
+
+**Quelle est la différence entre une foncière et une SCPI ?**
+
+Une SCPI (Société Civile de Placement Immobilier) collecte des fonds auprès d'un grand nombre d'épargnants et est gérée par une société de gestion agréée par l'AMF. Une foncière est une structure plus souple, souvent non cotée, qui peut être créée par des particuliers ou des professionnels. La foncière offre davantage de contrôle sur les décisions d'investissement mais implique une gestion plus active. Les SCPI facturent généralement 8 à 12 % de frais d'entrée, là où une foncière bien structurée peut proposer 0 € de frais d'entrée.
+
+**Comment financer une foncière ?**
+
+Le financement d'une foncière repose sur trois leviers principaux : les apports en capital des associés, l'emprunt bancaire (idéalement jusqu'à 80 % du coût total de l'opération, soit un LTC de 80 %), et les levées de fonds auprès d'investisseurs extérieurs. La combinaison de ces sources permet de maximiser l'effet de levier et d'optimiser le rendement sur fonds propres.
+
+**Quelle différence entre foncière et SCI ?**
+
+La SCI (Société Civile Immobilière) est une structure à objet civil, adaptée à la gestion patrimoniale ou familiale. La foncière, le plus souvent constituée en SAS ou SARL, peut exercer des activités commerciales (achat-revente, location à grande échelle) et accueille plus facilement des investisseurs extérieurs. La foncière est également plus adaptée aux levées de fonds et à l'éligibilité PEA-PME.
+
+*Vous souhaitez en savoir plus sur le modèle de la Foncière Valora ? Contactez notre équipe pour découvrir nos prochaines opportunités d'investissement.*
+      `
+    },
+    {
       id: 16,
       title: "0€ de Frais d'Entrée : Pourquoi la Foncière Valora révolutionne l'Investissement Immobilier en 2026",
       slug: "zero-frais-entree-fonciere-valora-revolutionne-investissement-immobilier-2026",
