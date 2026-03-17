@@ -61,10 +61,7 @@ export default function ImageCropper({ imageSrc, onCropComplete, onCancel, aspec
       imageRef.current.naturalWidth * scale,
       imageRef.current.naturalHeight * scale
     );
-    // Draw crop border
-    ctx.strokeStyle = '#C9A961';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(1, 1, cw - 2, ch - 2);
+
 
   };
 
