@@ -100,10 +100,14 @@ function KpisSection() {
         <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2"><TrendingUp className="h-5 w-5 text-[#C9A961]" /> Levée de Fonds en Cours</h3>
         <div className="grid md:grid-cols-2 gap-4">
           {[
+            { key: 'titre', label: 'Titre de la levée', type: 'text' },
+            { key: 'description', label: 'Description', type: 'text' },
             { key: 'objectif', label: 'Objectif (€)', type: 'number' },
             { key: 'collecte', label: 'Collecté (€)', type: 'number' },
             { key: 'souscripteurs', label: 'Souscripteurs', type: 'number' },
             { key: 'dateCloture', label: 'Date de clôture', type: 'text' },
+            { key: 'ticketMinimum', label: 'Ticket minimum', type: 'text' },
+            { key: 'typeTitre', label: 'Type de titre', type: 'text' },
           ].map(f => (
             <div key={f.key}>
               <Label className="text-sm">{f.label}</Label>
