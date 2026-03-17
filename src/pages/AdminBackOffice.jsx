@@ -366,6 +366,9 @@ export default function AdminBackOffice() {
           {activeTab === 'dashboard' && <DashboardSection />}
           {activeTab === 'contacts' && <DemandesContactSection />}
           {activeTab === 'photos' && <GestionPhotos embedded />}
+          {activeTab === 'equipe' && <AdminEquipe />}
+          {activeTab === 'blog' && <AdminBlog />}
+          {activeTab === 'levees' && <AdminLeveeFonds />}
           {activeTab === 'acces' && (
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
               <GererAcces embedded />
