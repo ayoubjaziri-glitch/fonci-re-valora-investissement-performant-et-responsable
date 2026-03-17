@@ -50,7 +50,7 @@ La réglementation se durcit : dès 2025, les logements classés G sont interdit
 ## Stratégies gagnantes pour 2026
 
 ### Investir dans la valeur ajoutée
-Le modèle "value-add" consiste à acquérir des actifs décotés nécessitant une rénovation, pour les valoriser après travaux. **La Foncière Patrimoniale** applique cette stratégie avec succès :
+Le modèle "value-add" consiste à acquérir des actifs décotés nécessitant une rénovation, pour les valoriser après travaux. **La Foncière Valora** applique cette stratégie avec succès :
 - Achat d'immeubles anciens en centre-ville
 - Réhabilitation complète avec passage DPE F/G → B/C
 - Mise en location à des rendements optimisés (6-8%)
@@ -85,7 +85,7 @@ Pour les investisseurs, le message est clair : **2026 est une année charnière*
       slug: "fonciere-immobiliere-vehicule-investissement",
       excerpt: "Guide complet sur les foncières immobilières, leur fonctionnement, leurs avantages fiscaux et comment elles créent de la valeur pour leurs associés.",
       category: "Investissement",
-      author: "La Foncière Patrimoniale",
+      author: "La Foncière Valora",
       date: "15 Février 2026",
       readTime: "10 min",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80",
@@ -154,7 +154,7 @@ Selon la structure juridique choisie, les foncières bénéficient de régimes f
 ### 5. Alignement des intérêts
 Dans une foncière patrimoniale bien structurée, les gérants sont eux-mêmes associés significatifs. Ce **skin in the game** garantit l'alignement total des intérêts entre dirigeants et investisseurs.
 
-## Notre modèle : La Foncière Patrimoniale
+## Notre modèle : La Foncière Valora
 
 ### Une stratégie différenciante
 Nous nous distinguons par notre approche **value-add** :
@@ -233,7 +233,7 @@ Contrairement aux structures à frais de gestion élevés (2-3% des actifs), le 
       slug: "rehabilitation-bbc-passoires-thermiques",
       excerpt: "Guide pratique de la réhabilitation Bâtiment Basse Consommation : techniques, coûts, rentabilité et impact ESG.",
       category: "Rénovation",
-      author: "La Foncière Patrimoniale",
+      author: "La Foncière Valora",
       date: "5 Février 2026",
       readTime: "9 min",
       image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80",
@@ -282,7 +282,7 @@ Avant toute acquisition, nous réalisons :
       slug: "pea-pme-immobilier-fiscalite",
       excerpt: "Comment investir dans l'immobilier via un PEA-PME et bénéficier d'une fiscalité ultra-avantageuse tout en diversifiant son patrimoine.",
       category: "Fiscalité",
-      author: "La Foncière Patrimoniale",
+      author: "La Foncière Valora",
       date: "1 Février 2026",
       readTime: "6 min",
       image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&q=80",
@@ -441,7 +441,7 @@ Le PEA-PME est une **enveloppe fiscale** créée en 2014 pour orienter l'épargn
             Intéressé par notre approche ?
           </h3>
           <p className="text-white/70 mb-6">
-            Découvrez comment devenir associé de La Foncière Patrimoniale.
+            Découvrez comment devenir associé de La Foncière Valora.
           </p>
           <Link to={createPageUrl("Contact")}>
             <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">

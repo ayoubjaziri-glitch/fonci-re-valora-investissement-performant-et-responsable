@@ -49,7 +49,7 @@ La réglementation se durcit : dès 2025, les logements classés G sont interdit
 ## Stratégies gagnantes pour 2026
 
 ### Investir dans la valeur ajoutée
-Le modèle "value-add" consiste à acquérir des actifs décotés nécessitant une rénovation, pour les valoriser après travaux. **La Foncière Patrimoniale** applique cette stratégie avec succès :
+Le modèle "value-add" consiste à acquérir des actifs décotés nécessitant une rénovation, pour les valoriser après travaux. **La Foncière Valora** applique cette stratégie avec succès :
 - Achat d'immeubles anciens en centre-ville
 - Réhabilitation complète avec passage DPE F/G → B/C
 - Mise en location à des rendements optimisés (6-8%)
@@ -89,7 +89,7 @@ Pour les investisseurs, le message est clair : **2026 est une année charnière*
       slug: "fonciere-immobiliere-vehicule-investissement",
       excerpt: "Guide complet sur les foncières immobilières, leur fonctionnement, leurs avantages fiscaux et comment elles créent de la valeur pour leurs associés.",
       category: "Investissement",
-      author: "La Foncière Patrimoniale",
+      author: "La Foncière Valora",
       date: "15 Février 2026",
       readTime: "10 min",
       image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80",
@@ -161,7 +161,7 @@ Selon la structure juridique choisie, les foncières bénéficient de régimes f
 ### 5. Alignement des intérêts
 Dans une foncière patrimoniale bien structurée, les gérants sont eux-mêmes associés significatifs. Ce **skin in the game** garantit l'alignement total des intérêts entre dirigeants et investisseurs.
 
-## Notre modèle : La Foncière Patrimoniale
+## Notre modèle : La Foncière Valora
 
 ### Une stratégie différenciante
 Nous nous distinguons par notre approche **value-add** :
@@ -212,7 +212,7 @@ Nous mettons un point d'honneur à :
 
 Les foncières immobilières offrent une alternative performante à l'investissement locatif en direct. Elles combinent professionnalisme, mutualisation, optimisation fiscale et potentiel de rendement attractif.
 
-**La Foncière Patrimoniale** s'adresse aux investisseurs avisés recherchant un placement immobilier structuré, transparent et à fort potentiel de création de valeur.
+**La Foncière Valora** s'adresse aux investisseurs avisés recherchant un placement immobilier structuré, transparent et à fort potentiel de création de valeur.
 
 ---
 
@@ -291,7 +291,7 @@ Contrairement aux structures à frais de gestion élevés (2-3% des actifs), le 
 2. Phase de "rattrapage" (100% gérants) jusqu'à rééquilibrage
 3. Puis partage standard (80/20)
 
-## Notre approche à La Foncière Patrimoniale
+## Notre approche à La Foncière Valora
 
 ### Structure transparente
 Nous appliquons un modèle de carried interest **aligné avec les meilleurs standards** du marché :
@@ -345,7 +345,7 @@ Si les modalités de calcul du carried ne sont pas clairement explicitées dans 
 
 Le carried interest est bien plus qu'un simple mécanisme de rémunération : c'est un **outil de gouvernance** qui garantit que les gérants travaillent dans l'intérêt exclusif des investisseurs.
 
-Chez **La Foncière Patrimoniale**, nous sommes convaincus que la performance durable naît de cet alignement parfait. Notre rémunération dépend de votre succès.
+Chez **La Foncière Valora**, nous sommes convaincus que la performance durable naît de cet alignement parfait. Notre rémunération dépend de votre succès.
 
 **C'est ainsi que se construisent les partenariats de long terme.**
 
@@ -360,7 +360,7 @@ Chez **La Foncière Patrimoniale**, nous sommes convaincus que la performance du
       slug: "rehabilitation-bbc-passoires-thermiques",
       excerpt: "Guide pratique de la réhabilitation Bâtiment Basse Consommation : techniques, coûts, rentabilité et impact ESG.",
       category: "Rénovation",
-      author: "La Foncière Patrimoniale",
+      author: "La Foncière Valora",
       date: "5 Février 2026",
       readTime: "9 min",
       image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
@@ -534,7 +534,7 @@ La réhabilitation BBC est au cœur de notre stratégie d'investissement. Elle c
 - **Performance ESG** (impact environnemental positif)
 - **Rentabilité** (rendements locatifs + plus-values)
 
-C'est cette expertise qui fait de **La Foncière Patrimoniale** un acteur de référence de l'immobilier durable et performant.
+C'est cette expertise qui fait de **La Foncière Valora** un acteur de référence de l'immobilier durable et performant.
 
 ---
 
@@ -547,7 +547,7 @@ C'est cette expertise qui fait de **La Foncière Patrimoniale** un acteur de ré
       slug: "pea-pme-immobilier-fiscalite",
       excerpt: "Comment investir dans l'immobilier via un PEA-PME et bénéficier d'une fiscalité ultra-avantageuse tout en diversifiant son patrimoine.",
       category: "Fiscalité",
-      author: "La Foncière Patrimoniale",
+      author: "La Foncière Valora",
       date: "1 Février 2026",
       readTime: "6 min",
       image: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80",
@@ -599,7 +599,7 @@ Contrairement à un investissement immobilier en direct :
 ## Notre structure éligible PEA-PME
 
 ### Conditions d'éligibilité
-**La Foncière Patrimoniale** respecte tous les critères :
+**La Foncière Valora** respecte tous les critères :
 - ✅ Forme juridique : SAS
 - ✅ Effectif : < 250 salariés
 - ✅ Chiffre d'affaires : < 50 M€
@@ -620,7 +620,7 @@ Nous émettons des **actions ordinaires** éligibles PEA-PME, permettant aux inv
 
 **Stratégie recommandée**
 1. **Ouverture PEA-PME** (plafond 225 000 €)
-2. **Investissement** : 100 000 € dans La Foncière Patrimoniale
+2. **Investissement** : 100 000 € dans La Foncière Valora
 3. **Horizon** : 8-10 ans (jusqu'à la retraite)
 
 **Projection de performance**
@@ -683,7 +683,7 @@ Bien que théoriquement liquide, la revente de parts de foncière non cotée peu
 
 Le PEA-PME est un **outil fiscal puissant** qui permet d'investir dans l'immobilier via une foncière tout en optimisant drastiquement sa fiscalité.
 
-**La Foncière Patrimoniale**, éligible PEA-PME, offre une opportunité unique de combiner :
+**La Foncière Valora**, éligible PEA-PME, offre une opportunité unique de combiner :
 - Performance immobilière (8-12% TRI)
 - Optimisation fiscale (0% après 5 ans)
 - Professionnalisme de gestion
@@ -891,7 +891,7 @@ Pour les investisseurs avisés, c'est une stratégie patrimoniale de premier ord
             Vous souhaitez en savoir plus ?
           </h2>
           <p className="text-white/70 mb-8 max-w-2xl mx-auto">
-            Découvrez notre stratégie d'investissement et comment devenir associé de La Foncière Patrimoniale.
+            Découvrez notre stratégie d'investissement et comment devenir associé de La Foncière Valora.
           </p>
           <div className="flex flex-wrap gap-4 justify-center">
             <Link to={createPageUrl("StrategyPerformance")}>
