@@ -20,6 +20,76 @@ export default function BlogArticle() {
 
   const articles = [
     {
+      id: 6,
+      title: "Réforme Fiscale 2026 : Comment protéger votre holding patrimoniale de la taxe de 20 % ?",
+      slug: "reforme-fiscale-2026-taxe-holding-20-pourcent",
+      excerpt: "L'article 3 de la Loi de Finances 2026 instaure une taxe de 20 % sur les actifs non opérationnels des holdings patrimoniales. Analyse des critères, mécanismes et stratégies pour protéger votre structure.",
+      category: "Fiscalité",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "10 min",
+      image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
+      content: `
+# Réforme Fiscale 2026 : Comment protéger votre holding patrimoniale de la taxe de 20 % ?
+
+L'année 2026 marque un tournant historique pour les structures de détention patrimoniale. L'article 3 de la Loi de Finances pour 2026 (créant l'article 235 ter C du CGI) a instauré une **taxe de 20 %** ciblant les actifs non opérationnels des holdings, souvent qualifiées de « cash boxes ». Si votre société accumule des capitaux ou des biens sans activité économique réelle, il est urgent de réévaluer la nature de vos actifs pour éviter une imposition que beaucoup d'experts qualifient de « confiscatoire ».
+
+## Les 3 critères d'assujettissement : Êtes-vous dans le viseur ?
+
+Toutes les sociétés ne sont pas concernées par cette mesure. Le législateur a défini trois critères cumulatifs qui font basculer une holding dans le champ de la taxe :
+
+**1. Le seuil de patrimoine :** La valeur vénale brute des actifs doit atteindre au moins **5 millions €**. Ce seuil exclut les petites structures familiales pour se concentrer sur les patrimoines financiers et immobiliers significatifs.
+
+**2. La prépondérance passive :** Plus de **50 % des revenus totaux** (produits d'exploitation et financiers) doivent provenir de « revenus passifs » : dividendes, intérêts de placements, redevances ou loyers.
+
+**3. Le contrôle par des personnes physiques :** La taxe vise les structures détenues majoritairement (au moins 50 % des droits de vote ou financiers) par une personne physique ou son cercle familial. Les groupes institutionnels ou cotés en sont donc exclus.
+
+## Focus Immobilier : La ligne de partage entre « Outil de travail » et « Actif de jouissance »
+
+Le cœur de la réforme repose sur la qualification de vos actifs immobiliers. Pour une foncière, la distinction est vitale car elle détermine l'application du taux de 20 %.
+
+### Les actifs immobiliers imposables (non professionnels)
+
+Sont spécifiquement visés les biens dont la société se réserve la jouissance, sans utilité économique directe :
+
+- **Occupation à titre gratuit :** Logements occupés par les associés ou leur famille sans loyer.
+- **Loyers sous-évalués :** Biens loués à des conditions inférieures au marché (loyer de complaisance).
+- **Résidences secondaires et de villégiature :** Tout bien non exploité commercialement ou affecté à des loisirs (chasse, pêche).
+
+### Les actifs immobiliers exonérés (professionnels)
+
+Échappent à la taxe les biens qui participent réellement à l'activité de la foncière :
+
+- **Immobilier locatif de marché :** Les biens mis en location à des tiers dans des conditions normales de marché (loyer de pleine concurrence).
+- **Immobilier d'exploitation :** Biens affectés directement à l'activité industrielle, commerciale ou libérale de la société ou de ses filiales (bureaux occupés par le personnel, entrepôts opérationnels).
+
+## Mécanisme de calcul et calendrier : Ce qu'il faut savoir
+
+La taxe est assise sur la **valeur vénale des actifs taxables** au jour de la clôture de l'exercice.
+
+- **Le taux :** Fixé à 20 %, il représente une charge massive. Pour un actif imposable de 8 millions €, la taxe annuelle s'élève à **1 600 000 €**.
+- **La non-déductibilité :** Cette charge n'est pas déductible du bénéfice imposable à l'IS, ce qui alourdit encore le coût fiscal global.
+- **Non-cumul avec l'IFI :** Pour éviter une double imposition, les actifs soumis à cette taxe de 20 % sont exonérés d'Impôt sur la Fortune Immobilière (IFI). Cependant, le taux de 20 % est bien supérieur au plafond de 1,5 % de l'IFI.
+- **Échéance :** Elle s'applique aux exercices clos à compter du **31 décembre 2026**. La première déclaration et le paiement interviendront au printemps 2027.
+
+## Plan d'action : 3 stratégies pour sécuriser votre holding avant fin 2026
+
+Face à cette "taxe holding", l'inertie est votre pire ennemie. Voici les leviers d'optimisation préconisés par les experts :
+
+**1. Arbitrage et Réallocation :** Réorienter la trésorerie ou les actifs vers des investissements productifs ou des filiales opérationnelles pour repasser sous le seuil de 50 % de revenus passifs.
+
+**2. Normalisation des Baux :** Si vous détenez des biens occupés par des proches, réajustez les loyers aux prix du marché via des baux réels pour sortir ces actifs de l'assiette taxable.
+
+**3. Distribution de Dividendes :** Réduire la taille du bilan en distribuant une partie de la trésorerie accumulée pour redescendre en dessous du seuil de 5 millions € d'actifs.
+
+## Conclusion
+
+La réforme 2026 ne signifie pas la fin de la holding patrimoniale, mais elle impose une gestion plus **"dynamique"** et moins passive de vos actifs. Un diagnostic patrimonial complet avant le **31 décembre 2026** est indispensable pour identifier vos zones de risque.
+
+*Vous souhaitez analyser l'exposition de votre structure à cette nouvelle taxe ? Contactez notre équipe pour un diagnostic personnalisé.*
+      `
+    },
+    {
       id: 1,
       title: "Marché Immobilier 2026 : Opportunités et Perspectives pour les Investisseurs",
       slug: "marche-immobilier-2026-opportunites",
