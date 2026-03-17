@@ -80,6 +80,57 @@ Plus votre Tranche Marginale d'Imposition (TMI) est élevée, plus l'effet de le
       `
     },
     {
+      id: 15,
+      title: "Où investir en France en 2026 ? Les critères de choix et stratégies de la Foncière Valora",
+      slug: "ou-investir-france-2026-criteres-strategies-fonciere-valora",
+      excerpt: "Tension locative, rénovation BBC, dispositif Jeanbrun, PEA-PME... La Foncière Valora dévoile ses critères de sélection et ses zones d'intervention prioritaires pour maximiser le rendement en 2026.",
+      category: "Investissement",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "7 min",
+      image: "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80",
+      content: `
+# Où investir en France en 2026 ? Les critères de choix et stratégies de la Foncière Valora
+
+Le marché immobilier français de 2026 est entré dans une phase de normalisation après les cycles de correction de 2024-2025. Pour la Foncière Valora, cette période n'est plus à la spéculation aveugle, mais à l'investissement "Value-Add" : créer de la valeur par la transformation technique et la conformité environnementale.
+
+## 1. La Tension Locative : Le filtre n°1 de la Foncière Valora
+
+- **Zones Tendues :** La Foncière Valora privilégie les métropoles et leurs premières couronnes (Zones A bis, A et B1) où l'offre de logements est structurellement déficitaire.
+- **Marchés Secondaires Dynamiques :** La Foncière Valora identifie des opportunités à haut rendement dans des villes comme Vichy ou Clermont-Ferrand, où la pression locative est alimentée par des pôles universitaires et médicaux en expansion.
+
+## 2. L'Obsolescence Énergétique : Le moteur de performance Valora
+
+- **La Décote à l'Achat :** La Foncière Valora cible des immeubles classés E, F ou G, avec une décote de −10 % à −15 % par rapport au prix du marché "vert".
+- **La Transformation BBC :** L'objectif systématique est de porter ces actifs au niveau DPE A ou B, sécurisant une plus-value latente de +10 % à +15 % et garantissant la conformité aux interdictions de louer de 2028 et 2034.
+
+## 3. L'Ingénierie Financière et l'Effet de Levier
+
+- **LTC Cible de 80 % :** La Foncière Valora finance jusqu'à 80 % du coût total (acquisition + travaux). Avec des taux stabilisés autour de 3,25 % sur 20 ans, le levier permet de viser un **TRI cible supérieur à 10 % net**.
+- **Alignement d'Intérêts :** Rendement prioritaire (hurdle) de 6,5 %. La direction ne perçoit de carried interest qu'une fois cet objectif atteint pour les associés.
+
+## 4. Le Cadre Fiscal : Dispositif Jeanbrun et PEA-PME
+
+- **Le Dispositif Jeanbrun :** Permet d'amortir fiscalement 80 % de la valeur du bien, effaçant la quasi-totalité de l'imposition sur les revenus locatifs.
+- **Éligibilité PEA-PME :** **Exonération totale d'impôt sur le revenu (12,8 %)** sur les gains et plus-values après 5 ans de détention.
+
+## 5. Les Zones d'Intervention de la Foncière Valora en 2026
+
+- **Bordeaux :** Solidité patrimoniale et impact du futur RER Métropolitain.
+- **Lyon :** Tension locative extrême et opportunités créées par la ZFE.
+- **Vichy :** Rendements bruts supérieurs à 9 % et attractivité UNESCO.
+- **Clermont-Ferrand :** Bassin d'emploi industriel stable et prix d'entrée attractifs.
+
+## Conclusion
+
+Investir en France en 2026 demande de maîtriser une chaîne de valeur complexe : sourcing exclusif, ingénierie BTP BBC, fiscalité Jeanbrun et financement optimisé. La Foncière Valora offre cette expertise clé en main avec un modèle unique : **0 € de frais d'entrée** et un alignement total sur votre réussite patrimoniale.
+
+Bâtissez l'immobilier résidentiel de demain. Rejoignez le cercle d'associés de la Foncière Valora.
+
+*Contactez notre équipe pour découvrir nos prochaines opportunités d'investissement.*
+      `
+    },
+    {
       id: 14,
       title: "Investir à Lyon en 2026 : L'Analyse Stratégique de la Foncière Valora sur le Marché de la Métropole",
       slug: "investir-lyon-2026-analyse-strategique-fonciere-valora",
