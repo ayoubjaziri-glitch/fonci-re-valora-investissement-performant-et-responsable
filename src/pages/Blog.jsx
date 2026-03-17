@@ -1405,7 +1405,187 @@ Le dispositif Jeanbrun est donc une stratégie de **capitalisation et de revenus
 Plus votre Tranche Marginale d'Imposition (TMI) est élevée, plus l'effet de levier du dispositif Jeanbrun est spectaculaire. En effaçant l'imposition sur vos loyers et en réduisant votre impôt global, il s'impose comme **l'outil majeur de la structuration patrimoniale en 2026**.
 
 *Vous souhaitez évaluer l'impact du dispositif Jeanbrun sur votre situation fiscale ? Notre équipe vous accompagne dans votre stratégie patrimoniale.*
-    `
+      `
+  },
+  {
+    id: 21,
+    title: "Loi Climat et Résilience 2026 : Guide complet des nouvelles obligations pour les propriétaires bailleurs",
+    slug: "loi-climat-resilience-2026-obligations-proprietaires-bailleurs",
+    excerpt: "DPE obligatoire, interdictions de location, calendrier 2025-2034, sanctions et aides à la rénovation. La Loi Climat et Résilience transforme en profondeur le marché locatif français. Guide exhaustif pour propriétaires.",
+    category: "Marché",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "10 min",
+    image: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 22,
+    title: "Investir dans l'immobilier au Portugal en 2026 : Fiscalité, marchés et rendements",
+    slug: "investir-immobilier-portugal-2026-fiscalite-marches-rendements",
+    excerpt: "Porto, Lisbonne, Algarve... Le Portugal reste en 2026 l'une des destinations préférées des investisseurs français. Régime NHR, prix au m², rendements locatifs, processus d'achat : le guide complet.",
+    category: "Marché",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "9 min",
+    image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 23,
+    title: "La nue-propriété en 2026 : mécanisme complet, avantages fiscaux et stratégies patrimoniales",
+    slug: "nue-propriete-2026-mecanisme-avantages-fiscaux-strategies-patrimoniales",
+    excerpt: "Démembrement de propriété, usufruit temporaire, IFI, transmission optimisée... La nue-propriété est l'un des outils patrimoniaux les plus puissants. Décryptage complet du mécanisme et de ses bénéfices.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "8 min",
+    image: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 24,
+    title: "Créer et gérer une SCI familiale en 2026 : guide pratique, fiscalité et optimisation",
+    slug: "creer-gerer-sci-familiale-2026-guide-pratique-fiscalite",
+    excerpt: "Statuts, parts sociales, régime fiscal IR ou IS, transmission facilitée... La SCI familiale reste l'outil de référence pour gérer et transmettre un patrimoine immobilier. Guide complet 2026.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "8 min",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 25,
+    title: "Coliving en France 2026 : un marché en pleine expansion entre rendement et innovation sociale",
+    slug: "coliving-france-2026-marche-expansion-rendement-innovation",
+    excerpt: "Coûts partagés, vie communautaire, espaces communs... Le coliving s'impose comme un modèle résidentiel incontournable. Analyse du marché, des prix, des rendements et des acteurs en 2026.",
+    category: "Marché",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "7 min",
+    image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 26,
+    title: "Crowdfunding immobilier en 2026 : fonctionnement, risques, rendements et fiscalité",
+    slug: "crowdfunding-immobilier-2026-fonctionnement-risques-rendements",
+    excerpt: "Plateformes agréées AMF, obligations ou equity, rendements de 8 à 12 %... Le crowdfunding immobilier démocratise l'accès aux projets de promotion. Guide complet des mécanismes et des risques.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "8 min",
+    image: "https://images.unsplash.com/photo-1559526324-593bc073d938?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 27,
+    title: "Réforme de la copropriété 2026 : nouvelles obligations, droits et gestion des syndicats",
+    slug: "reforme-copropriete-2026-nouvelles-obligations-syndicats",
+    excerpt: "Fonds travaux obligatoires, digitalisation des AG, nouvelles règles de vote, encadrement des syndics... La réforme de la copropriété 2026 redistribue les cartes. Ce que tout copropriétaire doit savoir.",
+    category: "Gouvernance",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "9 min",
+    image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 28,
+    title: "Marché immobilier à Lisbonne en 2026 : analyse des arrondissements, prix et tendances",
+    slug: "marche-immobilier-lisbonne-2026-arrondissements-prix-tendances",
+    excerpt: "Alfama, Chiado, Parque das Nações... Lisbonne continue d'attirer les investisseurs du monde entier. Analyse détaillée des quartiers, des prix au m², des rendements locatifs et des perspectives 2026.",
+    category: "Marché",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "8 min",
+    image: "https://images.unsplash.com/photo-1555881400-74d7acaacd8b?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 29,
+    title: "SCPI en 2026 : bilan du marché, performances, comparatif et perspectives pour les épargnants",
+    slug: "scpi-2026-bilan-marche-performances-comparatif-perspectives",
+    excerpt: "Taux de distribution, valeur de reconstitution, capitalisation totale du marché... Les SCPI traversent une phase de consolidation en 2026. Analyse complète des performances, des risques et des alternatives.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "10 min",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 30,
+    title: "Le viager en 2026 : guide complet du mécanisme, calcul de la rente et fiscalité",
+    slug: "viager-2026-guide-complet-mecanisme-calcul-rente-fiscalite",
+    excerpt: "Viager occupé, viager libre, bouquet, rente viagère, espérance de vie... Le viager est un outil patrimonial souvent méconnu. Guide complet des mécanismes, des avantages pour vendeur et acquéreur.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "9 min",
+    image: "https://images.unsplash.com/photo-1569399078436-5a8f73b6a62a?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 31,
+    title: "RE2020 : La réglementation environnementale dans le neuf et son impact sur les prix immobiliers",
+    slug: "re2020-reglementation-environnementale-neuf-impact-prix-immobiliers",
+    excerpt: "Bilan carbone, matériaux biosourcés, cycle de vie du bâtiment, confort d'été... La RE2020 redéfinit les standards de la construction neuve. Analyse de l'impact sur les coûts de construction et les prix de vente.",
+    category: "Rénovation",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "8 min",
+    image: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 32,
+    title: "Immobilier de prestige en France 2026 : marchés, tendances et fiscalité des biens haut de gamme",
+    slug: "immobilier-prestige-france-2026-marches-tendances-fiscalite",
+    excerpt: "Paris 6e, 7e, 8e, Côte d'Azur, Alpes, châteaux... L'immobilier de prestige français fascine les acheteurs internationaux. Analyse des marchés premium, des prix records et de la fiscalité spécifique aux biens de luxe.",
+    category: "Marché",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "8 min",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 33,
+    title: "Droit de préemption urbain 2026 : guide complet pour propriétaires, investisseurs et acquéreurs",
+    slug: "droit-preemption-urbain-2026-guide-proprietaires-investisseurs",
+    excerpt: "DPU, DPUR, droit de préemption du locataire, procédure, délais et recours... Le droit de préemption est une réalité incontournable de l'immobilier urbain. Tout comprendre pour anticiper et protéger son projet.",
+    category: "Gouvernance",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "7 min",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 34,
+    title: "LMNP vs LMP en 2026 : comparatif complet, seuils, amortissement et choix du bon statut",
+    slug: "lmnp-vs-lmp-2026-comparatif-seuils-amortissement-choix-statut",
+    excerpt: "Régime micro-BIC ou réel, amortissement Censi-Bouvard, cotisations sociales, seuils de basculement LMP/LMNP... La location meublée offre une fiscalité puissante mais complexe. Guide comparatif exhaustif 2026.",
+    category: "Fiscalité",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "10 min",
+    image: "https://images.unsplash.com/photo-1554224154-26032ffc0d07?w=800&q=80",
+    content: ``
+  },
+  {
+    id: 35,
+    title: "Résidences services 2026 : investir dans l'étudiant, le senior et le tourisme en bail commercial",
+    slug: "residences-services-2026-etudiant-senior-tourisme-bail-commercial",
+    excerpt: "Résidences étudiantes, EHPAD, résidences de tourisme, bail commercial 3-6-9... Les résidences services offrent des rendements stables de 4 à 6 %. Guide complet des mécanismes, des risques et des stratégies.",
+    category: "Investissement",
+    author: "La Foncière Valora",
+    date: "17 Mars 2026",
+    readTime: "9 min",
+    image: "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?w=800&q=80",
+    content: ``
   }];
 
 
