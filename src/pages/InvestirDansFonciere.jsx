@@ -80,24 +80,7 @@ export default function InvestirDansFonciere() {
           </div>
         </div>
       </article>
-            <h2 className="text-4xl font-serif text-[#1A3A52] mb-8">Qu'est-ce qu'une Foncière Immobilière ?</h2>
-            
-            <div className="prose prose-lg max-w-none mb-8">
-              <p className="text-lg text-slate-700 leading-relaxed mb-6">
-                Une foncière immobilière est une société dont l'activité principale consiste à acquérir, gérer et valoriser 
-                un patrimoine immobilier. Contrairement à l'investissement locatif en direct, une foncière mutualise les 
-                capitaux de plusieurs investisseurs pour constituer un portefeuille diversifié d'actifs immobiliers générant 
-                des revenus locatifs et des plus-values de cession.
-              </p>
 
-              <p className="text-lg text-slate-700 leading-relaxed mb-6">
-                Le terme "foncière" désigne étymologiquement une société qui investit dans le foncier, c'est-à-dire dans 
-                des terrains et des bâtiments. Dans le contexte moderne de l'investissement immobilier, une foncière se 
-                distingue par sa structure professionnelle, sa gouvernance structurée et son approche stratégique de la 
-                création de valeur immobilière.
-              </p>
-
-              <h3 className="text-2xl font-serif text-[#1A3A52] mt-12 mb-6">Le Principe de Fonctionnement</h3>
               
               <p className="text-lg text-slate-700 leading-relaxed mb-6">
                 Une foncière fonctionne selon un schéma simple mais puissant : elle collecte des fonds auprès d'investisseurs 
