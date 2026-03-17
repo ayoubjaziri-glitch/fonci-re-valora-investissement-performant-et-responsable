@@ -41,7 +41,8 @@ export default function AdminRealisationsPlus() {
   const saveMutation = useMutation({
     mutationFn: async (data) => {
       const payload = {
-        titre: data.titre, location: data.location, annee: data.annee, image_avant: data.image_avant, 
+        titre: data.titre, location: data.location, lat: data.lat ? parseFloat(data.lat) : null, 
+        lng: data.lng ? parseFloat(data.lng) : null, annee: data.annee, image_avant: data.image_avant, 
         image_apres: data.image_apres, surface: data.surface, logements: data.logements, investissement: data.investissement,
         dpe_avant: data.dpe_avant, dpe_apres: data.dpe_apres, description_avant: data.description_avant,
         description_apres: data.description_apres, travaux: data.travaux, rendement_brut: data.rendement_brut,
