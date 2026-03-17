@@ -294,6 +294,7 @@ export default function AdminBackOffice() {
     equipe: 'Équipe',
     blog: 'Blog & Articles',
     levees: 'Levées de Fonds',
+    realisations: 'Nos Biens & Réalisations',
     acces: 'Accès Associés',
     kpis: 'KPIs & Métriques',
     docs: 'Documents',
@@ -371,6 +372,7 @@ export default function AdminBackOffice() {
           {activeTab === 'equipe' && <AdminEquipe />}
           {activeTab === 'blog' && <AdminBlog />}
           {activeTab === 'levees' && <AdminLeveeFonds />}
+          {activeTab === 'realisations' && <AdminRealisations />}
           {activeTab === 'acces' && (
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
               <GererAcces embedded />
