@@ -12,7 +12,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 
-import GestionPhotos from './GestionPhotos';
 import GererAcces from './GererAcces';
 import AdminEspaceAssocie from './AdminEspaceAssocie';
 import AdminEquipe from '../components/admin/AdminEquipe';
