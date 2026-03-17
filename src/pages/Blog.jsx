@@ -36,10 +36,11 @@ export default function Blog() {
     content: a.contenu || ''
   }));
 
-  const articles = [
-  {
-    id: 20,
-    title: "Investissement Immobilier 2026 : Le Guide Stratégique de la Foncière Valora",
+  // Utiliser les articles de la BDD en fallback sur les statiques
+  const articles = articlesFromDB.length > 0 ? articlesFromDB : [
+   {
+     id: 20,
+     title: "Investissement Immobilier 2026 : Le Guide Stratégique de la Foncière Valora",
     slug: "investissement-immobilier-2026-guide-strategique-fonciere-valora",
     excerpt: "Rendement résilient, valeur verte, effet de levier... La Foncière Valora décrypte les leviers clés pour transformer les mutations du marché 2026 en opportunités de croissance durable.",
     category: "Investissement",
