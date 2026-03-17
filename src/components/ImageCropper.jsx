@@ -65,13 +65,7 @@ export default function ImageCropper({ imageSrc, onCropComplete, onCancel, aspec
     ctx.strokeStyle = '#C9A961';
     ctx.lineWidth = 2;
     ctx.strokeRect(1, 1, cw - 2, ch - 2);
-    // Draw grid lines
-    ctx.strokeStyle = 'rgba(201,169,97,0.4)';
-    ctx.lineWidth = 1;
-    for (let i = 1; i < 3; i++) {
-      ctx.beginPath(); ctx.moveTo(cw * i / 3, 0); ctx.lineTo(cw * i / 3, ch); ctx.stroke();
-      ctx.beginPath(); ctx.moveTo(0, ch * i / 3); ctx.lineTo(cw, ch * i / 3); ctx.stroke();
-    }
+
   };
 
   const handleMouseDown = (e) => {
