@@ -12,6 +12,7 @@ export default function AdminEquipe() {
   const qc = useQueryClient();
   const [editing, setEditing] = useState(null); // null | 'new' | {id,...}
   const [form, setForm] = useState(EMPTY);
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   const { data: membres = [] } = useQuery({
     queryKey: ['membres-equipe'],
@@ -29,6 +30,20 @@ export default function AdminEquipe() {
     mutationFn: (id) => base44.entities.MembreEquipe.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['membres-equipe'] }),
   });
+
+  const handlePhotoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingPhoto(true);
+    try {
+      const res = await base44.integrations.Core.UploadFile({ file });
+      setForm({ ...form, image_url: res.file_url });
+    } catch (err) {
+      console.error('Upload échoué:', err);
+    } finally {
+      setUploadingPhoto(false);
+    }
+  };
 
   const openNew = () => { setForm(EMPTY); setEditing('new'); };
   const openEdit = (m) => { setForm({ ...m }); setEditing(m); };
