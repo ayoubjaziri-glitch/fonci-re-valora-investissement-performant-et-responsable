@@ -8,6 +8,8 @@ import {
   Facebook, Linkedin, Mail, ChevronRight
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 
 export default function BlogArticle() {
   const location = useLocation();
@@ -18,7 +20,28 @@ export default function BlogArticle() {
     window.scrollTo(0, 0);
   }, [slug]);
 
-  const articles = [
+  // Charger tous les articles de la BDD
+  const { data: articlesDB = [], isLoading } = useQuery({
+    queryKey: ['blog-articles'],
+    queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 100),
+    initialData: []
+  });
+
+  // Mapper les articles de la BDD au format utilisé
+  const dbArticles = articlesDB.filter(a => a.publie).map(a => ({
+    id: a.id,
+    title: a.titre,
+    slug: a.slug,
+    excerpt: a.extrait,
+    category: a.categorie,
+    author: a.auteur || 'La Foncière Valora',
+    date: a.date_publication ? new Date(a.date_publication).toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' }) : '',
+    readTime: a.temps_lecture || '5 min',
+    image: a.image_url || 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80',
+    content: a.contenu || ''
+  }));
+
+  const staticArticles = [
     {
       id: 20,
       title: "Investissement Immobilier 2026 : Le Guide Stratégique de la Foncière Valora",
