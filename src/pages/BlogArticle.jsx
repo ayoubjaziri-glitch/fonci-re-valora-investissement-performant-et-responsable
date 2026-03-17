@@ -20,6 +20,66 @@ export default function BlogArticle() {
 
   const articles = [
     {
+      id: 7,
+      title: "Dispositif Jeanbrun 2026 : Le guide complet du nouvel investissement locatif amortissable",
+      slug: "dispositif-jeanbrun-2026-guide-complet-investissement-locatif",
+      excerpt: "Après le Pinel, découvrez le nouveau dispositif Jeanbrun : un mécanisme d'amortissement comptable révolutionnaire pour l'investissement locatif en 2026. Guide complet des conditions, taux et stratégies.",
+      category: "Fiscalité",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "9 min",
+      image: "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80",
+      content: `
+# Dispositif Jeanbrun 2026 : Le guide complet du nouvel investissement locatif amortissable
+
+Après l'extinction définitive du dispositif Pinel fin 2024, le marché immobilier locatif français a connu une phase d'attentisme. La réponse du gouvernement est arrivée avec le plan « Relance Logement », instaurant par l'article 47 de la loi de finances pour 2026 le **dispositif Jeanbrun**. Contrairement à ses prédécesseurs fondés sur des réductions d'impôt forfaitaires, ce nouveau statut du bailleur privé repose sur un mécanisme d'**amortissement comptable**, offrant une stratégie patrimoniale de long terme bien plus proche de la réalité économique des actifs.
+
+## Le mécanisme de l'amortissement : Comment ça marche ?
+
+La grande révolution de la "Loi Jeanbrun" est l'introduction de l'amortissement pour la **location nue**, un avantage jusqu'ici réservé au statut LMNP (Loueur en Meublé Non Professionnel). L'État reconnaît désormais que le bâti subit une usure théorique et vous autorise à déduire cette "perte de valeur" de vos revenus fonciers.
+
+**L'assiette amortissable :** La loi fixe forfaitairement la valeur du bâti amortissable à **80 %** du prix d'acquisition (les 20 % restants représentant le terrain, actif non amortissable).
+
+**Les taux annuels :** Ils dépendent de votre engagement social (plus le loyer est bas, plus le taux est élevé) :
+
+- **Loyer intermédiaire :** 3,5 % par an (plafonné à 8 000 €)
+- **Loyer social :** 4,5 % par an (plafonné à 10 000 €)
+- **Loyer très social :** 5,5 % par an (plafonné à 12 000 €)
+
+> Note : Les taux sont légèrement minorés pour l'immobilier ancien rénové (respectivement 3 %, 3,5 % et 4 %).
+
+## Le levier du "Super-Déficit" foncier
+
+Le dispositif Jeanbrun permet de cumuler deux avantages fiscaux puissants. En plus de l'amortissement, vous déduisez l'intégralité des charges réelles : intérêts d'emprunt, taxe foncière, frais de gestion et primes d'assurance.
+
+Si la somme de l'amortissement et des charges dépasse vos revenus locatifs, vous créez un **déficit foncier**. Ce déficit est alors imputable sur votre revenu global (salaires, pensions) dans la limite de **10 700 € par an**. Ce plafond est même doublé à **21 400 €** jusqu'en 2027 pour les travaux de rénovation énergétique dans l'ancien.
+
+## Les conditions d'éligibilité en 2026
+
+Pour sécuriser votre avantage fiscal sur les **9 années d'engagement obligatoire**, vous devez respecter des critères stricts :
+
+**Nature du bien :** Le dispositif cible exclusivement les immeubles collectifs. Les maisons individuelles sont explicitement exclues pour favoriser la densification urbaine.
+
+**Performance énergétique :** Le neuf doit respecter la norme RE2020. Pour l'ancien, les travaux doivent représenter au moins **30 % du prix d'acquisition** et permettre au bien d'atteindre la **classe A ou B** au DPE.
+
+**Plafonds de loyers :** Le calcul du loyer maximum suit une formule précise intégrant un coefficient multiplicateur basé sur la surface pondérée du logement (plafonné à 1,2 pour les surfaces inférieures à 38 m²).
+
+**Zonage universel :** Contrairement au Pinel, l'éligibilité au Jeanbrun est **nationale**. Vous pouvez investir partout en France, bien que les plafonds de loyers restent indexés sur les zones (A bis, A, B1, B2).
+
+## Stratégie de revente et plus-value
+
+Il est crucial d'anticiper la sortie de l'investissement. À la revente, les amortissements pratiqués pendant la détention sont **réintégrés** pour le calcul de la plus-value immobilière. Cela signifie que votre prix d'acquisition "comptable" diminue, augmentant mécaniquement l'assiette taxable à la sortie.
+
+Le dispositif Jeanbrun est donc une stratégie de **capitalisation et de revenus complémentaires à long terme**, plutôt qu'un outil d'achat-revente rapide.
+
+## Conclusion
+
+Plus votre Tranche Marginale d'Imposition (TMI) est élevée, plus l'effet de levier du dispositif Jeanbrun est spectaculaire. En effaçant l'imposition sur vos loyers et en réduisant votre impôt global, il s'impose comme **l'outil majeur de la structuration patrimoniale en 2026**.
+
+*Vous souhaitez évaluer l'impact du dispositif Jeanbrun sur votre situation fiscale ? Notre équipe vous accompagne dans votre stratégie patrimoniale.*
+      `
+    },
+    {
       id: 6,
       title: "Réforme Fiscale 2026 : Comment protéger votre holding patrimoniale de la taxe de 20 % ?",
       slug: "reforme-fiscale-2026-taxe-holding-20-pourcent",
