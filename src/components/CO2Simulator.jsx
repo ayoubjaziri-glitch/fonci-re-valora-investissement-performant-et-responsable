@@ -384,29 +384,59 @@ export default function CO2Simulator() {
                   </div>
                 </div>
 
-                {/* Graphique référentiel DPE */}
+                {/* Coût estimatif travaux */}
                 <div className="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm">
-                  <h4 className="font-semibold text-[#1A3A52] mb-1">Référentiel DPE — Émissions CO₂</h4>
-                  <p className="text-xs text-slate-400 mb-5">kgCO₂eq/m²/an par classe énergétique</p>
-                  <ResponsiveContainer width="100%" height={180}>
-                    <BarChart data={chartData} barSize={32}>
-                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" />
-                      <XAxis dataKey="dpe" tick={{ fontSize: 12, fontWeight: 700 }} />
-                      <YAxis tick={{ fontSize: 11 }} />
-                      <Tooltip content={<CustomTooltip />} />
-                      <Bar dataKey="CO₂ (kg/m²/an)" radius={[6, 6, 0, 0]}>
-                        {chartData.map((entry, index) => (
-                          <Cell
-                            key={index}
-                            fill={entry.fill}
-                            opacity={
-                              entry.dpe === dpeAvant || entry.dpe === dpeApres ? 1 : 0.35
-                            }
-                          />
-                        ))}
-                      </Bar>
+                  <div className="flex items-center justify-between mb-2">
+                    <h4 className="font-semibold text-[#1A3A52]">Coût estimatif des travaux</h4>
+                    <span className={`text-xs px-3 py-1 rounded-full font-semibold ${
+                      calc.niveau === 'léger' ? 'bg-blue-100 text-blue-700' :
+                      calc.niveau === 'moyen' ? 'bg-amber-100 text-amber-700' :
+                      calc.niveau === 'complet' ? 'bg-orange-100 text-orange-700' :
+                      'bg-red-100 text-red-700'
+                    }`}>
+                      Rénovation {calc.niveau}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400 mb-5">Estimation basée sur les barèmes ADEME / ANAH 2024 — {calc.cout_m2} €/m² en moyenne</p>
+
+                  {/* Fourchette de coût */}
+                  <div className="bg-gradient-to-br from-[#1A3A52] to-[#2A4A6F] rounded-2xl p-5 mb-5 text-white text-center">
+                    <p className="text-white/60 text-xs mb-1">Fourchette estimée</p>
+                    <p className="text-3xl font-bold text-[#C9A961]">
+                      {calc.cout_travaux_min.toLocaleString('fr-FR')} – {calc.cout_travaux_max.toLocaleString('fr-FR')} €
+                    </p>
+                    <p className="text-white/60 text-sm mt-1">Moyenne : {calc.cout_travaux_moy.toLocaleString('fr-FR')} € · soit {calc.cout_m2} €/m²</p>
+                    {calc.roi_ans && (
+                      <p className="text-emerald-400 text-xs mt-2 font-semibold">
+                        Retour sur investissement estimé : ~{calc.roi_ans} ans (via économies énergétiques)
+                      </p>
+                    )}
+                  </div>
+
+                  {/* Répartition par poste */}
+                  <h5 className="text-sm font-semibold text-slate-700 mb-3">Répartition par poste de travaux</h5>
+                  <ResponsiveContainer width="100%" height={160}>
+                    <BarChart data={chartData} barSize={28} layout="vertical">
+                      <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
+                      <XAxis type="number" tick={{ fontSize: 10 }} tickFormatter={v => `${v.toLocaleString('fr-FR')} €`} />
+                      <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={130} />
+                      <Tooltip formatter={(v) => [`${v.toLocaleString('fr-FR')} €`, 'Montant estimé']} />
+                      <Bar dataKey="montant" radius={[0, 6, 6, 0]} fill="#C9A961" />
                     </BarChart>
                   </ResponsiveContainer>
+
+                  {/* Aides disponibles */}
+                  <div className="mt-5 pt-4 border-t border-slate-100">
+                    <h5 className="text-sm font-semibold text-slate-700 mb-3">💡 Aides mobilisables</h5>
+                    <div className="flex flex-wrap gap-2">
+                      {calc.aides.map((aide, i) => (
+                        <div key={i} className="bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2 text-xs">
+                          <span className="font-semibold text-emerald-800">{aide.nom}</span>
+                          <span className="text-emerald-600 ml-1">→ {aide.montant}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </>
             ) : (
