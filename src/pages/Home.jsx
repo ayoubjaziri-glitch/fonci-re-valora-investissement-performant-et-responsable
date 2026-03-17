@@ -61,7 +61,7 @@ export default function Home() {
   const stats = [
   { value: "18 ans", label: "D'expertise immobilière", icon: Calendar },
   { value: "3 M€", label: "D'actifs sous gestion", icon: Building2 },
-  { value: ">7%", label: "TRI net visé", icon: Percent },
+  { value: ">10%", label: "TRI net visé", icon: Percent },
   { value: "20 M€", label: "Objectif 5 ans", icon: Target }];
 
 
