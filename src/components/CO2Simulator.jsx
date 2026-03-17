@@ -8,12 +8,12 @@ import { Euro } from 'lucide-react';
 // DPE data: kWhEP/m²/an (énergie primaire) et kgCO2eq/m²/an
 const DPE_DATA = {
   G: { label: 'G', minEP: 420, co2: 115, color: '#8B0000', bgColor: '#FEE2E2' },
-  F: { label: 'F', minEP: 331, co2: 85,  color: '#DC2626', bgColor: '#FEE2E2' },
-  E: { label: 'E', minEP: 251, co2: 60,  color: '#F97316', bgColor: '#FFEDD5' },
-  D: { label: 'D', minEP: 181, co2: 35,  color: '#EAB308', bgColor: '#FEF9C3' },
-  C: { label: 'C', minEP: 111, co2: 16,  color: '#22C55E', bgColor: '#DCFCE7' },
-  B: { label: 'B', minEP: 71,  co2: 7,   color: '#16A34A', bgColor: '#DCFCE7' },
-  A: { label: 'A', minEP: 50,  co2: 2.5, color: '#15803D', bgColor: '#DCFCE7' },
+  F: { label: 'F', minEP: 331, co2: 85, color: '#DC2626', bgColor: '#FEE2E2' },
+  E: { label: 'E', minEP: 251, co2: 60, color: '#F97316', bgColor: '#FFEDD5' },
+  D: { label: 'D', minEP: 181, co2: 35, color: '#EAB308', bgColor: '#FEF9C3' },
+  C: { label: 'C', minEP: 111, co2: 16, color: '#22C55E', bgColor: '#DCFCE7' },
+  B: { label: 'B', minEP: 71, co2: 7, color: '#16A34A', bgColor: '#DCFCE7' },
+  A: { label: 'A', minEP: 50, co2: 2.5, color: '#15803D', bgColor: '#DCFCE7' }
 };
 
 const DPE_ORDER = ['G', 'F', 'E', 'D', 'C', 'B', 'A'];
@@ -28,20 +28,20 @@ const KM_PAR_KG_CO2 = 6.5;
 // Coût estimatif travaux par m² selon scénario de rénovation (source: ADEME, ANAH 2024)
 // clé = dpeAvant_dpeApres
 const COUT_TRAVAUX_M2 = {
-  'G_F': 80,  'G_E': 160, 'G_D': 280, 'G_C': 420, 'G_B': 600, 'G_A': 800,
+  'G_F': 80, 'G_E': 160, 'G_D': 280, 'G_C': 420, 'G_B': 600, 'G_A': 800,
   'F_E': 100, 'F_D': 200, 'F_C': 350, 'F_B': 520, 'F_A': 720,
   'E_D': 120, 'E_C': 260, 'E_B': 420, 'E_A': 620,
   'D_C': 150, 'D_B': 300, 'D_A': 500,
   'C_B': 180, 'C_A': 380,
-  'B_A': 220,
+  'B_A': 220
 };
 
 // Détail des postes de travaux selon le niveau de rénovation
 const POSTES_TRAVAUX = {
-  léger:    [{ poste: 'Isolation combles', pct: 30 }, { poste: 'Menuiseries', pct: 35 }, { poste: 'Régulation chauffage', pct: 20 }, { poste: 'Ventilation', pct: 15 }],
-  moyen:    [{ poste: 'Isolation (ITE/ITI)', pct: 35 }, { poste: 'Menuiseries', pct: 20 }, { poste: 'Chauffage (PAC/poêle)', pct: 30 }, { poste: 'VMC double flux', pct: 15 }],
-  complet:  [{ poste: 'Isolation globale', pct: 30 }, { poste: 'PAC haute perf.', pct: 25 }, { poste: 'VMC double flux', pct: 10 }, { poste: 'Menuiseries triple vitrage', pct: 20 }, { poste: 'Solaire thermique', pct: 15 }],
-  total:    [{ poste: 'Isolation + ITE', pct: 28 }, { poste: 'PAC géothermique', pct: 22 }, { poste: 'VMC double flux', pct: 10 }, { poste: 'Menuiseries AAA', pct: 18 }, { poste: 'Solaire PV', pct: 12 }, { poste: 'Second œuvre', pct: 10 }],
+  léger: [{ poste: 'Isolation combles', pct: 30 }, { poste: 'Menuiseries', pct: 35 }, { poste: 'Régulation chauffage', pct: 20 }, { poste: 'Ventilation', pct: 15 }],
+  moyen: [{ poste: 'Isolation (ITE/ITI)', pct: 35 }, { poste: 'Menuiseries', pct: 20 }, { poste: 'Chauffage (PAC/poêle)', pct: 30 }, { poste: 'VMC double flux', pct: 15 }],
+  complet: [{ poste: 'Isolation globale', pct: 30 }, { poste: 'PAC haute perf.', pct: 25 }, { poste: 'VMC double flux', pct: 10 }, { poste: 'Menuiseries triple vitrage', pct: 20 }, { poste: 'Solaire thermique', pct: 15 }],
+  total: [{ poste: 'Isolation + ITE', pct: 28 }, { poste: 'PAC géothermique', pct: 22 }, { poste: 'VMC double flux', pct: 10 }, { poste: 'Menuiseries AAA', pct: 18 }, { poste: 'Solaire PV', pct: 12 }, { poste: 'Second œuvre', pct: 10 }]
 };
 
 function getNiveauRenovation(dpeAvant, dpeApres) {
@@ -56,34 +56,34 @@ function getNiveauRenovation(dpeAvant, dpeApres) {
 
 // Aides disponibles selon le niveau
 const AIDES = {
-  léger:   [{ nom: 'MaPrimeRénov\'', montant: '25%' }, { nom: 'CEE', montant: '5–10%' }],
-  moyen:   [{ nom: 'MaPrimeRénov\'', montant: '35%' }, { nom: 'CEE', montant: '10%' }, { nom: 'Éco-PTZ', montant: '30 000 €' }],
+  léger: [{ nom: 'MaPrimeRénov\'', montant: '25%' }, { nom: 'CEE', montant: '5–10%' }],
+  moyen: [{ nom: 'MaPrimeRénov\'', montant: '35%' }, { nom: 'CEE', montant: '10%' }, { nom: 'Éco-PTZ', montant: '30 000 €' }],
   complet: [{ nom: 'MaPrimeRénov\'', montant: '50%' }, { nom: 'CEE', montant: '12%' }, { nom: 'Éco-PTZ', montant: '50 000 €' }],
-  total:   [{ nom: 'MaPrimeRénov\' Sérénité', montant: '50–70%' }, { nom: 'CEE', montant: '15%' }, { nom: 'Éco-PTZ', montant: '50 000 €' }, { nom: 'ANAH', montant: 'selon revenu' }],
+  total: [{ nom: 'MaPrimeRénov\' Sérénité', montant: '50–70%' }, { nom: 'CEE', montant: '15%' }, { nom: 'Éco-PTZ', montant: '50 000 €' }, { nom: 'ANAH', montant: 'selon revenu' }]
 };
 
 function DpeSelector({ label, value, onChange }) {
   return (
     <div>
-      <p className="text-sm font-semibold text-slate-600 mb-3">{label}</p>
+      <p className="text-slate-600 mt-1 mb-3 text-sm font-semibold">{label}</p>
       <div className="flex gap-2 flex-wrap">
-        {DPE_ORDER.map(dpe => (
-          <button
-            key={dpe}
-            onClick={() => onChange(dpe)}
-            className={`w-11 h-11 rounded-xl font-bold text-sm transition-all border-2 ${
-              value === dpe
-                ? 'scale-110 shadow-lg border-transparent text-white'
-                : 'border-transparent text-slate-700 bg-slate-100 hover:bg-slate-200'
-            }`}
-            style={value === dpe ? { backgroundColor: DPE_DATA[dpe].color } : {}}
-          >
+        {DPE_ORDER.map((dpe) =>
+        <button
+          key={dpe}
+          onClick={() => onChange(dpe)}
+          className={`w-11 h-11 rounded-xl font-bold text-sm transition-all border-2 ${
+          value === dpe ?
+          'scale-110 shadow-lg border-transparent text-white' :
+          'border-transparent text-slate-700 bg-slate-100 hover:bg-slate-200'}`
+          }
+          style={value === dpe ? { backgroundColor: DPE_DATA[dpe].color } : {}}>
+          
             {dpe}
           </button>
-        ))}
+        )}
       </div>
-    </div>
-  );
+    </div>);
+
 }
 
 function MetricCard({ icon: Icon, label, value, unit, sub, color = '#C9A961', highlight = false }) {
@@ -100,8 +100,8 @@ function MetricCard({ icon: Icon, label, value, unit, sub, color = '#C9A961', hi
         <span className="text-sm font-normal ml-1" style={{ color: highlight ? '#C9A961' : '#64748b' }}>{unit}</span>
       </p>
       {sub && <p className={`text-xs mt-0.5 ${highlight ? 'text-white/60' : 'text-slate-400'}`}>{sub}</p>}
-    </div>
-  );
+    </div>);
+
 }
 
 const CustomTooltip = ({ active, payload, label }) => {
@@ -109,11 +109,11 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="bg-[#1A3A52] text-white px-4 py-3 rounded-xl shadow-xl text-sm">
         <p className="font-semibold mb-1">DPE {label}</p>
-        {payload.map((p, i) => (
-          <p key={i} style={{ color: p.color }}>{p.name} : <strong>{p.value}</strong></p>
-        ))}
-      </div>
-    );
+        {payload.map((p, i) =>
+        <p key={i} style={{ color: p.color }}>{p.name} : <strong>{p.value}</strong></p>
+        )}
+      </div>);
+
   }
   return null;
 };
@@ -143,11 +143,11 @@ export default function CO2Simulator() {
     const cout_apres = ep_apres * COUT_KWH;
     const cout_economie = cout_avant - cout_apres;
 
-    const arbres = Math.round((co2_economie / 1000) * ARBRES_PAR_TONNE);
+    const arbres = Math.round(co2_economie / 1000 * ARBRES_PAR_TONNE);
     const km_voiture = Math.round(co2_economie * KM_PAR_KG_CO2);
 
-    const pct_ep = ep_avant > 0 ? Math.round((ep_economie / ep_avant) * 100) : 0;
-    const pct_co2 = co2_avant > 0 ? Math.round((co2_economie / co2_avant) * 100) : 0;
+    const pct_ep = ep_avant > 0 ? Math.round(ep_economie / ep_avant * 100) : 0;
+    const pct_co2 = co2_avant > 0 ? Math.round(co2_economie / co2_avant * 100) : 0;
 
     const cle = `${dpeAvant}_${dpeApres}`;
     const cout_m2 = COUT_TRAVAUX_M2[cle] || 300;
@@ -164,19 +164,19 @@ export default function CO2Simulator() {
   }, [surface, dpeAvant, dpeApres]);
 
   // Données graphique coût par poste
-  const chartData = calc.postes ? calc.postes.map(p => ({
+  const chartData = calc.postes ? calc.postes.map((p) => ({
     name: p.poste,
     montant: Math.round(p.pct / 100 * calc.cout_travaux_moy),
     pct: p.pct,
-    fill: '#C9A961',
+    fill: '#C9A961'
   })) : [];
 
   const scenariosRapides = [
-    { label: 'Passoire → Décent', av: 'F', ap: 'C', desc: 'Rénovation standard' },
-    { label: 'Passoire → Excellent', av: 'F', ap: 'A', desc: 'Rénovation globale' },
-    { label: 'Médiocre → Performant', av: 'E', ap: 'B', desc: 'Rénovation avancée' },
-    { label: 'Très mauvais → Décent', av: 'G', ap: 'C', desc: 'Réhabilitation complète' },
-  ];
+  { label: 'Passoire → Décent', av: 'F', ap: 'C', desc: 'Rénovation standard' },
+  { label: 'Passoire → Excellent', av: 'F', ap: 'A', desc: 'Rénovation globale' },
+  { label: 'Médiocre → Performant', av: 'E', ap: 'B', desc: 'Rénovation avancée' },
+  { label: 'Très mauvais → Décent', av: 'G', ap: 'C', desc: 'Réhabilitation complète' }];
+
 
   return (
     <section className="py-8 bg-gradient-to-b from-slate-50 to-white">
@@ -186,8 +186,8 @@ export default function CO2Simulator() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-5"
-        >
+          className="text-center mb-5">
+          
           <div className="flex items-center justify-center gap-3 mb-3">
             <div className="w-8 h-0.5 bg-[#C9A961]" />
             <span className="text-[#C9A961] font-medium tracking-wider uppercase text-xs">Outil interactif</span>
@@ -207,8 +207,8 @@ export default function CO2Simulator() {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-1 space-y-4"
-          >
+            className="lg:col-span-1 space-y-4">
+            
             {/* Surface */}
             <div className="bg-white rounded-2xl p-5 border border-slate-200 shadow-sm">
               <h3 className="font-semibold text-[#1A3A52] mb-4 text-sm flex items-center gap-2">
@@ -224,32 +224,32 @@ export default function CO2Simulator() {
                   value={[surface]}
                   onValueChange={([v]) => setSurface(v)}
                   min={100} max={1000} step={10}
-                  className="mt-1"
-                />
+                  className="mt-1" />
+                
                 <div className="flex justify-between text-xs text-slate-400 mt-1">
                   <span>100 m²</span><span>1 000 m²</span>
                 </div>
               </div>
 
               <DpeSelector label="DPE avant travaux" value={dpeAvant} onChange={setDpeAvant} />
-              <div className="my-3 flex items-center gap-2 text-slate-400">
-                <div className="flex-1 h-px bg-slate-200" />
-                <ArrowRight className="h-3 w-3" />
-                <div className="flex-1 h-px bg-slate-200" />
-              </div>
+              
+
+
+
+              
               <DpeSelector label="DPE après travaux" value={dpeApres} onChange={setDpeApres} />
 
-              {!isValid && (
-                <div className="mt-3 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl p-2.5">
+              {!isValid &&
+              <div className="mt-3 flex items-start gap-2 bg-amber-50 border border-amber-200 rounded-xl p-2.5">
                   <Info className="h-4 w-4 text-amber-600 mt-0.5 flex-shrink-0" />
                   <p className="text-xs text-amber-700">Sélectionnez un DPE après travaux meilleur que le DPE initial.</p>
                 </div>
-              )}
+              }
             </div>
 
             {/* KPIs compacts */}
-            {isValid && (
-              <div className="space-y-2">
+            {isValid &&
+            <div className="space-y-2">
                 <div className="bg-[#1A3A52] rounded-xl p-3 border border-[#1A3A52] text-white flex items-center gap-2">
                   <div className="w-7 h-7 rounded-lg flex items-center justify-center bg-[#C9A961]/20 flex-shrink-0">
                     <TrendingDown className="h-4 w-4 text-[#C9A961]" />
@@ -287,7 +287,7 @@ export default function CO2Simulator() {
                   </div>
                 </div>
               </div>
-            )}
+            }
           </motion.div>
 
           {/* Résultats */}
@@ -295,13 +295,13 @@ export default function CO2Simulator() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="lg:col-span-2 space-y-6"
-          >
-            {isValid ? (
-              <>
+            className="lg:col-span-2 space-y-6">
+            
+            {isValid ?
+            <>
                 {/* Comparaison avant / après + barre */}
-                <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
-                  <h4 className="font-semibold text-[#1A3A52] mb-3 text-sm">Comparaison Avant / Après</h4>
+                <div className="bg-white px-4 py-2 rounded-2xl border border-slate-200 shadow-sm">
+                  <h4 className="text-[#1A3A52] mb-2 text-sm font-semibold">Comparaison Avant / Après</h4>
                   <div className="grid grid-cols-3 gap-3 text-center mb-3">
                     <div className="rounded-xl p-3" style={{ backgroundColor: DPE_DATA[dpeAvant].bgColor }}>
                       <div className="w-10 h-10 rounded-full mx-auto flex items-center justify-center text-white text-lg font-black mb-1" style={{ backgroundColor: DPE_DATA[dpeAvant].color }}>{dpeAvant}</div>
@@ -329,7 +329,7 @@ export default function CO2Simulator() {
                     <span className="text-slate-400">Émissions restantes</span>
                     <span className="text-emerald-600 font-semibold">Économie : {calc.pct_co2}%</span>
                   </div>
-                  <div className="mt-3 bg-slate-50 rounded-xl p-3 flex items-center gap-2">
+                  <div className="bg-slate-50 mt-3 px-3 rounded-xl flex items-center gap-2">
                     <span className="text-lg">🚗</span>
                     <p className="text-xs text-slate-600">
                       Équivaut à <strong className="text-[#1A3A52]">{calc.km_voiture.toLocaleString('fr-FR')} km</strong> évités/an en voiture thermique.
@@ -338,15 +338,15 @@ export default function CO2Simulator() {
                 </div>
 
                 {/* Coût estimatif travaux */}
-                <div className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm">
+                <div className="bg-white px-4 py-2 rounded-2xl border border-slate-200 shadow-sm">
                   <div className="flex items-center justify-between mb-1">
                     <h4 className="font-semibold text-[#1A3A52] text-sm">Coût estimatif des travaux</h4>
                     <span className={`text-xs px-2 py-0.5 rounded-full font-semibold ${
-                      calc.niveau === 'léger' ? 'bg-blue-100 text-blue-700' :
-                      calc.niveau === 'moyen' ? 'bg-amber-100 text-amber-700' :
-                      calc.niveau === 'complet' ? 'bg-orange-100 text-orange-700' :
-                      'bg-red-100 text-red-700'
-                    }`}>Rénovation {calc.niveau}</span>
+                  calc.niveau === 'léger' ? 'bg-blue-100 text-blue-700' :
+                  calc.niveau === 'moyen' ? 'bg-amber-100 text-amber-700' :
+                  calc.niveau === 'complet' ? 'bg-orange-100 text-orange-700' :
+                  'bg-red-100 text-red-700'}`
+                  }>Rénovation {calc.niveau}</span>
                   </div>
                   <p className="text-xs text-slate-400 mb-3">{calc.cout_m2} €/m² en moyenne (ADEME/ANAH 2024)</p>
 
@@ -362,35 +362,35 @@ export default function CO2Simulator() {
                   <ResponsiveContainer width="100%" height={130}>
                     <BarChart data={chartData} barSize={20} layout="vertical">
                       <CartesianGrid strokeDasharray="3 3" stroke="#f1f5f9" horizontal={false} />
-                      <XAxis type="number" tick={{ fontSize: 9 }} tickFormatter={v => `${(v/1000).toFixed(0)}k€`} />
+                      <XAxis type="number" tick={{ fontSize: 9 }} tickFormatter={(v) => `${(v / 1000).toFixed(0)}k€`} />
                       <YAxis type="category" dataKey="name" tick={{ fontSize: 10 }} width={120} />
                       <Tooltip formatter={(v) => [`${v.toLocaleString('fr-FR')} €`, 'Montant']} />
                       <Bar dataKey="montant" radius={[0, 4, 4, 0]} fill="#C9A961" />
                     </BarChart>
                   </ResponsiveContainer>
 
-                  <div className="mt-3 pt-3 border-t border-slate-100">
+                  <div className="mt-3 border-t border-slate-100">
                     <p className="text-xs font-semibold text-slate-600 mb-2">💡 Aides mobilisables</p>
                     <div className="flex flex-wrap gap-1.5">
-                      {calc.aides.map((aide, i) => (
-                        <div key={i} className="bg-emerald-50 border border-emerald-200 rounded-lg px-2 py-1 text-xs">
+                      {calc.aides.map((aide, i) =>
+                    <div key={i} className="bg-emerald-50 border border-emerald-200 rounded-lg px-2 py-1 text-xs">
                           <span className="font-semibold text-emerald-800">{aide.nom}</span>
                           <span className="text-emerald-600 ml-1">→ {aide.montant}</span>
                         </div>
-                      ))}
+                    )}
                     </div>
                   </div>
                 </div>
-              </>
-            ) : (
-              <div className="flex flex-col items-center justify-center h-full bg-white rounded-3xl border border-slate-200 p-16 text-center">
+              </> :
+
+            <div className="flex flex-col items-center justify-center h-full bg-white rounded-3xl border border-slate-200 p-16 text-center">
                 <div className="w-20 h-20 bg-amber-100 rounded-full flex items-center justify-center mb-4">
                   <Info className="h-10 w-10 text-amber-500" />
                 </div>
                 <h3 className="text-lg font-semibold text-slate-700 mb-2">Sélectionnez vos paramètres</h3>
                 <p className="text-slate-500">Choisissez un DPE après travaux meilleur que le DPE initial pour simuler les gains.</p>
               </div>
-            )}
+            }
           </motion.div>
         </div>
 
@@ -403,6 +403,6 @@ export default function CO2Simulator() {
           </p>
         </div>
       </div>
-    </section>
-  );
+    </section>);
+
 }
