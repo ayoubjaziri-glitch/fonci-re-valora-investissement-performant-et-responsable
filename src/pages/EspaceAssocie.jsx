@@ -346,27 +346,36 @@ export default function EspaceAssocie() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-gradient-to-r from-[#C9A961] to-[#B8994F] rounded-2xl p-6 mb-8">
 
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3 mb-2">
             <div className="w-3 h-3 bg-[#1A3A52] rounded-full animate-pulse" />
-            <h3 className="text-xl font-serif text-[#1A3A52]">Levée de Fonds en Cours</h3>
+            <h3 className="text-xl font-serif text-[#1A3A52]">{leveeEnCours.titre || 'Levée de Fonds en Cours'}</h3>
           </div>
-          <div className="grid md:grid-cols-4 gap-6 mb-4">
+          {leveeEnCours.description && <p className="text-[#1A3A52]/70 text-sm mb-4">{leveeEnCours.description}</p>}
+          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4 mb-4">
             <div>
-              <p className="text-[#1A3A52]/70 text-sm mb-1">Objectif</p>
-              <p className="text-2xl font-bold text-[#1A3A52]">{leveeEnCours.objectif.toLocaleString()} €</p>
+              <p className="text-[#1A3A52]/70 text-xs mb-1">Objectif</p>
+              <p className="text-xl font-bold text-[#1A3A52]">{leveeEnCours.objectif.toLocaleString()} €</p>
             </div>
             <div>
-              <p className="text-[#1A3A52]/70 text-sm mb-1">Collecté</p>
-              <p className="text-2xl font-bold text-[#1A3A52]">{leveeEnCours.collecte.toLocaleString()} €</p>
+              <p className="text-[#1A3A52]/70 text-xs mb-1">Collecté</p>
+              <p className="text-xl font-bold text-[#1A3A52]">{leveeEnCours.collecte.toLocaleString()} €</p>
             </div>
             <div>
-              <p className="text-[#1A3A52]/70 text-sm mb-1">Souscripteurs</p>
-              <p className="text-2xl font-bold text-[#1A3A52]">{leveeEnCours.souscripteurs}</p>
+              <p className="text-[#1A3A52]/70 text-xs mb-1">Souscripteurs</p>
+              <p className="text-xl font-bold text-[#1A3A52]">{leveeEnCours.souscripteurs}</p>
             </div>
             <div>
-              <p className="text-[#1A3A52]/70 text-sm mb-1">Clôture</p>
-              <p className="text-2xl font-bold text-[#1A3A52]">{leveeEnCours.dateCloture}</p>
+              <p className="text-[#1A3A52]/70 text-xs mb-1">Clôture</p>
+              <p className="text-xl font-bold text-[#1A3A52]">{leveeEnCours.dateCloture}</p>
             </div>
+            {leveeEnCours.ticketMinimum && <div>
+              <p className="text-[#1A3A52]/70 text-xs mb-1">Ticket min.</p>
+              <p className="text-xl font-bold text-[#1A3A52]">{leveeEnCours.ticketMinimum}</p>
+            </div>}
+            {leveeEnCours.typeTitre && <div>
+              <p className="text-[#1A3A52]/70 text-xs mb-1">Type de titre</p>
+              <p className="text-sm font-bold text-[#1A3A52]">{leveeEnCours.typeTitre}</p>
+            </div>}
           </div>
           <div className="h-3 bg-[#1A3A52]/20 rounded-full overflow-hidden">
             <div className="h-full bg-[#1A3A52]" style={{ width: `${leveeEnCours.pourcentage}%` }} />
