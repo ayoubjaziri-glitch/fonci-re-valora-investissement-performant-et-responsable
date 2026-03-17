@@ -36,25 +36,25 @@ export default function InvestirDansFonciere() {
       {/* Hero Section */}
       <section className="relative py-24 bg-gradient-to-br from-[#1A3A52] to-[#2A4A6F]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-4xl">
+          <div className="max-w-4xl">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Guide Complet
+                Article Blog
               </span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-serif text-white mb-6 leading-tight">
-              Investir dans une Foncière Immobilière : Le Guide Complet 2026
+            <h1 className="text-4xl md:text-5xl font-serif text-white mb-6 leading-tight">
+              {article.titre}
             </h1>
-            <p className="text-xl text-white/80 leading-relaxed">
-              Tout ce que vous devez savoir sur l'investissement immobilier via une foncière patrimoniale : 
-              fonctionnement, avantages fiscaux, rendements, stratégies et bonnes pratiques pour réussir 
-              votre investissement dans l'immobilier résidentiel structuré.
+            <p className="text-lg text-white/80 leading-relaxed mb-6">
+              {article.extrait}
             </p>
-          </motion.div>
+            <div className="flex items-center gap-4 text-white/70 text-sm">
+              <span>{new Date(article.date_publication).toLocaleDateString('fr-FR')}</span>
+              <span>•</span>
+              <span>{article.temps_lecture}</span>
+            </div>
+          </div>
         </div>
       </section>
 
