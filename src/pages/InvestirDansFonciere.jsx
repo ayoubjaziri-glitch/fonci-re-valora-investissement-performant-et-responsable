@@ -58,33 +58,6 @@ export default function InvestirDansFonciere() {
         </div>
       </section>
 
-      {/* Table of Contents */}
-      <section className="py-12 bg-slate-50 border-y border-slate-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <h2 className="text-2xl font-serif text-[#1A3A52] mb-6">Sommaire</h2>
-          <div className="grid md:grid-cols-3 gap-4">
-            <a href="#definition" className="p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
-              <span className="text-[#C9A961] font-semibold">1. Qu'est-ce qu'une foncière ?</span>
-            </a>
-            <a href="#avantages" className="p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
-              <span className="text-[#C9A961] font-semibold">2. Les avantages</span>
-            </a>
-            <a href="#types" className="p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
-              <span className="text-[#C9A961] font-semibold">3. Types de foncières</span>
-            </a>
-            <a href="#rendement" className="p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
-              <span className="text-[#C9A961] font-semibold">4. Rendement et performance</span>
-            </a>
-            <a href="#fiscalite" className="p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
-              <span className="text-[#C9A961] font-semibold">5. Fiscalité</span>
-            </a>
-            <a href="#comment-investir" className="p-4 bg-white rounded-lg hover:shadow-md transition-shadow">
-              <span className="text-[#C9A961] font-semibold">6. Comment investir</span>
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* Main Content */}
       <article className="py-16">
         <div className="max-w-5xl mx-auto px-6 lg:px-8">
