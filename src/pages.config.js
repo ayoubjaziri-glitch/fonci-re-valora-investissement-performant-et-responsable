@@ -47,6 +47,7 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
+import AdminBackOffice from './pages/AdminBackOffice';
 import AdminEspaceAssocie from './pages/AdminEspaceAssocie';
 import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
