@@ -1,15 +1,36 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 import { createPageUrl } from '../utils';
-import { motion } from 'framer-motion';
-import { 
-  Building2, TrendingUp, Shield, Users, Briefcase, 
-  CheckCircle2, ArrowRight, Euro, BarChart3, Target,
-  Award, Clock, FileText, PieChart, Percent, Calculator
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import ReactMarkdown from 'react-markdown';
 
 export default function InvestirDansFonciere() {
+  const { data: articles = [], isLoading } = useQuery({
+    queryKey: ['blog-articles'],
+    queryFn: () => base44.entities.ArticleBlog.filter({ publie: true }),
+  });
+
+  const article = articles.find(a => a.slug === 'investissement-immobilier-2026-guide-fonciere-valora');
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-[#C9A961] border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!article) {
+    return (
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <p className="text-slate-600">Article non trouvé</p>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
