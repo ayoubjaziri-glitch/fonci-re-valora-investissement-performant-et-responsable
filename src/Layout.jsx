@@ -26,7 +26,7 @@ function LogoImage() {
   return (
     <img
       src={logoUrl}
-      alt="La Foncière Patrimoniale" className="mx-2 px-2 opacity-100 rounded-[10px] h-24 w-auto" />);
+      alt="La Foncière Patrimoniale" className="mx-2 px-2 opacity-100 rounded-[10px] h-14 w-auto" />);
 
 
 
