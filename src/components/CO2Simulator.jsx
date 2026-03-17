@@ -19,7 +19,7 @@ const DPE_DATA = {
 const DPE_ORDER = ['G', 'F', 'E', 'D', 'C', 'B', 'A'];
 
 // Coût énergie moyen en France (€/kWh énergie primaire, mix)
-const COUT_KWH = 0.13;
+const COUT_KWH = 0.20;
 // Arbres nécessaires pour absorber 1 tonne CO2/an
 const ARBRES_PAR_TONNE = 40;
 // Km voiture par kgCO2
