@@ -133,7 +133,7 @@ function MapLocationsSection() {
   );
 }
 
-export default function GestionPhotos() {
+export default function GestionPhotos({ embedded = false }) {
   const [uploading, setUploading] = useState(false);
   const [editingImage, setEditingImage] = useState(null);
   const [newUrl, setNewUrl] = useState('');
@@ -208,21 +208,7 @@ export default function GestionPhotos() {
     );
   }
 
-  return (
-    <div className="min-h-screen bg-slate-50 py-12">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="mb-8"
-        >
-          <h1 className="text-3xl font-serif text-[#1A3A52] mb-2">
-            Gestion des Photos du Site
-          </h1>
-          <p className="text-slate-600">
-            Modifiez facilement toutes les photos du site sans toucher au code
-          </p>
-        </motion.div>
+  const inner = (
 
         <Tabs defaultValue="equipe" className="space-y-6">
           <TabsList className="grid grid-cols-6 w-full max-w-4xl">
