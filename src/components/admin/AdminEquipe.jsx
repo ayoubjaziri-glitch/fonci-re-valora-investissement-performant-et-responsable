@@ -102,9 +102,23 @@ export default function AdminEquipe() {
                 <Input value={form.focus} onChange={e => setForm({...form, focus: e.target.value})} placeholder="Structuration bancaire, BBC..." />
               </div>
               <div>
-                <label className="text-sm font-medium text-slate-700 block mb-1">Photo URL</label>
-                <Input value={form.image_url} onChange={e => setForm({...form, image_url: e.target.value})} placeholder="https://..." />
-                {form.image_url && <img src={form.image_url} alt="preview" className="mt-2 h-20 w-20 object-cover rounded-xl" />}
+                <label className="text-sm font-medium text-slate-700 block mb-1">Photo du membre</label>
+                <div className="flex gap-3">
+                  <label className="flex-1 cursor-pointer">
+                    <div className="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center hover:border-[#C9A961] hover:bg-slate-50 transition-colors">
+                      {uploadingPhoto ? (
+                        <Loader2 className="h-5 w-5 text-slate-400 mx-auto animate-spin" />
+                      ) : (
+                        <>
+                          <Upload className="h-5 w-5 text-slate-400 mx-auto mb-1" />
+                          <p className="text-xs text-slate-600">Cliquez pour uploader</p>
+                        </>
+                      )}
+                    </div>
+                    <input type="file" accept="image/*" onChange={handlePhotoUpload} disabled={uploadingPhoto} className="hidden" />
+                  </label>
+                  {form.image_url && <img src={form.image_url} alt="preview" className="w-16 h-16 object-cover rounded-lg flex-shrink-0" />}
+                </div>
               </div>
               <div>
                 <label className="text-sm font-medium text-slate-700 block mb-1">Description courte</label>
