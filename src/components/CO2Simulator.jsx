@@ -306,12 +306,12 @@ export default function CO2Simulator() {
                     sub={`avant → après : ${Math.round(calc.cout_avant).toLocaleString('fr-FR')} → ${Math.round(calc.cout_apres).toLocaleString('fr-FR')} €`}
                   />
                   <MetricCard
-                    icon={Thermometer}
-                    label="Équivalent arbres plantés"
-                    value={calc.arbres.toLocaleString('fr-FR')}
-                    unit="arbres"
-                    sub="pour absorber le CO₂ économisé"
-                    color="#16A34A"
+                    icon={Euro}
+                    label="Coût travaux estimé"
+                    value={calc.cout_travaux_moy.toLocaleString('fr-FR')}
+                    unit="€"
+                    sub={`${calc.cout_m2} €/m² · Rénovation ${calc.niveau}`}
+                    color="#C9A961"
                   />
                 </div>
 
