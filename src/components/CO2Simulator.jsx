@@ -179,14 +179,14 @@ export default function CO2Simulator() {
   ];
 
   return (
-    <section className="py-12 bg-gradient-to-b from-slate-50 to-white">
+    <section className="py-8 bg-gradient-to-b from-slate-50 to-white">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-center mb-8"
+          className="text-center mb-5"
         >
           <div className="flex items-center justify-center gap-3 mb-3">
             <div className="w-8 h-0.5 bg-[#C9A961]" />

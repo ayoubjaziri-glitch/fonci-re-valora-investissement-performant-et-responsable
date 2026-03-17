@@ -80,6 +80,79 @@ Plus votre Tranche Marginale d'Imposition (TMI) est élevée, plus l'effet de le
       `
     },
     {
+      id: 11,
+      title: "Marché Immobilier Bordeaux 2026 : L'Analyse Détaillée et Stratégique de la Foncière Valora",
+      slug: "marche-immobilier-bordeaux-2026-analyse-fonciere-valora",
+      excerpt: "Prix, quartiers, méthode BBC, dispositif Jeanbrun... La Foncière Valora décrypte le marché bordelais et explique pourquoi Bordeaux reste sa zone d'investissement prioritaire en 2026.",
+      category: "Marché",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "8 min",
+      image: "https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80",
+      content: `
+# Marché Immobilier Bordeaux 2026 : L'Analyse Détaillée et Stratégique de la Foncière Valora
+
+Après une décennie de hausse ininterrompue et un rééquilibrage salutaire en 2024-2025, le marché immobilier bordelais entre en 2026 dans une phase de fluidité retrouvée. Pour la Foncière Valora, Bordeaux n'est pas seulement une ville dynamique, c'est un **laboratoire de création de valeur** où l'ancien dégradé devient l'actif financier de demain.
+
+## 1. Analyse des Prix et Dynamique des Quartiers par la Foncière Valora
+
+Au premier semestre 2026, le prix médian des appartements anciens à Bordeaux se stabilise à **4 240 €/m²**, tandis que les maisons anciennes affichent un prix médian de 345 000 €. Toutefois, la Foncière Valora identifie des disparités fortes qui constituent des opportunités de rendement brut supérieur à **9 %** :
+
+- **Bordeaux Bastide :** Le quartier privilégié par la Foncière Valora pour son équilibre prix/loyer. Un T2 neuf ou lourdement rénové de 47 m² s'y acquiert autour de 233 000 € pour un loyer cible de 890 € hors charges (rentabilité brute de 4,5 % avant optimisation fiscale).
+- **Cenon et Lormont :** Ces communes, intégrées au réseau de tramway et bientôt au RER Métropolitain, permettent à la Foncière Valora d'acquérir des immeubles de rapport avec une décote de −10 % à −15 % par rapport à l'hyper-centre.
+- **Secteur Gare Saint-Jean :** Un emplacement stratégique pour capter l'effet du Grand Projet Sud-Ouest (GPSO). Avec la future LGV plaçant Toulouse à 1h05 de Bordeaux, la Foncière Valora anticipe une hausse de la demande pour les cadres en mobilité.
+
+## 2. La Méthode Valora : Transformer les Passoires Thermiques en Actifs BBC
+
+La mission de la Foncière Valora repose sur une revalorisation technique radicale. En France, environ 5 millions de logements nécessitent une rénovation énergétique. À Bordeaux, la Foncière Valora cible les immeubles en pierre classés D, E ou F pour les porter au niveau **DPE A ou B (BBC)**.
+
+### L'avantage technique de la Foncière Valora
+
+Grâce à un réseau intégré de 30 entreprises de BTP partenaires, la Foncière Valora pilote des chantiers complexes (isolation par l'intérieur, pompes à chaleur, menuiseries haute performance) qui permettent :
+
+- **L'extraction de la "Valeur Verte" :** Une appréciation immédiate du patrimoine de +10 % à +15 % après travaux.
+- **L'optimisation du DPE Électrique :** La Foncière Valora profite du nouveau coefficient de conversion de l'électricité (passé de 2,3 à 1,9 au 1er janvier 2026), facilitant la sortie du statut de passoire thermique pour ses actifs.
+
+## 3. Ingénierie Financière et Dispositif Jeanbrun 2026
+
+Investir avec la Foncière Valora, c'est bénéficier d'un effet de levier maximal. En 2026, les taux immobiliers se sont stabilisés autour de **3,25 % sur 20 ans**.
+
+### Le montage type de la Foncière Valora à Bordeaux
+
+La Foncière Valora sécurise des financements à **80 % LTC** (Loan-To-Cost), incluant le prix du bien et les travaux de rénovation BBC. Pour maximiser la performance nette, la Foncière Valora utilise le dispositif Jeanbrun (Relance Logement) :
+
+- **Amortissement puissant :** Déduction de 3,5 % à 5,5 % de la valeur du bâti (80 % du prix) chaque année.
+- **Super-Déficit Foncier :** En tant que spécialiste de la rénovation, la Foncière Valora permet d'imputer jusqu'à **21 400 €** de déficit foncier sur le revenu global des associés (dispositif renforcé pour la rénovation énergétique jusqu'en 2027).
+
+## 4. Pourquoi choisir la Foncière Valora plutôt qu'une SCPI ?
+
+| Caractéristique | SCPI Traditionnelle | Foncière Valora |
+|---|---|---|
+| Frais d'entrée | 8 à 12 % | **0 € (100 % investi J1)** |
+| Frais de gestion fixes | 10 à 15 % | **0 € (Uniquement au succès)** |
+| Gouvernance | Passive | **Participative (Comité Opérationnel)** |
+| Fiscalité | Impôt sur le revenu | **Éligible PEA-PME (0 % IR après 5 ans)** |
+
+La direction de la Foncière Valora ne perçoit sa rémunération (carried interest) qu'après avoir versé un rendement prioritaire (hurdle) de **6,5 % par an** à ses associés, garantissant un alignement total des intérêts.
+
+## 5. L'Équipe Fondatrice : 18 ans d'Expertise Immobilière
+
+La solidité de la Foncière Valora repose sur l'expérience de ses dirigeants, qui gèrent déjà un patrimoine de **3,7 millions d'euros** au sein du Groupe Auvergne et Patrimoine :
+
+- **Ayoub Jaziri :** Expert en stratégie d'acquisition et financement, ancien chef de projet en promotion immobilière à Bordeaux.
+- **Sophian Naili :** Spécialiste du sourcing "Off-Market" via un réseau de 45 agents partenaires.
+- **Renaud Marchand :** Ingénieur BTP, garant de la qualité de la rénovation BBC et du respect des normes environnementales.
+
+## Conclusion
+
+Bordeaux reste la valeur refuge de 2026. En alliant une expertise technique BBC, un sourcing exclusif et un cadre fiscal PEA-PME, la Foncière Valora offre à ses associés un **TRI cible supérieur à 10 % net**.
+
+Rejoignez la Foncière Valora pour transformer le paysage résidentiel bordelais.
+
+*Contactez notre équipe pour découvrir nos prochaines opportunités d'investissement à Bordeaux.*
+      `
+    },
+    {
       id: 10,
       title: "Pourquoi investir dans une foncière résidentielle comme la Foncière Valora en 2026 ?",
       slug: "pourquoi-investir-fonciere-residentielle-valora-2026",
