@@ -194,7 +194,7 @@ export default function Equipe() {
 
                 <div className="relative h-40">
                   <img
-                  src={getImageUrl(member.imageKey, member.image)}
+                  src={member.image || getImageUrl(member.imageKey, '')}
                   alt={member.name}
                   className="w-full h-full object-cover" />
 
