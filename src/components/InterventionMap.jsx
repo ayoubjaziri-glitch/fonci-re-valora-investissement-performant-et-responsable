@@ -41,20 +41,20 @@ export default function InterventionMap() {
   });
 
   // Fusionner zones manuelles + biens actifs des réalisations
-  const allZones = [
-    ...zonesDb,
-    ...realisations.filter(b => b.actif && b.location).map(b => ({
-      id: `real-${b.id}`,
-      name: b.titre,
-      adresse: b.location,
-      lat: zonesDb.find(z => z.adresse?.includes(b.location.split(',')[0]))?.lat || 45.8,
-      lng: zonesDb.find(z => z.adresse?.includes(b.location.split(',')[0]))?.lng || 2.5,
-      dpe: b.dpe_apres,
-      logements: b.logements,
-      image_url: b.image_apres,
-      actif: true
-    }))
-  ];
+   const allZones = [
+     ...zonesDb,
+     ...realisations.filter(b => b.actif && b.location && b.lat && b.lng).map(b => ({
+       id: `real-${b.id}`,
+       name: b.titre,
+       adresse: b.location,
+       lat: b.lat,
+       lng: b.lng,
+       dpe: b.dpe_apres,
+       logements: b.logements,
+       image_url: b.image_apres,
+       actif: true
+     }))
+   ];
 
   // Dédupliquer par nom
   const uniqueZones = Array.from(new Map(allZones.map(z => [z.name, z])).values());
