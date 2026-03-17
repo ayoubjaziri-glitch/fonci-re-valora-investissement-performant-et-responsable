@@ -1,5 +1,5 @@
-import React from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import React, { useRef } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { MapPin } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
@@ -24,83 +24,94 @@ const customIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-export default function InterventionMap() {
-  // Centré sur Vichy
-  const center = [46.1313, 3.4304]; // Vichy coordinates
-  const defaultZoom = 8; // Zoom pour voir Vichy et ses environs
+const ClusterMarkerHandler = ({ clusters, mapRef }) => {
+  const map = useMap();
+  mapRef.current = map;
+  return null;
+};
 
-  // Récupère les biens actifs des Réalisations
+export default function InterventionMap() {
+  const mapRef = useRef(null);
+  const center = [46.1313, 3.4304]; // Vichy
+  const defaultZoom = 9;
+
   const { data: realisations = [] } = useQuery({
     queryKey: ['realisations-biens'],
-    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
+    queryFn: () => base44.entities.RealisationBien.filter({ actif: true }),
     initialData: []
   });
 
-  const { data: zonesDb = [] } = useQuery({
-    queryKey: ['map-locations'],
-    queryFn: () => base44.entities.MapLocation.filter({ actif: true }),
-    initialData: []
-  });
-
-  // Récupère les acquisitions (patrimoine) de l'espace associé
   const { data: acquisitions = [] } = useQuery({
     queryKey: ['acq-associe'],
-    queryFn: () => base44.entities.AcquisitionAssocie.filter({ type: 'patrimoine' }),
+    queryFn: () => base44.entities.AcquisitionAssocie.list(),
     initialData: []
   });
 
-  // Fusionner zones manuelles + biens actifs des réalisations + acquisitions
-  const allZones = [
-    ...zonesDb,
-    ...realisations.filter(b => b.actif && b.location && b.lat && b.lng).map(b => ({
-      id: `real-${b.id}`,
-      name: b.titre,
-      adresse: b.location,
-      lat: b.lat,
-      lng: b.lng,
-      dpe: b.dpe_apres,
-      logements: b.logements,
-      image_url: b.image_apres,
-      actif: true,
-      type: 'realisation'
-    })),
-    ...acquisitions.filter(a => a.ville).map((a, idx) => ({
-      id: `acq-${a.id}-${idx}`,
-      name: a.ville,
-      adresse: a.ville,
-      lat: 46.1313 + (Math.random() * 0.3 - 0.15),
-      lng: 3.4304 + (Math.random() * 0.3 - 0.15),
-      dpe: a.dpe,
-      logements: a.lots ? `${a.lots} lots` : '',
-      image_url: null,
-      actif: true,
-      type: 'acquisition'
-    }))
+  // Coordonnées de Vichy et Clermont-Ferrand
+  const CITY_COORDS = {
+    vichy: { lat: 46.1313, lng: 3.4304 },
+    clermont: { lat: 45.7772, lng: 3.0873 }
+  };
+
+  // Combiner les biens actifs du back office avec coordonnées réelles
+  const allBiens = [
+    ...realisations
+      .filter(b => b.actif && b.location && b.lat && b.lng)
+      .map(b => ({
+        id: `real-${b.id}`,
+        name: b.titre,
+        adresse: b.location,
+        lat: b.lat,
+        lng: b.lng,
+        dpe: b.dpe_apres,
+        logements: b.logements,
+        image_url: b.image_apres,
+        type: 'realisation'
+      }))
   ];
 
-  // Grouper les biens de Vichy pour clustering
-  const vichyZones = allZones.filter(z => {
-    const isNearVichy = (z.lat > 45.95 && z.lat < 46.35) && (z.lng > 3.2 && z.lng < 3.65);
-    return isNearVichy || z.adresse.toLowerCase().includes('vichy');
-  });
+  // Grouper par ville (Vichy ou Clermont-Ferrand)
+  const groupedByCity = allBiens.reduce((acc, bien) => {
+    const isVichy = (bien.lat > 45.95 && bien.lat < 46.35) && (bien.lng > 3.2 && bien.lng < 3.65);
+    const isClermont = (bien.lat > 45.6 && bien.lat < 45.95) && (bien.lng > 2.9 && bien.lng < 3.3);
+    
+    if (isVichy) {
+      acc.vichy.push(bien);
+    } else if (isClermont) {
+      acc.clermont.push(bien);
+    }
+    return acc;
+  }, { vichy: [], clermont: [] });
 
-  const otherZones = allZones.filter(z => !vichyZones.includes(z));
+  // Créer les clusters
+  const clusterMarkers = [];
+  if (groupedByCity.vichy.length > 0) {
+    clusterMarkers.push({
+      id: 'vichy-cluster',
+      name: `Vichy (${groupedByCity.vichy.length})`,
+      lat: CITY_COORDS.vichy.lat,
+      lng: CITY_COORDS.vichy.lng,
+      isCluster: true,
+      items: groupedByCity.vichy
+    });
+  }
+  if (groupedByCity.clermont.length > 0) {
+    clusterMarkers.push({
+      id: 'clermont-cluster',
+      name: `Clermont-Ferrand (${groupedByCity.clermont.length})`,
+      lat: CITY_COORDS.clermont.lat,
+      lng: CITY_COORDS.clermont.lng,
+      isCluster: true,
+      items: groupedByCity.clermont
+    });
+  }
 
-  // Créer un marker clustérisé pour Vichy
-  const vichyClusterMarker = vichyZones.length > 0 ? [{
-    id: 'vichy-cluster',
-    name: `Secteur Vichy (${vichyZones.length} bien${vichyZones.length > 1 ? 's' : ''})`,
-    adresse: 'Vichy et environs',
-    lat: 46.1313,
-    lng: 3.4304,
-    dpe: null,
-    logements: null,
-    image_url: null,
-    isCluster: true,
-    clusterItems: vichyZones
-  }] : [];
-
-  const uniqueZones = [...vichyClusterMarker, ...otherZones];
+  const handleClusterClick = (items) => {
+    if (!mapRef.current || items.length === 0) return;
+    
+    const bounds = L.latLngBounds(items.map(item => [item.lat, item.lng]));
+    mapRef.current.fitBounds(bounds, { padding: [50, 50] });
+  };
 
   return (
     <div className="relative">
