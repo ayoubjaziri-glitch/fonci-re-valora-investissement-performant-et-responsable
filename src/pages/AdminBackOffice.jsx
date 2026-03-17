@@ -19,6 +19,7 @@ import AdminEquipe from '../components/admin/AdminEquipe';
 import AdminBlog from '../components/admin/AdminBlog';
 import AdminLeveeFonds from '../components/admin/AdminLeveeFonds';
 import AdminRealisations from '../components/admin/AdminRealisations';
+import AdminRealisationsPlus from '../components/admin/AdminRealisationsPlus';
 
 const ADMIN_PASSWORD = 'ValorAdmin2026!';
 
