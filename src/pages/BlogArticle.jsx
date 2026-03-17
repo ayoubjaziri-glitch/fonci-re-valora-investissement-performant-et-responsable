@@ -80,6 +80,55 @@ Plus votre Tranche Marginale d'Imposition (TMI) est élevée, plus l'effet de le
       `
     },
     {
+      id: 8,
+      title: "Transmission de patrimoine immobilier en 2026 : Stratégies pour réduire les droits de succession",
+      slug: "transmission-patrimoine-immobilier-2026-droits-succession",
+      excerpt: "Démembrement, Pacte Dutreil, SCI à l'IS... Découvrez les leviers d'optimisation incontournables pour sécuriser la transmission de votre foncière et réduire drastiquement les droits de succession en 2026.",
+      category: "Fiscalité",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "8 min",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80",
+      content: `
+# Transmission de patrimoine immobilier en 2026 : Stratégies pour réduire les droits de succession
+
+La pérennité d'une foncière patrimoniale ne se mesure pas seulement à sa rentabilité immédiate, mais à sa capacité à traverser les générations. En 2026, l'anticipation est plus que jamais la clé de voûte de la gestion de fortune. Avec l'évolution des règles fiscales et le durcissement de certains dispositifs, l'inertie peut coûter jusqu'à **45 %** de la valeur de vos actifs en ligne directe, voire **60 %** hors lien familial. Voici les leviers d'optimisation indispensables pour sécuriser votre héritage cette année.
+
+## Le démembrement de propriété : L'outil « roi » de la transmission
+
+Le démembrement reste la stratégie la plus efficace pour transmettre un bien immobilier tout en conservant son usage ou ses revenus. Le principe est simple : vous donnez la nue-propriété de vos parts sociales ou de vos immeubles à vos héritiers, tout en conservant l'usufruit.
+
+### L'importance des « anniversaires fiscaux »
+
+En 2026, l'âge du donateur est le facteur déterminant du coût fiscal de l'opération. La valeur de l'usufruit (et donc l'assiette taxable de la nue-propriété) est fixée par un barème administratif strict :
+
+- **Avant 71 ans :** L'usufruit est valorisé à 40 % de la valeur totale du bien. La base taxable pour vos enfants n'est donc que de **60 %**.
+- **À partir de 71 ans :** L'usufruit tombe à 30 %, faisant grimper la base taxable à **70 %**.
+
+**Calcul d'optimisation :** Pour un patrimoine immobilier de 1 000 000 €, réaliser la donation à 70 ans plutôt qu'à 71 ans permet d'exclure 100 000 € supplémentaires de l'assiette des droits de mutation. À votre décès, l'usufruit s'éteint et vos héritiers récupèrent la pleine propriété sans aucune taxe supplémentaire.
+
+## Le Pacte Dutreil version 2026 : De nouvelles règles du jeu
+
+Pour les foncières structurées en sociétés opérationnelles ou holdings animatrices, le Pacte Dutreil offre une **exonération de 75 %** sur la valeur des titres transmis. Cependant, la loi de finances pour 2026 a apporté deux modifications majeures qu'il convient de maîtriser :
+
+**Allongement de la conservation :** L'engagement individuel de conservation des titres, qui suit l'engagement collectif de 2 ans, est porté de **4 à 6 ans**. Un pacte signé en 2026 impose donc aux héritiers de rester propriétaires jusqu'en 2034 au minimum pour valider l'avantage fiscal.
+
+**Exclusion des actifs « somptuaires » :** L'assiette de l'exonération est désormais limitée aux actifs strictement professionnels. Les actifs de luxe logés dans la holding (yachts, voitures de collection, chevaux de course) sont désormais exclus du calcul de la réduction de 75 %, sauf s'ils sont affectés à l'activité principale de la société depuis au moins 9 ans.
+
+## La SCI à l'IS : Transmettre sans perdre le pouvoir
+
+La Société Civile Immobilière (SCI) soumise à l'Impôt sur les Sociétés (IS) est l'outil idéal pour une transmission graduelle. Elle permet de **saturer les abattements légaux de 100 000 €** par parent et par enfant tous les 15 ans sans jamais perdre le contrôle de la foncière.
+
+En vous nommant gérant statutaire avec des pouvoirs étendus, vous pouvez donner la quasi-totalité des parts sociales à vos enfants tout en gardant la main sur les décisions stratégiques (vente des biens, arbitrage, réinvestissement). De plus, la valeur des parts d'une SCI à l'IS est souvent plus faible que celle de l'immobilier détenu en direct (en raison de la dette bancaire et de l'imposition latente sur les plus-values), ce qui permet de transmettre un patrimoine plus important pour une même enveloppe fiscale.
+
+## Conclusion : Un diagnostic indispensable avant le 31 décembre
+
+Optimiser sa succession en 2026 ne signifie pas seulement réduire l'impôt ; c'est assurer une transmission apaisée et cohérente. Chaque situation est unique et dépend de votre âge, de votre régime matrimonial et de la structure de vos actifs.
+
+*Vous souhaitez réaliser un diagnostic successoral de votre patrimoine immobilier ? Notre équipe vous accompagne dans la structuration de votre transmission.*
+      `
+    },
+    {
       id: 6,
       title: "Réforme Fiscale 2026 : Comment protéger votre holding patrimoniale de la taxe de 20 % ?",
       slug: "reforme-fiscale-2026-taxe-holding-20-pourcent",
