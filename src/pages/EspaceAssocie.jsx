@@ -109,6 +109,7 @@ export default function EspaceAssocie() {
   const { data: docsDb = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => base44.entities.DocumentAssocie.filter({ actif: true }, '-date_document'), enabled: isLoggedIn });
   const { data: actuDb = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => base44.entities.ActualiteAssocie.filter({ actif: true }, '-date_publication', 5), enabled: isLoggedIn });
   const { data: acqDb = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => base44.entities.AcquisitionAssocie.list(), enabled: isLoggedIn });
+  const { data: realisationDb = [] } = useQuery({ queryKey: ['realisation-biens'], queryFn: () => base44.entities.RealisationBien.filter({ actif: true }), enabled: isLoggedIn });
   const { data: roadmapDb = [] } = useQuery({ queryKey: ['roadmap-associe'], queryFn: () => base44.entities.RoadmapAssocie.list('ordre'), enabled: isLoggedIn });
 
   const getConfig = (key, fallback) => {
@@ -229,8 +230,25 @@ export default function EspaceAssocie() {
   const resultatsRaw = getConfig('resultats', { loyers: '185 000 €', tauxOccupation: '93,5%', resultatNet: '32 500 €', datePub: '15 janvier 2026', prochainResultat: '≈ 28 000 €', dateProchaineResult: '15 avril 2026' });
   const gouvernanceRaw = getConfig('gouvernance', { texte: "Accès réservé aux associés élus par les catégories B et C pour les décisions stratégiques (acquisitions, arbitrages, emprunts).", stratégieDette: "Amortissement progressif sur 20 ans. Effet de levier maîtrisé avec LTV cible ≤ 80% à l'acquisition." });
 
-  // DB data with fallbacks
-  const patrimoine = acqDb.filter((a) => a.type === 'patrimoine').map((a) => ({ nom: a.ville, lots: a.lots, valeur: a.valeur, dpe: a.dpe, occupation: a.occupation }));
+  // DB data - Synchronize from both RealisationBien (actifs réalisés) and AcquisitionAssocie (patrimoine)
+  const patrimoine = [
+    // Biens réalisés actifs (RealisationBien)
+    ...realisationDb.map((r) => ({
+      nom: r.titre,
+      lots: r.logements ? parseInt(r.logements) : 0,
+      valeur: r.investissement || '—',
+      dpe: r.dpe_apres,
+      occupation: r.plus_value || '—'
+    })),
+    // Acquisitions de type patrimoine
+    ...acqDb.filter((a) => a.type === 'patrimoine').map((a) => ({
+      nom: a.ville,
+      lots: a.lots,
+      valeur: a.valeur,
+      dpe: a.dpe,
+      occupation: a.occupation
+    }))
+  ];
 
 
   const acquisitionsEnCours = acqDb.filter((a) => a.type === 'acquisition_en_cours').length > 0 ?
