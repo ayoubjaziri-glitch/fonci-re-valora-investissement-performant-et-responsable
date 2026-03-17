@@ -88,18 +88,18 @@ function DpeSelector({ label, value, onChange }) {
 
 function MetricCard({ icon: Icon, label, value, unit, sub, color = '#C9A961', highlight = false }) {
   return (
-    <div className={`rounded-2xl p-5 border ${highlight ? 'bg-[#1A3A52] border-[#1A3A52] text-white' : 'bg-white border-slate-200'}`}>
-      <div className="flex items-center gap-3 mb-3">
-        <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ backgroundColor: highlight ? 'rgba(201,169,97,0.2)' : '#f1f5f9' }}>
-          <Icon className="h-5 w-5" style={{ color: highlight ? '#C9A961' : color }} />
+    <div className={`rounded-xl p-4 border ${highlight ? 'bg-[#1A3A52] border-[#1A3A52] text-white' : 'bg-white border-slate-200'}`}>
+      <div className="flex items-center gap-2 mb-2">
+        <div className="w-7 h-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: highlight ? 'rgba(201,169,97,0.2)' : '#f1f5f9' }}>
+          <Icon className="h-4 w-4" style={{ color: highlight ? '#C9A961' : color }} />
         </div>
         <p className={`text-xs font-medium ${highlight ? 'text-white/70' : 'text-slate-500'}`}>{label}</p>
       </div>
-      <p className={`text-3xl font-bold ${highlight ? 'text-white' : 'text-[#1A3A52]'}`}>
+      <p className={`text-xl font-bold ${highlight ? 'text-white' : 'text-[#1A3A52]'}`}>
         {value}
-        <span className="text-base font-normal ml-1" style={{ color: highlight ? '#C9A961' : '#64748b' }}>{unit}</span>
+        <span className="text-sm font-normal ml-1" style={{ color: highlight ? '#C9A961' : '#64748b' }}>{unit}</span>
       </p>
-      {sub && <p className={`text-xs mt-1 ${highlight ? 'text-white/60' : 'text-slate-400'}`}>{sub}</p>}
+      {sub && <p className={`text-xs mt-0.5 ${highlight ? 'text-white/60' : 'text-slate-400'}`}>{sub}</p>}
     </div>
   );
 }
