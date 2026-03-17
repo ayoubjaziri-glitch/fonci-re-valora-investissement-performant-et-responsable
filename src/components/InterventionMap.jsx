@@ -61,23 +61,46 @@ export default function InterventionMap() {
       dpe: b.dpe_apres,
       logements: b.logements,
       image_url: b.image_apres,
-      actif: true
+      actif: true,
+      type: 'realisation'
     })),
     ...acquisitions.filter(a => a.ville).map((a, idx) => ({
       id: `acq-${a.id}-${idx}`,
       name: a.ville,
       adresse: a.ville,
-      lat: 46.1313 + (Math.random() * 0.5 - 0.25), // Petite variation autour de Vichy
-      lng: 3.4304 + (Math.random() * 0.5 - 0.25),
+      lat: 46.1313 + (Math.random() * 0.3 - 0.15),
+      lng: 3.4304 + (Math.random() * 0.3 - 0.15),
       dpe: a.dpe,
       logements: a.lots ? `${a.lots} lots` : '',
       image_url: null,
-      actif: true
+      actif: true,
+      type: 'acquisition'
     }))
   ];
 
-  // Ne pas dédupliquer par nom pour voir tous les biens même à la même adresse
-  const uniqueZones = allZones;
+  // Grouper les biens de Vichy pour clustering
+  const vichyZones = allZones.filter(z => {
+    const isNearVichy = (z.lat > 45.95 && z.lat < 46.35) && (z.lng > 3.2 && z.lng < 3.65);
+    return isNearVichy || z.adresse.toLowerCase().includes('vichy');
+  });
+
+  const otherZones = allZones.filter(z => !vichyZones.includes(z));
+
+  // Créer un marker clustérisé pour Vichy
+  const vichyClusterMarker = vichyZones.length > 0 ? [{
+    id: 'vichy-cluster',
+    name: `Secteur Vichy (${vichyZones.length} bien${vichyZones.length > 1 ? 's' : ''})`,
+    adresse: 'Vichy et environs',
+    lat: 46.1313,
+    lng: 3.4304,
+    dpe: null,
+    logements: null,
+    image_url: null,
+    isCluster: true,
+    clusterItems: vichyZones
+  }] : [];
+
+  const uniqueZones = [...vichyClusterMarker, ...otherZones];
 
   return (
     <div className="relative">
@@ -100,32 +123,68 @@ export default function InterventionMap() {
             >
               <Popup>
                 <div className="p-0 min-w-[280px]">
-                  {zone.image_url && (
-                    <img 
-                      src={zone.image_url} 
-                      alt={zone.name}
-                      className="w-full h-40 object-cover rounded-t-lg"
-                    />
-                  )}
-                  <div className="p-4">
-                    <h4 className="font-bold text-slate-900 text-base mb-2">{zone.name}</h4>
-                    <p className="text-slate-600 text-xs mb-3 flex items-start gap-1">
-                      <MapPin className="h-3 w-3 mt-0.5 flex-shrink-0" />
-                      {zone.adresse}
-                    </p>
-                    <div className="flex justify-between items-center">
-                      <span className="text-slate-700 font-medium text-sm">{zone.logements}</span>
-                      {zone.dpe && (
-                        <span className={`px-2 py-1 rounded text-xs font-bold text-white ${
-                          zone.dpe === 'A' ? 'bg-emerald-500' : 
-                          zone.dpe === 'B' ? 'bg-green-500' : 
-                          'bg-lime-500'
-                        }`}>
-                          DPE {zone.dpe}
-                        </span>
-                      )}
+                  {zone.isCluster ? (
+                    // Popup pour le cluster Vichy
+                    <div className="p-4">
+                      <h4 className="font-bold text-slate-900 text-base mb-3 flex items-center gap-2">
+                        📍 {zone.name}
+                      </h4>
+                      <div className="space-y-2 max-h-64 overflow-y-auto">
+                        {zone.clusterItems.map((item, idx) => (
+                          <div key={idx} className="border-l-2 border-[#C9A961] pl-3 py-1">
+                            <p className="font-semibold text-slate-800 text-sm">{item.name}</p>
+                            <p className="text-slate-600 text-xs flex items-center gap-1">
+                              <MapPin className="h-3 w-3" />
+                              {item.adresse}
+                            </p>
+                            {item.logements && (
+                              <p className="text-slate-600 text-xs mt-1">{item.logements}</p>
+                            )}
+                            {item.dpe && (
+                              <span className={`inline-block mt-1 px-2 py-0.5 rounded text-xs font-bold text-white ${
+                                item.dpe === 'A' ? 'bg-emerald-500' : 
+                                item.dpe === 'B' ? 'bg-green-500' : 
+                                item.dpe === 'C' ? 'bg-lime-500' :
+                                'bg-amber-500'
+                              }`}>
+                                DPE {item.dpe}
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  ) : (
+                    // Popup pour les markers individuels
+                    <>
+                      {zone.image_url && (
+                        <img 
+                          src={zone.image_url} 
+                          alt={zone.name}
+                          className="w-full h-40 object-cover rounded-t-lg"
+                        />
+                      )}
+                      <div className="p-4">
+                        <h4 className="font-bold text-slate-900 text-base mb-2">{zone.name}</h4>
+                        <p className="text-slate-600 text-xs mb-3 flex items-start gap-1">
+                          <MapPin className="h-3 w-3 mt-0.5 flex-shrink-0" />
+                          {zone.adresse}
+                        </p>
+                        <div className="flex justify-between items-center">
+                          <span className="text-slate-700 font-medium text-sm">{zone.logements}</span>
+                          {zone.dpe && (
+                            <span className={`px-2 py-1 rounded text-xs font-bold text-white ${
+                              zone.dpe === 'A' ? 'bg-emerald-500' : 
+                              zone.dpe === 'B' ? 'bg-green-500' : 
+                              'bg-lime-500'
+                            }`}>
+                              DPE {zone.dpe}
+                            </span>
+                          )}
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               </Popup>
             </Marker>
