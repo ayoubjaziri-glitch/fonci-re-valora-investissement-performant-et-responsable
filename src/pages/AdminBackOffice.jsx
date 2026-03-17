@@ -367,7 +367,6 @@ export default function AdminBackOffice() {
         <div className="flex-1 p-6 lg:p-8">
           {activeTab === 'dashboard' && <DashboardSection />}
           {activeTab === 'contacts' && <DemandesContactSection />}
-          {activeTab === 'photos' && <GestionPhotos embedded />}
           {activeTab === 'equipe' && <AdminEquipe />}
           {activeTab === 'blog' && <AdminBlog />}
           {activeTab === 'levees' && <AdminLeveeFonds />}
