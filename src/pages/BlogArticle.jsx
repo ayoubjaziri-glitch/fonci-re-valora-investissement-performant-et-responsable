@@ -80,6 +80,122 @@ Plus votre Tranche Marginale d'Imposition (TMI) est élevée, plus l'effet de le
       `
     },
     {
+      id: 13,
+      title: "Investir à Paris en 2026 : Stratégies et Opportunités avec la Foncière Valora",
+      slug: "investir-paris-2026-strategies-fonciere-valora",
+      excerpt: "Soft landing, rénovation BBC, dispositif Jeanbrun... La Foncière Valora décrypte le marché parisien 2026 et ses opportunités d'extraction de valeur verte dans les arrondissements en mutation.",
+      category: "Marché",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "7 min",
+      image: "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800&q=80",
+      content: `
+# Investir à Paris en 2026 : Stratégies et Opportunités avec la Foncière Valora
+
+Le marché immobilier parisien entre en 2026 dans une phase de "soft landing" (atterrissage en douceur) après les corrections de ces dernières années. Avec un prix médian stabilisé autour de **10 400 €/m²**, la capitale confirme son statut de valeur refuge absolue pour les investisseurs institutionnels et privés. Pour la Foncière Valora, Paris en 2026 n'est plus un marché de spéculation, mais un terrain d'excellence pour l'extraction de la "valeur verte" par la rénovation BBC.
+
+## 1. L'état du marché parisien en 2026 : Une reprise sélective
+
+Début 2026, les transactions repartent à la hausse grâce à des conditions de financement plus prévisibles, avec des taux moyens observés par la Foncière Valora autour de **3,25 % sur 20 ans**.
+
+### Disparités par arrondissement (Analyses Foncière Valora T1 2026)
+
+- **Le sommet du marché :** Le 6e et le 7e arrondissement se maintiennent entre 13 500 € et 15 000 €/m², portés par une demande internationale insensible aux cycles.
+- **Les arrondissements dynamiques :** Le 3e (Haut Marais) et le 8e affichent les plus fortes progressions (+2,1 % sur un an).
+- **Les gisements de rendement :** La Foncière Valora identifie des opportunités stratégiques dans les 13e, 18e, 19e et 20e arrondissements, où les prix descendent parfois sous les **8 500 €/m²** dans certains micro-quartiers en pleine mutation.
+
+## 2. La transition énergétique : Le levier de performance de la Foncière Valora
+
+- **Sourcing Off-Market :** Grâce à ses 45 agents partenaires, la Foncière Valora accède à des immeubles entiers classés E ou F avec une décote de −10 % à −15 %.
+- **Ingénierie BBC :** La Foncière Valora transforme ces biens en actifs de classe DPE A ou B, garantissant une pérennité locative totale face aux interdictions climatiques de 2028 et 2034.
+- **Super-Déficit Foncier :** Les travaux pilotés par la Foncière Valora permettent d'optimiser fiscalement l'investissement via le déficit foncier renforcé à **21 400 € par an** jusqu'en 2027.
+
+## 3. Dispositif Jeanbrun 2026 : L'atout fiscal à Paris
+
+- **L'amortissement puissant :** Déduction de 3,5 % à 5,5 % de la valeur du bâti chaque année, permettant souvent d'atteindre **0 € d'impôt** sur les loyers pendant les 10 premières années.
+- **Pas de zonage :** Contrairement au Pinel, le dispositif s'applique partout, permettant à la Foncière Valora de sélectionner des immeubles parisiens basés sur la qualité du quartier plutôt que sur une contrainte administrative.
+
+## 4. Pourquoi choisir la Foncière Valora pour investir à Paris ?
+
+| Avantages | SCPI Traditionnelle | Foncière Valora |
+|---|---|---|
+| Frais d'entrée | 8 à 12 % | **0 € (100 % investi dès J1)** |
+| Performance cible | 3,5 à 4,5 % | **TRI > 10 % net** |
+| Rénovation énergétique | Ponctuelle | **Systématique (BBC)** |
+| Fiscalité | Impôt sur le revenu | **Éligible PEA-PME (Exonération IR)** |
+
+La Foncière Valora garantit un alignement total des intérêts : la direction n'est rémunérée qu'après avoir versé un rendement prioritaire (hurdle) de **6,5 % par an** aux associés.
+
+## Conclusion : Bâtir le Paris de demain avec la Foncière Valora
+
+En 2026, l'immobilier parisien demande une expertise technique et fiscale pointue. En alliant une stratégie de rénovation BBC radicale, un sourcing exclusif et une fiscalité optimisée (PEA-PME), la Foncière Valora transforme les contraintes énergétiques en un puissant moteur de capitalisation.
+
+*Contactez nos experts pour découvrir nos projets en cours.*
+      `
+    },
+    {
+      id: 12,
+      title: "Investir à Vichy en 2026 : Le Guide de la Foncière Valora pour transformer le patrimoine thermal en actif de haute performance",
+      slug: "investir-vichy-2026-guide-fonciere-valora",
+      excerpt: "Depuis son inscription à l'UNESCO, Vichy offre des rendements locatifs bruts dépassant 9 %. La Foncière Valora analyse les quartiers, la rénovation BBC et les opportunités de cette pépite du marché résidentiel 2026.",
+      category: "Marché",
+      author: "La Foncière Valora",
+      date: "17 Mars 2026",
+      readTime: "8 min",
+      image: "https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=800&q=80",
+      content: `
+# Investir à Vichy en 2026 : Le Guide de la Foncière Valora pour transformer le patrimoine thermal en actif de haute performance
+
+Depuis son inscription au patrimoine mondial de l'UNESCO en 2021, Vichy a opéré une métamorphose spectaculaire. En 2026, la « Reine des Villes d'Eaux » n'est plus seulement une destination thermale de premier plan ; elle est devenue un moteur de rendement exceptionnel pour les investisseurs avisés. Pour la Foncière Valora, Vichy représente l'équilibre parfait entre une valorisation patrimoniale sécurisée et une **rentabilité locative brute dépassant souvent les 9 %**.
+
+## 1. État des lieux du marché vichyssois au premier semestre 2026
+
+Au 1er mars 2026, le prix moyen au m² à Vichy s'établit autour de **1 930 €**, tous types de biens confondus. Si les prix ont progressé de +32 % sur les cinq dernières années, la Foncière Valora note que Vichy reste l'une des villes les plus abordables de France pour une commune de cette strate.
+
+### La dynamique des quartiers analysée par la Foncière Valora
+
+- **Thermal-Vieux Vichy :** Le secteur le plus prestigieux où le prix des appartements rénovés atteint 2 378 €/m². La Foncière Valora y cible des micro-surfaces pour la location saisonnière et étudiante.
+- **Quartier Jeanne d'Arc - Stade :** Un secteur en pleine expansion. La Foncière Valora identifie ici des immeubles de rapport offrant un prix attractif de 1 579 €/m².
+- **Quartier des Ailes :** Zone prometteuse au nord-ouest, bénéficiant d'un plan d'investissement de 15 millions d'euros pour sa transformation urbaine.
+
+## 2. Le Modèle Valora : La rénovation BBC au service du rendement
+
+La mission de la Foncière Valora consiste à acquérir des actifs avec une décote de −10 % à −15 % pour les transformer en logements de **classe DPE A ou B**.
+
+- **Une "Valeur Verte" immédiate :** Une revalorisation du patrimoine de +10 % à +15 % dès la livraison des travaux.
+- **Une attractivité locative record :** Taux d'occupation cible supérieur à **98 %** sur ses actifs vichyssois.
+- **Optimisation DPE :** La Foncière Valora tire profit du nouveau coefficient de conversion de l'électricité (passé à 1,9).
+
+## 3. Ingénierie Financière : Pourquoi la Foncière Valora surclasse les SCPI à Vichy ?
+
+| Critères | SCPI de Rendement | Foncière Valora |
+|---|---|---|
+| Frais d'entrée | 8 à 12 % | **0 € (100 % investi dès J1)** |
+| Rendement brut cible | 4 à 5 % | **> 9 % (Marché Vichyssois)** |
+| Frais de gestion fixes | 10 à 15 % | **0 € (Rémunération au succès)** |
+| Fiscalité | Impôt sur le revenu | **Éligible PEA-PME (Exonération IR)** |
+
+## 4. Stratégie 2026 : Levier Jeanbrun et Agglomération "AGIR 2035"
+
+- **Le Dispositif Jeanbrun :** Permet de déduire un amortissement comptable (jusqu'à 12 000 €/an) des revenus locatifs. Sans zonage restrictif, idéal pour les villes moyennes dynamiques comme Vichy.
+- **Le Projet AGIR 2035 :** La feuille de route de Vichy Communauté prévoit 190 opérations de modernisation. La Foncière Valora anticipe une hausse continue de la demande pour les logements qualitatifs.
+
+## 5. L'Équipe Valora : 18 ans d'ancrage territorial
+
+- **Ayoub Jaziri :** Pilote la stratégie de financement optimisée à 80 % LTC.
+- **Sophian Naili :** Expert du sourcing "Off-Market" via un réseau de 45 agents partenaires.
+- **Renaud Marchand :** Ingénieur BTP, garant de la qualité des rénovations BBC.
+
+## Conclusion
+
+Vichy est la pépite du marché résidentiel de 2026. En combinant un prix d'entrée bas, une tension locative forte et l'expertise technique de la Foncière Valora, vous bâtissez un patrimoine immobilier à haute valeur ajoutée.
+
+Devenez associé de la Foncière Valora. Le ticket d'entrée est fixé à **10 000 €** pour les premiers investisseurs.
+
+*Contactez notre équipe pour découvrir nos opportunités actuelles à Vichy.*
+      `
+    },
+    {
       id: 11,
       title: "Marché Immobilier Bordeaux 2026 : L'Analyse Détaillée et Stratégique de la Foncière Valora",
       slug: "marche-immobilier-bordeaux-2026-analyse-fonciere-valora",
