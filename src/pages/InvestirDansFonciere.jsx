@@ -78,10 +78,6 @@ export default function InvestirDansFonciere() {
               {article.contenu}
             </ReactMarkdown>
           </div>
-        </div>
-      </article>
-
-
 
           {/* CTA */}
           <section className="my-16">
@@ -107,7 +103,6 @@ export default function InvestirDansFonciere() {
               </div>
             </div>
           </section>
-
         </div>
       </article>
 
