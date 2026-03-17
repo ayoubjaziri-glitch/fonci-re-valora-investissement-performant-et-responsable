@@ -721,24 +721,24 @@ export default function Home() {
               <div className="bg-white/5 backdrop-blur-md rounded-3xl p-8 border border-white/20">
                 <div className="text-center mb-8">
                   <p className="text-[#C9A961] text-sm font-medium mb-2">Objectif de la levée</p>
-                  <p className="text-6xl font-bold text-white mb-2">250 000 €</p>
+                  <p className="text-6xl font-bold text-white mb-2">{currentLevy.objectif}</p>
                   <p className="text-white/60 text-sm">Première opération à 1,25 M€</p>
                   <div className="mt-4">
                     <div className="flex justify-between text-xs text-white/50 mb-1">
                       <span>Avancement</span>
-                      <span>38%</span>
+                      <span>{currentLevy.avancement}%</span>
                     </div>
                     <div className="w-full h-2 bg-white/10 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#C9A961] rounded-full" style={{ width: '38%' }} />
+                      <div className="h-full bg-[#C9A961] rounded-full" style={{ width: `${currentLevy.avancement}%` }} />
                     </div>
-                    <p className="text-[#C9A961] text-xs mt-2 font-medium">95 000 € souscrits sur 250 000 €</p>
+                    <p className="text-[#C9A961] text-xs mt-2 font-medium">{currentLevy.collecte} souscrits sur {currentLevy.objectif}</p>
                   </div>
                 </div>
-                
+
                 <div className="grid grid-cols-2 gap-4 mb-6">
                   <div className="bg-white/5 rounded-2xl p-5 text-center border border-white/10">
                     <p className="text-white/60 text-xs mb-2">Ticket minimum</p>
-                    <p className="text-2xl font-bold text-white">10 000 €</p>
+                    <p className="text-2xl font-bold text-white">{currentLevy.ticket_min}</p>
                   </div>
                   <div className="bg-[#C9A961]/20 rounded-2xl p-5 text-center border border-[#C9A961]/40">
                     <p className="text-white/60 text-xs mb-2">Frais d'entrée</p>
