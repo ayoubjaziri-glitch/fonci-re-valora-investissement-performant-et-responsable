@@ -224,11 +224,11 @@ export default function CO2Simulator() {
                 <Slider
                   value={[surface]}
                   onValueChange={([v]) => setSurface(v)}
-                  min={50} max={2000} step={10}
+                  min={100} max={1000} step={10}
                   className="mt-2"
                 />
                 <div className="flex justify-between text-xs text-slate-400 mt-1">
-                  <span>50 m²</span><span>2 000 m²</span>
+                  <span>100 m²</span><span>1 000 m²</span>
                 </div>
               </div>
 
