@@ -4,7 +4,7 @@ import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Pencil, Trash2, X, Save, Users } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, Save, Users, Upload, Loader2 } from 'lucide-react';
 
 const EMPTY = { nom: '', role: '', focus: '', description: '', experience: '', image_url: '', type: 'membre', ordre: 0, actif: true };
 
