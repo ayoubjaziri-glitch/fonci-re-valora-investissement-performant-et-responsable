@@ -26,7 +26,7 @@ function LogoImage() {
   return (
     <img
       src={logoUrl}
-      alt="La Foncière Patrimoniale" className="h-14 w-auto" />);
+      alt="La Foncière Valora" className="h-14 w-auto bg-white rounded" />);
 
 
 
