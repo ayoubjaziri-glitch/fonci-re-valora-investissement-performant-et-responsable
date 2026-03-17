@@ -159,15 +159,16 @@ export default function AdminRealisationsPlus() {
                  </div>
                </div>
 
-               <div className="grid grid-cols-2 gap-4">
-                 <div>
-                   <Label className="text-sm font-medium">Latitude (pour la carte)</Label>
-                   <Input type="number" step="0.000001" value={form.lat} onChange={e => setForm({...form, lat: e.target.value})} placeholder="48.8566" />
+               <div>
+                 <Label className="text-sm font-medium">Adresse complète (pour la carte)</Label>
+                 <div className="flex gap-2 mt-1">
+                   <Input value={form.location} onChange={e => setForm({...form, location: e.target.value})} placeholder="12 Rue de la Paix, 75001 Paris" />
+                   <Button onClick={() => handleGeocodeAddress(form.location)} disabled={geocoding || !form.location} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold whitespace-nowrap">
+                     {geocoding ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Géolocaliser'}
+                   </Button>
                  </div>
-                 <div>
-                   <Label className="text-sm font-medium">Longitude (pour la carte)</Label>
-                   <Input type="number" step="0.000001" value={form.lng} onChange={e => setForm({...form, lng: e.target.value})} placeholder="2.3522" />
-                 </div>
+                 {geoError && <p className="text-xs text-red-500 mt-1">{geoError}</p>}
+                 {form.lat && form.lng && <p className="text-xs text-emerald-600 mt-1">✓ Coordonnées trouvées: {form.lat.toFixed(4)}, {form.lng.toFixed(4)}</p>}
                </div>
 
                <div className="grid grid-cols-2 gap-4">
