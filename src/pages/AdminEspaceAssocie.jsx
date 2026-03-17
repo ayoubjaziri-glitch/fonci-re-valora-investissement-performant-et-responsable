@@ -633,7 +633,41 @@ function RoadmapSection() {
 }
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
-export default function AdminEspaceAssocie() {
+export default function AdminEspaceAssocie({ defaultTab = 'kpis', embedded = false }) {
+  const tabMap = {
+    kpis: 'kpis',
+    docs_actu: 'docs',
+    acq: 'acq',
+    roadmap: 'roadmap',
+  };
+  const resolvedTab = tabMap[defaultTab] || defaultTab;
+
+  const content = (
+    <Tabs defaultValue={resolvedTab}>
+      {!embedded && (
+        <TabsList className="flex flex-wrap gap-1 h-auto mb-8 bg-white border border-slate-200 p-2 rounded-xl">
+          <TabsTrigger value="kpis" className="text-sm">📊 KPIs & Métriques</TabsTrigger>
+          <TabsTrigger value="docs" className="text-sm">📄 Documents</TabsTrigger>
+          <TabsTrigger value="actu" className="text-sm">📰 Actualités</TabsTrigger>
+          <TabsTrigger value="acq" className="text-sm">🏢 Biens & Acquisitions</TabsTrigger>
+          <TabsTrigger value="roadmap" className="text-sm">🚀 Roadmap</TabsTrigger>
+        </TabsList>
+      )}
+      <TabsContent value="kpis"><KpisSection /></TabsContent>
+      <TabsContent value="docs">
+        <div className="space-y-8">
+          <DocumentsSection />
+          <ActualitesSection />
+        </div>
+      </TabsContent>
+      <TabsContent value="actu"><ActualitesSection /></TabsContent>
+      <TabsContent value="acq"><AcquisitionsSection /></TabsContent>
+      <TabsContent value="roadmap"><RoadmapSection /></TabsContent>
+    </Tabs>
+  );
+
+  if (embedded) return content;
+
   return (
     <div className="min-h-screen bg-slate-50">
       <div className="bg-[#1A3A52] py-8">
@@ -647,7 +681,6 @@ export default function AdminEspaceAssocie() {
           </div>
         </div>
       </div>
-
       <div className="max-w-5xl mx-auto px-6 py-8">
         <Tabs defaultValue="kpis">
           <TabsList className="flex flex-wrap gap-1 h-auto mb-8 bg-white border border-slate-200 p-2 rounded-xl">
@@ -657,7 +690,6 @@ export default function AdminEspaceAssocie() {
             <TabsTrigger value="acq" className="text-sm">🏢 Biens & Acquisitions</TabsTrigger>
             <TabsTrigger value="roadmap" className="text-sm">🚀 Roadmap</TabsTrigger>
           </TabsList>
-
           <TabsContent value="kpis"><KpisSection /></TabsContent>
           <TabsContent value="docs"><DocumentsSection /></TabsContent>
           <TabsContent value="actu"><ActualitesSection /></TabsContent>
