@@ -48,7 +48,7 @@ export default function Home() {
   };
 
   // Récupérer la première levée active
-  const currentLevy = levees.find(l => l.actif && l.statut === 'Ouverte') || levees.find(l => l.statut === 'Ouverte') || {
+  const currentLevy = levees.find((l) => l.actif && l.statut === 'Ouverte') || levees.find((l) => l.statut === 'Ouverte') || {
     nom: 'Notre levée de fonds inaugurale',
     objectif: '250 000 €',
     collecte: '95 000 €',
@@ -262,8 +262,8 @@ export default function Home() {
               </div>
               <div className="bg-[#C9A961] rounded-2xl p-6 text-center">
                 <Percent className="h-8 w-8 text-[#1A3A52] mx-auto mb-3" />
-                <p className="text-3xl font-bold text-[#1A3A52] mb-1">Supérieur à 7%</p>
-                <p className="text-sm text-[#1A3A52]/80">TRI net visé</p>
+                <p className="text-3xl font-bold text-[#1A3A52] mb-1">Supérieur à 10%</p>
+                <p className="text-slate-900 text-sm font-semibold">TRI net visé</p>
               </div>
               <div className="bg-slate-900 p-6 text-center rounded-2xl">
                 <Target className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
