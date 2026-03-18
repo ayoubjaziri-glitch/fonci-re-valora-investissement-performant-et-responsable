@@ -29,8 +29,8 @@ function LogoImage() {
     <img
       src={logoUrl}
       alt="La Foncière Valora"
-      className="h-14 w-auto border-0" />
-  );
+      className="h-14 w-auto border-0" />);
+
 }
 
 export default function Layout({ children, currentPageName }) {
@@ -148,8 +148,8 @@ export default function Layout({ children, currentPageName }) {
             {/* Brand */}
             <div className="md:col-span-2">
               <div className="mb-6">
-                <p className="text-2xl font-serif text-white tracking-wide">La Foncière</p>
-                <p className="text-3xl font-serif text-[#C9A961] tracking-widest font-semibold">Valora</p>
+                <p className="text-2xl font-serif text-white tracking-wide">La Foncière VALORA</p>
+                
               </div>
               <p className="text-white/60 mb-6 max-w-sm">Foncière résidentielle dédiée à l'acquisition, à la réhabilitation  et à la valorisation d'immeubles présentant un potentiel de création de valeur au sein de marchés résidentiels dynamique
 
