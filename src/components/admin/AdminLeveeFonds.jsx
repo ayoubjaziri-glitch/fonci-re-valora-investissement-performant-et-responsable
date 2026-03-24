@@ -11,7 +11,8 @@ const EMPTY = {
   nom: '', objectif: '', collecte: '', avancement: 0,
   date_ouverture: '', date_cloture: '', ticket_min: '10 000 €',
   rendement_cible: '10% net', description: '', statut: 'Préparation',
-  nb_investisseurs: 0, actif: true
+  nb_investisseurs: 0, horizon: '5 ans', effet_levier: 'x5',
+  valorisation_an5: '+61%', sous_titre: '', actif: true
 };
 
 const STATUT_COLORS = {
