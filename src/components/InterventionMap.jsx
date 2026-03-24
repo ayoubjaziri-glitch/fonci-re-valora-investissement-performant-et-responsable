@@ -1,12 +1,11 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import { MapPin } from 'lucide-react';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 
-// Fix for default markers
+// Fix default marker icons
 delete L.Icon.Default.prototype._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
@@ -14,8 +13,8 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Custom icon
-const customIcon = new L.Icon({
+// Custom gold marker
+const goldIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
   iconSize: [25, 41],
@@ -24,16 +23,43 @@ const customIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
-const ClusterMarkerHandler = ({ clusters, mapRef }) => {
+// Slightly offset markers that share the same coordinates
+function jitterCoords(items) {
+  const seen = {};
+  return items.map((item) => {
+    const key = `${item.lat.toFixed(4)},${item.lng.toFixed(4)}`;
+    seen[key] = (seen[key] || 0) + 1;
+    const count = seen[key];
+    // Spiral offset so overlapping markers spread out
+    const angle = (count - 1) * 2.4; // golden angle
+    const radius = count === 1 ? 0 : 0.0025 * Math.ceil((count - 1) / 6);
+    return {
+      ...item,
+      displayLat: item.lat + radius * Math.cos(angle),
+      displayLng: item.lng + radius * Math.sin(angle),
+    };
+  });
+}
+
+const MapController = ({ mapRef }) => {
   const map = useMap();
   mapRef.current = map;
   return null;
 };
 
+const DPE_COLORS = {
+  A: 'bg-emerald-500',
+  B: 'bg-green-500',
+  C: 'bg-lime-500',
+  D: 'bg-yellow-500',
+  E: 'bg-orange-400',
+  F: 'bg-orange-600',
+  G: 'bg-red-600',
+};
+
 export default function InterventionMap() {
   const mapRef = useRef(null);
-  const center = [46.1313, 3.4304]; // Vichy
-  const defaultZoom = 9;
+  const [selectedBien, setSelectedBien] = useState(null);
 
   const { data: realisations = [] } = useQuery({
     queryKey: ['realisations-biens'],
@@ -41,137 +67,130 @@ export default function InterventionMap() {
     initialData: []
   });
 
-  const { data: acquisitions = [] } = useQuery({
-    queryKey: ['acq-associe'],
-    queryFn: () => base44.entities.AcquisitionAssocie.list(),
-    initialData: []
-  });
+  const allBiens = realisations
+    .filter(b => b.actif && b.lat && b.lng)
+    .map(b => ({
+      id: `real-${b.id}`,
+      name: b.titre,
+      adresse: b.location || '',
+      lat: parseFloat(b.lat),
+      lng: parseFloat(b.lng),
+      dpe: b.dpe_apres,
+      logements: b.logements,
+      surface: b.surface,
+      rendement: b.rendement_brut,
+      image_url: b.image_apres,
+    }));
 
-  // Coordonnées de Vichy et Clermont-Ferrand
-  const CITY_COORDS = {
-    vichy: { lat: 46.1313, lng: 3.4304 },
-    clermont: { lat: 45.7772, lng: 3.0873 }
-  };
+  const jitteredBiens = jitterCoords(allBiens);
 
-  // Combiner les biens actifs du back office avec coordonnées réelles
-  const allBiens = [
-    ...realisations
-      .filter(b => b.actif && b.location && b.lat && b.lng)
-      .map(b => ({
-        id: `real-${b.id}`,
-        name: b.titre,
-        adresse: b.location,
-        lat: b.lat,
-        lng: b.lng,
-        dpe: b.dpe_apres,
-        logements: b.logements,
-        image_url: b.image_apres,
-        type: 'realisation'
-      }))
-  ];
+  // Compute map center
+  const center = allBiens.length > 0
+    ? [
+        allBiens.reduce((s, b) => s + b.lat, 0) / allBiens.length,
+        allBiens.reduce((s, b) => s + b.lng, 0) / allBiens.length,
+      ]
+    : [46.1313, 3.4304];
 
-  // Grouper par ville (Vichy ou Clermont-Ferrand)
-  const groupedByCity = allBiens.reduce((acc, bien) => {
-    const isVichy = (bien.lat > 45.95 && bien.lat < 46.35) && (bien.lng > 3.2 && bien.lng < 3.65);
-    const isClermont = (bien.lat > 45.6 && bien.lat < 45.95) && (bien.lng > 2.9 && bien.lng < 3.3);
-    
-    if (isVichy) {
-      acc.vichy.push(bien);
-    } else if (isClermont) {
-      acc.clermont.push(bien);
-    }
+  // City grouping for legend
+  const cities = allBiens.reduce((acc, b) => {
+    const isVichy = b.lat > 45.95 && b.lat < 46.35 && b.lng > 3.2 && b.lng < 3.65;
+    const isClermont = b.lat > 45.6 && b.lat < 45.95 && b.lng > 2.9 && b.lng < 3.3;
+    const city = isVichy ? 'Vichy' : isClermont ? 'Clermont-Fd' : 'Autre';
+    acc[city] = (acc[city] || 0) + 1;
     return acc;
-  }, { vichy: [], clermont: [] });
-
-  // Créer les clusters
-  const clusterMarkers = [];
-  if (groupedByCity.vichy.length > 0) {
-    clusterMarkers.push({
-      id: 'vichy-cluster',
-      name: `Vichy (${groupedByCity.vichy.length})`,
-      lat: CITY_COORDS.vichy.lat,
-      lng: CITY_COORDS.vichy.lng,
-      isCluster: true,
-      items: groupedByCity.vichy
-    });
-  }
-  if (groupedByCity.clermont.length > 0) {
-    clusterMarkers.push({
-      id: 'clermont-cluster',
-      name: `Clermont-Ferrand (${groupedByCity.clermont.length})`,
-      lat: CITY_COORDS.clermont.lat,
-      lng: CITY_COORDS.clermont.lng,
-      isCluster: true,
-      items: groupedByCity.clermont
-    });
-  }
-
-  const handleClusterClick = (items) => {
-    if (!mapRef.current || items.length === 0) return;
-    
-    const bounds = L.latLngBounds(items.map(item => [item.lat, item.lng]));
-    mapRef.current.fitBounds(bounds, { padding: [50, 50] });
-  };
+  }, {});
 
   return (
     <div className="relative">
-      <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200">
-        <MapContainer 
-          center={center} 
-          zoom={defaultZoom} 
-          style={{ height: '500px', width: '100%' }}
+      <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200" style={{ height: 520 }}>
+        <MapContainer
+          center={center}
+          zoom={allBiens.length > 0 ? 12 : 9}
+          style={{ height: '100%', width: '100%' }}
           scrollWheelZoom={true}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <ClusterMarkerHandler clusters={clusterMarkers} mapRef={mapRef} />
-          
-          {clusterMarkers.map((cluster) => (
-            <Marker 
-              key={cluster.id} 
-              position={[cluster.lat, cluster.lng]}
-              icon={customIcon}
+          <MapController mapRef={mapRef} />
+
+          {jitteredBiens.map((bien) => (
+            <Marker
+              key={bien.id}
+              position={[bien.displayLat, bien.displayLng]}
+              icon={goldIcon}
               eventHandlers={{
-                click: () => handleClusterClick(cluster.items)
+                click: () => setSelectedBien(bien.id === selectedBien ? null : bien.id)
               }}
             >
-              <Popup>
-                <div className="p-4 min-w-[300px]">
-                  <h4 className="font-bold text-slate-900 text-base mb-4 flex items-center gap-2">
-                    📍 {cluster.name}
-                  </h4>
-                  <div className="space-y-3 max-h-80 overflow-y-auto">
-                    {cluster.items.map((item, idx) => (
-                      <div key={idx} className="border-l-2 border-[#C9A961] pl-3 py-2">
-                        <p className="font-semibold text-slate-800 text-sm">{item.name}</p>
-                        <p className="text-slate-600 text-xs flex items-center gap-1 mt-1">
-                          <MapPin className="h-3 w-3" />
-                          {item.adresse}
-                        </p>
-                        {item.logements && (
-                          <p className="text-slate-600 text-xs mt-1">{item.logements}</p>
-                        )}
-                        {item.dpe && (
-                          <span className={`inline-block mt-1.5 px-2 py-0.5 rounded text-xs font-bold text-white ${
-                            item.dpe === 'A' ? 'bg-emerald-500' : 
-                            item.dpe === 'B' ? 'bg-green-500' : 
-                            item.dpe === 'C' ? 'bg-lime-500' :
-                            'bg-amber-500'
-                          }`}>
-                            DPE {item.dpe}
-                          </span>
-                        )}
-                      </div>
-                    ))}
+              <Popup
+                maxWidth={280}
+                minWidth={240}
+                autoPan={true}
+                autoPanPaddingTopLeft={[10, 10]}
+                autoPanPaddingBottomRight={[10, 10]}
+              >
+                <div className="font-sans" style={{ lineHeight: 1.4 }}>
+                  {/* Header */}
+                  <div style={{ background: '#1A3A52', margin: '-12px -12px 10px', padding: '12px 14px', borderRadius: '4px 4px 0 0' }}>
+                    <p style={{ color: '#C9A961', fontWeight: 700, fontSize: 13, margin: 0 }}>📍 {bien.name}</p>
+                    {bien.adresse && (
+                      <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, margin: '3px 0 0' }}>{bien.adresse}</p>
+                    )}
                   </div>
-                  <button
-                    onClick={() => handleClusterClick(cluster.items)}
-                    className="mt-4 w-full bg-[#C9A961] hover:bg-[#B8994F] text-slate-900 py-2 rounded-lg text-sm font-semibold transition-colors"
-                  >
-                    Zoomer sur {cluster.items.length} bien{cluster.items.length > 1 ? 's' : ''}
-                  </button>
+
+                  {/* Image */}
+                  {bien.image_url && (
+                    <div style={{ margin: '0 -12px 10px', height: 130, overflow: 'hidden' }}>
+                      <img
+                        src={bien.image_url}
+                        alt={bien.name}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                      />
+                    </div>
+                  )}
+
+                  {/* Details */}
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 8 }}>
+                    {bien.logements && (
+                      <div style={{ background: '#f8f9fa', borderRadius: 6, padding: '6px 8px' }}>
+                        <p style={{ fontSize: 10, color: '#888', margin: 0 }}>Logements</p>
+                        <p style={{ fontSize: 12, fontWeight: 700, color: '#1A3A52', margin: 0 }}>{bien.logements}</p>
+                      </div>
+                    )}
+                    {bien.surface && (
+                      <div style={{ background: '#f8f9fa', borderRadius: 6, padding: '6px 8px' }}>
+                        <p style={{ fontSize: 10, color: '#888', margin: 0 }}>Surface</p>
+                        <p style={{ fontSize: 12, fontWeight: 700, color: '#1A3A52', margin: 0 }}>{bien.surface}</p>
+                      </div>
+                    )}
+                    {bien.rendement && (
+                      <div style={{ background: '#f8f9fa', borderRadius: 6, padding: '6px 8px' }}>
+                        <p style={{ fontSize: 10, color: '#888', margin: 0 }}>Rendement brut</p>
+                        <p style={{ fontSize: 12, fontWeight: 700, color: '#1A3A52', margin: 0 }}>{bien.rendement}</p>
+                      </div>
+                    )}
+                    {bien.dpe && (
+                      <div style={{ background: '#f8f9fa', borderRadius: 6, padding: '6px 8px' }}>
+                        <p style={{ fontSize: 10, color: '#888', margin: 0 }}>DPE</p>
+                        <span style={{
+                          display: 'inline-block',
+                          background: bien.dpe === 'A' ? '#10b981' : bien.dpe === 'B' ? '#22c55e' : bien.dpe === 'C' ? '#84cc16' : '#f59e0b',
+                          color: 'white',
+                          fontWeight: 700,
+                          fontSize: 12,
+                          padding: '1px 8px',
+                          borderRadius: 4,
+                          marginTop: 2
+                        }}>
+                          DPE {bien.dpe}
+                        </span>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </Popup>
             </Marker>
@@ -180,20 +199,33 @@ export default function InterventionMap() {
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg z-[1000]">
-        <p className="text-xs text-slate-500 mb-3 font-medium">PARC IMMOBILIER</p>
-        <div className="space-y-2">
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-slate-700">Vichy</span>
-            <span className="bg-[#C9A961] text-white text-xs px-2 py-0.5 rounded-full font-bold">{groupedByCity.vichy.length}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="text-sm font-semibold text-slate-700">Clermont-Fd</span>
-            <span className="bg-[#C9A961] text-white text-xs px-2 py-0.5 rounded-full font-bold">{groupedByCity.clermont.length}</span>
-          </div>
-          <p className="text-xs text-slate-500 mt-2">Cliquez sur un cluster pour zoomer</p>
-        </div>
+      <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg z-[1000] min-w-[160px]">
+        <p className="text-xs text-slate-500 mb-3 font-semibold uppercase tracking-wide">Parc immobilier</p>
+        {allBiens.length === 0 ? (
+          <p className="text-xs text-slate-400 italic">Aucun bien géolocalisé</p>
+        ) : (
+          <>
+            {Object.entries(cities).map(([city, count]) => (
+              <div key={city} className="flex items-center justify-between gap-4 mb-1.5">
+                <span className="text-sm font-semibold text-slate-700">{city}</span>
+                <span className="bg-[#C9A961] text-white text-xs px-2 py-0.5 rounded-full font-bold">{count}</span>
+              </div>
+            ))}
+            <div className="border-t border-slate-100 mt-2 pt-2 flex items-center justify-between">
+              <span className="text-xs text-slate-500">Total</span>
+              <span className="text-xs font-bold text-[#1A3A52]">{allBiens.length} bien{allBiens.length > 1 ? 's' : ''}</span>
+            </div>
+          </>
+        )}
       </div>
+
+      {allBiens.length === 0 && (
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <div className="bg-white/90 backdrop-blur-sm rounded-2xl p-8 text-center shadow-lg">
+            <p className="text-slate-500 text-sm">Ajoutez des biens avec coordonnées GPS depuis le back office</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
