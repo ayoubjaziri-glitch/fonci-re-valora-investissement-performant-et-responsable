@@ -113,13 +113,31 @@ export default function AdminLeveeFonds() {
                   <Input value={form.ticket_min} onChange={e => setForm({...form, ticket_min: e.target.value})} placeholder="10 000 €" />
                 </div>
                 <div>
-                  <label className="text-sm font-medium text-slate-700 block mb-1">Rendement cible</label>
+                  <label className="text-sm font-medium text-slate-700 block mb-1">TRI net visé</label>
                   <Input value={form.rendement_cible} onChange={e => setForm({...form, rendement_cible: e.target.value})} placeholder="10% net" />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-slate-700 block mb-1">Nb investisseurs</label>
                   <Input type="number" value={form.nb_investisseurs} onChange={e => setForm({...form, nb_investisseurs: parseInt(e.target.value)||0})} />
                 </div>
+              </div>
+              <div className="grid grid-cols-3 gap-4">
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-1">Horizon recommandé</label>
+                  <Input value={form.horizon} onChange={e => setForm({...form, horizon: e.target.value})} placeholder="5 ans" />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-1">Effet de levier</label>
+                  <Input value={form.effet_levier} onChange={e => setForm({...form, effet_levier: e.target.value})} placeholder="x5" />
+                </div>
+                <div>
+                  <label className="text-sm font-medium text-slate-700 block mb-1">Valorisation An 5</label>
+                  <Input value={form.valorisation_an5} onChange={e => setForm({...form, valorisation_an5: e.target.value})} placeholder="+61%" />
+                </div>
+              </div>
+              <div>
+                <label className="text-sm font-medium text-slate-700 block mb-1">Sous-titre (sous le montant objectif)</label>
+                <Input value={form.sous_titre} onChange={e => setForm({...form, sous_titre: e.target.value})} placeholder="Première opération à 1,25 M€" />
               </div>
               <div>
                 <label className="text-sm font-medium text-slate-700 block mb-1">Description</label>
