@@ -47,16 +47,25 @@ export default function Home() {
     return image?.url || fallback;
   };
 
-  // Récupérer la première levée active
-  const currentLevy = levees.find((l) => l.actif && l.statut === 'Ouverte') || levees.find((l) => l.statut === 'Ouverte') || {
-    nom: 'Notre levée de fonds inaugurale',
-    objectif: '250 000 €',
-    collecte: '95 000 €',
-    avancement: 38,
-    ticket_min: '10 000 €',
-    rendement_cible: '>10%',
-    description: 'Cette opération permet de soutenir le développement d\'une foncière résidentielle à fort potentiel. La structure se distingue par une optimisation maximale des capitaux : 100 % de l\'apport est investi dans les actifs, sans aucun frais d\'entrée.'
-  };
+  // Récupérer la première levée active (Ouverte ou En cours, triée par pertinence)
+  const currentLevy = levees.find((l) => l.actif && l.statut === 'Ouverte')
+    || levees.find((l) => l.actif && l.statut === 'En cours')
+    || levees.find((l) => l.statut === 'Ouverte')
+    || levees.find((l) => l.statut === 'En cours')
+    || levees[0]
+    || {
+      nom: 'Notre levée de fonds inaugurale',
+      objectif: '250 000 €',
+      collecte: '95 000 €',
+      avancement: 38,
+      ticket_min: '10 000 €',
+      rendement_cible: '>10%',
+      horizon: '5 ans',
+      effet_levier: 'x5',
+      valorisation_an5: '+61%',
+      sous_titre: 'Première opération à 1,25 M€',
+      description: 'Cette opération permet de soutenir le développement d\'une foncière résidentielle à fort potentiel. La structure se distingue par une optimisation maximale des capitaux : 100 % de l\'apport est investi dans les actifs, sans aucun frais d\'entrée.'
+    };
 
   const stats = [
   { value: "18 ans", label: "D'expertise immobilière", icon: Calendar },
