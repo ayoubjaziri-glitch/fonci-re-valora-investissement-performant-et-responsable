@@ -80,7 +80,7 @@ export default function StrategyPerformance() {
     items: [
     { label: "Frais d'entrée", value: "0 €", positive: true },
     { label: "Frais de gestion", value: "0 € fixe", positive: true },
-    { label: "Rendement TRI", value: "> 10% NET", positive: true }]
+    { label: "Rendement TRI", value: "10% NET", positive: true }]
 
   },
   {
