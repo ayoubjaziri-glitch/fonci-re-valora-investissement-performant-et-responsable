@@ -755,11 +755,11 @@ export default function Home() {
                   </div>
                   <div className="bg-white/5 rounded-2xl p-5 text-center border border-white/10">
                     <p className="text-white/60 text-xs mb-2">Effet de levier</p>
-                    <p className="text-2xl font-bold text-white">x5</p>
+                    <p className="text-2xl font-bold text-white">{currentLevy.effet_levier || 'x5'}</p>
                   </div>
                   <div className="bg-[#C9A961]/20 rounded-2xl p-5 text-center border border-[#C9A961]/40">
                     <p className="text-white/60 text-xs mb-2">Valorisation An 5</p>
-                    <p className="text-2xl font-bold text-[#C9A961]">+61%</p>
+                    <p className="text-2xl font-bold text-[#C9A961]">{currentLevy.valorisation_an5 || '+61%'}</p>
                   </div>
                 </div>
 
