@@ -712,11 +712,11 @@ export default function Home() {
                  <div className="grid grid-cols-2 gap-4 mb-8">
                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                      <p className="text-white/60 text-sm mb-1">TRI net visé</p>
-                     <p className="text-3xl font-bold text-[#C9A961]">{currentLevy.rendement_cible}</p>
+                     <p className="text-3xl font-bold text-[#C9A961]">{currentLevy.rendement_cible || '>10%'}</p>
                    </div>
                    <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
                      <p className="text-white/60 text-sm mb-1">Horizon recommandé</p>
-                     <p className="text-3xl font-bold text-white">5 ans</p>
+                     <p className="text-3xl font-bold text-white">{currentLevy.horizon || '5 ans'}</p>
                    </div>
                  </div>
                 <Link to={createPageUrl("Contact")}>
