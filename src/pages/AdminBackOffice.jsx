@@ -22,23 +22,33 @@ import AdminRealisationsPlus from '../components/admin/AdminRealisationsPlus';
 import AdminAcces from '../components/admin/AdminAcces';
 import GestionPhotos from './GestionPhotos';
 
-const ADMIN_PASSWORD = 'ValorAdmin2026!';
-
 // ─── Login ───────────────────────────────────────────────────────────────────
 function AdminLogin({ onLogin }) {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (password === ADMIN_PASSWORD) {
+    setLoading(true);
+    setError('');
+
+    // Vérifier les comptes admin en base
+    const admins = await base44.entities.AccesAdmin.list();
+    const match = admins.find(
+      (a) => a.actif && a.email === email.trim() && a.password === password
+    );
+
+    if (match) {
       sessionStorage.setItem('admin_auth', '1');
       onLogin();
     } else {
-      setError('Mot de passe incorrect');
+      setError('Identifiants incorrects ou compte désactivé');
       setPassword('');
     }
+    setLoading(false);
   };
 
   return (
@@ -54,7 +64,16 @@ function AdminLogin({ onLogin }) {
           </div>
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">Mot de passe administrateur</label>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Adresse email</label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
+                <Input type="email" value={email}
+                  onChange={(e) => { setEmail(e.target.value); setError(''); }}
+                  className="pl-10" placeholder="admin@example.com" required />
+              </div>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Mot de passe</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-slate-400" />
                 <Input type={showPassword ? 'text' : 'password'} value={password}
@@ -67,8 +86,8 @@ function AdminLogin({ onLogin }) {
               </div>
             </div>
             {error && <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">{error}</div>}
-            <Button type="submit" className="w-full bg-[#1A3A52] hover:bg-[#2A4A6F] text-white py-6 font-semibold">
-              Accéder au back-office
+            <Button type="submit" disabled={loading} className="w-full bg-[#1A3A52] hover:bg-[#2A4A6F] text-white py-6 font-semibold">
+              {loading ? 'Vérification...' : 'Accéder au back-office'}
             </Button>
           </form>
         </div>
