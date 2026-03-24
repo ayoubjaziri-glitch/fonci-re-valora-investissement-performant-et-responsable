@@ -731,7 +731,7 @@ export default function Home() {
                 <div className="text-center mb-8">
                   <p className="text-[#C9A961] text-sm font-medium mb-2">Objectif de la levée</p>
                   <p className="text-6xl font-bold text-white mb-2">{currentLevy.objectif}</p>
-                  <p className="text-white/60 text-sm">Première opération à 1,25 M€</p>
+                  <p className="text-white/60 text-sm">{currentLevy.sous_titre || 'Première opération à 1,25 M€'}</p>
                   <div className="mt-4">
                     <div className="flex justify-between text-xs text-white/50 mb-1">
                       <span>Avancement</span>
