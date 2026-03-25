@@ -9,6 +9,7 @@ import {
 import InterventionMap from "../components/InterventionMap";
 import { Button } from "@/components/ui/button";
 import BeforeAfterSlider from "../components/BeforeAfterSlider";
+import DynamicSections from '../components/DynamicSections';
 import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 
@@ -228,6 +229,9 @@ export default function Realisations() {
           <InterventionMap />
         </div>
       </section>
+
+      {/* Sections personnalisées */}
+      <DynamicSections page="nos_biens" />
 
       {/* CTA */}
       <section className="bg-[#C9A961] py-12">
