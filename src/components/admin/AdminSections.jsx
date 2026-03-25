@@ -6,8 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Plus, Pencil, Trash2, X, Save, Eye, EyeOff, Sparkles, PenLine,
-  Home, TrendingUp, Briefcase, Users, Globe, Leaf, Building2, GripVertical,
-  CheckCircle2, Quote, ArrowRight, ChevronDown, ChevronUp
+  Home, TrendingUp, Briefcase, Users, Globe, Leaf, Building2, GripVertical
 } from 'lucide-react';
 import SectionChoiceModal from './SectionChoiceModal';
 import AISectionModal from './AISectionModal';
@@ -29,233 +28,66 @@ const TYPES_LABELS = {
   temoignage: 'Témoignage', liste: 'Liste',
 };
 
-// ─── Aperçu miniature fidèle à la charte ───────────────────────────────────
-function SectionPreviewMini({ section }) {
-  const { type_section, titre, sous_titre, contenu, image_url } = section;
-  const lignes = contenu ? contenu.split('\n').filter(l => l.trim()) : [];
-
-  switch (type_section) {
-    case 'texte':
-      return (
-        <div className="bg-white px-8 py-6 text-center rounded-xl border border-slate-100 pointer-events-none select-none">
-          {sous_titre && (
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <div className="w-6 h-0.5 bg-[#C9A961]" />
-              <span className="text-[#C9A961] font-medium tracking-wider uppercase text-xs">{sous_titre}</span>
-              <div className="w-6 h-0.5 bg-[#C9A961]" />
-            </div>
-          )}
-          {titre && <h3 className="font-serif text-[#1A3A52] text-base font-semibold mb-2">{titre}</h3>}
-          {lignes[0] && <p className="text-slate-500 text-xs line-clamp-2">{lignes[0]}</p>}
-        </div>
-      );
-
-    case 'texte_image':
-      return (
-        <div className="bg-slate-50 rounded-xl border border-slate-100 overflow-hidden pointer-events-none select-none">
-          <div className="grid grid-cols-2 gap-0">
-            <div className="px-5 py-5">
-              {sous_titre && <p className="text-[#C9A961] text-xs font-medium uppercase tracking-wider mb-1">{sous_titre}</p>}
-              {titre && <h3 className="font-serif text-[#1A3A52] text-sm font-semibold mb-2">{titre}</h3>}
-              {lignes[0] && <p className="text-slate-500 text-xs line-clamp-2">{lignes[0]}</p>}
-            </div>
-            <div className="h-28">
-              {image_url
-                ? <img src={image_url} alt="" className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
-                : <div className="w-full h-full bg-gradient-to-br from-[#1A3A52] to-[#2A4A6F] flex items-center justify-center">
-                    <div className="w-8 h-0.5 bg-[#C9A961]" />
-                  </div>
-              }
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'chiffres': {
-      const chiffres = lignes.map(l => {
-        const p = l.split('|');
-        return { valeur: p[0]?.trim(), libelle: p[1]?.trim() || '' };
-      }).filter(c => c.valeur).slice(0, 4);
-      return (
-        <div className="bg-slate-900 rounded-xl border border-slate-700 px-5 py-5 pointer-events-none select-none">
-          {titre && <h3 className="font-serif text-white text-sm text-center mb-3">{titre}</h3>}
-          <div className="grid grid-cols-4 gap-2">
-            {chiffres.length > 0 ? chiffres.map((c, i) => (
-              <div key={i} className="bg-white/10 rounded-lg p-2 text-center">
-                <p className="text-[#C9A961] font-bold text-sm">{c.valeur}</p>
-                <p className="text-white/60 text-xs line-clamp-1">{c.libelle}</p>
-              </div>
-            )) : (
-              <div className="col-span-4 text-center text-white/30 text-xs py-2">Format : valeur | libellé</div>
-            )}
-          </div>
-        </div>
-      );
-    }
-
-    case 'cta':
-      return (
-        <div className="bg-[#C9A961] rounded-xl px-6 py-5 text-center pointer-events-none select-none">
-          {titre && <h3 className="font-serif text-[#1A3A52] text-sm font-bold mb-1">{titre}</h3>}
-          {sous_titre && <p className="text-[#1A3A52]/70 text-xs mb-3">{sous_titre}</p>}
-          <span className="inline-flex items-center gap-1 bg-[#1A3A52] text-white text-xs font-semibold px-4 py-1.5 rounded-lg">
-            Entrer en relation <ArrowRight className="h-3 w-3" />
-          </span>
-        </div>
-      );
-
-    case 'temoignage':
-      return (
-        <div className="bg-slate-50 rounded-xl border border-slate-100 px-6 py-5 relative pointer-events-none select-none">
-          <Quote className="h-8 w-8 text-[#C9A961]/20 absolute top-3 right-4" />
-          {contenu && <p className="text-slate-600 text-xs italic mb-3 line-clamp-2">"{contenu}"</p>}
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-[#1A3A52] rounded-full flex items-center justify-center flex-shrink-0">
-              <span className="text-[#C9A961] font-bold text-xs">{titre?.charAt(0) || 'A'}</span>
-            </div>
-            <div>
-              {titre && <p className="font-semibold text-[#1A3A52] text-xs">{titre}</p>}
-              {sous_titre && <p className="text-slate-400 text-xs">{sous_titre}</p>}
-            </div>
-          </div>
-        </div>
-      );
-
-    case 'liste':
-      return (
-        <div className="bg-white rounded-xl border border-slate-100 px-5 py-4 pointer-events-none select-none">
-          {titre && <h3 className="font-serif text-[#1A3A52] text-sm font-semibold mb-3">{titre}</h3>}
-          <div className="space-y-1.5">
-            {lignes.slice(0, 3).map((l, i) => (
-              <div key={i} className="flex items-start gap-2 p-1.5 bg-slate-50 rounded-lg">
-                <CheckCircle2 className="h-3.5 w-3.5 text-[#C9A961] flex-shrink-0 mt-0.5" />
-                <span className="text-slate-600 text-xs line-clamp-1">{l.replace(/^[-•*]\s*/, '')}</span>
-              </div>
-            ))}
-            {lignes.length > 3 && <p className="text-xs text-slate-300 pl-2">+{lignes.length - 3} éléments…</p>}
-          </div>
-        </div>
-      );
-
-    default:
-      return <div className="bg-slate-50 rounded-xl border border-dashed border-slate-200 px-5 py-4 text-slate-400 text-xs text-center">Aperçu non disponible</div>;
-  }
-}
-
-// ─── Formulaire d'édition inline ────────────────────────────────────────────
-function InlineEditForm({ form, setForm, onSave, onCancel, isLoading }) {
+// Formulaire d'édition d'une section existante
+function EditSectionForm({ form, setForm, onSave, onCancel, isLoading }) {
   return (
-    <div className="mt-4 pt-4 border-t border-slate-100 space-y-3">
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="text-xs font-medium text-slate-500 block mb-1">Titre *</label>
-          <Input value={form.titre || ''} onChange={e => setForm({ ...form, titre: e.target.value })} className="text-sm h-8" />
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl p-6 w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="flex items-center justify-between mb-5">
+          <h3 className="text-lg font-semibold text-[#1A3A52]">Modifier la section</h3>
+          <button onClick={onCancel}><X className="h-5 w-5 text-slate-400" /></button>
         </div>
-        <div>
-          <label className="text-xs font-medium text-slate-500 block mb-1">Sous-titre</label>
-          <Input value={form.sous_titre || ''} onChange={e => setForm({ ...form, sous_titre: e.target.value })} className="text-sm h-8" />
+        <div className="space-y-4">
+          <div>
+            <label className="text-sm font-medium text-slate-700 block mb-1">Titre *</label>
+            <Input value={form.titre || ''} onChange={e => setForm({ ...form, titre: e.target.value })} />
+          </div>
+          <div>
+            <label className="text-sm font-medium text-slate-700 block mb-1">Sous-titre</label>
+            <Input value={form.sous_titre || ''} onChange={e => setForm({ ...form, sous_titre: e.target.value })} />
+          </div>
+          <div>
+            <label className="text-sm font-medium text-slate-700 block mb-1">Type</label>
+            <select value={form.type_section} onChange={e => setForm({ ...form, type_section: e.target.value })}
+              className="w-full px-3 py-2 border border-input rounded-md text-sm bg-white">
+              {Object.entries(TYPES_LABELS).map(([id, label]) => <option key={id} value={id}>{label}</option>)}
+            </select>
+          </div>
+          <div>
+            <label className="text-sm font-medium text-slate-700 block mb-1">Contenu</label>
+            <Textarea rows={5} value={form.contenu || ''} onChange={e => setForm({ ...form, contenu: e.target.value })} />
+          </div>
+          <div>
+            <label className="text-sm font-medium text-slate-700 block mb-1">URL image (optionnel)</label>
+            <Input value={form.image_url || ''} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="https://..." />
+            {form.image_url && <img src={form.image_url} alt="" className="mt-2 h-24 w-full object-cover rounded-lg" onError={e => e.target.style.display='none'} />}
+          </div>
+          <div>
+            <label className="text-sm font-medium text-slate-700 block mb-1">Ordre</label>
+            <Input type="number" value={form.ordre || 0} onChange={e => setForm({ ...form, ordre: parseInt(e.target.value) || 0 })} className="w-24" />
+          </div>
+          <div className="flex items-center gap-2">
+            <input type="checkbox" id="actif-edit" checked={form.actif} onChange={e => setForm({ ...form, actif: e.target.checked })} />
+            <label htmlFor="actif-edit" className="text-sm text-slate-700">Visible sur le site</label>
+          </div>
         </div>
-      </div>
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="text-xs font-medium text-slate-500 block mb-1">Type</label>
-          <select value={form.type_section || 'texte'} onChange={e => setForm({ ...form, type_section: e.target.value })}
-            className="w-full px-2 py-1.5 border border-input rounded-md text-xs bg-white h-8">
-            {Object.entries(TYPES_LABELS).map(([id, label]) => <option key={id} value={id}>{label}</option>)}
-          </select>
-        </div>
-        <div>
-          <label className="text-xs font-medium text-slate-500 block mb-1">Ordre</label>
-          <Input type="number" value={form.ordre ?? 0} onChange={e => setForm({ ...form, ordre: parseInt(e.target.value) || 0 })} className="text-sm h-8 w-20" />
-        </div>
-      </div>
-      <div>
-        <label className="text-xs font-medium text-slate-500 block mb-1">Contenu</label>
-        <Textarea rows={4} value={form.contenu || ''} onChange={e => setForm({ ...form, contenu: e.target.value })} className="text-sm resize-none" />
-        {form.type_section === 'chiffres' && (
-          <p className="text-xs text-slate-400 mt-1">Format : <code className="bg-slate-100 px-1 rounded">valeur | libellé</code> — une ligne par chiffre</p>
-        )}
-      </div>
-      <div>
-        <label className="text-xs font-medium text-slate-500 block mb-1">URL image</label>
-        <Input value={form.image_url || ''} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="https://..." className="text-sm h-8" />
-      </div>
-      <div className="flex items-center justify-between pt-2">
-        <label className="flex items-center gap-2 text-xs text-slate-600 cursor-pointer">
-          <input type="checkbox" checked={!!form.actif} onChange={e => setForm({ ...form, actif: e.target.checked })} className="rounded" />
-          Visible sur le site
-        </label>
-        <div className="flex gap-2">
-          <Button variant="outline" size="sm" onClick={onCancel} className="h-7 text-xs">Annuler</Button>
-          <Button size="sm" disabled={isLoading || !form.titre?.trim()} onClick={onSave}
-            className="h-7 text-xs bg-[#1A3A52] hover:bg-[#2A4A6F] text-white">
-            <Save className="h-3 w-3 mr-1" />{isLoading ? 'Sauvegarde…' : 'Sauvegarder'}
+        <div className="flex gap-3 mt-6">
+          <Button onClick={onSave} disabled={isLoading || !form.titre?.trim()} className="flex-1 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white">
+            <Save className="h-4 w-4 mr-2" /> {isLoading ? 'Sauvegarde…' : 'Sauvegarder'}
           </Button>
+          <Button variant="outline" onClick={onCancel}>Annuler</Button>
         </div>
       </div>
     </div>
   );
 }
 
-// ─── Carte d'une section ────────────────────────────────────────────────────
-function SectionCard({ section, onToggle, onDelete, onUpdate, isUpdating }) {
-  const [editing, setEditing] = useState(false);
-  const [form, setForm] = useState({});
-
-  const startEdit = () => { setForm({ ...section }); setEditing(true); };
-  const cancelEdit = () => setEditing(false);
-  const saveEdit = () => onUpdate(form, () => setEditing(false));
-
-  return (
-    <div className={`bg-white rounded-2xl border transition-all ${section.actif ? 'border-slate-200 shadow-sm' : 'border-slate-100 opacity-60'}`}>
-      {/* Header */}
-      <div className="flex items-center gap-3 px-4 pt-4 pb-3">
-        <GripVertical className="h-4 w-4 text-slate-200 cursor-grab flex-shrink-0" />
-        <div className="flex-1 min-w-0 flex items-center gap-2 flex-wrap">
-          <span className="font-semibold text-[#1A3A52] text-sm">{section.titre}</span>
-          <span className="text-xs bg-[#C9A961]/10 text-[#C9A961] px-2 py-0.5 rounded-full font-medium">{TYPES_LABELS[section.type_section] || section.type_section}</span>
-          <span className="text-xs text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full">#{section.ordre}</span>
-          {!section.actif && <span className="text-xs bg-red-100 text-red-500 px-2 py-0.5 rounded-full">Masqué</span>}
-        </div>
-        <div className="flex items-center gap-1 flex-shrink-0">
-          <button onClick={() => onToggle(section)}
-            className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
-            title={section.actif ? 'Masquer du site' : 'Afficher sur le site'}>
-            {section.actif ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
-          </button>
-          <button onClick={editing ? cancelEdit : startEdit}
-            className={`p-1.5 rounded-lg transition-colors ${editing ? 'text-[#1A3A52] bg-[#1A3A52]/10' : 'text-slate-400 hover:text-[#1A3A52] hover:bg-slate-100'}`}
-            title="Modifier">
-            <Pencil className="h-4 w-4" />
-          </button>
-          <button onClick={() => { if (confirm('Supprimer cette section ?')) onDelete(section.id); }}
-            className="p-1.5 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-            title="Supprimer">
-            <Trash2 className="h-4 w-4" />
-          </button>
-        </div>
-      </div>
-
-      {/* Aperçu visuel */}
-      <div className="px-4 pb-4">
-        <SectionPreviewMini section={editing ? form : section} />
-      </div>
-
-      {/* Formulaire inline */}
-      {editing && (
-        <div className="px-4 pb-4">
-          <InlineEditForm form={form} setForm={setForm} onSave={saveEdit} onCancel={cancelEdit} isLoading={isUpdating} />
-        </div>
-      )}
-    </div>
-  );
-}
-
-// ─── Composant principal ─────────────────────────────────────────────────────
 export default function AdminSections() {
   const qc = useQueryClient();
   const [activePage, setActivePage] = useState('accueil');
-  const [modal, setModal] = useState(null);
+  const [modal, setModal] = useState(null); // null | 'choice' | 'ai' | 'manual'
+  const [editingSection, setEditingSection] = useState(null);
+  const [editForm, setEditForm] = useState({});
 
   const { data: sections = [] } = useQuery({
     queryKey: ['site-sections'],
@@ -268,8 +100,8 @@ export default function AdminSections() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.SiteSection.update(id, data),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['site-sections'] }),
+    mutationFn: (data) => base44.entities.SiteSection.update(editingSection.id, data),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['site-sections'] }); setEditingSection(null); },
   });
 
   const deleteMutation = useMutation({
@@ -277,12 +109,13 @@ export default function AdminSections() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['site-sections'] }),
   });
 
+  const toggleMutation = useMutation({
+    mutationFn: ({ id, actif }) => base44.entities.SiteSection.update(id, { actif }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ['site-sections'] }),
+  });
+
   const pageSections = sections.filter(s => s.page === activePage).sort((a, b) => a.ordre - b.ordre);
   const currentPageInfo = PAGES.find(p => p.id === activePage);
-
-  const handleUpdate = (sectionId, formData, onDone) => {
-    updateMutation.mutate({ id: sectionId, data: formData }, { onSuccess: () => onDone?.() });
-  };
 
   return (
     <div className="flex gap-6">
@@ -313,16 +146,17 @@ export default function AdminSections() {
           <div className="flex items-center gap-3">
             {currentPageInfo && <currentPageInfo.icon className="h-5 w-5 text-[#C9A961]" />}
             <h2 className="text-lg font-semibold text-[#1A3A52]">{currentPageInfo?.label}</h2>
-            <span className="text-sm text-slate-400">{pageSections.length} section{pageSections.length !== 1 ? 's' : ''}</span>
+            <span className="text-sm text-slate-400">{pageSections.length} section{pageSections.length !== 1 ? 's' : ''} personnalisée{pageSections.length !== 1 ? 's' : ''}</span>
           </div>
           <Button onClick={() => setModal('choice')} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
             <Plus className="h-4 w-4 mr-2" /> Ajouter une section
           </Button>
         </div>
 
+        {/* Info synchronisation */}
         <div className="mb-4 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-xs text-blue-700 flex items-start gap-2">
-          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
-          <span>Cliquez sur <strong>✏️</strong> d'une section pour modifier son contenu directement. Les changements sont synchronisés en temps réel sur le site.</span>
+          <div className="mt-0.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+          <span>Les sections créées ici s'affichent automatiquement sur la page <strong>{currentPageInfo?.label}</strong> du site, dans l'ordre défini, en respectant la charte graphique Valora.</span>
         </div>
 
         {pageSections.length === 0 ? (
@@ -335,29 +169,89 @@ export default function AdminSections() {
             <p className="text-slate-300 text-xs mt-1">Cliquez pour ajouter votre première section</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-3">
             {pageSections.map((section) => (
-              <SectionCard
-                key={section.id}
-                section={section}
-                onToggle={(s) => updateMutation.mutate({ id: s.id, data: { actif: !s.actif } })}
-                onDelete={(id) => deleteMutation.mutate(id)}
-                onUpdate={(formData, onDone) => handleUpdate(section.id, formData, onDone)}
-                isUpdating={updateMutation.isPending}
-              />
+              <div key={section.id} className={`bg-white rounded-2xl border p-5 transition-all ${section.actif ? 'border-slate-200 shadow-sm' : 'border-slate-100 opacity-60'}`}>
+                <div className="flex items-start gap-4">
+                  <div className="text-slate-200 mt-1 cursor-grab">
+                    <GripVertical className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <h3 className="font-semibold text-[#1A3A52]">{section.titre}</h3>
+                      <span className="text-xs bg-[#C9A961]/10 text-[#C9A961] px-2 py-0.5 rounded-full font-medium">{TYPES_LABELS[section.type_section] || section.type_section}</span>
+                      <span className="text-xs text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full">#{section.ordre}</span>
+                      {!section.actif && <span className="text-xs bg-red-100 text-red-500 px-2 py-0.5 rounded-full">Masqué</span>}
+                    </div>
+                    {section.sous_titre && <p className="text-sm text-slate-500 mb-1">{section.sous_titre}</p>}
+                    {section.contenu && <p className="text-sm text-slate-400 line-clamp-2 mt-1">{section.contenu}</p>}
+                    {section.image_url && (
+                      <img src={section.image_url} alt="" className="mt-2 h-14 w-24 object-cover rounded-lg border border-slate-100"
+                        onError={e => e.target.style.display = 'none'} />
+                    )}
+                  </div>
+                  <div className="flex items-center gap-1.5 flex-shrink-0">
+                    <button onClick={() => toggleMutation.mutate({ id: section.id, actif: !section.actif })}
+                      className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
+                      title={section.actif ? 'Masquer du site' : 'Afficher sur le site'}>
+                      {section.actif ? <Eye className="h-4 w-4" /> : <EyeOff className="h-4 w-4" />}
+                    </button>
+                    <Button size="sm" variant="outline" onClick={() => { setEditForm({ ...section }); setEditingSection(section); }}>
+                      <Pencil className="h-3.5 w-3.5" />
+                    </Button>
+                    <Button size="sm" variant="outline"
+                      onClick={() => { if (confirm('Supprimer cette section du site ?')) deleteMutation.mutate(section.id); }}
+                      className="text-red-500 border-red-200 hover:bg-red-50">
+                      <Trash2 className="h-3.5 w-3.5" />
+                    </Button>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         )}
       </div>
 
+      {/* Modale de choix */}
       {modal === 'choice' && (
-        <SectionChoiceModal pageLabel={currentPageInfo?.label} onChooseAI={() => setModal('ai')} onChooseManual={() => setModal('manual')} onCancel={() => setModal(null)} />
+        <SectionChoiceModal
+          pageLabel={currentPageInfo?.label}
+          onChooseAI={() => setModal('ai')}
+          onChooseManual={() => setModal('manual')}
+          onCancel={() => setModal(null)}
+        />
       )}
+
+      {/* Modale IA */}
       {modal === 'ai' && (
-        <AISectionModal page={activePage} existingSections={pageSections} onSave={(data) => createMutation.mutate(data)} onCancel={() => setModal(null)} />
+        <AISectionModal
+          page={activePage}
+          existingSections={pageSections}
+          onSave={(data) => createMutation.mutate(data)}
+          onCancel={() => setModal(null)}
+        />
       )}
+
+      {/* Modale manuelle */}
       {modal === 'manual' && (
-        <ManualSectionModal page={activePage} existingSections={pageSections} onSave={(data) => createMutation.mutate(data)} onCancel={() => setModal(null)} isLoading={createMutation.isPending} />
+        <ManualSectionModal
+          page={activePage}
+          existingSections={pageSections}
+          onSave={(data) => createMutation.mutate(data)}
+          onCancel={() => setModal(null)}
+          isLoading={createMutation.isPending}
+        />
+      )}
+
+      {/* Modale édition */}
+      {editingSection && (
+        <EditSectionForm
+          form={editForm}
+          setForm={setEditForm}
+          onSave={() => updateMutation.mutate(editForm)}
+          onCancel={() => setEditingSection(null)}
+          isLoading={updateMutation.isPending}
+        />
       )}
     </div>
   );
