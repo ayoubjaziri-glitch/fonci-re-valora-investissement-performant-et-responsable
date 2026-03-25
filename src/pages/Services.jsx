@@ -15,6 +15,7 @@ import {
   FileText } from
 'lucide-react';
 import { Button } from "@/components/ui/button";
+import DynamicSections from '../components/DynamicSections';
 
 export default function Services() {
   const services = [
