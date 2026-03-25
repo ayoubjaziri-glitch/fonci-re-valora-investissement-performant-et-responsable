@@ -270,6 +270,7 @@ const navGroups = [
     label: 'Contenu du Site',
     items: [
       { id: 'photos', label: 'Photos & Média', icon: Image },
+      { id: 'sections', label: 'Sections des pages', icon: LayoutDashboard },
       { id: 'equipe', label: 'Équipe', icon: Users },
       { id: 'realisations', label: 'Nos Biens', icon: Building2 },
       { id: 'blog', label: 'Blog & Articles', icon: Newspaper },
