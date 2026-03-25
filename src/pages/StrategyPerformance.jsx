@@ -565,6 +565,9 @@ Flat Tax (PFU)</p>
 
 
 
+      {/* Sections personnalisées */}
+      <DynamicSections page="strategie" />
+
       {/* CTA */}
       <section className="bg-[#C9A961] py-16">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
