@@ -28,6 +28,7 @@ import RealisationsGallery from "../components/RealisationsGallery";
 import InterventionMap from "../components/InterventionMap";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from '@/api/base44Client';
+import DynamicSections from '../components/DynamicSections';
 
 export default function Home() {
   const { data: images = [] } = useQuery({
