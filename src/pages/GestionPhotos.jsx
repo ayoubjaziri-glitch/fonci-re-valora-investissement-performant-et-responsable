@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Upload, Save, Image as ImageIcon, Edit2, Crop, Home, TrendingUp, Briefcase, Users, Globe, Leaf, Building2, Star } from 'lucide-react';
+import { Upload, Save, Image as ImageIcon, Edit2, Crop, Home, TrendingUp, Briefcase, Users, Globe, Leaf, Building2, Star, ExternalLink } from 'lucide-react';
 import ImageCropper from '../components/ImageCropper';
 
 // Mapping clé image → page du site
