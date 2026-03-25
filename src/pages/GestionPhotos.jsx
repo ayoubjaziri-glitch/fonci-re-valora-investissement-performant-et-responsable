@@ -258,7 +258,9 @@ export default function GestionPhotos({ embedded = false }) {
               <span className="text-sm text-slate-400">{currentImages.length} image{currentImages.length > 1 ? 's' : ''}</span>
             </div>
 
-            {currentImages.length > 0 ? (
+            {currentPage?.special === 'realisations' ? (
+              <RealisationsBiensSection />
+            ) : currentImages.length > 0 ? (
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
                 {currentImages.map((image) => (
                   <ImageCard key={image.id} image={image}
