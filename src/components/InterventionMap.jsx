@@ -106,7 +106,7 @@ export default function InterventionMap() {
       <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200" style={{ height: 520 }}>
         <MapContainer
           center={center}
-          zoom={allBiens.length > 0 ? 12 : 9}
+          zoom={allBiens.length > 0 ? 10 : 9}
           style={{ height: '100%', width: '100%' }}
           scrollWheelZoom={true}
         >
