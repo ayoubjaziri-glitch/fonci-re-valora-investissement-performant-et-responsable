@@ -102,7 +102,7 @@ export default function InterventionMap() {
   }, {});
 
   return (
-    <div className="relative">
+    <div className="relative" style={{ zIndex: 0 }}>
       <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200" style={{ height: 520 }}>
         <MapContainer
           center={center}
