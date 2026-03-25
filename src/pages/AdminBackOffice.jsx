@@ -21,6 +21,7 @@ import AdminRealisations from '../components/admin/AdminRealisations';
 import AdminRealisationsPlus from '../components/admin/AdminRealisationsPlus';
 import AdminAcces from '../components/admin/AdminAcces';
 import GestionPhotos from './GestionPhotos';
+import AdminSections from '../components/admin/AdminSections';
 
 // ─── Login ───────────────────────────────────────────────────────────────────
 function AdminLogin({ onLogin }) {
