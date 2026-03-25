@@ -13,6 +13,7 @@ import {
   ArrowRight } from
 'lucide-react';
 import { Button } from "@/components/ui/button";
+import DynamicSections from '../components/DynamicSections';
 
 export default function Partenaires() {
   const [formData, setFormData] = React.useState({

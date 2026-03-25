@@ -4,6 +4,7 @@ import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from '@/api/base44Client';
+import DynamicSections from '../components/DynamicSections';
 import {
   Leaf, TreePine, Thermometer, Zap, Droplets, Sun, Wind,
   Building2, ArrowRight, CheckCircle2, Target, BarChart3,
