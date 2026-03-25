@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import InvestmentSimulator from "../components/InvestmentSimulator";
 import { base44 } from "@/api/base44Client";
+import DynamicSections from '../components/DynamicSections';
 
 export default function StrategyPerformance() {
   useEffect(() => {
