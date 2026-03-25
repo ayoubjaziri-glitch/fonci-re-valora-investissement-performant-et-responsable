@@ -5,9 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import {
-  Plus, Pencil, Trash2, X, Save, Eye, EyeOff,
+  Plus, Pencil, Trash2, X, Save, Eye, EyeOff, Sparkles,
   Home, TrendingUp, Briefcase, Users, Globe, Leaf, Building2, GripVertical
 } from 'lucide-react';
+import AISectionModal from './AISectionModal';
 
 const PAGES = [
   { id: 'accueil',     label: 'Accueil',         icon: Home },
@@ -28,35 +29,25 @@ const TYPES = [
   { id: 'liste',        label: 'Liste à puces' },
 ];
 
-const EMPTY_FORM = {
-  titre: '', sous_titre: '', contenu: '', image_url: '',
-  type_section: 'texte', ordre: 0, actif: true,
-};
-
-function SectionForm({ form, setForm, onSave, onCancel, isLoading }) {
+// Modal d'édition manuelle (pour modification d'une section existante)
+function EditSectionForm({ form, setForm, onSave, onCancel, isLoading }) {
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl p-6 w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl">
         <div className="flex items-center justify-between mb-5">
-          <h3 className="text-lg font-semibold text-[#1A3A52]">
-            {form.id ? 'Modifier la section' : 'Nouvelle section'}
-          </h3>
+          <h3 className="text-lg font-semibold text-[#1A3A52]">Modifier la section</h3>
           <button onClick={onCancel}><X className="h-5 w-5 text-slate-400" /></button>
         </div>
 
         <div className="space-y-4">
           <div>
             <label className="text-sm font-medium text-slate-700 block mb-1">Titre *</label>
-            <Input value={form.titre} onChange={e => setForm({ ...form, titre: e.target.value })}
-              placeholder="Ex: Notre approche d'investissement" />
+            <Input value={form.titre} onChange={e => setForm({ ...form, titre: e.target.value })} />
           </div>
-
           <div>
             <label className="text-sm font-medium text-slate-700 block mb-1">Sous-titre</label>
-            <Input value={form.sous_titre} onChange={e => setForm({ ...form, sous_titre: e.target.value })}
-              placeholder="Une accroche courte..." />
+            <Input value={form.sous_titre} onChange={e => setForm({ ...form, sous_titre: e.target.value })} />
           </div>
-
           <div>
             <label className="text-sm font-medium text-slate-700 block mb-1">Type de section</label>
             <select value={form.type_section} onChange={e => setForm({ ...form, type_section: e.target.value })}
@@ -64,38 +55,30 @@ function SectionForm({ form, setForm, onSave, onCancel, isLoading }) {
               {TYPES.map(t => <option key={t.id} value={t.id}>{t.label}</option>)}
             </select>
           </div>
-
           <div>
             <label className="text-sm font-medium text-slate-700 block mb-1">Contenu</label>
-            <Textarea rows={5} value={form.contenu} onChange={e => setForm({ ...form, contenu: e.target.value })}
-              placeholder="Texte principal de la section... (Markdown supporté)" />
+            <Textarea rows={5} value={form.contenu} onChange={e => setForm({ ...form, contenu: e.target.value })} />
           </div>
-
           <div>
             <label className="text-sm font-medium text-slate-700 block mb-1">URL de l'image (optionnel)</label>
-            <Input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })}
-              placeholder="https://..." />
+            <Input value={form.image_url} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="https://..." />
             {form.image_url && (
               <img src={form.image_url} alt="Preview" className="mt-2 h-24 w-full object-cover rounded-lg"
                 onError={e => e.target.style.display = 'none'} />
             )}
           </div>
-
           <div>
             <label className="text-sm font-medium text-slate-700 block mb-1">Ordre d'affichage</label>
             <Input type="number" value={form.ordre} onChange={e => setForm({ ...form, ordre: parseInt(e.target.value) || 0 })} />
           </div>
-
           <div className="flex items-center gap-2">
-            <input type="checkbox" id="actif-s" checked={form.actif}
-              onChange={e => setForm({ ...form, actif: e.target.checked })} />
+            <input type="checkbox" id="actif-s" checked={form.actif} onChange={e => setForm({ ...form, actif: e.target.checked })} />
             <label htmlFor="actif-s" className="text-sm text-slate-700">Section visible sur le site</label>
           </div>
         </div>
 
         <div className="flex gap-3 mt-6">
-          <Button onClick={onSave} disabled={isLoading || !form.titre.trim()}
-            className="flex-1 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white">
+          <Button onClick={onSave} disabled={isLoading || !form.titre.trim()} className="flex-1 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white">
             <Save className="h-4 w-4 mr-2" />
             {isLoading ? 'Sauvegarde...' : 'Sauvegarder'}
           </Button>
@@ -109,19 +92,23 @@ function SectionForm({ form, setForm, onSave, onCancel, isLoading }) {
 export default function AdminSections() {
   const qc = useQueryClient();
   const [activePage, setActivePage] = useState('accueil');
-  const [editing, setEditing] = useState(null); // null | 'new' | section object
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [showAIModal, setShowAIModal] = useState(false);
+  const [editingSection, setEditingSection] = useState(null); // null | section object
+  const [editForm, setEditForm] = useState({});
 
   const { data: sections = [] } = useQuery({
     queryKey: ['site-sections'],
     queryFn: () => base44.entities.SiteSection.list('ordre', 200),
   });
 
-  const saveMutation = useMutation({
-    mutationFn: (data) => editing === 'new'
-      ? base44.entities.SiteSection.create({ ...data, page: activePage })
-      : base44.entities.SiteSection.update(editing.id, data),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['site-sections'] }); setEditing(null); },
+  const createMutation = useMutation({
+    mutationFn: (data) => base44.entities.SiteSection.create({ ...data, page: activePage }),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['site-sections'] }); setShowAIModal(false); },
+  });
+
+  const updateMutation = useMutation({
+    mutationFn: (data) => base44.entities.SiteSection.update(editingSection.id, data),
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['site-sections'] }); setEditingSection(null); },
   });
 
   const deleteMutation = useMutation({
@@ -135,11 +122,9 @@ export default function AdminSections() {
   });
 
   const pageSections = sections.filter(s => s.page === activePage).sort((a, b) => a.ordre - b.ordre);
-
-  const openNew = () => { setForm({ ...EMPTY_FORM }); setEditing('new'); };
-  const openEdit = (s) => { setForm({ ...s }); setEditing(s); };
-
   const currentPageInfo = PAGES.find(p => p.id === activePage);
+
+  const openEdit = (s) => { setEditForm({ ...s }); setEditingSection(s); };
 
   return (
     <div className="flex gap-6">
@@ -170,16 +155,17 @@ export default function AdminSections() {
             <h2 className="text-lg font-semibold text-[#1A3A52]">{currentPageInfo?.label}</h2>
             <span className="text-sm text-slate-400">{pageSections.length} section{pageSections.length !== 1 ? 's' : ''}</span>
           </div>
-          <Button onClick={openNew} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-            <Plus className="h-4 w-4 mr-2" /> Ajouter une section
+          <Button onClick={() => setShowAIModal(true)} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
+            <Sparkles className="h-4 w-4 mr-2" /> Ajouter avec l'IA
           </Button>
         </div>
 
         {pageSections.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-dashed border-slate-300 flex flex-col items-center justify-center py-20 text-center">
-            <Plus className="h-10 w-10 text-slate-200 mb-3" />
+          <div className="bg-white rounded-2xl border border-dashed border-slate-300 flex flex-col items-center justify-center py-20 text-center cursor-pointer hover:border-[#C9A961] transition-colors"
+            onClick={() => setShowAIModal(true)}>
+            <Sparkles className="h-10 w-10 text-[#C9A961]/40 mb-3" />
             <p className="text-slate-400 text-sm">Aucune section pour cette page</p>
-            <p className="text-slate-300 text-xs mt-1">Cliquez sur "Ajouter une section" pour commencer</p>
+            <p className="text-slate-300 text-xs mt-1">Cliquez pour ajouter une section avec l'IA</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -228,14 +214,24 @@ export default function AdminSections() {
         )}
       </div>
 
-      {/* Modal */}
-      {editing && (
-        <SectionForm
-          form={form}
-          setForm={setForm}
-          onSave={() => saveMutation.mutate(form)}
-          onCancel={() => setEditing(null)}
-          isLoading={saveMutation.isPending}
+      {/* Modale IA */}
+      {showAIModal && (
+        <AISectionModal
+          page={activePage}
+          existingSections={pageSections}
+          onSave={(data) => createMutation.mutate(data)}
+          onCancel={() => setShowAIModal(false)}
+        />
+      )}
+
+      {/* Modale édition manuelle */}
+      {editingSection && (
+        <EditSectionForm
+          form={editForm}
+          setForm={setEditForm}
+          onSave={() => updateMutation.mutate(editForm)}
+          onCancel={() => setEditingSection(null)}
+          isLoading={updateMutation.isPending}
         />
       )}
     </div>
