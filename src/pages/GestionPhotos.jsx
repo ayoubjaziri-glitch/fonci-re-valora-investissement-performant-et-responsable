@@ -57,8 +57,8 @@ const PAGES = [
     id: 'realisations',
     label: 'Page Nos Biens',
     icon: Building2,
-    keys: [], // toutes les clés "realisation_*"
-    keyPattern: 'realisation',
+    keys: [],
+    special: 'realisations',
   },
 ];
 
