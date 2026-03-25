@@ -397,6 +397,9 @@ export default function Durabilite() {
           </div>
         </div>
       </section>
+
+      {/* Sections personnalisées */}
+      <DynamicSections page="durabilite" />
     </div>);
 
 }

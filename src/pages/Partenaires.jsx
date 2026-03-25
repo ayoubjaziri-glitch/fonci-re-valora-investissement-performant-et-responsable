@@ -191,6 +191,9 @@ export default function Partenaires() {
         </div>
       </section>
 
+      {/* Sections personnalisées */}
+      <DynamicSections page="ecosysteme" />
+
       {/* CTA Contact */}
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
