@@ -417,6 +417,9 @@ export default function Equipe() {
         </div>
       </section>
 
+      {/* Sections personnalisées */}
+      <DynamicSections page="equipe" />
+
       {/* CTA */}
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
