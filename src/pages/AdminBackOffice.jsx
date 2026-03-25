@@ -315,6 +315,7 @@ export default function AdminBackOffice() {
     dashboard: 'Dashboard',
     contacts: 'Demandes de Contact',
     photos: 'Photos & Média',
+    sections: 'Sections des pages',
     equipe: 'Équipe',
     blog: 'Blog & Articles',
     levees: 'Levées de Fonds',
