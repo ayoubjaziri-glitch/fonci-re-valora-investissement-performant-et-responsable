@@ -395,6 +395,7 @@ export default function AdminBackOffice() {
           {activeTab === 'dashboard' && <DashboardSection />}
           {activeTab === 'contacts' && <DemandesContactSection />}
           {activeTab === 'photos' && <GestionPhotos embedded />}
+          {activeTab === 'sections' && <AdminSections />}
           {activeTab === 'equipe' && <AdminEquipe />}
           {activeTab === 'blog' && <AdminBlog />}
           {activeTab === 'levees' && <AdminLeveeFonds />}
