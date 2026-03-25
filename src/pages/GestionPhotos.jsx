@@ -106,6 +106,59 @@ function ImageCard({ image, editingImage, newUrl, setNewUrl, setEditingImage, ha
   );
 }
 
+function RealisationsBiensSection() {
+  const { data: biens = [] } = useQuery({
+    queryKey: ['realisations-biens-photos'],
+    queryFn: () => base44.entities.RealisationBien.list(),
+  });
+
+  const biensActifs = biens.filter(b => b.actif !== false);
+
+  return (
+    <div>
+      <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-700">
+        <strong>Synchronisé automatiquement</strong> — Les photos ci-dessous sont directement liées aux biens gérés dans <em>Back-Office → Nos Biens & Réalisations</em>. Pour ajouter ou modifier une photo, éditez le bien correspondant.
+      </div>
+      {biensActifs.length === 0 ? (
+        <div className="bg-white rounded-2xl border border-slate-200 flex flex-col items-center justify-center py-20 text-center">
+          <Building2 className="h-12 w-12 text-slate-200 mb-3" />
+          <p className="text-slate-400 text-sm">Aucun bien ajouté</p>
+          <p className="text-slate-300 text-xs mt-1">Ajoutez des biens depuis "Nos Biens & Réalisations"</p>
+        </div>
+      ) : (
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+          {biensActifs.map((bien) => (
+            <div key={bien.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+              <div className="grid grid-cols-2 gap-0.5 bg-slate-100">
+                <div className="aspect-video bg-slate-200 relative">
+                  {bien.image_avant ? (
+                    <img src={bien.image_avant} alt="Avant" className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
+                  ) : <div className="w-full h-full flex items-center justify-center text-xs text-slate-400">Avant</div>}
+                  <span className="absolute bottom-1 left-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">Avant</span>
+                </div>
+                <div className="aspect-video bg-slate-200 relative">
+                  {bien.image_apres ? (
+                    <img src={bien.image_apres} alt="Après" className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
+                  ) : <div className="w-full h-full flex items-center justify-center text-xs text-slate-400">Après</div>}
+                  <span className="absolute bottom-1 left-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">Après</span>
+                </div>
+              </div>
+              <div className="p-4">
+                <p className="font-semibold text-[#1A3A52] text-sm">{bien.titre}</p>
+                <p className="text-xs text-slate-400 mt-0.5">{bien.location}</p>
+                <p className="text-xs text-[#C9A961] mt-2 flex items-center gap-1">
+                  <ExternalLink className="h-3 w-3" />
+                  Modifiable depuis "Nos Biens & Réalisations"
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function GestionPhotos({ embedded = false }) {
   const [uploading, setUploading] = useState(false);
   const [editingImage, setEditingImage] = useState(null);
