@@ -273,7 +273,7 @@ const navGroups = [
     items: [
       { id: 'photos', label: 'Photos & Média', icon: Image },
       { id: 'contenu', label: 'Textes & Contenu', icon: FileText },
-      { id: 'sections', label: 'Sections dynamiques', icon: LayoutDashboard },
+      { id: 'sections', label: 'Ajouter une section', icon: LayoutDashboard },
       { id: 'equipe', label: 'Équipe', icon: Users },
       { id: 'realisations', label: 'Nos Biens', icon: Building2 },
       { id: 'blog', label: 'Blog & Articles', icon: Newspaper },
@@ -320,7 +320,7 @@ export default function AdminBackOffice() {
     contacts: 'Demandes de Contact',
     photos: 'Photos & Média',
     contenu: 'Textes & Contenu du site',
-    sections: 'Sections dynamiques',
+    sections: 'Ajouter une section',
     equipe: 'Équipe',
     blog: 'Blog & Articles',
     levees: 'Levées de Fonds',
