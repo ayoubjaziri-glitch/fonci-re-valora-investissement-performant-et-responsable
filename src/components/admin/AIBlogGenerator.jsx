@@ -27,7 +27,7 @@ export default function AIBlogGenerator({ onClose, onSuccess }) {
 
     const prompt = `Tu es un expert en immobilier d'investissement, fiscalité et rénovation énergétique en France. Tu rédiges pour le blog de "La Foncière Valora", une foncière résidentielle premium basée à Vichy, dédiée à l'acquisition, réhabilitation et valorisation d'immeubles avec fort potentiel de création de valeur.
 
-MISSION : Rédige un article de blog ULTRA-COMPLET, très long (minimum 2500 mots de contenu), optimisé SEO, en français, sur le sujet suivant :
+MISSION : Rédige un article de blog ULTRA-COMPLET, très long (MINIMUM 7500 MOTS de contenu, tu dois absolument dépasser ce seuil), optimisé SEO, en français, sur le sujet suivant :
 
 Sujet : "${sujet}"
 Catégorie : "${categorie}"
@@ -36,7 +36,10 @@ Angle éditorial / ton souhaité : "${angle || 'Expert et pédagogique, rassuran
 
 RÈGLES STRICTES :
 - Le contenu doit être en Markdown avec des titres H2 (##), H3 (###), des listes à puces, des tableaux si pertinent, des encadrés <blockquote> pour des citations ou chiffres clés
-- Minimum 8 sections thématiques distinctes et développées
+- MINIMUM 15 sections thématiques distinctes et très développées (chaque section doit faire au moins 400-500 mots)
+- Ajouter des sous-sections H3 et H4 dans chaque section principale
+- Inclure des exemples concrets, études de cas, simulations chiffrées, conseils pratiques détaillés
+- Ajouter une FAQ complète d'au moins 10 questions/réponses développées en fin d'article
 - Intégrer des données chiffrées réelles (lois, dispositifs fiscaux, statistiques de marché, etc.)
 - Mentionner la Foncière Valora et ses expertises de façon naturelle 2-3 fois
 - L'extrait (résumé) doit faire 2-3 phrases accrocheuses pour le SEO
@@ -96,11 +99,11 @@ Réponds UNIQUEMENT avec un JSON valide :
           </div>
           <h3 className="text-xl font-serif text-[#1A3A52] mb-3">L'IA rédige votre article…</h3>
           <p className="text-slate-500 text-sm leading-relaxed">
-            Génération d'un contenu ultra-complet et optimisé SEO avec <strong>Claude Sonnet</strong>.<br />
-            Cela peut prendre 30 à 60 secondes.
+          Génération d'un contenu ultra-complet et optimisé SEO avec <strong>Claude Sonnet</strong>.<br />
+          Cela peut prendre 60 à 90 secondes pour 7500+ mots.
           </p>
           <div className="mt-6 flex flex-col gap-2 text-xs text-slate-400">
-            <span>✦ Rédaction de 2500+ mots</span>
+          <span>✦ Rédaction de 7500+ mots</span>
             <span>✦ Structure SEO optimisée</span>
             <span>✦ Publication automatique</span>
           </div>
@@ -187,7 +190,7 @@ Réponds UNIQUEMENT avec un JSON valide :
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
-            <strong>✦ IA Ultra-puissante :</strong> L'article sera rédigé par Claude Sonnet avec 2500+ mots, 8+ sections, données chiffrées, optimisation SEO complète et publié automatiquement.
+            <strong>✦ IA Ultra-puissante :</strong> L'article sera rédigé par Claude Sonnet avec 7500+ mots, 15+ sections, FAQ complète, données chiffrées, optimisation SEO maximale et publié automatiquement.
           </div>
 
           <Button

@@ -79,9 +79,9 @@ export default function AdminBlog() {
               <Wand2 className="h-6 w-6 text-[#1A3A52]" />
             </div>
             <h3 className="font-bold text-white text-lg mb-2">Générer avec l'IA</h3>
-            <p className="text-white/70 text-sm leading-relaxed">Claude Sonnet rédige un article de 2500+ mots, ultra-complet, optimisé SEO et le publie automatiquement.</p>
+            <p className="text-white/70 text-sm leading-relaxed">Claude Sonnet rédige un article de 7500+ mots, ultra-complet, optimisé SEO et le publie automatiquement.</p>
             <div className="mt-4 flex flex-wrap gap-2">
-              {['2500+ mots', 'SEO optimisé', 'Publication auto'].map(tag => (
+              {['7500+ mots', 'SEO optimisé', 'Publication auto'].map(tag => (
                 <span key={tag} className="text-xs bg-white/10 text-white px-2 py-0.5 rounded-full">{tag}</span>
               ))}
             </div>
