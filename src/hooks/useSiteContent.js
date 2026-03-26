@@ -9,7 +9,8 @@ export function useSiteContent() {
   const { data: contents = [] } = useQuery({
     queryKey: ['site-content'],
     queryFn: () => base44.entities.SiteContent.list(),
-    staleTime: 60000,
+    staleTime: 0,
+    refetchOnWindowFocus: true,
   });
 
   const get = (cle, fallback = '') => {
