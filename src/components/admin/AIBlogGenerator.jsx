@@ -34,12 +34,15 @@ MISSION : Rédige un article de blog complet et long (3000-5000 MOTS), optimisé
 Sujet : "${sujet}"
 Catégorie : "${categorie}"
 Mots-clés SEO à intégrer naturellement : "${motsCles || 'investissement immobilier, foncière, rénovation, rendement, immeuble de rapport'}"
-Angle éditorial / ton souhaité : "${angle || 'Expert et pédagogique, rassurant pour des investisseurs patrimoniaux'}"
+Angle éditorial / ton souhaité : "${angle || 'Expert et professionnel, ton conseiller pour investisseurs patrimoniaux'}"
 
 RÈGLES STRICTES :
-- Le contenu doit être en Markdown avec des titres H2 (##), H3 (###), des listes à puces, des tableaux si pertinent
-- 8-12 sections thématiques bien développées
-- Inclure des exemples concrets, données chiffrées, conseils pratiques
+- Format : Markdown pur, UNIQUEMENT des paragraphes longs (pas de tableaux, AUCUN)
+- Seulement 3-4 titres H2 (##) maximum pour structurer les grandes sections
+- AUCUN sous-titre H3, aucune liste à puces, aucun formatting gras ou italique sauf très rare
+- 3000-5000 mots de paragraphes denses et bien développés
+- Ton: professionnel, pédagogique, écrit par un humain expert - pas de contenu trop "IA"
+- Inclure des exemples concrets et chiffrés intégrés naturellement dans le texte
 - Mentionner la Foncière Valora naturellement 2-3 fois
 - L'extrait (résumé) doit faire 2-3 phrases accrocheuses pour le SEO
 - Calculer le temps de lecture approximatif (environ 1 mot = 0.006 min)
@@ -50,7 +53,7 @@ Réponds UNIQUEMENT avec un JSON valide :
   "titre": "...",
   "slug": "...",
   "extrait": "...",
-  "contenu": "...(Markdown, 3000-5000 mots)...",
+  "contenu": "...(Markdown, 3000-5000 mots, paragraphes longs, minimaliste)...",
   "categorie": "${categorie}",
   "auteur": "La Foncière Valora",
   "image_url": "https://images.unsplash.com/photo-...",
