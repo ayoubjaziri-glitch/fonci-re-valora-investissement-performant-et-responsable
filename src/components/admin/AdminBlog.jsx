@@ -4,7 +4,8 @@ import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Pencil, Trash2, X, Save, Eye, EyeOff } from 'lucide-react';
+import { Plus, Pencil, Trash2, X, Save, Eye, EyeOff, Wand2, PenLine } from 'lucide-react';
+import AIBlogGenerator from './AIBlogGenerator';
 
 const CATEGORIES = ["Marché", "Investissement", "Fiscalité", "Rénovation", "Gouvernance"];
 
@@ -23,7 +24,8 @@ export default function AdminBlog() {
   const qc = useQueryClient();
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(EMPTY);
-  const [view, setView] = useState('list'); // 'list' | 'form'
+  const [view, setView] = useState('list'); // 'list' | 'form' | 'choice'
+  const [showAIGenerator, setShowAIGenerator] = useState(false);
 
   const { data: articles = [] } = useQuery({
     queryKey: ['articles-blog-admin'],
@@ -48,7 +50,46 @@ export default function AdminBlog() {
   };
 
   const openNew = () => { setForm(EMPTY); setEditing('new'); setView('form'); };
+  const openChoice = () => setView('choice');
   const openEdit = (a) => { setForm({ ...a }); setEditing(a); setView('form'); };
+
+  if (view === 'choice') {
+    return (
+      <div className="space-y-5">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-[#1A3A52]">Nouvel article — Choisir le mode</h2>
+          <Button variant="outline" onClick={() => setView('list')}><X className="h-4 w-4 mr-2" /> Annuler</Button>
+        </div>
+        <div className="grid md:grid-cols-2 gap-6 mt-4">
+          {/* Saisie manuelle */}
+          <button onClick={openNew}
+            className="bg-white border-2 border-slate-200 hover:border-[#1A3A52] rounded-2xl p-8 text-left transition-all group">
+            <div className="w-12 h-12 bg-slate-100 group-hover:bg-[#1A3A52] rounded-xl flex items-center justify-center mb-4 transition-colors">
+              <PenLine className="h-6 w-6 text-slate-600 group-hover:text-white transition-colors" />
+            </div>
+            <h3 className="font-bold text-[#1A3A52] text-lg mb-2">Saisie manuelle</h3>
+            <p className="text-slate-500 text-sm leading-relaxed">Rédigez votre article vous-même avec l'éditeur Markdown. Contrôle total sur le contenu.</p>
+          </button>
+
+          {/* Génération IA */}
+          <button onClick={() => { setView('list'); setShowAIGenerator(true); }}
+            className="bg-gradient-to-br from-[#1A3A52] to-[#2A4A6F] border-2 border-transparent rounded-2xl p-8 text-left transition-all relative overflow-hidden group">
+            <div className="absolute top-3 right-3 bg-[#C9A961] text-[#1A3A52] text-xs font-bold px-2 py-0.5 rounded-full">IA</div>
+            <div className="w-12 h-12 bg-[#C9A961] rounded-xl flex items-center justify-center mb-4">
+              <Wand2 className="h-6 w-6 text-[#1A3A52]" />
+            </div>
+            <h3 className="font-bold text-white text-lg mb-2">Générer avec l'IA</h3>
+            <p className="text-white/70 text-sm leading-relaxed">Claude Sonnet rédige un article de 2500+ mots, ultra-complet, optimisé SEO et le publie automatiquement.</p>
+            <div className="mt-4 flex flex-wrap gap-2">
+              {['2500+ mots', 'SEO optimisé', 'Publication auto'].map(tag => (
+                <span key={tag} className="text-xs bg-white/10 text-white px-2 py-0.5 rounded-full">{tag}</span>
+              ))}
+            </div>
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   if (view === 'form') {
     return (
@@ -128,7 +169,7 @@ export default function AdminBlog() {
           <h2 className="text-xl font-semibold text-[#1A3A52]">Gestion du Blog</h2>
           <p className="text-slate-500 text-sm">{articles.length} article{articles.length > 1 ? 's' : ''} • {articles.filter(a => a.publie).length} publié{articles.filter(a => a.publie).length > 1 ? 's' : ''}</p>
         </div>
-        <Button onClick={openNew} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
+        <Button onClick={openChoice} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
           <Plus className="h-4 w-4 mr-2" /> Nouvel article
         </Button>
       </div>
@@ -163,6 +204,16 @@ export default function AdminBlog() {
           </div>
         )}
       </div>
+
+      {showAIGenerator && (
+        <AIBlogGenerator
+          onClose={() => setShowAIGenerator(false)}
+          onSuccess={() => {
+            qc.invalidateQueries({ queryKey: ['articles-blog-admin'] });
+            setShowAIGenerator(false);
+          }}
+        />
+      )}
     </div>
   );
 }
