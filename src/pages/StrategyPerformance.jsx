@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
+import { useSiteContent } from '../hooks/useSiteContent';
 import {
   MapPin, Home, Percent, Tag, Building2, FileCheck, Clock, ArrowRight,
   Search, Landmark, Wrench, CalendarDays, CheckCircle2, XCircle,
@@ -14,6 +15,7 @@ import { base44 } from "@/api/base44Client";
 import DynamicSections from '../components/DynamicSections';
 
 export default function StrategyPerformance() {
+  const { get } = useSiteContent();
   useEffect(() => {
     base44.analytics.track({
       eventName: "strategy_performance_page_viewed",
@@ -110,15 +112,14 @@ export default function StrategyPerformance() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Stratégie & Performance
+                {get('strategie_hero_accroche', 'Stratégie & Performance')}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Une approche structurée de l'investissement résidentiel
+              {get('strategie_hero_titre', "Une approche structurée de l'investissement résidentiel")}
             </h1>
             <p className="text-xl text-white/70">
-              Pilotage professionnel du cycle immobilier, de l'acquisition à l'arbitrage, 
-              dans une logique de valorisation patrimoniale progressive.
+              {get('strategie_hero_description', "Pilotage professionnel du cycle immobilier, de l'acquisition à l'arbitrage, dans une logique de valorisation patrimoniale progressive.")}
             </p>
           </motion.div>
         </div>
@@ -140,13 +141,11 @@ export default function StrategyPerformance() {
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Le Contexte</p>
-                  <h3 className="text-slate-900 text-2xl font-serif">Les enjeux structurants</h3>
+                  <h3 className="text-slate-900 text-2xl font-serif">{get('strategie_contexte_titre', 'Les enjeux structurants')}</h3>
                 </div>
               </div>
               <p className="text-slate-600 mb-6 leading-relaxed">
-                La valorisation durable d'un actif immobilier repose sur une approche globale mobilisant 
-                des compétences complémentaires. Sans cette maîtrise transversale — financière, technique, 
-                opérationnelle et patrimoniale — aucune stratégie de création de valeur ne peut s'inscrire dans le temps.
+                {get('strategie_contexte_description', "La valorisation durable d'un actif immobilier repose sur une approche globale mobilisant des compétences complémentaires. Sans cette maîtrise transversale — financière, technique, opérationnelle et patrimoniale — aucune stratégie de création de valeur ne peut s'inscrire dans le temps.")}
               </p>
               <div className="space-y-4">
                 {contextItems.map((item, index) =>
@@ -205,8 +204,8 @@ export default function StrategyPerformance() {
             viewport={{ once: true }}
             className="text-center mb-16">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Les piliers de l'acquisition
-
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
+              {get('strategie_piliers_titre', "Les piliers de l'acquisition")}
             </h2>
           </motion.div>
 
@@ -240,13 +239,11 @@ export default function StrategyPerformance() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}>
 
-              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Zones à Fort Potentiel
-
+              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">
+                {get('strategie_zones_titre', 'Zones à Fort Potentiel')}
               </h2>
               <p className="text-gray-600 mb-8 leading-relaxed">
-                La stratégie d'investissement s'oriente vers des territoires présentant des perspectives 
-                de valorisation pérennes, fondées sur la profondeur du marché locatif, la stabilité 
-                démographique et la vitalité des bassins d'emploi.
+                {get('strategie_zones_description', "La stratégie d'investissement s'oriente vers des territoires présentant des perspectives de valorisation pérennes, fondées sur la profondeur du marché locatif, la stabilité démographique et la vitalité des bassins d'emploi.")}
               </p>
               
               <div className="grid grid-cols-2 gap-4">
@@ -312,12 +309,11 @@ export default function StrategyPerformance() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Alignement total des intérêts
-
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
+              {get('strategie_alignement_titre', 'Alignement total des intérêts')}
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Le modèle privilégie un alignement durable entre associés, indépendamment de la taille 
-              de leur engagement, autour d'une trajectoire patrimoniale commune.
+              {get('strategie_alignement_description', "Le modèle privilégie un alignement durable entre associés, indépendamment de la taille de leur engagement, autour d'une trajectoire patrimoniale commune.")}
             </p>
           </motion.div>
 
@@ -381,8 +377,8 @@ export default function StrategyPerformance() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Comparatif — 3 modèles d'investissement
-
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
+              {get('strategie_comparatif_titre', "Comparatif — 3 modèles d'investissement")}
             </h2>
           </motion.div>
 
@@ -428,11 +424,11 @@ export default function StrategyPerformance() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}>
 
-              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Évolution du capital
-
+              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">
+                {get('strategie_projection_titre', 'Évolution du capital')}
               </h2>
               <p className="text-slate-600 mb-8">
-                Exemple de projection : 10 000 € investis lors de la première levée.
+                {get('strategie_projection_description', "Exemple de projection : 10 000 € investis lors de la première levée.")}
               </p>
               
               <div className="bg-[#0f172a] mb-6 p-6 rounded-2xl from-[#1A3A52] to-[#2A4A6F]">
@@ -515,11 +511,10 @@ export default function StrategyPerformance() {
               viewport={{ once: true }}>
 
               <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">
-                Éligibilité PEA-PME
+                {get('strategie_peapme_titre', 'Éligibilité PEA-PME')}
               </h2>
               <p className="text-white/70 mb-6">
-                La détention des actions sur une période minimale de 5 ans permet l'éligibilité 
-                au dispositif PEA-PME avec exonération d'impôt sur le revenu (12,8%) sur les gains capitalisés.
+                {get('strategie_peapme_description', "La détention des actions sur une période minimale de 5 ans permet l'éligibilité au dispositif PEA-PME avec exonération d'impôt sur le revenu (12,8%) sur les gains capitalisés.")}
               </p>
               <ul className="space-y-3">
                 <li className="flex items-center gap-3 text-white">
@@ -574,9 +569,8 @@ Flat Tax (PFU)</p>
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
 
           </h2>
-          <p className="text-slate-800 mb-8">Rejoignez un cercle d'associés unis par une stratégie immobilière maîtrisée, une exécution professionnelle et une gouvernance exemplaire.
-
-
+          <p className="text-slate-800 mb-8">
+            {get('strategie_cta_description', "Rejoignez un cercle d'associés unis par une stratégie immobilière maîtrisée, une exécution professionnelle et une gouvernance exemplaire.")}
           </p>
           <Link to={createPageUrl("Contact")}>
             <Button className="bg-[#0f172a] text-slate-50 px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#B8994F]">

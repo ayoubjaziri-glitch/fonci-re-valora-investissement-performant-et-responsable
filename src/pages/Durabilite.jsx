@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from '@/api/base44Client';
 import DynamicSections from '../components/DynamicSections';
+import { useSiteContent } from '../hooks/useSiteContent';
 import {
   Leaf, TreePine, Thermometer, Zap, Droplets, Sun, Wind,
   Building2, ArrowRight, CheckCircle2, Target, BarChart3,
@@ -14,6 +15,7 @@ import { Button } from "@/components/ui/button";
 import CO2Simulator from '../components/CO2Simulator';
 
 export default function Durabilite() {
+  const { get } = useSiteContent();
   const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
     queryFn: () => base44.entities.SiteImage.list(),
@@ -122,16 +124,14 @@ export default function Durabilite() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Stratégie ESG
+                {get('durabilite_hero_accroche', 'Stratégie ESG')}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Valorisation Patrimoniale Durable
+              {get('durabilite_hero_titre', 'Valorisation Patrimoniale Durable')}
             </h1>
             <p className="text-xl text-white/80">
-              Transformer des actifs énergivores en logements performants et pérennes, 
-              sans risque réglementaire. Notre approche privilégie l'équilibre entre 
-              performance énergétique et rentabilité patrimoniale.
+              {get('durabilite_hero_description', "Transformer des actifs énergivores en logements performants et pérennes, sans risque réglementaire. Notre approche privilégie l'équilibre entre performance énergétique et rentabilité patrimoniale.")}
             </p>
           </motion.div>
         </div>
@@ -147,21 +147,16 @@ export default function Durabilite() {
               viewport={{ once: true }}>
 
               <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-6">
-                Une stratégie pragmatique et durable
+                {get('durabilite_vision_titre', 'Une stratégie pragmatique et durable')}
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Notre stratégie se concentre sur <strong>la transformation d'actifs F/G en actifs de classe C minimum</strong>, 
-                assurant ainsi une louabilité pérenne et une valorisation patrimoniale optimale. 
-                Lorsque les caractéristiques du bien et le contexte économique le permettent, nous visons un DPE B ou A.
+                {get('durabilite_vision_para1', "Notre stratégie se concentre sur la transformation d'actifs F/G en actifs de classe C minimum, assurant ainsi une louabilité pérenne et une valorisation patrimoniale optimale. Lorsque les caractéristiques du bien et le contexte économique le permettent, nous visons un DPE B ou A.")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-6">
-                Cette approche répond à un triple enjeu : <strong>conformité réglementaire</strong> (éradication 
-                des passoires thermiques), <strong>confort des occupants</strong> (VMC performante, isolation efficace) 
-                et <strong>création de valeur patrimoniale</strong>.
+                {get('durabilite_vision_para2', "Cette approche répond à un triple enjeu : conformité réglementaire (éradication des passoires thermiques), confort des occupants (VMC performante, isolation efficace) et création de valeur patrimoniale.")}
               </p>
               <p className="text-slate-600 leading-relaxed mb-8">
-                Chaque projet fait l'objet d'une analyse approfondie pour déterminer l'objectif de performance 
-                énergétique optimal, en fonction des contraintes techniques, réglementaires et financières.
+                {get('durabilite_vision_para3', "Chaque projet fait l'objet d'une analyse approfondie pour déterminer l'objectif de performance énergétique optimal, en fonction des contraintes techniques, réglementaires et financières.")}
               </p>
             </motion.div>
 
@@ -202,11 +197,10 @@ export default function Durabilite() {
             className="text-center mb-16">
 
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
-              Nos engagements concrets
+              {get('durabilite_engagements_titre', 'Nos engagements concrets')}
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Des objectifs mesurables et ambitieux pour transformer notre parc immobilier 
-              en référence de la rénovation durable.
+              {get('durabilite_engagements_description', "Des objectifs mesurables et ambitieux pour transformer notre parc immobilier en référence de la rénovation durable.")}
             </p>
           </motion.div>
 
@@ -245,7 +239,7 @@ export default function Durabilite() {
             className="text-center mb-16">
 
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
-              Les 3 piliers de notre démarche ESG
+              {get('durabilite_piliers_titre', 'Les 3 piliers de notre démarche ESG')}
             </h2>
           </motion.div>
 
@@ -287,11 +281,10 @@ export default function Durabilite() {
             className="text-center mb-16">
 
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              Notre trajectoire de valorisation
+              {get('durabilite_trajectoire_titre', 'Notre trajectoire de valorisation')}
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto">
-              Dès le départ, nous visons un DPE C minimum sur l'ensemble des acquisitions. 
-              Notre ambition : atteindre progressivement 95% du parc en DPE B ou A d'ici 2030.
+              {get('durabilite_trajectoire_description', "Dès le départ, nous visons un DPE C minimum sur l'ensemble des acquisitions. Notre ambition : atteindre progressivement 95% du parc en DPE B ou A d'ici 2030.")}
             </p>
           </motion.div>
 
@@ -324,11 +317,10 @@ export default function Durabilite() {
             className="text-center mb-16">
 
             <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">
-              Nos interventions techniques
+              {get('durabilite_travaux_titre', 'Nos interventions techniques')}
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Un programme de réhabilitation adapté à chaque actif pour atteindre les objectifs 
-              de performance énergétique et de valorisation patrimoniale.
+              {get('durabilite_travaux_description', "Un programme de réhabilitation adapté à chaque actif pour atteindre les objectifs de performance énergétique et de valorisation patrimoniale.")}
             </p>
           </motion.div>
 
@@ -379,8 +371,7 @@ export default function Durabilite() {
 
           </h2>
           <p className="text-[#1A3A52]/80 mb-8">
-            Participez à une approche patrimoniale intégrant les enjeux de durabilité 
-            au sein d'une stratégie structurée.
+            {get('durabilite_cta_description', "Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.")}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
             <Link to={createPageUrl("Contact")}>

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useSiteContent } from '../hooks/useSiteContent';
 import {
   X, ArrowRight, Leaf, Home, Thermometer, Zap, Building2,
   Calendar, MapPin, Euro, ChevronLeft, ChevronRight, ArrowLeftRight } from
@@ -28,6 +29,7 @@ const getDPEColor = (dpe) => {
 };
 
 export default function Realisations() {
+  const { get } = useSiteContent();
   const [selectedId, setSelectedId] = useState(null);
   const [showAfter, setShowAfter] = useState({});
 
@@ -84,15 +86,14 @@ export default function Realisations() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Portefeuille
+                {get('realisations_hero_accroche', 'Portefeuille')}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Nos opérations de valorisation
+              {get('realisations_hero_titre', 'Nos opérations de valorisation')}
             </h1>
             <p className="text-xl text-white/70">
-              Découvrez nos actifs réhabilités : chaque acquisition fait l'objet d'une 
-              transformation profonde visant l'excellence énergétique et la création de valeur patrimoniale.
+              {get('realisations_hero_description', "Découvrez nos actifs réhabilités : chaque acquisition fait l'objet d'une transformation profonde visant l'excellence énergétique et la création de valeur patrimoniale.")}
             </p>
           </motion.div>
         </div>
@@ -103,20 +104,20 @@ export default function Realisations() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <p className="text-3xl font-bold text-[#C9A961]">3.7 M€</p>
-              <p className="text-sm text-slate-600">Patrimoine sous gestion</p>
+              <p className="text-3xl font-bold text-[#C9A961]">{get('realisations_stat1_valeur', '3.7 M€')}</p>
+              <p className="text-sm text-slate-600">{get('realisations_stat1_label', 'Patrimoine sous gestion')}</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-slate-900">4</p>
-              <p className="text-sm text-slate-600">Immeubles</p>
+              <p className="text-3xl font-bold text-slate-900">{get('realisations_stat2_valeur', '4')}</p>
+              <p className="text-sm text-slate-600">{get('realisations_stat2_label', 'Immeubles')}</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-[#1A3A52]">42</p>
-              <p className="text-sm text-slate-600">Lots</p>
+              <p className="text-3xl font-bold text-[#1A3A52]">{get('realisations_stat3_valeur', '42')}</p>
+              <p className="text-sm text-slate-600">{get('realisations_stat3_label', 'Lots')}</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-[#C9A961]">100%</p>
-              <p className="text-sm text-slate-600">DPE C, B et A</p>
+              <p className="text-3xl font-bold text-[#C9A961]">{get('realisations_stat4_valeur', '100%')}</p>
+              <p className="text-sm text-slate-600">{get('realisations_stat4_label', 'DPE C, B et A')}</p>
             </div>
           </div>
         </div>
@@ -220,10 +221,10 @@ export default function Realisations() {
             className="text-center mb-12">
 
             <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Notre parc immobilier
+              {get('realisations_carte_titre', 'Notre parc immobilier')}
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Découvrez la localisation géographique de nos immeubles résidentiels
+              {get('realisations_carte_description', 'Découvrez la localisation géographique de nos immeubles résidentiels')}
             </p>
           </motion.div>
           <InterventionMap />
@@ -236,11 +237,11 @@ export default function Realisations() {
       {/* CTA */}
       <section className="bg-[#C9A961] py-12">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">Investir aux côtés de La Foncière Valora
-
+          <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">
+            {get('realisations_cta_titre', 'Investir aux côtés de La Foncière Valora')}
           </h2>
-          <p className="text-slate-900 mb-8">Accédez à une exposition immobilière structurée et à un pilotage professionnel.
-
+          <p className="text-slate-900 mb-8">
+            {get('realisations_cta_description', 'Accédez à une exposition immobilière structurée et à un pilotage professionnel.')}
           </p>
           <Link to={createPageUrl("Contact")}>
             <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
