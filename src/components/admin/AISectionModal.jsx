@@ -81,7 +81,6 @@ export default function AISectionModal({ page, existingSections, onSave, onCance
     const existingList = existingSections.map((s, i) => `${i + 1}. "${s.titre}" (${s.type_section})`).join('\n') || 'Aucune';
 
     const res = await base44.integrations.Core.InvokeLLM({
-      model: 'claude_sonnet_4_6',
       prompt: `Tu es un expert senior en marketing immobilier premium et en rédaction de contenu pour sites web haut de gamme.
 Tu travailles pour "La Foncière Valora" — une foncière résidentielle d'exception (fondée en 2008, groupe Auvergne & Patrimoine).
 
