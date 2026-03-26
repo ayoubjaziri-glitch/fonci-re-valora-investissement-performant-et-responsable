@@ -243,7 +243,7 @@ export default function AdminContenu() {
             page={page}
             contents={filteredContents}
             onSave={handleSave}
-            defaultOpen={i === 0}
+            defaultOpen={false}
           />
         ))
       )}
