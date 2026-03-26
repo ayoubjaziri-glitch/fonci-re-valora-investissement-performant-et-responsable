@@ -72,18 +72,18 @@ export default function Equipe() {
   const strengths = [
   {
     icon: Award,
-    title: "18 ans d'historique cumulée",
-    description: "Expertise éprouvée sur l'immobilier résidentiel"
+    titleKey: "equipe_force1_titre", titleFallback: "18 ans d'historique cumulée",
+    descKey: "equipe_force1_desc", descFallback: "Expertise éprouvée sur l'immobilier résidentiel"
   },
   {
     icon: Network,
-    title: "Chaîne de valeur intégrée",
-    description: "De la levée de fonds au sourcing, financement, travaux BBC, location et arbitrage"
+    titleKey: "equipe_force2_titre", titleFallback: "Chaîne de valeur intégrée",
+    descKey: "equipe_force2_desc", descFallback: "De la levée de fonds au sourcing, financement, travaux BBC, location et arbitrage"
   },
   {
     icon: Lightbulb,
-    title: "Accès privilégié",
-    description: "Opportunités exclusives et exécution rapide dans les zones tendues"
+    titleKey: "equipe_force3_titre", titleFallback: "Accès privilégié",
+    descKey: "equipe_force3_desc", descFallback: "Opportunités exclusives et exécution rapide dans les zones tendues"
   }];
 
 
@@ -243,8 +243,8 @@ export default function Equipe() {
                 <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-4">
                   <strength.icon className="h-8 w-8 text-[#C9A961]" />
                 </div>
-                <h3 className="text-lg font-semibold text-[#1A3A52] mb-2">{strength.title}</h3>
-                <p className="text-slate-600 text-sm">{strength.description}</p>
+                <h3 className="text-lg font-semibold text-[#1A3A52] mb-2">{get(strength.titleKey, strength.titleFallback)}</h3>
+                <p className="text-slate-600 text-sm">{get(strength.descKey, strength.descFallback)}</p>
               </motion.div>
             )}
           </div>
@@ -261,7 +261,7 @@ export default function Equipe() {
             className="text-center mb-16">
 
             <div className="inline-block bg-[#C9A961] text-[#1A3A52] px-4 py-2 rounded-full text-sm font-bold mb-6">
-              Depuis 2008
+              {get('equipe_groupe_badge', 'Depuis 2008')}
             </div>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
               {get('equipe_groupe_titre', 'Structure du groupe')}
@@ -280,16 +280,16 @@ export default function Equipe() {
               className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 mb-8 text-center border-2 border-[#C9A961]">
 
               <Building2 className="h-12 w-12 text-[#C9A961] mx-auto mb-4" />
-              <h3 className="text-2xl font-serif text-white mb-2">Auvergne & Patrimoine</h3>
-              <p className="text-[#C9A961] font-medium mb-4">Holding du groupe • Établi et éprouvé</p>
+              <h3 className="text-2xl font-serif text-white mb-2">{get('equipe_holding_nom', 'Auvergne & Patrimoine')}</h3>
+              <p className="text-[#C9A961] font-medium mb-4">{get('equipe_holding_soustitre', 'Holding du groupe • Établi et éprouvé')}</p>
               <div className="grid grid-cols-2 gap-4 max-w-xl mx-auto">
                 <div className="bg-white/5 rounded-xl p-4">
-                  <p className="text-2xl font-bold text-white">18 ans</p>
-                  <p className="text-white/60 text-sm">D'expertise</p>
+                  <p className="text-2xl font-bold text-white">{get('equipe_holding_stat1_val', '18 ans')}</p>
+                  <p className="text-white/60 text-sm">{get('equipe_holding_stat1_label', "D'expertise")}</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4">
-                  <p className="text-2xl font-bold text-[#C9A961]">3.7 M€</p>
-                  <p className="text-white/60 text-sm">Valorisation</p>
+                  <p className="text-2xl font-bold text-[#C9A961]">{get('equipe_holding_stat2_val', '3.7 M€')}</p>
+                  <p className="text-white/60 text-sm">{get('equipe_holding_stat2_label', 'Valorisation')}</p>
                 </div>
               </div>
             </motion.div>
@@ -305,8 +305,8 @@ export default function Equipe() {
                 <div className="w-12 h-12 bg-[#C9A961] rounded-xl flex items-center justify-center mx-auto mb-3">
                   <Building2 className="h-6 w-6 text-[#1A3A52]" />
                 </div>
-                <h4 className="text-white font-semibold mb-2">BVS</h4>
-                <p className="text-white/60 text-sm">Blaise Vichy Séjours</p>
+                <h4 className="text-white font-semibold mb-2">{get('equipe_filiale1_nom', 'BVS')}</h4>
+                <p className="text-white/60 text-sm">{get('equipe_filiale1_desc', 'Blaise Vichy Séjours')}</p>
               </motion.div>
 
               <motion.div
@@ -319,8 +319,8 @@ export default function Equipe() {
                 <div className="w-12 h-12 bg-[#C9A961] rounded-xl flex items-center justify-center mx-auto mb-3">
                   <Users className="h-6 w-6 text-[#1A3A52]" />
                 </div>
-                <h4 className="text-white font-semibold mb-2">SA Gabriel</h4>
-                <p className="text-white/60 text-sm">Présidente des sociétés</p>
+                <h4 className="text-white font-semibold mb-2">{get('equipe_filiale2_nom', 'SA Gabriel')}</h4>
+                <p className="text-white/60 text-sm">{get('equipe_filiale2_desc', 'Présidente des sociétés')}</p>
               </motion.div>
 
               <motion.div
@@ -333,8 +333,8 @@ export default function Equipe() {
                 <div className="w-12 h-12 bg-[#1A3A52] rounded-xl flex items-center justify-center mx-auto mb-3">
                   <TrendingUp className="h-6 w-6 text-[#C9A961]" />
                 </div>
-                <h4 className="text-[#1A3A52] font-bold mb-2"> Foncière Valora</h4>
-                <p className="text-[#1A3A52]/80 text-sm">Objet de cette présentation</p>
+                <h4 className="text-[#1A3A52] font-bold mb-2">{get('equipe_filiale3_nom', 'Foncière Valora')}</h4>
+                <p className="text-[#1A3A52]/80 text-sm">{get('equipe_filiale3_desc', 'Objet de cette présentation')}</p>
               </motion.div>
             </div>
           </div>

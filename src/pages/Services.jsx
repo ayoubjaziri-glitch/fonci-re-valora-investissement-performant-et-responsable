@@ -97,7 +97,7 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Process Timeline - Enhanced for better visibility */}
+      {/* Process Timeline */}
       <section className="py-24 bg-[#F8F9FA]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
@@ -106,8 +106,8 @@ export default function Services() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('missions_process_titre', "Processus d'investissement structuré")}
-
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
+              {get('missions_process_titre', "Processus d'investissement structuré")}
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               {get('missions_process_description', 'Six étapes maîtrisées pour maximiser la création de valeur patrimoniale')}
@@ -153,8 +153,8 @@ export default function Services() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('missions_expertise_titre', "Nos domaines d'expertise")}
-
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
+              {get('missions_expertise_titre', "Nos domaines d'expertise")}
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
               {get('missions_expertise_description', 'Une chaîne de valeur intégrée pour maximiser la performance de vos investissements')}
@@ -200,7 +200,7 @@ export default function Services() {
             className="text-center mb-16">
 
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-            {get('missions_pourquoi_titre', 'Pourquoi choisir notre gestion ?')}
+              {get('missions_pourquoi_titre', 'Pourquoi choisir notre gestion ?')}
             </h2>
           </motion.div>
 
@@ -267,11 +267,11 @@ export default function Services() {
       {/* CTA */}
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
-
+          <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">
+            {get('missions_cta_titre', "S'associer à notre dynamique de valorisation")}
           </h2>
           <p className="text-[#1A3A52]/80 mb-8">
-            Accédez à une exposition immobilière organisée autour d'un pilotage professionnel et d'une gouvernance claire.
+            {get('missions_cta_description', "Accédez à une exposition immobilière organisée autour d'un pilotage professionnel et d'une gouvernance claire.")}
           </p>
           <Link to={createPageUrl("Contact")}>
             <Button className="bg-slate-800 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
