@@ -30,7 +30,7 @@ const TYPES_LABELS = {
 };
 
 // Formulaire d'édition d'une section existante
-function EditSectionForm({ form, setForm, onSave, onCancel, isLoading }) {
+function EditSectionForm({ form, setForm, onSave, onCancel, isLoading, editingSection, pageSections }) {
   return (
     <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
       <div className="bg-white rounded-2xl p-6 w-full max-w-xl max-h-[90vh] overflow-y-auto shadow-2xl">
@@ -256,6 +256,8 @@ export default function AdminSections() {
           onSave={() => updateMutation.mutate(editForm)}
           onCancel={() => setEditingSection(null)}
           isLoading={updateMutation.isPending}
+          editingSection={editingSection}
+          pageSections={pageSections}
         />
       )}
     </div>
