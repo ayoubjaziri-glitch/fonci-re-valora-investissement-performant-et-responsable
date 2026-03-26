@@ -60,7 +60,7 @@ Réponds UNIQUEMENT avec un JSON valide :
 
     const result = await base44.integrations.Core.InvokeLLM({
       prompt,
-      model: 'claude_sonnet_4_6',
+      model: 'gemini_3_flash',
       response_json_schema: {
         type: 'object',
         properties: {
@@ -73,7 +73,8 @@ Réponds UNIQUEMENT avec un JSON valide :
           image_url: { type: 'string' },
           temps_lecture: { type: 'string' },
           date_publication: { type: 'string' },
-        }
+        },
+        required: ['titre', 'slug', 'extrait', 'contenu']
       }
     });
 
@@ -103,8 +104,8 @@ Réponds UNIQUEMENT avec un JSON valide :
           </div>
           <h3 className="text-xl font-serif text-[#1A3A52] mb-3">L'IA rédige votre article…</h3>
           <p className="text-slate-500 text-sm leading-relaxed">
-          Génération d'un contenu complet et optimisé SEO avec <strong>Claude Sonnet</strong>.<br />
-          Cela peut prendre 30 à 60 secondes pour 3000-5000 mots.
+          Génération d'un contenu complet et optimisé SEO avec <strong>Gemini Flash</strong>.<br />
+          Cela peut prendre 20 à 45 secondes pour 3000-5000 mots.
           </p>
           <div className="mt-6 flex flex-col gap-2 text-xs text-slate-400">
           <span>✦ Rédaction de 3000-5000 mots</span>
@@ -144,7 +145,7 @@ Réponds UNIQUEMENT avec un JSON valide :
             </div>
             <div>
               <h2 className="text-white font-semibold text-lg">Générer un article avec l'IA</h2>
-              <p className="text-white/60 text-xs">Claude Sonnet — Article ultra-complet & SEO</p>
+              <p className="text-white/60 text-xs">Gemini Flash — Article complet & SEO</p>
             </div>
           </div>
           <button onClick={onClose} className="text-white/60 hover:text-white">
@@ -194,7 +195,7 @@ Réponds UNIQUEMENT avec un JSON valide :
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
-            <strong>✦ IA Ultra-puissante :</strong> L'article sera rédigé par Claude Sonnet avec 3000-5000 mots, optimisation SEO maximale et publié automatiquement.
+            <strong>✦ IA Performante :</strong> L'article sera rédigé par Gemini Flash avec 3000-5000 mots, optimisation SEO et publié automatiquement.
           </div>
 
           <Button
