@@ -8,7 +8,8 @@ import { X, Wand2, Loader2, CheckCircle2, Sparkles } from 'lucide-react';
 const CATEGORIES = ["Marché", "Investissement", "Fiscalité", "Rénovation", "Gouvernance"];
 
 function slugify(str) {
-  return str.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  if (!str) return 'article-' + Date.now();
+  return String(str).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
@@ -81,7 +82,7 @@ Réponds UNIQUEMENT avec un JSON valide :
     // Ensure slug is clean
     const articleData = {
       ...result,
-      slug: slugify(result.slug || result.titre),
+      slug: slugify(result.slug || result.titre || sujet),
       publie: true,
     };
 
