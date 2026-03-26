@@ -63,8 +63,23 @@ function EditSectionForm({ form, setForm, onSave, onCancel, isLoading }) {
             {form.image_url && <img src={form.image_url} alt="" className="mt-2 h-24 w-full object-cover rounded-lg" onError={e => e.target.style.display='none'} />}
           </div>
           <div>
-            <label className="text-sm font-medium text-slate-700 block mb-1">Ordre</label>
-            <Input type="number" value={form.ordre || 0} onChange={e => setForm({ ...form, ordre: parseInt(e.target.value) || 0 })} className="w-24" />
+            <label className="text-sm font-medium text-slate-700 block mb-1">Position dans la page (ordre)</label>
+            <div className="flex items-center gap-3">
+              <Input type="number" value={form.ordre || 0} onChange={e => setForm({ ...form, ordre: parseInt(e.target.value) || 0 })} className="w-28" />
+              <div className="text-xs text-slate-400 leading-relaxed">
+                <span className="font-medium text-slate-600">10–50</span> = haut de page<br />
+                <span className="font-medium text-slate-600">100–500</span> = milieu<br />
+                <span className="font-medium text-slate-600">900+</span> = bas de page
+              </div>
+            </div>
+            <div className="mt-2 flex gap-2 flex-wrap">
+              {[{label:'Début de page', val: 10}, {label:'Après hero', val: 50}, {label:'Milieu', val: 200}, {label:'Avant CTA', val: 800}, {label:'Fin de page', val: 950}].map(p => (
+                <button key={p.val} type="button" onClick={() => setForm({...form, ordre: p.val})}
+                  className={`text-xs px-2 py-1 rounded-lg border transition-colors ${form.ordre === p.val ? 'border-[#C9A961] bg-[#C9A961]/10 text-[#1A3A52] font-medium' : 'border-slate-200 text-slate-500 hover:border-slate-300'}`}>
+                  {p.label}
+                </button>
+              ))}
+            </div>
           </div>
           <div className="flex items-center gap-2">
             <input type="checkbox" id="actif-edit" checked={form.actif} onChange={e => setForm({ ...form, actif: e.target.checked })} />
@@ -156,7 +171,7 @@ export default function AdminSections() {
         {/* Info synchronisation */}
         <div className="mb-4 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-xs text-blue-700 flex items-start gap-2">
           <div className="mt-0.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
-          <span>Les sections créées ici s'affichent automatiquement sur la page <strong>{currentPageInfo?.label}</strong> du site, dans l'ordre défini, en respectant la charte graphique Valora.</span>
+          <span>Les sections s'affichent sur la page <strong>{currentPageInfo?.label}</strong> dans l'ordre défini par le numéro <strong>#ordre</strong>. Un ordre <strong>faible (ex: 10)</strong> = début de page, <strong>élevé (ex: 900)</strong> = fin de page. Réorganisez-les en modifiant le numéro d'ordre.</span>
         </div>
 
         {pageSections.length === 0 ? (
@@ -180,7 +195,9 @@ export default function AdminSections() {
                     <div className="flex items-center gap-2 mb-1 flex-wrap">
                       <h3 className="font-semibold text-[#1A3A52]">{section.titre}</h3>
                       <span className="text-xs bg-[#C9A961]/10 text-[#C9A961] px-2 py-0.5 rounded-full font-medium">{TYPES_LABELS[section.type_section] || section.type_section}</span>
-                      <span className="text-xs text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full">#{section.ordre}</span>
+                      <span className="text-xs text-slate-400 bg-slate-50 px-2 py-0.5 rounded-full cursor-pointer hover:bg-slate-100" title="Ordre d'affichage — modifiez via ✏️">
+                        ordre: {section.ordre}
+                      </span>
                       {!section.actif && <span className="text-xs bg-red-100 text-red-500 px-2 py-0.5 rounded-full">Masqué</span>}
                     </div>
                     {section.sous_titre && <p className="text-sm text-slate-500 mb-1">{section.sous_titre}</p>}
