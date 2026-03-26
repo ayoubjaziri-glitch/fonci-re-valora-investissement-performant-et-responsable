@@ -393,12 +393,7 @@ export default function AdminBackOffice() {
           <div className="text-sm text-slate-400">Back-Office</div>
           <ChevronRight className="h-4 w-4 text-slate-300" />
           <div className="text-sm font-semibold text-[#1A3A52] flex-1">{tabTitles[activeTab]}</div>
-          <Button
-            onClick={() => setShowPageGenerator(true)}
-            className="bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F] hover:from-[#2A4A6F] hover:to-[#3A5A8F] text-white text-xs font-semibold px-4 py-2 h-8 shadow-sm"
-          >
-            <Wand2 className="h-3.5 w-3.5 mr-1.5" /> Générer une page avec l'IA
-          </Button>
+
         </div>
 
         {/* Content */}
