@@ -21,51 +21,22 @@ import { useSiteContent } from '../hooks/useSiteContent';
 export default function Services() {
   const { get } = useSiteContent();
   const services = [
-  {
-    icon: TrendingUp,
-    title: "Levée de Fonds & Ingénierie Financière",
-    description: "Pilotage des levées de fonds afin de renforcer la capacité d'investissement de la foncière et créer de la valeur pour les associés.",
-    features: ["Structuration financière optimisée", "Effet de levier bancaire 80%", "Montage juridique adapté"]
-  },
-  {
-    icon: Search,
-    title: "Acquisition & Sélection",
-    description: "Sourcing stratégique d'actifs résidentiels présentant un potentiel de valorisation durable.",
-    features: ["Analyse multicritères structurée", "Négociation maîtrisée", "Due diligence approfondie"]
-  },
-  {
-    icon: Hammer,
-    title: "Rénovation & Valorisation BBC",
-    description: "Travaux pilotés par experts BTP avec objectif DPE A ou B systématique.",
-    features: ["Plus-value latentes +10–15%", "Réseau de 30+ entreprises BTP", "Conformité énergétique garantie"]
-  },
-  {
-    icon: Users,
-    title: "Gestion déléguée, vision partagée",
-    description: "La gestion opérationnelle est intégralement pilotée par la foncière, permettant aux investisseurs de rester concentrés sur leur stratégie patrimoniale tout en conservant une lecture claire des actifs et des décisions structurantes.",
-    features: ["Gestion opérationnelle complète", "Reporting régulier", "Gouvernance transparente"]
-  },
-  {
-    icon: HomeIcon,
-    title: "Gestion locative & Pilotage",
-    description: "Commercialisation multi-canaux visant un taux d'occupation cible supérieur à 98 %.",
-    features: ["Sélection rigoureuse des locataires", "Reporting semestriel structuré", "Suivi administratif et financier des flux locatifs"]
-  },
-  {
-    icon: Briefcase,
-    title: "Arbitrage Stratégique & Fiscalité",
-    description: "Cessions d'actifs, en bloc ou de manière sélective, intégrant une approche patrimoniale et un cadre fiscal adapté, notamment via le PEA-PME.",
-    features: ["Stratégie de sortie structurée dans une logique de long terme", "Cadre fiscal pouvant bénéficier des dispositifs en vigueur, dont le PEA-PME", "Valorisation progressive du patrimoine"]
-  }];
-
+  { icon: TrendingUp, titleKey: "missions_service1_titre", titleFallback: "Levée de Fonds & Ingénierie Financière", descKey: "missions_service1_description", descFallback: "Pilotage des levées de fonds afin de renforcer la capacité d'investissement de la foncière et créer de la valeur pour les associés.", featuresKey: "missions_service1_features", featuresFallback: "Structuration financière optimisée\nEffet de levier bancaire 80%\nMontage juridique adapté" },
+  { icon: Search, titleKey: "missions_service2_titre", titleFallback: "Acquisition & Sélection", descKey: "missions_service2_description", descFallback: "Sourcing stratégique d'actifs résidentiels présentant un potentiel de valorisation durable.", featuresKey: "missions_service2_features", featuresFallback: "Analyse multicritères structurée\nNégociation maîtrisée\nDue diligence approfondie" },
+  { icon: Hammer, titleKey: "missions_service3_titre", titleFallback: "Rénovation & Valorisation BBC", descKey: "missions_service3_description", descFallback: "Travaux pilotés par experts BTP avec objectif DPE A ou B systématique.", featuresKey: "missions_service3_features", featuresFallback: "Plus-value latentes +10–15%\nRéseau de 30+ entreprises BTP\nConformité énergétique garantie" },
+  { icon: Users, titleKey: "missions_service4_titre", titleFallback: "Gestion déléguée, vision partagée", descKey: "missions_service4_description", descFallback: "La gestion opérationnelle est intégralement pilotée par la foncière.", featuresKey: "missions_service4_features", featuresFallback: "Gestion opérationnelle complète\nReporting régulier\nGouvernance transparente" },
+  { icon: HomeIcon, titleKey: "missions_service5_titre", titleFallback: "Gestion locative & Pilotage", descKey: "missions_service5_description", descFallback: "Commercialisation multi-canaux visant un taux d'occupation cible supérieur à 98 %.", featuresKey: "missions_service5_features", featuresFallback: "Sélection rigoureuse des locataires\nReporting semestriel structuré\nSuivi administratif et financier des flux locatifs" },
+  { icon: Briefcase, titleKey: "missions_service6_titre", titleFallback: "Arbitrage Stratégique & Fiscalité", descKey: "missions_service6_description", descFallback: "Cessions d'actifs, en bloc ou de manière sélective, intégrant une approche patrimoniale.", featuresKey: "missions_service6_features", featuresFallback: "Stratégie de sortie structurée dans une logique de long terme\nCadre fiscal PEA-PME\nValorisation progressive du patrimoine" }
+  ];
 
   const processSteps = [
-  { number: "01", title: "Sourcing", desc: "Identification d'opportunités, y compris hors marché" },
-  { number: "02", title: "Analyse", desc: "Études approfondies et due diligence structurée" },
-  { number: "03", title: "Acquisition", desc: "Structuration, négociation et financement des opérations" },
-  { number: "04", title: "Réhabilitation", desc: "Programmes de rénovation BBC pilotés et suivis" },
-  { number: "05", title: "Exploitation locative", desc: "Mise en location et gestion optimisée des actifs" },
-  { number: "06", title: "Arbitrage", desc: "Cessions et réallocations stratégiques du portefeuille" }];
+  { number: "01", titleKey: "missions_process1_titre", titleFallback: "Sourcing", descKey: "missions_process1_desc", descFallback: "Identification d'opportunités, y compris hors marché" },
+  { number: "02", titleKey: "missions_process2_titre", titleFallback: "Analyse", descKey: "missions_process2_desc", descFallback: "Études approfondies et due diligence structurée" },
+  { number: "03", titleKey: "missions_process3_titre", titleFallback: "Acquisition", descKey: "missions_process3_desc", descFallback: "Structuration, négociation et financement des opérations" },
+  { number: "04", titleKey: "missions_process4_titre", titleFallback: "Réhabilitation", descKey: "missions_process4_desc", descFallback: "Programmes de rénovation BBC pilotés et suivis" },
+  { number: "05", titleKey: "missions_process5_titre", titleFallback: "Exploitation locative", descKey: "missions_process5_desc", descFallback: "Mise en location et gestion optimisée des actifs" },
+  { number: "06", titleKey: "missions_process6_titre", titleFallback: "Arbitrage", descKey: "missions_process6_desc", descFallback: "Cessions et réallocations stratégiques du portefeuille" }
+  ];
 
 
   return (
@@ -128,9 +99,9 @@ export default function Services() {
                   <div className="w-12 h-12 bg-[#1A3A52] rounded-xl flex items-center justify-center flex-shrink-0">
                     <span className="text-xl font-bold text-[#C9A961]">{step.number}</span>
                   </div>
-                  <h3 className="font-semibold text-[#1A3A52] text-lg">{step.title}</h3>
+                  <h3 className="font-semibold text-[#1A3A52] text-lg">{get(step.titleKey, step.titleFallback)}</h3>
                 </div>
-                <p className="text-sm text-slate-600 leading-relaxed">{step.desc}</p>
+                <p className="text-sm text-slate-600 leading-relaxed">{get(step.descKey, step.descFallback)}</p>
               </motion.div>
             )}
           </div>
@@ -174,10 +145,10 @@ export default function Services() {
                 <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mb-6 group-hover:bg-[#C9A961] transition-all duration-300 group-hover:scale-110">
                   <service.icon className="h-8 w-8 text-[#C9A961] group-hover:text-[#1A3A52] transition-colors" />
                 </div>
-                <h3 className="text-xl font-semibold text-[#1A3A52] mb-3">{service.title}</h3>
-                <p className="text-slate-600 mb-6 leading-relaxed">{service.description}</p>
+                <h3 className="text-xl font-semibold text-[#1A3A52] mb-3">{get(service.titleKey, service.titleFallback)}</h3>
+                <p className="text-slate-600 mb-6 leading-relaxed">{get(service.descKey, service.descFallback)}</p>
                 <ul className="space-y-2">
-                  {service.features.map((feature, idx) =>
+                  {get(service.featuresKey, service.featuresFallback).split('\n').filter(f => f.trim()).map((feature, idx) =>
                 <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
                       <div className="w-1.5 h-1.5 bg-[#C9A961] rounded-full" />
                       {feature}

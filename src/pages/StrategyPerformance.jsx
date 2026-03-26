@@ -33,17 +33,18 @@ export default function StrategyPerformance() {
 
 
   const contextItems = [
-  { icon: Search, title: "Sélection des actifs", desc: "Identifier des immeubles à fort potentiel suppose une lecture fine des marchés, un réseau qualifié et une analyse multicritère approfondie." },
-  { icon: Landmark, title: "Structuration du financement", desc: "L'intégration de l'effet de levier et la négociation de conditions adaptées nécessitent une ingénierie financière cohérente avec la trajectoire patrimoniale." },
-  { icon: Wrench, title: "Conduite des réhabilitations", desc: "La rénovation BBC implique une coordination technique exigeante et un pilotage rigoureux des intervenants." },
-  { icon: CalendarDays, title: "Exploitation locative", desc: "La gestion du patrimoine et le suivi administratif reposent sur une organisation opérationnelle structurée." }];
-
+  { icon: Search, titleKey: "strategie_contexte1_titre", titleFallback: "Sélection des actifs", descKey: "strategie_contexte1_desc", descFallback: "Identifier des immeubles à fort potentiel suppose une lecture fine des marchés, un réseau qualifié et une analyse multicritère approfondie." },
+  { icon: Landmark, titleKey: "strategie_contexte2_titre", titleFallback: "Structuration du financement", descKey: "strategie_contexte2_desc", descFallback: "L'intégration de l'effet de levier et la négociation de conditions adaptées nécessitent une ingénierie financière cohérente avec la trajectoire patrimoniale." },
+  { icon: Wrench, titleKey: "strategie_contexte3_titre", titleFallback: "Conduite des réhabilitations", descKey: "strategie_contexte3_desc", descFallback: "La rénovation BBC implique une coordination technique exigeante et un pilotage rigoureux des intervenants." },
+  { icon: CalendarDays, titleKey: "strategie_contexte4_titre", titleFallback: "Exploitation locative", descKey: "strategie_contexte4_desc", descFallback: "La gestion du patrimoine et le suivi administratif reposent sur une organisation opérationnelle structurée." }
+  ];
 
   const solutions = [
-  { title: "Parcours d'investissement structuré", desc: "De l'acquisition à l'arbitrage, chaque étape du cycle immobilier est organisée dans une logique de gestion déléguée et de pilotage professionnel." },
-  { title: "Processus structuré", desc: "Analyses approfondies, réhabilitations BBC, mise en exploitation locative et reporting régulier : une méthodologie pensée pour inscrire la valorisation dans la durée." },
-  { title: "Structuration du financement", desc: "Recours maîtrisé à l'effet de levier et recherche de conditions bancaires adaptées à la stratégie patrimoniale." },
-  { title: "Pilotage & transparence", desc: "Communication périodique, suivi des indicateurs clés et gouvernance favorisant une lecture claire de l'évolution du portefeuille." }];
+  { titleKey: "strategie_solution1_titre", titleFallback: "Parcours d'investissement structuré", descKey: "strategie_solution1_desc", descFallback: "De l'acquisition à l'arbitrage, chaque étape du cycle immobilier est organisée dans une logique de gestion déléguée et de pilotage professionnel." },
+  { titleKey: "strategie_solution2_titre", titleFallback: "Processus structuré", descKey: "strategie_solution2_desc", descFallback: "Analyses approfondies, réhabilitations BBC, mise en exploitation locative et reporting régulier." },
+  { titleKey: "strategie_solution3_titre", titleFallback: "Structuration du financement", descKey: "strategie_solution3_desc", descFallback: "Recours maîtrisé à l'effet de levier et recherche de conditions bancaires adaptées à la stratégie patrimoniale." },
+  { titleKey: "strategie_solution4_titre", titleFallback: "Pilotage & transparence", descKey: "strategie_solution4_desc", descFallback: "Communication périodique, suivi des indicateurs clés et gouvernance favorisant une lecture claire de l'évolution du portefeuille." }
+  ];
 
 
   const zones = [
@@ -154,8 +155,8 @@ export default function StrategyPerformance() {
                       <item.icon className="h-5 w-5 text-slate-400" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-[#1A3A52] mb-1">{item.title}</h4>
-                      <p className="text-sm text-gray-600">{item.desc}</p>
+                      <h4 className="font-semibold text-[#1A3A52] mb-1">{get(item.titleKey, item.titleFallback)}</h4>
+                      <p className="text-sm text-gray-600">{get(item.descKey, item.descFallback)}</p>
                     </div>
                   </div>
                 )}
@@ -184,8 +185,8 @@ export default function StrategyPerformance() {
                       <CheckCircle2 className="h-5 w-5 text-[#1A3A52]" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-white mb-1">{item.title}</h4>
-                      <p className="text-sm text-white/70">{item.desc}</p>
+                      <h4 className="font-semibold text-white mb-1">{get(item.titleKey, item.titleFallback)}</h4>
+                      <p className="text-sm text-white/70">{get(item.descKey, item.descFallback)}</p>
                     </div>
                   </div>
                 )}
@@ -327,9 +328,9 @@ export default function StrategyPerformance() {
               <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Handshake className="h-8 w-8 text-[#C9A961]" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">Création de valeur partagée</h3>
+              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">{get('strategie_alignement1_titre', 'Création de valeur partagée')}</h3>
               <p className="text-slate-600 text-sm">
-                Plus-values réalisées + Remboursement du prêt + Capitalisation des flux
+                {get('strategie_alignement1_desc', 'Plus-values réalisées + Remboursement du prêt + Capitalisation des flux')}
               </p>
             </motion.div>
 
@@ -343,9 +344,9 @@ export default function StrategyPerformance() {
               <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Trophy className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">Rémunération à la performance</h3>
+              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">{get('strategie_alignement2_titre', 'Rémunération à la performance')}</h3>
               <p className="text-[#1A3A52]/80 text-sm">
-                Carried interest uniquement sur la surperformance au-delà de 6,5%/an
+                {get('strategie_alignement2_desc', 'Carried interest uniquement sur la surperformance au-delà de 6,5%/an')}
               </p>
             </motion.div>
 
@@ -359,9 +360,9 @@ export default function StrategyPerformance() {
               <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <TrendingUp className="h-8 w-8 text-[#C9A961]" />
               </div>
-              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">0€ de frais initiaux</h3>
+              <h3 className="text-lg font-semibold text-[#1A3A52] mb-3">{get('strategie_alignement3_titre', '0€ de frais initiaux')}</h3>
               <p className="text-slate-600 text-sm">
-                100% de l'apport investi dans les actifs
+                {get('strategie_alignement3_desc', "100% de l'apport investi dans les actifs")}
               </p>
             </motion.div>
           </div>
@@ -519,15 +520,15 @@ export default function StrategyPerformance() {
               <ul className="space-y-3">
                 <li className="flex items-center gap-3 text-white">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
-                  Exonération d'impôt sur le revenu (12,8%)
+                  {get('strategie_peapme_bullet1', "Exonération d'impôt sur le revenu (12,8%)")}
                 </li>
                 <li className="flex items-center gap-3 text-white">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
-                  Plus-values et dividendes réinvestis exonérés
+                  {get('strategie_peapme_bullet2', 'Plus-values et dividendes réinvestis exonérés')}
                 </li>
                 <li className="flex items-center gap-3 text-white">
                   <CheckCircle2 className="h-5 w-5 text-[#C9A961]" />
-                  Avantage fiscal lors de la sortie
+                  {get('strategie_peapme_bullet3', 'Avantage fiscal lors de la sortie')}
                 </li>
               </ul>
             </motion.div>
