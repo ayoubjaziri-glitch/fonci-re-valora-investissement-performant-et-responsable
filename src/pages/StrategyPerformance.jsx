@@ -579,9 +579,6 @@ Flat Tax (PFU)</p>
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
 
           </h2>
-          <p className="text-slate-800 mb-4">
-            {get('strategie_cta_titre', "S'associer à notre dynamique de valorisation")}
-          </p>
           <p className="text-slate-800 mb-8">
             {get('strategie_cta_description', "Rejoignez un cercle d'associés unis par une stratégie immobilière maîtrisée, une exécution professionnelle et une gouvernance exemplaire.")}
           </p>

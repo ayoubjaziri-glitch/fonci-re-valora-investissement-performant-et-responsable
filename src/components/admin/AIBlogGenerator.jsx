@@ -25,6 +25,7 @@ export default function AIBlogGenerator({ onClose, onSuccess }) {
     if (!sujet.trim()) { setError('Veuillez entrer un sujet.'); return; }
     setError('');
     setStep('generating');
+    try {
 
     const prompt = `Tu es un expert en immobilier d'investissement, fiscalité et rénovation énergétique en France. Tu rédiges pour le blog de "La Foncière Valora", une foncière résidentielle premium basée à Vichy, dédiée à l'acquisition, réhabilitation et valorisation d'immeubles avec fort potentiel de création de valeur.
 
@@ -89,6 +90,11 @@ Réponds UNIQUEMENT avec un JSON valide :
     await base44.entities.ArticleBlog.create(articleData);
     setStep('done');
     onSuccess();
+    } catch (err) {
+      console.error('AI Blog generation error:', err);
+      setError("Une erreur s'est produite lors de la génération. Veuillez réessayer.");
+      setStep('config');
+    }
   };
 
   if (step === 'generating') {

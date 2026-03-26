@@ -319,9 +319,6 @@ export default function Durabilite() {
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
 
           </h2>
-          <p className="text-slate-900 font-semibold mb-2 text-2xl font-serif">
-            {get('durabilite_cta_titre', "S'associer à notre dynamique de valorisation")}
-          </p>
           <p className="text-[#1A3A52]/80 mb-8">
             {get('durabilite_cta_description', "Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.")}
           </p>
