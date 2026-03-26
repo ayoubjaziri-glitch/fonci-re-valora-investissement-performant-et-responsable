@@ -24,12 +24,12 @@ export default function StrategyPerformance() {
   }, []);
 
   const strategyPoints = [
-  { icon: Home, title: "Rénovation BBC", description: "DPE D–E transformé en A–B pour maximiser la valeur" },
-  { icon: Percent, title: "Rendement 9%+ brut", description: "Objectif d'équilibre économique durable sur chaque actif" },
-  { icon: Tag, title: "Décote à l'Achat", description: "−10% à −15% vs prix marché pour créer la valeur" },
-  { icon: Building2, title: "Sourcing Off-Market", description: "Réseau de 45+ agents partenaires pour opportunités exclusives" },
-  { icon: FileCheck, title: "Due Diligence", description: "Analyse multicritères, diagnostics complets, financement sécurisé" },
-  { icon: Clock, title: "Horizon 5–6 ans", description: "Cycle de détention patrimonial avec arbitrages stratégiques" }];
+  { icon: Home, titleKey: "strategie_pilier1_titre", descKey: "strategie_pilier1_desc", titleFallback: "Rénovation BBC", descFallback: "DPE D–E transformé en A–B pour maximiser la valeur" },
+  { icon: Percent, titleKey: "strategie_pilier2_titre", descKey: "strategie_pilier2_desc", titleFallback: "Rendement 9%+ brut", descFallback: "Objectif d'équilibre économique durable sur chaque actif" },
+  { icon: Tag, titleKey: "strategie_pilier3_titre", descKey: "strategie_pilier3_desc", titleFallback: "Décote à l'Achat", descFallback: "−10% à −15% vs prix marché pour créer la valeur" },
+  { icon: Building2, titleKey: "strategie_pilier4_titre", descKey: "strategie_pilier4_desc", titleFallback: "Sourcing Off-Market", descFallback: "Réseau de 45+ agents partenaires pour opportunités exclusives" },
+  { icon: FileCheck, titleKey: "strategie_pilier5_titre", descKey: "strategie_pilier5_desc", titleFallback: "Due Diligence", descFallback: "Analyse multicritères, diagnostics complets, financement sécurisé" },
+  { icon: Clock, titleKey: "strategie_pilier6_titre", descKey: "strategie_pilier6_desc", titleFallback: "Horizon 5–6 ans", descFallback: "Cycle de détention patrimonial avec arbitrages stratégiques" }];
 
 
   const contextItems = [
@@ -47,10 +47,10 @@ export default function StrategyPerformance() {
 
 
   const zones = [
-  { name: "Bordeaux", description: "Métropole dynamique avec forte demande locative" },
-  { name: "Lyon", description: "2ème marché français, tension locative élevée" },
-  { name: "Vichy", description: "Ville thermale en renouveau, rendements attractifs" },
-  { name: "Clermont-Ferrand", description: "Bassin universitaire et économique stable" }];
+  { nameKey: "strategie_zone1_nom", descKey: "strategie_zone1_desc", nameFallback: "Bordeaux", descFallback: "Métropole dynamique avec forte demande locative" },
+  { nameKey: "strategie_zone2_nom", descKey: "strategie_zone2_desc", nameFallback: "Lyon", descFallback: "2ème marché français, tension locative élevée" },
+  { nameKey: "strategie_zone3_nom", descKey: "strategie_zone3_desc", nameFallback: "Vichy", descFallback: "Ville thermale en renouveau, rendements attractifs" },
+  { nameKey: "strategie_zone4_nom", descKey: "strategie_zone4_desc", nameFallback: "Clermont-Ferrand", descFallback: "Bassin universitaire et économique stable" }];
 
 
   const projectionData = [
@@ -63,9 +63,9 @@ export default function StrategyPerformance() {
 
 
   const valueCreation = [
-  { icon: Building2, title: "Revenus locatifs nets", value: "562 500 €", desc: "112 500 €/an × 5 ans" },
-  { icon: TrendingUp, title: "Amortissement crédit", value: "274 929 €", desc: "Enrichissement fonds propres" },
-  { icon: PiggyBank, title: "Appréciation actif", value: "+96 605 €", desc: "Valeur an 5 : 1 346 605 €" }];
+  { icon: Building2, titleKey: "strategie_vc1_titre", valKey: "strategie_vc1_val", descKey: "strategie_vc1_desc", titleFallback: "Revenus locatifs nets", valFallback: "562 500 €", descFallback: "112 500 €/an × 5 ans" },
+  { icon: TrendingUp, titleKey: "strategie_vc2_titre", valKey: "strategie_vc2_val", descKey: "strategie_vc2_desc", titleFallback: "Amortissement crédit", valFallback: "274 929 €", descFallback: "Enrichissement fonds propres" },
+  { icon: PiggyBank, titleKey: "strategie_vc3_titre", valKey: "strategie_vc3_val", descKey: "strategie_vc3_desc", titleFallback: "Appréciation actif", valFallback: "+96 605 €", descFallback: "Valeur an 5 : 1 346 605 €" }];
 
 
   const comparatif = [
@@ -222,8 +222,8 @@ export default function StrategyPerformance() {
                 <div className="w-14 h-14 bg-[#1A3A52] rounded-xl flex items-center justify-center mb-4">
                   <point.icon className="h-7 w-7 text-[#C9A961]" />
                 </div>
-                <h3 className="text-lg font-semibold text-[#1A3A52] mb-2">{point.title}</h3>
-                <p className="text-slate-600">{point.description}</p>
+                <h3 className="text-lg font-semibold text-[#1A3A52] mb-2">{get(point.titleKey, point.titleFallback)}</h3>
+                <p className="text-slate-600">{get(point.descKey, point.descFallback)}</p>
               </motion.div>
             )}
           </div>
@@ -250,10 +250,10 @@ export default function StrategyPerformance() {
                 {zones.map((zone, index) =>
                 <div key={index} className="p-4 bg-white rounded-xl border border-slate-200">
                     <div className="flex items-center gap-2 mb-2">
-                      <MapPin className="h-5 w-5 text-[#C9A961]" />
-                      <span className="font-semibold text-[#1A3A52]">{zone.name}</span>
-                    </div>
-                    <p className="text-sm text-slate-600">{zone.description}</p>
+                       <MapPin className="h-5 w-5 text-[#C9A961]" />
+                       <span className="font-semibold text-[#1A3A52]">{get(zone.nameKey, zone.nameFallback)}</span>
+                     </div>
+                     <p className="text-sm text-slate-600">{get(zone.descKey, zone.descFallback)}</p>
                   </div>
                 )}
               </div>
@@ -265,33 +265,33 @@ export default function StrategyPerformance() {
               viewport={{ once: true }} className="bg-[#0f172a] p-8 rounded-3xl">
 
 
-              <h3 className="text-xl font-serif text-white mb-6">Objectifs clés</h3>
+              <h3 className="text-xl font-serif text-white mb-6">{get('strategie_objectifs_titre', 'Objectifs clés')}</h3>
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-[#C9A961] rounded-xl flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl font-bold text-[#1A3A52]">4</span>
+                    <span className="text-2xl font-bold text-[#1A3A52]">{get('strategie_obj1_valeur', '4')}</span>
                   </div>
                   <div>
-                    <p className="text-white font-semibold">Villes ciblées</p>
-                    <p className="text-white/60 text-sm">Marchés stratégiques sélectionnés</p>
+                    <p className="text-white font-semibold">{get('strategie_obj1_label', 'Villes ciblées')}</p>
+                    <p className="text-white/60 text-sm">{get('strategie_obj1_desc', 'Marchés stratégiques sélectionnés')}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl font-bold text-[#C9A961]">30</span>
+                    <span className="text-2xl font-bold text-[#C9A961]">{get('strategie_obj2_valeur', '30')}</span>
                   </div>
                   <div>
-                    <p className="text-white font-semibold">Immeubles cibles</p>
-                    <p className="text-white/60 text-sm">Pipeline d'acquisition identifié</p>
+                    <p className="text-white font-semibold">{get('strategie_obj2_label', 'Immeubles cibles')}</p>
+                    <p className="text-white/60 text-sm">{get('strategie_obj2_desc', "Pipeline d'acquisition identifié")}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
                   <div className="w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl font-bold text-[#C9A961]">20M€</span>
+                    <span className="text-2xl font-bold text-[#C9A961]">{get('strategie_obj3_valeur', '20M€')}</span>
                   </div>
                   <div>
-                    <p className="text-white font-semibold">Objectif d'actifs</p>
-                    <p className="text-white/60 text-sm">Horizon 5 ans</p>
+                    <p className="text-white font-semibold">{get('strategie_obj3_label', "Objectif d'actifs")}</p>
+                    <p className="text-white/60 text-sm">{get('strategie_obj3_desc', 'Horizon 5 ans')}</p>
                   </div>
                 </div>
               </div>
@@ -475,7 +475,7 @@ export default function StrategyPerformance() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}>
 
-              <h3 className="text-xl font-serif text-[#1A3A52] mb-6">Triple mécanisme de création de valeur</h3>
+              <h3 className="text-xl font-serif text-[#1A3A52] mb-6">{get('strategie_triple_titre', 'Triple mécanisme de création de valeur')}</h3>
               <div className="space-y-4">
                 {valueCreation.map((item, index) =>
                 <div key={index} className="flex gap-4 p-5 bg-white rounded-2xl border border-slate-200">
@@ -483,9 +483,9 @@ export default function StrategyPerformance() {
                       <item.icon className="h-7 w-7 text-[#C9A961]" />
                     </div>
                     <div>
-                      <h4 className="font-semibold text-[#1A3A52]">{item.title}</h4>
-                      <p className="text-xl font-bold text-[#C9A961]">{item.value}</p>
-                      <p className="text-sm text-slate-500">{item.desc}</p>
+                      <h4 className="font-semibold text-[#1A3A52]">{get(item.titleKey, item.titleFallback)}</h4>
+                      <p className="text-xl font-bold text-[#C9A961]">{get(item.valKey, item.valFallback)}</p>
+                      <p className="text-sm text-slate-500">{get(item.descKey, item.descFallback)}</p>
                     </div>
                   </div>
                 )}

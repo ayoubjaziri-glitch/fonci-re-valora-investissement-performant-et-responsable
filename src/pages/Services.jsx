@@ -84,7 +84,7 @@ export default function Services() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Nos missions
+                {get('missions_hero_accroche', 'Nos missions')}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
@@ -110,7 +110,7 @@ export default function Services() {
 
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Six étapes maîtrisées pour maximiser la création de valeur patrimoniale
+              {get('missions_process_description', 'Six étapes maîtrisées pour maximiser la création de valeur patrimoniale')}
             </p>
           </motion.div>
 
@@ -149,7 +149,7 @@ export default function Services() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Expertise complète
+                {get('missions_expertise_accroche', 'Expertise complète')}
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
@@ -157,7 +157,7 @@ export default function Services() {
 
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Une chaîne de valeur intégrée pour maximiser la performance de vos investissements
+              {get('missions_expertise_description', 'Une chaîne de valeur intégrée pour maximiser la performance de vos investissements')}
             </p>
           </motion.div>
 
@@ -214,10 +214,8 @@ export default function Services() {
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Shield className="h-8 w-8 text-[#1E3A5F]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 text-center">Gestion intégrée</h3>
-              <p className="text-white/70">La Foncière Valora assure le pilotage global des opérations immobilières : sélection, structuration, suivi et valorisation dans une logique patrimoniale de long terme.
-
-              </p>
+              <h3 className="text-xl font-semibold text-white mb-3 text-center">{get('missions_avantage1_titre', 'Gestion intégrée')}</h3>
+              <p className="text-white/70">{get('missions_avantage1_description', "La Foncière Valora assure le pilotage global des opérations immobilières : sélection, structuration, suivi et valorisation dans une logique patrimoniale de long terme.")}</p>
             </motion.div>
 
             <motion.div
@@ -230,10 +228,8 @@ export default function Services() {
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <FileText className="h-8 w-8 text-[#1E3A5F]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 text-center">Information & Gouvernance</h3>
-              <p className="text-white/70">
-                Une communication périodique et une organisation de la gouvernance permettent aux partenaires concernés de suivre l'évolution des opérations et les orientations stratégiques.
-              </p>
+              <h3 className="text-xl font-semibold text-white mb-3 text-center">{get('missions_avantage2_titre', 'Information & Gouvernance')}</h3>
+              <p className="text-white/70">{get('missions_avantage2_description', "Une communication périodique et une organisation de la gouvernance permettent aux partenaires concernés de suivre l'évolution des opérations et les orientations stratégiques.")}</p>
             </motion.div>
 
             <motion.div
@@ -246,10 +242,8 @@ export default function Services() {
               <div className="w-16 h-16 bg-[#C9A961] rounded-2xl flex items-center justify-center mx-auto mb-6">
                 <Users className="h-8 w-8 text-[#1E3A5F]" />
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3 text-center">Pilotage opérationnel</h3>
-              <p className="text-white/70">
-                Une organisation structurée réunissant des compétences complémentaires au service du développement et de la gestion des actifs.
-              </p>
+              <h3 className="text-xl font-semibold text-white mb-3 text-center">{get('missions_avantage3_titre', 'Pilotage opérationnel')}</h3>
+              <p className="text-white/70">{get('missions_avantage3_description', "Une organisation structurée réunissant des compétences complémentaires au service du développement et de la gestion des actifs.")}</p>
             </motion.div>
           </div>
 
@@ -259,11 +253,9 @@ export default function Services() {
             viewport={{ once: true }}
             className="mt-12 text-center">
 
-            <p className="text-xl text-white/90 italic font-serif">Aux côtés de La Foncière Valora
-
-            </p>
+            <p className="text-xl text-white/90 italic font-serif">{get('missions_conclusion_titre', 'Aux côtés de La Foncière Valora')}</p>
             <p className="text-white/70 mt-4 max-w-3xl mx-auto">
-              Découvrez une approche immobilière fondée sur un pilotage professionnel, une vision durable et un cadre de collaboration défini au cas par cas.
+              {get('missions_conclusion_description', 'Découvrez une approche immobilière fondée sur un pilotage professionnel, une vision durable et un cadre de collaboration défini au cas par cas.')}
             </p>
           </motion.div>
         </div>

@@ -88,19 +88,19 @@ export default function Equipe() {
 
 
   const groupStats = [
-  { label: "Actifs sous gestion", value: "3 M€" },
-  { label: "Entreprises BTP", value: "30+" },
-  { label: "Collaborateurs", value: "4" },
-  { label: "Années d'expertise", value: "18 ans" }];
+  { labelKey: "equipe_stat1_label", valueKey: "equipe_stat1_valeur", labelFallback: "Actifs sous gestion", valueFallback: "3 M€" },
+  { labelKey: "equipe_stat2_label", valueKey: "equipe_stat2_valeur", labelFallback: "Entreprises BTP", valueFallback: "30+" },
+  { labelKey: "equipe_stat3_label", valueKey: "equipe_stat3_valeur", labelFallback: "Collaborateurs", valueFallback: "4" },
+  { labelKey: "equipe_stat4_label", valueKey: "equipe_stat4_valeur", labelFallback: "Années d'expertise", valueFallback: "18 ans" }];
 
 
   const trajectory = [
-  { year: "2026", value: "1,25 M€" },
-  { year: "2027", value: "2,5 M€" },
-  { year: "2028", value: "5 M€" },
-  { year: "2029", value: "10 M€" },
-  { year: "2030", value: "15 M€" },
-  { year: "2031", value: "20 M€" }];
+  { year: "2026", valueKey: "equipe_traj1", valueFallback: "1,25 M€" },
+  { year: "2027", valueKey: "equipe_traj2", valueFallback: "2,5 M€" },
+  { year: "2028", valueKey: "equipe_traj3", valueFallback: "5 M€" },
+  { year: "2029", valueKey: "equipe_traj4", valueFallback: "10 M€" },
+  { year: "2030", valueKey: "equipe_traj5", valueFallback: "15 M€" },
+  { year: "2031", valueKey: "equipe_traj6", valueFallback: "20 M€" }];
 
 
   return (
@@ -119,7 +119,7 @@ export default function Equipe() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Équipe fondatrice
+                {get('equipe_hero_accroche', 'Équipe fondatrice')}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
@@ -145,7 +145,7 @@ export default function Equipe() {
               {get('equipe_fondateurs_titre', 'Associés opérationnels & Gouvernance')}
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur
+              {get('equipe_fondateurs_description', "Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur")}
             </p>
           </motion.div>
 
@@ -267,7 +267,7 @@ export default function Equipe() {
               {get('equipe_groupe_titre', 'Structure du groupe')}
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto">
-              Un groupe établi et éprouvé avec 18 ans d'expertise en immobilier patrimonial
+              {get('equipe_groupe_description', "Un groupe établi et éprouvé avec 18 ans d'expertise en immobilier patrimonial")}
             </p>
           </motion.div>
 
@@ -348,8 +348,8 @@ export default function Equipe() {
 
             {groupStats.map((stat, index) =>
             <div key={index} className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
-                <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
-                <p className="text-white/60 text-sm">{stat.label}</p>
+                <p className="text-3xl font-bold text-white mb-1">{get(stat.valueKey, stat.valueFallback)}</p>
+                <p className="text-white/60 text-sm">{get(stat.labelKey, stat.labelFallback)}</p>
               </div>
             )}
           </motion.div>
@@ -368,7 +368,7 @@ export default function Equipe() {
             <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('equipe_trajectoire_titre', 'Trajectoire de développement')}
 
             </h2>
-            <p className="text-slate-600">La Foncière Valora — 5 ans de croissance</p>
+            <p className="text-slate-600">{get('equipe_trajectoire_description', 'La Foncière Valora — 5 ans de croissance')}</p>
           </motion.div>
 
           <div className="relative">
@@ -396,7 +396,7 @@ export default function Equipe() {
                     </span>
                   </div>
                   <p className="text-sm text-slate-500 mb-1">{item.year}</p>
-                  <p className="text-xl font-bold text-[#1A3A52]">{item.value}</p>
+                  <p className="text-xl font-bold text-[#1A3A52]">{get(item.valueKey, item.valueFallback)}</p>
                 </motion.div>
               )}
             </div>
@@ -410,10 +410,10 @@ export default function Equipe() {
 
             <div className="flex items-center justify-center gap-3 mb-4">
               <Target className="h-6 w-6 text-[#C9A961]" />
-              <h3 className="text-xl font-serif text-white">Objectif 5 ans</h3>
+              <h3 className="text-xl font-serif text-white">{get('equipe_objectif_titre', 'Objectif 5 ans')}</h3>
             </div>
-            <p className="text-4xl font-bold text-[#C9A961] mb-2">20 M€</p>
-            <p className="text-white/70">d'actifs sous gestion</p>
+            <p className="text-4xl font-bold text-[#C9A961] mb-2">{get('equipe_objectif_valeur', '20 M€')}</p>
+            <p className="text-white/70">{get('equipe_objectif_label', "d'actifs sous gestion")}</p>
           </motion.div>
         </div>
       </section>
@@ -433,7 +433,7 @@ export default function Equipe() {
 
             </h2>
             <p className="text-[#1A3A52]/80 mb-8">
-              Portée par un groupe solide depuis 2008, contribuez à la création de valeur patrimoniale durable.
+              {get('equipe_cta_description', 'Portée par un groupe solide depuis 2008, contribuez à la création de valeur patrimoniale durable.')}
             </p>
             <Link to={createPageUrl("Contact")}>
               <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">

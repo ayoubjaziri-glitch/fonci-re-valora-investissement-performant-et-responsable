@@ -110,7 +110,7 @@ export default function Partenaires() {
             <div className="flex items-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Écosystème
+                {get('ecosysteme_hero_accroche', 'Écosystème')}
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
@@ -153,7 +153,7 @@ export default function Partenaires() {
 
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              Des acteurs qualifiés intervenant sur l'ensemble du cycle de valorisation.
+              {get('ecosysteme_partenaires_description', 'Des acteurs qualifiés intervenant sur l\'ensemble du cycle de valorisation.')}
             </p>
           </motion.div>
 
@@ -207,8 +207,8 @@ export default function Partenaires() {
             <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('ecosysteme_cta_titre', 'Partenaires et opérateurs')}
 
             </h2>
-            <p className="text-[#1A3A52]/80 mb-8">La foncière développe ses projets avec des partenaires : investisseurs privés, architectes, entreprises de construction et experts immobiliers.
-
+            <p className="text-[#1A3A52]/80 mb-8">
+              {get('ecosysteme_cta_description', "La foncière développe ses projets avec des partenaires : investisseurs privés, architectes, entreprises de construction et experts immobiliers.")}
             </p>
             <Link to={createPageUrl("Contact")}>
               <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
