@@ -83,6 +83,9 @@ export default function Durabilite() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Après Hero */}
+      <DynamicSections page="durabilite" minOrdre={10} maxOrdre={100} />
+
       {/* Vision */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -174,6 +177,9 @@ export default function Durabilite() {
           </div>
         </div>
       </section>
+
+      {/* Sections dynamiques — Après Engagements */}
+      <DynamicSections page="durabilite" minOrdre={100} maxOrdre={300} />
 
       {/* Piliers ESG */}
       <section className="py-24">
@@ -332,8 +338,8 @@ export default function Durabilite() {
         </div>
       </section>
 
-      {/* Sections personnalisées */}
-      <DynamicSections page="durabilite" />
+      {/* Sections dynamiques — Après CTA */}
+      <DynamicSections page="durabilite" minOrdre={500} maxOrdre={Infinity} />
     </div>);
 
 }

@@ -182,6 +182,9 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* Sections dynamiques — Après Hero */}
+      <DynamicSections page="accueil" minOrdre={10} maxOrdre={100} />
+
       {/* Qui sommes-nous */}
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -242,6 +245,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Après Qui sommes-nous */}
+      <DynamicSections page="accueil" minOrdre={100} maxOrdre={200} />
+
       {/* Durabilité */}
       <section className="bg-slate-50 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -300,6 +306,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Sections dynamiques — Après Durabilité */}
+      <DynamicSections page="accueil" minOrdre={200} maxOrdre={350} />
 
       {/* Atouts & Valeur Ajoutée */}
       <section className="bg-gradient-to-br py-20 from-slate-50 via-white to-slate-50">
@@ -366,6 +375,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Après Atouts */}
+      <DynamicSections page="accueil" minOrdre={350} maxOrdre={500} />
+
       {/* Nos Services */}
       <section className="bg-white py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -411,6 +423,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Sections dynamiques — Après Nos Services */}
+      <DynamicSections page="accueil" minOrdre={500} maxOrdre={600} />
 
       {/* Équipe */}
       <section className="py-24 bg-slate-50">
@@ -475,6 +490,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Sections dynamiques — Après Équipe */}
+      <DynamicSections page="accueil" minOrdre={600} maxOrdre={700} />
 
       {/* Nos Réalisations */}
       <section className="py-24 bg-white">
@@ -615,6 +633,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Après Réalisations */}
+      <DynamicSections page="accueil" minOrdre={700} maxOrdre={800} />
+
       {/* Zones avec carte */}
       <section className="py-24 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -656,8 +677,8 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Sections personnalisées back-office */}
-      <DynamicSections page="accueil" />
+      {/* Sections dynamiques — Après Zones / avant CTA */}
+      <DynamicSections page="accueil" minOrdre={800} maxOrdre={Infinity} />
 
       {/* CTA */}
       <section className="bg-[#C9A961] px-3 py-12">

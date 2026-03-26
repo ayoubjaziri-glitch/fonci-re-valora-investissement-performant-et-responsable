@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
 import { X, Sparkles, Save, RefreshCw, MapPin, Edit3, ChevronRight, Check, Wand2, Star } from 'lucide-react';
 import SectionPreview from './SectionPreview';
+import PositionPicker from './PositionPicker';
 
 const PAGE_STRUCTURES = {
   accueil: ['Hero principal', 'Qui sommes-nous', 'Durabilité ESG', 'Atouts & Valeur ajoutée', 'Nos Missions', 'Équipe fondatrice', 'Chiffres clés', 'Nos Réalisations', 'Levée en cours', 'Témoignages', "Zones d'intervention", 'CTA final'],
@@ -349,19 +350,19 @@ Retourne exactement ce JSON :
                           </label>
                           <Textarea rows={6} value={editedVariant.contenu || ''} onChange={e => setEditedVariant({ ...editedVariant, contenu: e.target.value })} />
                         </div>
-                        <div className="grid grid-cols-2 gap-3">
-                          <div>
-                            <label className="text-xs text-slate-500 mb-1 block">Type</label>
-                            <select value={editedVariant.type_section} onChange={e => setEditedVariant({ ...editedVariant, type_section: e.target.value })}
-                              className="w-full px-3 py-2 border border-input rounded-md text-sm bg-white">
-                              {['texte', 'texte_image', 'chiffres', 'cta', 'temoignage', 'liste'].map(t => <option key={t} value={t}>{t}</option>)}
-                            </select>
-                          </div>
-                          <div>
-                            <label className="text-xs text-slate-500 mb-1 block">Ordre d'affichage</label>
-                            <Input type="number" value={editedVariant.ordre} onChange={e => setEditedVariant({ ...editedVariant, ordre: parseInt(e.target.value) || 0 })} />
-                          </div>
-                        </div>
+                        <div>
+                           <label className="text-xs text-slate-500 mb-1 block">Type</label>
+                           <select value={editedVariant.type_section} onChange={e => setEditedVariant({ ...editedVariant, type_section: e.target.value })}
+                             className="w-full px-3 py-2 border border-input rounded-md text-sm bg-white">
+                             {['texte', 'texte_image', 'chiffres', 'cta', 'temoignage', 'liste'].map(t => <option key={t} value={t}>{t}</option>)}
+                           </select>
+                         </div>
+                         <PositionPicker
+                           page={page}
+                           value={editedVariant.ordre}
+                           onChange={val => setEditedVariant({ ...editedVariant, ordre: val })}
+                           existingSections={existingSections}
+                         />
                       </div>
                     )}
                   </div>

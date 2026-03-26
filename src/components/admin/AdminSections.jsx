@@ -11,6 +11,7 @@ import {
 import SectionChoiceModal from './SectionChoiceModal';
 import AISectionModal from './AISectionModal';
 import ManualSectionModal from './ManualSectionModal';
+import PositionPicker from './PositionPicker';
 
 const PAGES = [
   { id: 'accueil',     label: 'Accueil',         icon: Home },
@@ -62,25 +63,12 @@ function EditSectionForm({ form, setForm, onSave, onCancel, isLoading }) {
             <Input value={form.image_url || ''} onChange={e => setForm({ ...form, image_url: e.target.value })} placeholder="https://..." />
             {form.image_url && <img src={form.image_url} alt="" className="mt-2 h-24 w-full object-cover rounded-lg" onError={e => e.target.style.display='none'} />}
           </div>
-          <div>
-            <label className="text-sm font-medium text-slate-700 block mb-1">Position dans la page (ordre)</label>
-            <div className="flex items-center gap-3">
-              <Input type="number" value={form.ordre || 0} onChange={e => setForm({ ...form, ordre: parseInt(e.target.value) || 0 })} className="w-28" />
-              <div className="text-xs text-slate-400 leading-relaxed">
-                <span className="font-medium text-slate-600">10–50</span> = haut de page<br />
-                <span className="font-medium text-slate-600">100–500</span> = milieu<br />
-                <span className="font-medium text-slate-600">900+</span> = bas de page
-              </div>
-            </div>
-            <div className="mt-2 flex gap-2 flex-wrap">
-              {[{label:'Début de page', val: 10}, {label:'Après hero', val: 50}, {label:'Milieu', val: 200}, {label:'Avant CTA', val: 800}, {label:'Fin de page', val: 950}].map(p => (
-                <button key={p.val} type="button" onClick={() => setForm({...form, ordre: p.val})}
-                  className={`text-xs px-2 py-1 rounded-lg border transition-colors ${form.ordre === p.val ? 'border-[#C9A961] bg-[#C9A961]/10 text-[#1A3A52] font-medium' : 'border-slate-200 text-slate-500 hover:border-slate-300'}`}>
-                  {p.label}
-                </button>
-              ))}
-            </div>
-          </div>
+          <PositionPicker
+            page={editingSection?.page || 'accueil'}
+            value={form.ordre || 0}
+            onChange={val => setForm({ ...form, ordre: val })}
+            existingSections={pageSections.filter(s => s.id !== editingSection?.id)}
+          />
           <div className="flex items-center gap-2">
             <input type="checkbox" id="actif-edit" checked={form.actif} onChange={e => setForm({ ...form, actif: e.target.checked })} />
             <label htmlFor="actif-edit" className="text-sm text-slate-700">Visible sur le site</label>
@@ -170,8 +158,8 @@ export default function AdminSections() {
 
         {/* Info synchronisation */}
         <div className="mb-4 bg-blue-50 border border-blue-200 rounded-xl px-4 py-3 text-xs text-blue-700 flex items-start gap-2">
-          <div className="mt-0.5 w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
-          <span>Les sections s'affichent sur la page <strong>{currentPageInfo?.label}</strong> dans l'ordre défini par le numéro <strong>#ordre</strong>. Un ordre <strong>faible (ex: 10)</strong> = début de page, <strong>élevé (ex: 900)</strong> = fin de page. Réorganisez-les en modifiant le numéro d'ordre.</span>
+          <div className="w-1.5 h-1.5 rounded-full bg-blue-400 flex-shrink-0 mt-1.5" />
+          <span>Les sections s'affichent à l'emplacement exact que vous choisissez lors de la création. Pour changer la position, cliquez sur ✏️ et sélectionnez un nouvel emplacement.</span>
         </div>
 
         {pageSections.length === 0 ? (

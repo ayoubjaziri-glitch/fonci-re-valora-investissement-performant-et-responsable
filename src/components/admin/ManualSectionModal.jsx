@@ -5,6 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { X, Save, Eye } from 'lucide-react';
 import SectionStylePicker from './SectionStylePicker';
 import SectionPreview from './SectionPreview';
+import PositionPicker from './PositionPicker';
 
 const UNSPLASH_SUGGESTIONS = {
   accueil: ['https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80', 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80', 'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&q=80'],
@@ -119,13 +120,13 @@ export default function ManualSectionModal({ page, existingSections, onSave, onC
                 </div>
               )}
 
-              {/* Ordre */}
-              <div>
-                <label className="text-sm font-medium text-slate-700 block mb-1">Ordre d'affichage</label>
-                <Input type="number" value={form.ordre} onChange={e => update('ordre', parseInt(e.target.value) || 0)}
-                  className="w-24" />
-                <p className="text-xs text-slate-400 mt-1">Les sections existantes sont à {existingSections.map(s => s.ordre).join(', ') || '—'}</p>
-              </div>
+              {/* Position */}
+              <PositionPicker
+                page={page}
+                value={form.ordre}
+                onChange={val => update('ordre', val)}
+                existingSections={existingSections}
+              />
 
               {/* Visibilité */}
               <div className="flex items-center gap-2">

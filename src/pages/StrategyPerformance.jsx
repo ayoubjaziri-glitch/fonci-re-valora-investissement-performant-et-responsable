@@ -126,6 +126,9 @@ export default function StrategyPerformance() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Après Hero */}
+      <DynamicSections page="strategie" minOrdre={10} maxOrdre={100} />
+
       {/* Context / Solution */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -300,6 +303,9 @@ export default function StrategyPerformance() {
           </div>
         </div>
       </section>
+
+      {/* Sections dynamiques — Après Piliers */}
+      <DynamicSections page="strategie" minOrdre={100} maxOrdre={300} />
 
       {/* Alignment - MOVED UP */}
       <section className="py-16 bg-slate-50">
@@ -502,6 +508,9 @@ export default function StrategyPerformance() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Après Comparatif */}
+      <DynamicSections page="strategie" minOrdre={300} maxOrdre={500} />
+
       {/* Fiscal PEA-PME */}
       <section className="bg-gray-900 py-16">
         <div className="bg-[#0f172a] mx-auto px-6 max-w-7xl lg:px-8">
@@ -561,8 +570,8 @@ Flat Tax (PFU)</p>
 
 
 
-      {/* Sections personnalisées */}
-      <DynamicSections page="strategie" />
+      {/* Sections dynamiques — Avant CTA */}
+      <DynamicSections page="strategie" minOrdre={500} maxOrdre={Infinity} />
 
       {/* CTA */}
       <section className="bg-[#C9A961] py-16">

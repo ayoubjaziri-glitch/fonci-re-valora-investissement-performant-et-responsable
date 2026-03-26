@@ -8,11 +8,11 @@ import { CheckCircle2, Quote, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 /**
- * Composant qui lit les SiteSection en DB pour une page donnée
- * et les affiche en respectant la charte graphique Valora.
- * À insérer dans chaque page du site.
+ * Affiche les sections dynamiques pour une page et une plage d'ordre donnée.
+ * minOrdre (inclus) et maxOrdre (exclus) permettent d'insérer les sections
+ * au bon endroit dans la page selon leur numéro d'ordre.
  */
-export default function DynamicSections({ page }) {
+export default function DynamicSections({ page, minOrdre = 0, maxOrdre = Infinity }) {
   const { data: allSections = [] } = useQuery({
     queryKey: ['site-sections'],
     queryFn: () => base44.entities.SiteSection.list('ordre', 200),
@@ -20,7 +20,7 @@ export default function DynamicSections({ page }) {
   });
 
   const sections = allSections
-    .filter(s => s.page === page && s.actif !== false)
+    .filter(s => s.page === page && s.actif !== false && s.ordre >= minOrdre && s.ordre < maxOrdre)
     .sort((a, b) => a.ordre - b.ordre);
 
   if (sections.length === 0) return null;
