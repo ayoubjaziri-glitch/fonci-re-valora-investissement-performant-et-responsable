@@ -34,45 +34,51 @@ export default function Partenaires() {
   const ecosysteme = [
   {
     icon: Building2,
-    category: "Architectes",
-    title: "Vision architecturale & valorisation",
-    description: "Les architectes partenaires interviennent sur la conception des projets de réhabilitation, apportant une signature architecturale respectueuse du patrimoine bâti tout en intégrant les exigences de performance énergétique.",
-    values: ["Rôle clé dans la valorisation des actifs", "Vision patrimoniale de long terme", "Signature architecturale soignée"]
+    key: 'architectes',
+    category: get('ecosysteme_architectes_categorie', 'Architectes'),
+    title: get('ecosysteme_architectes_titre', 'Vision architecturale & valorisation'),
+    description: get('ecosysteme_architectes_description', "Les architectes partenaires interviennent sur la conception des projets de réhabilitation, apportant une signature architecturale respectueuse du patrimoine bâti tout en intégrant les exigences de performance énergétique."),
+    values: get('ecosysteme_architectes_valeurs', "Rôle clé dans la valorisation des actifs\nVision patrimoniale de long terme\nSignature architecturale soignée").split('\n').filter(v => v.trim())
   },
   {
     icon: Users,
-    category: "Entreprises BTP",
-    title: "Excellence opérationnelle",
-    description: "Les entreprises du bâtiment avec lesquelles nous collaborons sont sélectionnées pour leur savoir-faire technique, leur engagement dans la transition énergétique et leur capacité à respecter les standards de performance énergétique.",
-    values: ["Qualité d'exécution garantie", "Engagement dans la transition énergétique", "Partenaires techniques de confiance"]
+    key: 'btp',
+    category: get('ecosysteme_btp_categorie', 'Entreprises BTP'),
+    title: get('ecosysteme_btp_titre', 'Excellence opérationnelle'),
+    description: get('ecosysteme_btp_description', "Les entreprises du bâtiment avec lesquelles nous collaborons sont sélectionnées pour leur savoir-faire technique, leur engagement dans la transition énergétique et leur capacité à respecter les standards de performance énergétique."),
+    values: get('ecosysteme_btp_valeurs', "Qualité d'exécution garantie\nEngagement dans la transition énergétique\nPartenaires techniques de confiance").split('\n').filter(v => v.trim())
   },
   {
     icon: Shield,
-    category: "Notaires & Avocats",
-    title: "Sécurisation juridique",
-    description: "Accompagnement par des notaires et cabinets d'avocats spécialisés en droit immobilier, en structuration de sociétés et en gouvernance patrimoniale.",
-    values: ["Sécurisation des opérations", "Structuration juridique adaptée", "Conformité réglementaire"]
+    key: 'notaires',
+    category: get('ecosysteme_notaires_categorie', 'Notaires & Avocats'),
+    title: get('ecosysteme_notaires_titre', 'Sécurisation juridique'),
+    description: get('ecosysteme_notaires_description', "Accompagnement par des notaires et cabinets d'avocats spécialisés en droit immobilier, en structuration de sociétés et en gouvernance patrimoniale."),
+    values: get('ecosysteme_notaires_valeurs', "Sécurisation des opérations\nStructuration juridique adaptée\nConformité réglementaire").split('\n').filter(v => v.trim())
   },
   {
     icon: TrendingUp,
-    category: "Agents immobiliers",
-    title: "Sourcing & commercialisation",
-    description: "Réseau d'agents immobiliers pour l'accès à des opportunités off-market et la commercialisation locative des actifs réhabilités.",
-    values: ["Accès privilégié au marché", "Connaissance locale approfondie", "Réactivité commerciale"]
+    key: 'agents',
+    category: get('ecosysteme_agents_categorie', 'Agents immobiliers'),
+    title: get('ecosysteme_agents_titre', 'Sourcing & commercialisation'),
+    description: get('ecosysteme_agents_description', "Réseau d'agents immobiliers pour l'accès à des opportunités off-market et la commercialisation locative des actifs réhabilités."),
+    values: get('ecosysteme_agents_valeurs', "Accès privilégié au marché\nConnaissance locale approfondie\nRéactivité commerciale").split('\n').filter(v => v.trim())
   },
   {
     icon: Award,
-    category: "Établissements bancaires",
-    title: "Financement structuré",
-    description: "Partenariats avec des établissements de crédit pour structurer des financements adaptés aux opérations d'acquisition et de rénovation.",
-    values: ["Conditions négociées", "Relations de long terme", "Expertise financement immobilier"]
+    key: 'banques',
+    category: get('ecosysteme_banques_categorie', 'Établissements bancaires'),
+    title: get('ecosysteme_banques_titre', 'Financement structuré'),
+    description: get('ecosysteme_banques_description', "Partenariats avec des établissements de crédit pour structurer des financements adaptés aux opérations d'acquisition et de rénovation."),
+    values: get('ecosysteme_banques_valeurs', "Conditions négociées\nRelations de long terme\nExpertise financement immobilier").split('\n').filter(v => v.trim())
   },
   {
     icon: Handshake,
-    category: "Partenaires patrimoniaux",
-    title: "Accompagnement durable",
-    description: "Des acteurs engagés dans la durée qui accompagnent les projets immobiliers par leur expertise, leur réseau et leur vision stratégique, contribuant à la pérennité du développement de la foncière.",
-    values: ["Acteurs engagés dans la durée", "Accompagnement structuré des projets", "Alignement sur une vision patrimoniale"]
+    key: 'patrimoniaux',
+    category: get('ecosysteme_patrimoniaux_categorie', 'Partenaires patrimoniaux'),
+    title: get('ecosysteme_patrimoniaux_titre', 'Accompagnement durable'),
+    description: get('ecosysteme_patrimoniaux_description', "Des acteurs engagés dans la durée qui accompagnent les projets immobiliers par leur expertise, leur réseau et leur vision stratégique, contribuant à la pérennité du développement de la foncière."),
+    values: get('ecosysteme_patrimoniaux_valeurs', "Acteurs engagés dans la durée\nAccompagnement structuré des projets\nAlignement sur une vision patrimoniale").split('\n').filter(v => v.trim())
   }];
 
 
