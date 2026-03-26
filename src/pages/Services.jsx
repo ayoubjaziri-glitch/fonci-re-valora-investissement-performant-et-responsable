@@ -16,8 +16,10 @@ import {
 'lucide-react';
 import { Button } from "@/components/ui/button";
 import DynamicSections from '../components/DynamicSections';
+import { useSiteContent } from '../hooks/useSiteContent';
 
 export default function Services() {
+  const { get } = useSiteContent();
   const services = [
   {
     icon: TrendingUp,
@@ -86,11 +88,10 @@ export default function Services() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Nos missions
+              {get('missions_hero_titre', 'Nos missions')}
             </h1>
             <p className="text-xl text-white/70">
-              Une gestion institutionnelle de l'acquisition à l'arbitrage, pilotée par une équipe 
-              d'experts dédiée à la création de valeur patrimoniale durable.
+              {get('missions_hero_description', "Une gestion institutionnelle de l'acquisition à l'arbitrage, pilotée par une équipe d'experts dédiée à la création de valeur patrimoniale durable.")}
             </p>
           </motion.div>
         </div>
@@ -105,7 +106,7 @@ export default function Services() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Processus d'investissement structuré
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('missions_process_titre', "Processus d'investissement structuré")}
 
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
@@ -152,7 +153,7 @@ export default function Services() {
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Nos domaines d'expertise
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('missions_expertise_titre', "Nos domaines d'expertise")}
 
             </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
@@ -199,7 +200,7 @@ export default function Services() {
             className="text-center mb-16">
 
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              Pourquoi choisir notre gestion ?
+            {get('missions_pourquoi_titre', 'Pourquoi choisir notre gestion ?')}
             </h2>
           </motion.div>
 

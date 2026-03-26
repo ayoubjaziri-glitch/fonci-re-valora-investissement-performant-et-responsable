@@ -29,8 +29,11 @@ import InterventionMap from "../components/InterventionMap";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from '@/api/base44Client';
 import DynamicSections from '../components/DynamicSections';
+import { useSiteContent } from '../hooks/useSiteContent';
 
 export default function Home() {
+  const { get, getList } = useSiteContent();
+
   const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
     queryFn: () => base44.entities.SiteImage.list(),
@@ -96,21 +99,20 @@ export default function Home() {
   }];
 
 
-  const atouts = [
+  const atouts = getList('home_atouts_liste', [
   "Mutualisation du risque locatif au sein d'un portefeuille diversifié",
   "Allocation équilibrée entre revenus courants et création de valeur à long terme",
   "Gestion opérationnelle des actifs intégralement déléguée",
   "Véhicule d'investissement structuré, doté d'une gouvernance lisible",
   "Accès sélectif : Identification anticipée d'actifs et déploiement opérationnel maîtrisé dans des zones à dynamique soutenue.",
-  "Diversification géographique visant à atténuer l'exposition aux cycles locaux"];
+  "Diversification géographique visant à atténuer l'exposition aux cycles locaux"]);
 
-
-  const valeurAjoutee = [
+  const valeurAjoutee = getList('home_valeur_liste', [
   "Objectif de TRI supérieur aux véhicules d'investissement collectifs traditionnels et à l'immobilier en direct",
   "Chaîne de valeur intégrée : Du sourcing à l'acquisition, du financement à la réalisation des travaux (notamment BBC), puis à la mise en location et à l'arbitrage des actifs.",
   "Effet de levier bancaire optimisé (LTV 80%) démultipliant la performance",
   "Reporting régulier et transparence sur la valorisation des actifs",
-  "Création de valeur via la rénovation énergétique et l'amélioration du DPE"];
+  "Création de valeur via la rénovation énergétique et l'amélioration du DPE"]);
 
 
   const testimonials = [
@@ -156,7 +158,7 @@ export default function Home() {
             <div className="flex items-center gap-4 mb-8">
               <div className="w-16 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-widest uppercase text-sm">
-                Foncière Résidentielle
+                {get('home_hero_accroche', 'Foncière Résidentielle')}
               </span>
             </div>
 
@@ -221,10 +223,10 @@ export default function Home() {
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-12 h-1 bg-[#C9A961]" />
                 <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                  Qui sommes-nous
+                  {get('home_quisommes_accroche', 'Qui sommes-nous')}
                 </span>
               </div>
-              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Une foncière indépendante au service d'une vision patrimoniale exigeante
+              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">{get('home_quisommes_titre', "Une foncière indépendante au service d'une vision patrimoniale exigeante")}
 
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">La Foncière Valora développe et valorise des actifs résidentiels durables à travers une stratégie d'acquisition sélective, de réhabilitation énergétique BBC et de gestion active.
@@ -302,7 +304,7 @@ export default function Home() {
                   Durabilité
                 </span>
               </div>
-              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">La Foncière Responsable
+              <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">{get('home_durabilite_titre', 'La Foncière Responsable')}
 
               </h2>
               <p className="text-slate-600 leading-relaxed mb-6">
@@ -374,11 +376,11 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-16 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-bold tracking-wider uppercase">
-                Pourquoi investir avec nous
+                {get('home_atouts_accroche', 'Pourquoi investir avec nous')}
               </span>
               <div className="w-16 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-slate-900 mb-6 text-4xl font-serif md:text-5xl">Les atouts d'une foncière structurée
+            <h2 className="text-slate-900 mb-6 text-4xl font-serif md:text-5xl">{get('home_atouts_titre', "Les atouts d'une foncière structurée")}
 
             </h2>
             <p className="text-xl text-slate-600 max-w-3xl mx-auto leading-relaxed">
@@ -480,11 +482,11 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Nos Missions
+                {get('home_missions_accroche', 'Nos Missions')}
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">Solution intégrée de bout en bout
+            <h2 className="text-slate-900 mb-6 text-3xl font-serif md:text-4xl">{get('home_missions_titre', 'Solution intégrée de bout en bout')}
 
             </h2>
             <p className="text-slate-600 max-w-3xl mx-auto text-lg leading-relaxed">
@@ -543,11 +545,11 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Équipe fondatrice
+                {get('home_equipe_accroche', 'Équipe fondatrice')}
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Associés opérationnels & Gouvernance
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('home_equipe_titre', 'Associés opérationnels & Gouvernance')}
 
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
@@ -660,11 +662,11 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Portefeuille d'actifs
+                {get('home_realisations_accroche', "Portefeuille d'actifs")}
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Nos opérations de valorisation
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('home_realisations_titre', 'Nos opérations de valorisation')}
 
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
@@ -840,11 +842,11 @@ export default function Home() {
             <div className="flex items-center justify-center gap-3 mb-6">
               <div className="w-12 h-1 bg-[#C9A961]" />
               <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">
-                Zones d'intervention
+                {get('home_zones_accroche', "Zones d'intervention")}
               </span>
               <div className="w-12 h-1 bg-[#C9A961]" />
             </div>
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Des marchés à fort potentiel
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('home_zones_titre', 'Des marchés à fort potentiel')}
 
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
@@ -900,7 +902,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
             <div className="w-16 h-1 bg-[#C9A961] mx-auto mb-8" />
-            <h2 className="text-slate-900 mb-2 px-1 text-2xl font-serif md:text-3xl">Une plateforme immobilière ouverte aux partenaires
+            <h2 className="text-slate-900 mb-2 px-1 text-2xl font-serif md:text-3xl">{get('home_cta_titre', 'Une plateforme immobilière ouverte aux partenaires')}
             </h2>
             <p className="text-[#1A3A52] mb-8 text-base leading-relaxed">Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.
 

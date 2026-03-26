@@ -14,8 +14,10 @@ import {
 'lucide-react';
 import { Button } from "@/components/ui/button";
 import DynamicSections from '../components/DynamicSections';
+import { useSiteContent } from '../hooks/useSiteContent';
 
 export default function Partenaires() {
+  const { get } = useSiteContent();
   const [formData, setFormData] = React.useState({
     nom: '',
     fonction: '',
@@ -112,7 +114,7 @@ export default function Partenaires() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Écosystème de partenaires
+              {get('ecosysteme_hero_titre', 'Écosystème de partenaires')}
             </h1>
             <p className="text-xl text-white/70">Plus qu’une équipe, un modèle d’engagement : nous intégrons nos partenaires techniques et patrimoniaux au cœur de notre structure capitalistique. En alliant leurs expertises à nos objectifs de croissance, nous assurons une réexécution fluide et une création de valeur optimisée à chaque cycle d'investissement
 
@@ -147,7 +149,7 @@ export default function Partenaires() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Nos partenaires
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('ecosysteme_partenaires_titre', 'Nos partenaires')}
 
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
@@ -202,7 +204,7 @@ export default function Partenaires() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Partenaires et opérateurs
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('ecosysteme_cta_titre', 'Partenaires et opérateurs')}
 
             </h2>
             <p className="text-[#1A3A52]/80 mb-8">La foncière développe ses projets avec des partenaires : investisseurs privés, architectes, entreprises de construction et experts immobiliers.

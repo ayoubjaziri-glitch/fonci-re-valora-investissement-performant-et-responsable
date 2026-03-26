@@ -22,6 +22,7 @@ import AdminRealisationsPlus from '../components/admin/AdminRealisationsPlus';
 import AdminAcces from '../components/admin/AdminAcces';
 import GestionPhotos from './GestionPhotos';
 import AdminSections from '../components/admin/AdminSections';
+import AdminContenu from '../components/admin/AdminContenu';
 
 // ─── Login ───────────────────────────────────────────────────────────────────
 function AdminLogin({ onLogin }) {
@@ -270,7 +271,8 @@ const navGroups = [
     label: 'Contenu du Site',
     items: [
       { id: 'photos', label: 'Photos & Média', icon: Image },
-      { id: 'sections', label: 'Sections des pages', icon: LayoutDashboard },
+      { id: 'contenu', label: 'Textes & Contenu', icon: FileText },
+      { id: 'sections', label: 'Sections dynamiques', icon: LayoutDashboard },
       { id: 'equipe', label: 'Équipe', icon: Users },
       { id: 'realisations', label: 'Nos Biens', icon: Building2 },
       { id: 'blog', label: 'Blog & Articles', icon: Newspaper },
@@ -315,7 +317,8 @@ export default function AdminBackOffice() {
     dashboard: 'Dashboard',
     contacts: 'Demandes de Contact',
     photos: 'Photos & Média',
-    sections: 'Sections des pages',
+    contenu: 'Textes & Contenu du site',
+    sections: 'Sections dynamiques',
     equipe: 'Équipe',
     blog: 'Blog & Articles',
     levees: 'Levées de Fonds',
@@ -395,6 +398,7 @@ export default function AdminBackOffice() {
           {activeTab === 'dashboard' && <DashboardSection />}
           {activeTab === 'contacts' && <DemandesContactSection />}
           {activeTab === 'photos' && <GestionPhotos embedded />}
+          {activeTab === 'contenu' && <AdminContenu />}
           {activeTab === 'sections' && <AdminSections />}
           {activeTab === 'equipe' && <AdminEquipe />}
           {activeTab === 'blog' && <AdminBlog />}

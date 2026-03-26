@@ -10,8 +10,10 @@ import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { base44 } from '@/api/base44Client';
 import DynamicSections from '../components/DynamicSections';
+import { useSiteContent } from '../hooks/useSiteContent';
 
 export default function Equipe() {
+  const { get } = useSiteContent();
   const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
     queryFn: () => base44.entities.SiteImage.list(),
@@ -121,11 +123,10 @@ export default function Equipe() {
               </span>
             </div>
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
-              Notre histoire
+              {get('equipe_hero_titre', 'Notre histoire')}
             </h1>
             <p className="text-xl text-white/70">
-              Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur, 
-              uni par une vision patrimoniale de long terme et un alignement durable des intérêts.
+              {get('equipe_hero_description', "Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur, uni par une vision patrimoniale de long terme.")}
             </p>
           </motion.div>
         </div>
@@ -141,7 +142,7 @@ export default function Equipe() {
             className="text-center mb-16">
 
             <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Associés opérationnels & Gouvernance
+              {get('equipe_fondateurs_titre', 'Associés opérationnels & Gouvernance')}
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               Un collectif d'associés opérationnels intervenant à tous les niveaux de la chaîne de valeur
@@ -224,7 +225,7 @@ export default function Equipe() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Forces clés de l'équipe
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('equipe_forces_titre', "Forces clés de l'équipe")}
 
             </h2>
           </motion.div>
@@ -263,7 +264,7 @@ export default function Equipe() {
               Depuis 2008
             </div>
             <h2 className="text-3xl md:text-4xl font-serif text-white mb-4">
-              Structure du groupe
+              {get('equipe_groupe_titre', 'Structure du groupe')}
             </h2>
             <p className="text-white/70 max-w-2xl mx-auto">
               Un groupe établi et éprouvé avec 18 ans d'expertise en immobilier patrimonial
@@ -364,7 +365,7 @@ export default function Equipe() {
             viewport={{ once: true }}
             className="text-center mb-16">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Trajectoire de développement
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('equipe_trajectoire_titre', 'Trajectoire de développement')}
 
             </h2>
             <p className="text-slate-600">La Foncière Valora — 5 ans de croissance</p>
@@ -428,7 +429,7 @@ export default function Equipe() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
 
-            <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">Rejoignez une équipe d'experts
+            <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">{get('equipe_cta_titre', "Rejoignez une équipe d'experts")}
 
             </h2>
             <p className="text-[#1A3A52]/80 mb-8">
