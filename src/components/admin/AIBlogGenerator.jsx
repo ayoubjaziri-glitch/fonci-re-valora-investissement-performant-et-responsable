@@ -29,7 +29,7 @@ export default function AIBlogGenerator({ onClose, onSuccess }) {
 
     const prompt = `Tu es un expert en immobilier d'investissement, fiscalité et rénovation énergétique en France. Tu rédiges pour le blog de "La Foncière Valora", une foncière résidentielle premium basée à Vichy, dédiée à l'acquisition, réhabilitation et valorisation d'immeubles avec fort potentiel de création de valeur.
 
-MISSION : Rédige un article de blog ULTRA-COMPLET, très long (MINIMUM 7500 MOTS de contenu, tu dois absolument dépasser ce seuil), optimisé SEO, en français, sur le sujet suivant :
+MISSION : Rédige un article de blog complet et long (3000-5000 MOTS), optimisé SEO, en français, sur le sujet suivant :
 
 Sujet : "${sujet}"
 Catégorie : "${categorie}"
@@ -37,15 +37,12 @@ Mots-clés SEO à intégrer naturellement : "${motsCles || 'investissement immob
 Angle éditorial / ton souhaité : "${angle || 'Expert et pédagogique, rassurant pour des investisseurs patrimoniaux'}"
 
 RÈGLES STRICTES :
-- Le contenu doit être en Markdown avec des titres H2 (##), H3 (###), des listes à puces, des tableaux si pertinent, des encadrés <blockquote> pour des citations ou chiffres clés
-- MINIMUM 15 sections thématiques distinctes et très développées (chaque section doit faire au moins 400-500 mots)
-- Ajouter des sous-sections H3 et H4 dans chaque section principale
-- Inclure des exemples concrets, études de cas, simulations chiffrées, conseils pratiques détaillés
-- Ajouter une FAQ complète d'au moins 10 questions/réponses développées en fin d'article
-- Intégrer des données chiffrées réelles (lois, dispositifs fiscaux, statistiques de marché, etc.)
-- Mentionner la Foncière Valora et ses expertises de façon naturelle 2-3 fois
+- Le contenu doit être en Markdown avec des titres H2 (##), H3 (###), des listes à puces, des tableaux si pertinent
+- 8-12 sections thématiques bien développées
+- Inclure des exemples concrets, données chiffrées, conseils pratiques
+- Mentionner la Foncière Valora naturellement 2-3 fois
 - L'extrait (résumé) doit faire 2-3 phrases accrocheuses pour le SEO
-- Calculer le temps de lecture approximatif (1 mot = 0.006 min, arrondi)
+- Calculer le temps de lecture approximatif (environ 1 mot = 0.006 min)
 - Choisir une URL Unsplash en rapport avec l'immobilier ou la rénovation
 
 Réponds UNIQUEMENT avec un JSON valide :
@@ -53,7 +50,7 @@ Réponds UNIQUEMENT avec un JSON valide :
   "titre": "...",
   "slug": "...",
   "extrait": "...",
-  "contenu": "...(Markdown complet, très long)...",
+  "contenu": "...(Markdown, 3000-5000 mots)...",
   "categorie": "${categorie}",
   "auteur": "La Foncière Valora",
   "image_url": "https://images.unsplash.com/photo-...",
@@ -106,11 +103,11 @@ Réponds UNIQUEMENT avec un JSON valide :
           </div>
           <h3 className="text-xl font-serif text-[#1A3A52] mb-3">L'IA rédige votre article…</h3>
           <p className="text-slate-500 text-sm leading-relaxed">
-          Génération d'un contenu ultra-complet et optimisé SEO avec <strong>Claude Sonnet</strong>.<br />
-          Cela peut prendre 60 à 90 secondes pour 7500+ mots.
+          Génération d'un contenu complet et optimisé SEO avec <strong>Claude Sonnet</strong>.<br />
+          Cela peut prendre 30 à 60 secondes pour 3000-5000 mots.
           </p>
           <div className="mt-6 flex flex-col gap-2 text-xs text-slate-400">
-          <span>✦ Rédaction de 7500+ mots</span>
+          <span>✦ Rédaction de 3000-5000 mots</span>
             <span>✦ Structure SEO optimisée</span>
             <span>✦ Publication automatique</span>
           </div>
@@ -197,7 +194,7 @@ Réponds UNIQUEMENT avec un JSON valide :
           {error && <p className="text-red-500 text-sm">{error}</p>}
 
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
-            <strong>✦ IA Ultra-puissante :</strong> L'article sera rédigé par Claude Sonnet avec 7500+ mots, 15+ sections, FAQ complète, données chiffrées, optimisation SEO maximale et publié automatiquement.
+            <strong>✦ IA Ultra-puissante :</strong> L'article sera rédigé par Claude Sonnet avec 3000-5000 mots, optimisation SEO maximale et publié automatiquement.
           </div>
 
           <Button
