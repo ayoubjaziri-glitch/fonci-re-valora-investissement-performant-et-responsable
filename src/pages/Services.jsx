@@ -68,6 +68,9 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Après Hero */}
+      <DynamicSections page="missions" minOrdre={10} maxOrdre={100} />
+
       {/* Process Timeline */}
       <section className="py-24 bg-[#F8F9FA]">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -161,6 +164,9 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Entre services et avantages */}
+      <DynamicSections page="missions" minOrdre={100} maxOrdre={300} />
+
       {/* Advantages */}
       <section className="bg-slate-900 py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -232,8 +238,8 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Sections personnalisées */}
-      <DynamicSections page="missions" />
+      {/* Sections dynamiques — Avant CTA */}
+      <DynamicSections page="missions" minOrdre={300} maxOrdre={Infinity} />
 
       {/* CTA */}
       <section className="py-16 bg-[#C9A961]">

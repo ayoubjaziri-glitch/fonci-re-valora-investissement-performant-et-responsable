@@ -69,10 +69,9 @@ export default function Realisations() {
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-slate-900 overflow-hidden">
-        {/* MODIFIEZ LA PHOTO DE FOND DU HERO CI-DESSOUS */}
         <div className="absolute inset-0 opacity-20">
           <img
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80"
+            src={get('realisations_hero_image', 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1920&q=80')}
             alt=""
             className="w-full h-full object-cover" />
 
@@ -98,6 +97,9 @@ export default function Realisations() {
           </motion.div>
         </div>
       </section>
+
+      {/* Sections dynamiques — Après Hero */}
+      <DynamicSections page="nos_biens" minOrdre={10} maxOrdre={100} />
 
       {/* Stats */}
       <section className="py-12 bg-slate-50 border-b border-slate-200">
@@ -211,6 +213,9 @@ export default function Realisations() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Entre galerie et carte */}
+      <DynamicSections page="nos_biens" minOrdre={100} maxOrdre={300} />
+
       {/* Map Section */}
       <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -231,8 +236,8 @@ export default function Realisations() {
         </div>
       </section>
 
-      {/* Sections personnalisées */}
-      <DynamicSections page="nos_biens" />
+      {/* Sections dynamiques — Avant CTA */}
+      <DynamicSections page="nos_biens" minOrdre={300} maxOrdre={Infinity} />
 
       {/* CTA */}
       <section className="bg-[#C9A961] py-12">

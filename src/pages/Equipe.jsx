@@ -132,6 +132,9 @@ export default function Equipe() {
         </div>
       </section>
 
+      {/* Sections dynamiques — Après Hero */}
+      <DynamicSections page="equipe" minOrdre={10} maxOrdre={100} />
+
       {/* Founders */}
       <section className="py-24">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -250,6 +253,9 @@ export default function Equipe() {
           </div>
         </div>
       </section>
+
+      {/* Sections dynamiques — Entre Forces et Structure */}
+      <DynamicSections page="equipe" minOrdre={100} maxOrdre={300} />
 
       {/* Group Structure */}
       <section className="bg-slate-900 py-24">
@@ -418,8 +424,8 @@ export default function Equipe() {
         </div>
       </section>
 
-      {/* Sections personnalisées */}
-      <DynamicSections page="equipe" />
+      {/* Sections dynamiques — Avant CTA */}
+      <DynamicSections page="equipe" minOrdre={300} maxOrdre={Infinity} />
 
       {/* CTA */}
       <section className="py-16 bg-[#C9A961]">

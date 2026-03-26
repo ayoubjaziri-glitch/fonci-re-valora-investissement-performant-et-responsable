@@ -10,26 +10,13 @@ import {
   Building2,
   TrendingUp,
   CheckCircle2,
-  ArrowRight } from
-'lucide-react';
+  ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import DynamicSections from '../components/DynamicSections';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 export default function Partenaires() {
   const { get } = useSiteContent();
-  const [formData, setFormData] = React.useState({
-    nom: '',
-    fonction: '',
-    profil: 'architecte',
-    message: ''
-  });
-  const [submitted, setSubmitted] = React.useState(false);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-  };
 
   const ecosysteme = [
   {
@@ -81,32 +68,11 @@ export default function Partenaires() {
     values: get('ecosysteme_patrimoniaux_valeurs', "Acteurs engagés dans la durée\nAccompagnement structuré des projets\nAlignement sur une vision patrimoniale").split('\n').filter(v => v.trim())
   }];
 
-
-  const principes = [
-  {
-    icon: Handshake,
-    title: "Relations de long terme",
-    description: "Nous privilégions des partenariats durables fondés sur la confiance mutuelle et l'alignement des intérêts."
-  },
-  {
-    icon: Shield,
-    title: "Sélection rigoureuse",
-    description: "Chaque partenaire est sélectionné selon des critères stricts de compétence, d'éthique et de fiabilité."
-  },
-  {
-    icon: Award,
-    title: "Excellence opérationnelle",
-    description: "Nous exigeons le plus haut niveau de professionnalisme dans chaque intervention."
-  }];
-
-
   return (
     <div className="min-h-screen bg-white">
       {/* Hero */}
       <section className="relative py-24 bg-[#1A3A52] overflow-hidden">
-        <div className="bg-slate-900 opacity-100 absolute inset-0">
-          
-        </div>
+        <div className="bg-slate-900 opacity-100 absolute inset-0" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -122,29 +88,15 @@ export default function Partenaires() {
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
               {get('ecosysteme_hero_titre', 'Écosystème de partenaires')}
             </h1>
-            <p className="text-xl text-white/70">Plus qu’une équipe, un modèle d’engagement : nous intégrons nos partenaires techniques et patrimoniaux au cœur de notre structure capitalistique. En alliant leurs expertises à nos objectifs de croissance, nous assurons une réexécution fluide et une création de valeur optimisée à chaque cycle d'investissement
-
-
+            <p className="text-xl text-white/70">
+              {get('ecosysteme_hero_description', "Plus qu'une équipe, un modèle d'engagement : nous intégrons nos partenaires techniques et patrimoniaux au cœur de notre structure capitalistique. En alliant leurs expertises à nos objectifs de croissance, nous assurons une réexécution fluide et une création de valeur optimisée à chaque cycle d'investissement.")}
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Introduction */}
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
+      {/* Sections dynamiques — Après Hero */}
+      <DynamicSections page="ecosysteme" minOrdre={10} maxOrdre={100} />
 
       {/* Écosystème Grid */}
       <section className="py-16 bg-slate-50">
@@ -155,11 +107,11 @@ export default function Partenaires() {
             viewport={{ once: true }}
             className="text-center mb-12">
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('ecosysteme_partenaires_titre', 'Nos partenaires')}
-
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
+              {get('ecosysteme_partenaires_titre', 'Nos partenaires')}
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
-              {get('ecosysteme_partenaires_description', 'Des acteurs qualifiés intervenant sur l\'ensemble du cycle de valorisation.')}
+              {get('ecosysteme_partenaires_description', "Des acteurs qualifiés intervenant sur l'ensemble du cycle de valorisation.")}
             </p>
           </motion.div>
 
@@ -199,8 +151,8 @@ export default function Partenaires() {
         </div>
       </section>
 
-      {/* Sections personnalisées */}
-      <DynamicSections page="ecosysteme" />
+      {/* Sections dynamiques — milieu */}
+      <DynamicSections page="ecosysteme" minOrdre={100} maxOrdre={Infinity} />
 
       {/* CTA Contact */}
       <section className="py-16 bg-[#C9A961]">
@@ -210,8 +162,8 @@ export default function Partenaires() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}>
 
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">{get('ecosysteme_cta_titre', 'Partenaires et opérateurs')}
-
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
+              {get('ecosysteme_cta_titre', 'Partenaires et opérateurs')}
             </h2>
             <p className="text-[#1A3A52]/80 mb-8">
               {get('ecosysteme_cta_description', "La foncière développe ses projets avec des partenaires : investisseurs privés, architectes, entreprises de construction et experts immobiliers.")}
@@ -225,122 +177,6 @@ export default function Partenaires() {
           </motion.div>
         </div>
       </section>
-
-      {/* Principes */}
-      <section className="py-16 bg-white" style={{ display: 'none' }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-center mb-16">
-
-            <h2 className="text-3xl md:text-4xl font-serif text-[#1A3A52] mb-4">
-              Nos principes de collaboration
-            </h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Une démarche exigeante qui garantit la qualité de nos opérations.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {principes.map((principe, index) =>
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="bg-slate-50 rounded-2xl p-8 text-center">
-
-                <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center mx-auto mb-6">
-                  <principe.icon className="h-8 w-8 text-[#C9A961]" />
-                </div>
-                <h3 className="text-xl font-serif text-[#1A3A52] mb-3">{principe.title}</h3>
-                <p className="text-slate-600">{principe.description}</p>
-              </motion.div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Valeur Ajoutée */}
-      <section className="py-16 bg-[#1A3A52]" style={{ display: 'none' }}>
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}>
-
-              <h2 className="text-3xl md:text-4xl font-serif text-white mb-6">
-                Une approche structurée du partenariat
-              </h2>
-              <p className="text-white/70 mb-8 leading-relaxed">
-                Chaque partenaire est intégré dans une logique de coopération durable 
-                visant à optimiser la qualité d'exécution et la création de valeur sur 
-                l'ensemble du cycle immobilier.
-              </p>
-              <ul className="space-y-4">
-                <li className="flex items-start gap-3 text-white">
-                  <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
-                  <span>Processus de sélection rigoureux et transparent</span>
-                </li>
-                <li className="flex items-start gap-3 text-white">
-                  <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
-                  <span>Évaluation continue de la qualité des prestations</span>
-                </li>
-                <li className="flex items-start gap-3 text-white">
-                  <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
-                  <span>Relations de long terme favorisant l'efficacité opérationnelle</span>
-                </li>
-                <li className="flex items-start gap-3 text-white">
-                  <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
-                  <span>Alignement sur les objectifs de qualité et de performance</span>
-                </li>
-              </ul>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="bg-white/10 backdrop-blur-sm rounded-3xl p-8 border border-white/20">
-
-              <h3 className="text-xl font-serif text-white mb-6">Impact sur la performance</h3>
-              <div className="space-y-6">
-                <div className="flex items-center justify-between">
-                  <span className="text-white/80">Respect des délais</span>
-                  <span className="text-[#C9A961] font-bold text-xl">95%</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-white/80">Qualité d'exécution</span>
-                  <span className="text-[#C9A961] font-bold text-xl">Contrôlée</span>
-                </div>
-                <div className="flex items-center justify-between">
-                  <span className="text-white/80">Optimisation des coûts</span>
-                  <span className="text-[#C9A961] font-bold text-xl">Négociée</span>
-                </div>
-              </div>
-              <div className="mt-8 pt-8 border-t border-white/20">
-                <p className="text-white/80 text-sm">
-                  La qualité du réseau de partenaires constitue un facteur déterminant 
-                  de la réussite opérationnelle et de la création de valeur patrimoniale.
-                </p>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Mention légale */}
-      
-
-
-
-
-
-
-    </div>);
-
+    </div>
+  );
 }

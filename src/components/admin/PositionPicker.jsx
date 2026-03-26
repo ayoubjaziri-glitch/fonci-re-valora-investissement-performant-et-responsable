@@ -3,7 +3,6 @@ import React from 'react';
 /**
  * Définition des emplacements disponibles par page.
  * Chaque slot correspond à une plage d'ordre dans DynamicSections.
- * L'ordre choisi est le milieu de la plage pour garantir le bon affichage.
  */
 export const PAGE_SLOTS = {
   accueil: [
@@ -17,45 +16,44 @@ export const PAGE_SLOTS = {
     { label: 'Avant le CTA final',      ordre: 850, range: [800, 999] },
   ],
   strategie: [
-    { label: 'Après le Hero',    ordre: 50,  range: [10, 100] },
-    { label: 'Au milieu',        ordre: 300, range: [100, 500] },
-    { label: 'Avant le CTA',     ordre: 700, range: [500, 999] },
+    { label: 'Après le Hero',              ordre: 50,  range: [10, 100] },
+    { label: 'Après les Piliers / Zones',  ordre: 200, range: [100, 300] },
+    { label: 'Après Alignement / Comparatif', ordre: 400, range: [300, 500] },
+    { label: 'Avant le CTA',              ordre: 700, range: [500, 999] },
   ],
   missions: [
-    { label: 'Après le Hero',    ordre: 50,  range: [10, 100] },
-    { label: 'Au milieu',        ordre: 300, range: [100, 500] },
-    { label: 'Avant le CTA',     ordre: 700, range: [500, 999] },
+    { label: 'Après le Hero',             ordre: 50,  range: [10, 100] },
+    { label: 'Après le Processus',        ordre: 200, range: [100, 300] },
+    { label: 'Avant le CTA',             ordre: 700, range: [300, 999] },
   ],
   equipe: [
-    { label: 'Après le Hero',    ordre: 50,  range: [10, 100] },
-    { label: 'Au milieu',        ordre: 300, range: [100, 500] },
-    { label: 'Avant le CTA',     ordre: 700, range: [500, 999] },
+    { label: 'Après le Hero',             ordre: 50,  range: [10, 100] },
+    { label: 'Après les Forces clés',     ordre: 200, range: [100, 300] },
+    { label: 'Après la Structure groupe', ordre: 400, range: [300, 999] },
   ],
   ecosysteme: [
-    { label: 'Après le Hero',    ordre: 50,  range: [10, 100] },
-    { label: 'Au milieu',        ordre: 300, range: [100, 500] },
-    { label: 'Avant le CTA',     ordre: 700, range: [500, 999] },
+    { label: 'Après le Hero',             ordre: 50,  range: [10, 100] },
+    { label: 'Après la grille partenaires', ordre: 200, range: [100, 999] },
   ],
   durabilite: [
-    { label: 'Après le Hero',    ordre: 50,  range: [10, 100] },
-    { label: 'Au milieu',        ordre: 300, range: [100, 500] },
-    { label: 'Avant le CTA',     ordre: 700, range: [500, 999] },
+    { label: 'Après le Hero',             ordre: 50,  range: [10, 100] },
+    { label: 'Après les Engagements',     ordre: 200, range: [100, 300] },
+    { label: 'Après les Travaux / CO2',   ordre: 400, range: [300, 500] },
+    { label: 'Après le CTA',             ordre: 600, range: [500, 999] },
   ],
   nos_biens: [
-    { label: 'Après le Hero',    ordre: 50,  range: [10, 100] },
-    { label: 'Au milieu',        ordre: 300, range: [100, 500] },
-    { label: 'Avant le CTA',     ordre: 700, range: [500, 999] },
+    { label: 'Après le Hero',             ordre: 50,  range: [10, 100] },
+    { label: 'Après la Galerie',          ordre: 200, range: [100, 300] },
+    { label: 'Après la Carte',            ordre: 400, range: [300, 999] },
   ],
 };
 
 /**
  * Composant de sélection de position.
- * Affiche des boutons lisibles pour choisir où insérer la section dans la page.
  */
 export default function PositionPicker({ page, value, onChange, existingSections = [] }) {
   const slots = PAGE_SLOTS[page] || PAGE_SLOTS.accueil;
 
-  // Compte les sections existantes dans chaque slot
   const countInSlot = (slot) =>
     existingSections.filter(s => s.ordre >= slot.range[0] && s.ordre < slot.range[1]).length;
 
