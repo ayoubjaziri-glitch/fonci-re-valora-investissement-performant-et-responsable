@@ -78,7 +78,8 @@ function buildClusters(biens) {
       existing.lat = existing.biens.reduce((s, x) => s + x.lat, 0) / existing.biens.length;
       existing.lng = existing.biens.reduce((s, x) => s + x.lng, 0) / existing.biens.length;
     } else {
-      clusters.push({ lat: b.lat, lng: b.lng, count: 1, biens: [b], label: b.adresse?.split(',')[0] || 'Zone' });
+      const cityName = (b.adresse || b.name || 'Zone').split(',')[0].split(' - ')[0].trim();
+      clusters.push({ lat: b.lat, lng: b.lng, count: 1, biens: [b], label: cityName });
     }
   });
   return clusters;
