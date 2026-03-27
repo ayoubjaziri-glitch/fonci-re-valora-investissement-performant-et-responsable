@@ -87,13 +87,28 @@ export default function NavigationTracker() {
         if (geoCache) {
             saveView(JSON.parse(geoCache));
         } else {
-            fetch('https://ip-api.com/json/?fields=country,city,lat,lon,query')
+            // Try ip-api first, fallback to ipapi.co
+            fetch('https://ip-api.com/json/?fields=status,country,city,lat,lon,query')
                 .then(r => r.json())
                 .then(geo => {
-                    sessionStorage.setItem('_valora_geo', JSON.stringify(geo));
-                    saveView(geo);
+                    if (geo.status === 'success' && geo.lat) {
+                        sessionStorage.setItem('_valora_geo', JSON.stringify(geo));
+                        saveView(geo);
+                    } else {
+                        throw new Error('no geo');
+                    }
                 })
-                .catch(() => saveView());
+                .catch(() => {
+                    fetch('https://ipapi.co/json/')
+                        .then(r => r.json())
+                        .then(geo => {
+                            // ipapi.co uses longitude instead of lon
+                            const normalized = { country: geo.country_name, city: geo.city, lat: geo.latitude, lon: geo.longitude, query: geo.ip };
+                            sessionStorage.setItem('_valora_geo', JSON.stringify(normalized));
+                            saveView(normalized);
+                        })
+                        .catch(() => saveView());
+                });
         }
     }, [location.pathname]);
 

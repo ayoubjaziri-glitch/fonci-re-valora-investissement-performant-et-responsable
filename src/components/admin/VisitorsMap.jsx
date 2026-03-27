@@ -56,18 +56,10 @@ export default function VisitorsMap({ pageViews = [], mode = 'realtime', activeT
   const totalAll = new Set(pageViews.map(v => v.session_id)).size;
   const noGeoCount = totalAll - totalGeo;
 
-  if (clusters.length === 0) {
-    return (
-      <div className="bg-slate-50 border border-slate-200 rounded-2xl flex flex-col items-center justify-center" style={{ height: 380 }}>
-        <p className="text-slate-400 text-sm mb-1">Aucune donnée de géolocalisation disponible</p>
-        <p className="text-slate-300 text-xs">Les nouvelles visites seront localisées automatiquement</p>
-      </div>
-    );
-  }
-
-  // Map center = average of clusters
-  const centerLat = clusters.reduce((s, c) => s + c.lat, 0) / clusters.length;
-  const centerLng = clusters.reduce((s, c) => s + c.lng, 0) / clusters.length;
+  // Map center = average of clusters, or default to France
+  const centerLat = clusters.length > 0 ? clusters.reduce((s, c) => s + c.lat, 0) / clusters.length : 46.5;
+  const centerLng = clusters.length > 0 ? clusters.reduce((s, c) => s + c.lng, 0) / clusters.length : 2.5;
+  const mapZoom = clusters.length > 0 ? 4 : 5;
 
   return (
     <div className="space-y-3">
@@ -88,11 +80,17 @@ export default function VisitorsMap({ pageViews = [], mode = 'realtime', activeT
         )}
       </div>
 
+      {clusters.length === 0 && (
+        <div className="bg-amber-50 border border-amber-200 rounded-xl px-4 py-3 text-xs text-amber-700 mb-2">
+          Aucune visite géolocalisée pour l'instant. La carte s'enrichira automatiquement avec les nouvelles visites.
+        </div>
+      )}
+
       {/* Map */}
       <div className="rounded-2xl overflow-hidden border border-slate-200 shadow" style={{ height: 380, zIndex: 0 }}>
         <MapContainer
           center={[centerLat, centerLng]}
-          zoom={4}
+          zoom={mapZoom}
           style={{ height: '100%', width: '100%' }}
           scrollWheelZoom={true}
         >
