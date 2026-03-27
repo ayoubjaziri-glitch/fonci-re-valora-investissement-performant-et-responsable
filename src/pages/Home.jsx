@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import {
   Building2, TrendingUp, Shield, Users, ArrowRight, CheckCircle2,
   MapPin, Calendar, Percent, Target, Search, Home as HomeIcon,
-  Key, BarChart3, Leaf, Quote, Thermometer, Zap, TreePine
-} from 'lucide-react';
+  Key, BarChart3, Leaf, Quote, Thermometer, Zap, TreePine } from
+'lucide-react';
 import { Button } from "@/components/ui/button";
 import RealisationsGallery from "../components/RealisationsGallery";
 import InterventionMap from "../components/InterventionMap";
@@ -35,87 +35,87 @@ export default function Home() {
     return image?.url || fallback;
   };
 
-  const currentLevy = levees.find((l) => l.actif && l.statut === 'Ouverte')
-    || levees.find((l) => l.actif && l.statut === 'En cours')
-    || levees.find((l) => l.statut === 'Ouverte')
-    || levees.find((l) => l.statut === 'En cours')
-    || levees[0]
-    || {
-      nom: 'Notre levée de fonds inaugurale',
-      objectif: '250 000 €',
-      collecte: '95 000 €',
-      avancement: 38,
-      ticket_min: '10 000 €',
-      rendement_cible: '>10%',
-      horizon: '5 ans',
-      effet_levier: 'x5',
-      valorisation_an5: '+61%',
-      sous_titre: 'Première opération à 1,25 M€',
-      description: "Cette opération permet de soutenir le développement d'une foncière résidentielle à fort potentiel."
-    };
+  const currentLevy = levees.find((l) => l.actif && l.statut === 'Ouverte') ||
+  levees.find((l) => l.actif && l.statut === 'En cours') ||
+  levees.find((l) => l.statut === 'Ouverte') ||
+  levees.find((l) => l.statut === 'En cours') ||
+  levees[0] ||
+  {
+    nom: 'Notre levée de fonds inaugurale',
+    objectif: '250 000 €',
+    collecte: '95 000 €',
+    avancement: 38,
+    ticket_min: '10 000 €',
+    rendement_cible: '>10%',
+    horizon: '5 ans',
+    effet_levier: 'x5',
+    valorisation_an5: '+61%',
+    sous_titre: 'Première opération à 1,25 M€',
+    description: "Cette opération permet de soutenir le développement d'une foncière résidentielle à fort potentiel."
+  };
 
   const stats = [
-    { value: get('home_stat1_valeur', '18 ans'), label: get('home_stat1_label', "D'expertise immobilière"), icon: Calendar },
-    { value: get('home_stat2_valeur', '3 M€'), label: get('home_stat2_label', "D'actifs sous gestion"), icon: Building2 },
-    { value: get('home_stat3_valeur', '>10%'), label: get('home_stat3_label', "TRI net visé"), icon: Percent },
-    { value: get('home_stat4_valeur', '20 M€'), label: get('home_stat4_label', "Objectif 5 ans"), icon: Target },
-  ];
+  { value: get('home_stat1_valeur', '18 ans'), label: get('home_stat1_label', "D'expertise immobilière"), icon: Calendar },
+  { value: get('home_stat2_valeur', '3 M€'), label: get('home_stat2_label', "D'actifs sous gestion"), icon: Building2 },
+  { value: get('home_stat3_valeur', '>10%'), label: get('home_stat3_label', "TRI net visé"), icon: Percent },
+  { value: get('home_stat4_valeur', '20 M€'), label: get('home_stat4_label', "Objectif 5 ans"), icon: Target }];
+
 
   const services = [
-    {
-      title: get('home_service1_titre', "Souscription au capital"),
-      description: get('home_service1_desc', "La Foncière Valora fonctionne selon un modèle associant des opérateurs aux projets immobiliers développés par la société. Ces partenaires, en lien avec leur compétence métier, interviennent dans la structuration, la réalisation ou le suivi des opérations."),
-      imageKey: "service_souscription",
-      icon: Key
-    },
-    {
-      title: get('home_service2_titre', "Sourcing et due diligence"),
-      description: get('home_service2_desc', "Notre équipe identifie des actifs à fort potentiel de revalorisation. Chaque acquisition fait l'objet d'une analyse approfondie : rentabilité locative, décote à l'achat, potentiel de réhabilitation."),
-      imageKey: "service_sourcing",
-      icon: Search
-    },
-    {
-      title: get('home_service3_titre', "Asset management et arbitrage"),
-      description: get('home_service3_desc', "Gestion locative intégrée, suivi des flux de trésorerie, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur."),
-      imageKey: "service_asset",
-      icon: BarChart3
-    },
-  ];
+  {
+    title: get('home_service1_titre', "Souscription au capital"),
+    description: get('home_service1_desc', "La Foncière Valora fonctionne selon un modèle associant des opérateurs aux projets immobiliers développés par la société. Ces partenaires, en lien avec leur compétence métier, interviennent dans la structuration, la réalisation ou le suivi des opérations."),
+    imageKey: "service_souscription",
+    icon: Key
+  },
+  {
+    title: get('home_service2_titre', "Sourcing et due diligence"),
+    description: get('home_service2_desc', "Notre équipe identifie des actifs à fort potentiel de revalorisation. Chaque acquisition fait l'objet d'une analyse approfondie : rentabilité locative, décote à l'achat, potentiel de réhabilitation."),
+    imageKey: "service_sourcing",
+    icon: Search
+  },
+  {
+    title: get('home_service3_titre', "Asset management et arbitrage"),
+    description: get('home_service3_desc', "Gestion locative intégrée, suivi des flux de trésorerie, optimisation du taux d'occupation et stratégie d'arbitrage pour maximiser la création de valeur."),
+    imageKey: "service_asset",
+    icon: BarChart3
+  }];
+
 
   const atouts = getList('home_atouts_liste', [
-    "Mutualisation du risque locatif au sein d'un portefeuille diversifié",
-    "Allocation équilibrée entre revenus courants et création de valeur à long terme",
-    "Gestion opérationnelle des actifs intégralement déléguée",
-    "Véhicule d'investissement structuré, doté d'une gouvernance lisible",
-    "Accès sélectif : Identification anticipée d'actifs et déploiement opérationnel maîtrisé dans des zones à dynamique soutenue.",
-    "Diversification géographique visant à atténuer l'exposition aux cycles locaux"
-  ]);
+  "Mutualisation du risque locatif au sein d'un portefeuille diversifié",
+  "Allocation équilibrée entre revenus courants et création de valeur à long terme",
+  "Gestion opérationnelle des actifs intégralement déléguée",
+  "Véhicule d'investissement structuré, doté d'une gouvernance lisible",
+  "Accès sélectif : Identification anticipée d'actifs et déploiement opérationnel maîtrisé dans des zones à dynamique soutenue.",
+  "Diversification géographique visant à atténuer l'exposition aux cycles locaux"]
+  );
 
   const valeurAjoutee = getList('home_valeur_liste', [
-    "Objectif de TRI supérieur aux véhicules d'investissement collectifs traditionnels et à l'immobilier en direct",
-    "Chaîne de valeur intégrée : Du sourcing à l'acquisition, du financement à la réalisation des travaux (notamment BBC), puis à la mise en location et à l'arbitrage des actifs.",
-    "Effet de levier bancaire optimisé (LTV 80%) démultipliant la performance",
-    "Reporting régulier et transparence sur la valorisation des actifs",
-    "Création de valeur via la rénovation énergétique et l'amélioration du DPE"
-  ]);
+  "Objectif de TRI supérieur aux véhicules d'investissement collectifs traditionnels et à l'immobilier en direct",
+  "Chaîne de valeur intégrée : Du sourcing à l'acquisition, du financement à la réalisation des travaux (notamment BBC), puis à la mise en location et à l'arbitrage des actifs.",
+  "Effet de levier bancaire optimisé (LTV 80%) démultipliant la performance",
+  "Reporting régulier et transparence sur la valorisation des actifs",
+  "Création de valeur via la rénovation énergétique et l'amélioration du DPE"]
+  );
 
   const testimonials = [
-    {
-      text: get('home_temoignage1_texte', "Ce qui m'a convaincu, c'est la transparence du modèle : 0€ de frais d'entrée, une rémunération indexée sur la performance réelle, et une équipe qui investit elle-même dans les mêmes actifs."),
-      author: get('home_temoignage1_auteur', "François B."),
-      role: get('home_temoignage1_role', "Chef d'entreprise — Associé depuis 2024")
-    },
-    {
-      text: get('home_temoignage2_texte', "J'ai cherché pendant longtemps un véhicule d'investissement immobilier sans les contraintes de la gestion directe. La Foncière Valora correspond exactement à ce que je cherchais."),
-      author: get('home_temoignage2_auteur', "Isabelle R."),
-      role: get('home_temoignage2_role', "Médecin libéral — Associée depuis 2025")
-    },
-    {
-      text: get('home_temoignage3_texte', "Le reporting est clair, les fondateurs sont accessibles et répondent en 24h. C'est rare de trouver cette qualité de relation dans l'investissement immobilier structuré."),
-      author: get('home_temoignage3_auteur', "Marc D."),
-      role: get('home_temoignage3_role', "Cadre supérieur — Associé depuis 2024")
-    },
-  ];
+  {
+    text: get('home_temoignage1_texte', "Ce qui m'a convaincu, c'est la transparence du modèle : 0€ de frais d'entrée, une rémunération indexée sur la performance réelle, et une équipe qui investit elle-même dans les mêmes actifs."),
+    author: get('home_temoignage1_auteur', "François B."),
+    role: get('home_temoignage1_role', "Chef d'entreprise — Associé depuis 2024")
+  },
+  {
+    text: get('home_temoignage2_texte', "J'ai cherché pendant longtemps un véhicule d'investissement immobilier sans les contraintes de la gestion directe. La Foncière Valora correspond exactement à ce que je cherchais."),
+    author: get('home_temoignage2_auteur', "Isabelle R."),
+    role: get('home_temoignage2_role', "Médecin libéral — Associée depuis 2025")
+  },
+  {
+    text: get('home_temoignage3_texte', "Le reporting est clair, les fondateurs sont accessibles et répondent en 24h. C'est rare de trouver cette qualité de relation dans l'investissement immobilier structuré."),
+    author: get('home_temoignage3_auteur', "Marc D."),
+    role: get('home_temoignage3_role', "Cadre supérieur — Associé depuis 2024")
+  }];
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -207,15 +207,15 @@ export default function Home() {
               </p>
               <div className="space-y-4">
                 {[
-                  get('home_quisommes_point1', 'Portefeuille diversifié'),
-                  get('home_quisommes_point2', 'Gestion opérationnelle centralisée'),
-                  get('home_quisommes_point3', 'Éligibilité PEA-PME'),
-                ].map((point, i) => (
-                  <div key={i} className="flex items-start gap-3">
+                get('home_quisommes_point1', 'Portefeuille diversifié'),
+                get('home_quisommes_point2', 'Gestion opérationnelle centralisée'),
+                get('home_quisommes_point3', 'Éligibilité PEA-PME')].
+                map((point, i) =>
+                <div key={i} className="flex items-start gap-3">
                     <CheckCircle2 className="h-5 w-5 text-[#C9A961] mt-1 flex-shrink-0" />
                     <span className="text-slate-700">{point}</span>
                   </div>
-                ))}
+                )}
               </div>
             </motion.div>
 
@@ -338,13 +338,13 @@ export default function Home() {
                 <h3 className="text-slate-900 text-3xl font-serif">Atouts</h3>
               </div>
               <ul className="space-y-5">
-                {atouts.map((atout, index) => (
-                  <motion.li key={index} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-4 p-4 bg-slate-50 rounded-xl hover:bg-[#C9A961]/5 transition-all">
+                {atouts.map((atout, index) =>
+                <motion.li key={index} initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
+                className="flex items-start gap-4 p-4 bg-slate-50 rounded-xl hover:bg-[#C9A961]/5 transition-all">
                     <CheckCircle2 className="h-6 w-6 text-[#C9A961] mt-0.5 flex-shrink-0" />
                     <span className="text-slate-700 font-medium">{atout}</span>
                   </motion.li>
-                ))}
+                )}
               </ul>
             </motion.div>
 
@@ -356,13 +356,13 @@ export default function Home() {
                 <h3 className="text-slate-900 text-3xl font-serif">Valeur ajoutée</h3>
               </div>
               <ul className="space-y-5">
-                {valeurAjoutee.map((item, index) => (
-                  <motion.li key={index} initial={{ opacity: 0, x: 10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
-                    className="flex items-start gap-4 p-4 bg-[#1A3A52]/20 rounded-xl hover:bg-[#1A3A52]/30 transition-all">
+                {valeurAjoutee.map((item, index) =>
+                <motion.li key={index} initial={{ opacity: 0, x: 10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }}
+                className="flex items-start gap-4 p-4 bg-[#1A3A52]/20 rounded-xl hover:bg-[#1A3A52]/30 transition-all">
                     <CheckCircle2 className="h-6 w-6 text-[#1A3A52] mt-0.5 flex-shrink-0" />
                     <span className="text-[#1A3A52] font-medium">{item}</span>
                   </motion.li>
-                ))}
+                )}
               </ul>
             </motion.div>
           </div>
@@ -398,8 +398,8 @@ export default function Home() {
           </motion.div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="group relative">
+            {services.map((service, index) =>
+            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="group relative">
                 <div className="bg-white rounded-3xl overflow-hidden border border-slate-200 hover:shadow-2xl transition-all duration-500 h-full hover:-translate-y-2">
                   <div className="relative h-72 overflow-hidden">
                     <img src={getImageUrl(service.imageKey, '')} alt={service.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
@@ -419,7 +419,7 @@ export default function Home() {
                   </div>
                 </div>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -448,12 +448,12 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
-              { key: 'photo_ayoub', nom: get('home_membre1_nom', 'Ayoub Jaziri'), role: get('home_membre1_role', 'Cofondateur'), desc: get('home_membre1_desc', "Stratégie d'acquisition, suivi des travaux, financement et gouvernance."), fallback: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80' },
-              { key: 'photo_sophian', nom: get('home_membre2_nom', 'Sophian Naili'), role: get('home_membre2_role', 'Cofondateur'), desc: get('home_membre2_desc', "Investissement, sourcing off-market et arbitrages • gouvernance juridique et vision stratégique de la foncière."), fallback: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80' },
-              { key: 'photo_renaud', nom: get('home_membre3_nom', 'Renaud Marchand'), role: get('home_membre3_role', 'Associé'), desc: get('home_membre3_desc', "Travaux & rénovation, pilotage des chantiers • Ingénieur BTP • expertise technique sur les projets de réhabilitation."), fallback: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80' },
-            ].map((m, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="bg-white rounded-2xl p-8 text-center border border-slate-200">
+            { key: 'photo_ayoub', nom: get('home_membre1_nom', 'Ayoub Jaziri'), role: get('home_membre1_role', 'Cofondateur'), desc: get('home_membre1_desc', "Stratégie d'acquisition, suivi des travaux, financement et gouvernance."), fallback: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80' },
+            { key: 'photo_sophian', nom: get('home_membre2_nom', 'Sophian Naili'), role: get('home_membre2_role', 'Cofondateur'), desc: get('home_membre2_desc', "Investissement, sourcing off-market et arbitrages • gouvernance juridique et vision stratégique de la foncière."), fallback: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80' },
+            { key: 'photo_renaud', nom: get('home_membre3_nom', 'Renaud Marchand'), role: get('home_membre3_role', 'Associé'), desc: get('home_membre3_desc', "Travaux & rénovation, pilotage des chantiers • Ingénieur BTP • expertise technique sur les projets de réhabilitation."), fallback: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80' }].
+            map((m, i) =>
+            <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+            className="bg-white rounded-2xl p-8 text-center border border-slate-200">
                 <div className="w-20 h-20 bg-[#1A3A52] rounded-full mx-auto mb-4 overflow-hidden border-4 border-[#C9A961]">
                   <img src={getImageUrl(m.key, m.fallback)} alt={m.nom} className="w-full h-full object-cover" />
                 </div>
@@ -461,7 +461,7 @@ export default function Home() {
                 <p className="text-[#C9A961] text-sm font-medium mb-3">{m.role}</p>
                 <p className="text-slate-600 text-sm">{m.desc}</p>
               </motion.div>
-            ))}
+            )}
           </div>
 
           <div className="text-center">
@@ -478,15 +478,15 @@ export default function Home() {
       <section className="bg-slate-900 py-16">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
-            {stats.map((stat, index) => (
-              <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="text-center">
+            {stats.map((stat, index) =>
+            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="text-center">
                 <div className="w-14 h-14 mx-auto mb-4 bg-[#C9A961] rounded-2xl flex items-center justify-center">
                   <stat.icon className="h-7 w-7 text-[#1A3A52]" />
                 </div>
                 <p className="text-3xl font-bold text-white mb-1">{stat.value}</p>
                 <p className="text-sm text-white/70">{stat.label}</p>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -614,8 +614,8 @@ export default function Home() {
             </p>
           </motion.div>
           <div className="grid md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-slate-50 rounded-2xl p-8 relative">
+            {testimonials.map((testimonial, index) =>
+            <motion.div key={index} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: index * 0.1 }} className="bg-slate-50 rounded-2xl p-8 relative">
                 <Quote className="h-10 w-10 text-[#C9A961]/30 absolute top-6 right-6" />
                 <p className="text-slate-700 leading-relaxed mb-6 italic">"{testimonial.text}"</p>
                 <div className="flex items-center gap-3">
@@ -628,7 +628,7 @@ export default function Home() {
                   </div>
                 </div>
               </motion.div>
-            ))}
+            )}
           </div>
         </div>
       </section>
@@ -681,13 +681,13 @@ export default function Home() {
       <DynamicSections page="accueil" minOrdre={800} maxOrdre={Infinity} />
 
       {/* CTA */}
-      <section className="bg-[#C9A961] px-3 py-12">
+      <section className="bg-[#C9A961] px-3 py-6">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-slate-900 mb-2 px-1 text-2xl font-serif md:text-3xl">
               {get('home_cta_titre', 'Une plateforme immobilière ouverte aux partenaires')}
             </h2>
-            <p className="text-[#1A3A52] mb-8 text-base leading-relaxed">
+            <p className="text-[#1A3A52] mb-5 text-base leading-relaxed">
               {get('home_cta_description', "Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.")}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
@@ -705,6 +705,6 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }
