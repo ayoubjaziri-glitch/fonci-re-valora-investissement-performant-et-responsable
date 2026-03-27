@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Upload, Save, Image as ImageIcon, Edit2, Crop, Home, TrendingUp, Briefcase, Users, Globe, Leaf, Building2, Star, ExternalLink } from 'lucide-react';
+
 import ImageCropper from '../components/ImageCropper';
 
 // Mapping clé image → page du site
@@ -21,7 +22,14 @@ const PAGES = [
     id: 'accueil',
     label: 'Page Accueil',
     icon: Home,
-    keys: ['hero_home', 'hero_home_bg', 'hero_main'],
+    keys: ['hero_home', 'hero_home_bg', 'hero_main', 'durabilite_home', 'service_souscription', 'service_sourcing', 'service_asset'],
+  },
+  {
+    id: 'portefeuille',
+    label: 'Portefeuille d\'actifs',
+    icon: Building2,
+    keys: [],
+    special: 'portefeuille',
   },
   {
     id: 'strategie',
@@ -107,17 +115,44 @@ function ImageCard({ image, editingImage, newUrl, setNewUrl, setEditingImage, ha
 }
 
 function RealisationsBiensSection() {
+  const queryClient = useQueryClient();
+  const [uploading, setUploading] = useState(null); // { id, type }
+  const [cropModal, setCropModal] = useState(null);
+
   const { data: biens = [] } = useQuery({
     queryKey: ['realisations-biens-photos'],
-    queryFn: () => base44.entities.RealisationBien.list(),
+    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
   });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }) => base44.entities.RealisationBien.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['realisations-biens-photos'] });
+      queryClient.invalidateQueries({ queryKey: ['realisations-biens'] });
+    }
+  });
+
+  const handleFileUpload = (bienId, type, file) => {
+    const reader = new FileReader();
+    reader.onload = (e) => setCropModal({ bienId, type, src: e.target.result });
+    reader.readAsDataURL(file);
+  };
+
+  const handleCropComplete = async (croppedFile) => {
+    const { bienId, type } = cropModal;
+    setCropModal(null);
+    setUploading({ id: bienId, type });
+    const { file_url } = await base44.integrations.Core.UploadFile({ file: croppedFile });
+    await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: file_url } });
+    setUploading(null);
+  };
 
   const biensActifs = biens.filter(b => b.actif !== false);
 
   return (
     <div>
-      <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-xl text-sm text-blue-700">
-        <strong>Synchronisé automatiquement</strong> — Les photos ci-dessous sont directement liées aux biens gérés dans <em>Back-Office → Nos Biens & Réalisations</em>. Pour ajouter ou modifier une photo, éditez le bien correspondant.
+      <div className="mb-4 p-4 bg-emerald-50 border border-emerald-200 rounded-xl text-sm text-emerald-700">
+        <strong>✓ Synchronisé avec la galerie accueil</strong> — Uploadez les photos Avant/Après de chaque bien. Elles s'afficheront directement sur la page d'accueil dans "Nos opérations de valorisation".
       </div>
       {biensActifs.length === 0 ? (
         <div className="bg-white rounded-2xl border border-slate-200 flex flex-col items-center justify-center py-20 text-center">
@@ -126,35 +161,68 @@ function RealisationsBiensSection() {
           <p className="text-slate-300 text-xs mt-1">Ajoutez des biens depuis "Nos Biens & Réalisations"</p>
         </div>
       ) : (
-        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">
+        <div className="grid md:grid-cols-2 gap-5">
           {biensActifs.map((bien) => (
             <div key={bien.id} className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
               <div className="grid grid-cols-2 gap-0.5 bg-slate-100">
-                <div className="aspect-video bg-slate-200 relative">
+                {/* Photo Avant */}
+                <div className="relative aspect-video bg-slate-200 group">
                   {bien.image_avant ? (
-                    <img src={bien.image_avant} alt="Avant" className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
-                  ) : <div className="w-full h-full flex items-center justify-center text-xs text-slate-400">Avant</div>}
-                  <span className="absolute bottom-1 left-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">Avant</span>
+                    <img src={bien.image_avant} alt="Avant" className="w-full h-full object-cover" />
+                  ) : <div className="w-full h-full flex items-center justify-center text-xs text-slate-400">Aucune photo</div>}
+                  <span className="absolute top-1 left-1 bg-red-500 text-white text-xs px-1.5 py-0.5 rounded font-bold">AVANT</span>
+                  <label className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                    <div className="bg-white rounded-lg px-3 py-1.5 text-xs font-semibold text-[#1A3A52] flex items-center gap-1">
+                      <Upload className="h-3 w-3" />
+                      {uploading?.id === bien.id && uploading?.type === 'avant' ? 'Upload...' : 'Changer'}
+                    </div>
+                    <input type="file" accept="image/*" className="hidden"
+                      onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFileUpload(bien.id, 'avant', f); }}
+                      disabled={!!uploading} />
+                  </label>
                 </div>
-                <div className="aspect-video bg-slate-200 relative">
+                {/* Photo Après */}
+                <div className="relative aspect-video bg-slate-200 group">
                   {bien.image_apres ? (
-                    <img src={bien.image_apres} alt="Après" className="w-full h-full object-cover" onError={e => e.target.style.display='none'} />
-                  ) : <div className="w-full h-full flex items-center justify-center text-xs text-slate-400">Après</div>}
-                  <span className="absolute bottom-1 left-1 bg-black/50 text-white text-xs px-1.5 py-0.5 rounded">Après</span>
+                    <img src={bien.image_apres} alt="Après" className="w-full h-full object-cover" />
+                  ) : <div className="w-full h-full flex items-center justify-center text-xs text-slate-400">Aucune photo</div>}
+                  <span className="absolute top-1 left-1 bg-emerald-500 text-white text-xs px-1.5 py-0.5 rounded font-bold">APRÈS</span>
+                  <label className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer">
+                    <div className="bg-white rounded-lg px-3 py-1.5 text-xs font-semibold text-[#1A3A52] flex items-center gap-1">
+                      <Upload className="h-3 w-3" />
+                      {uploading?.id === bien.id && uploading?.type === 'apres' ? 'Upload...' : 'Changer'}
+                    </div>
+                    <input type="file" accept="image/*" className="hidden"
+                      onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFileUpload(bien.id, 'apres', f); }}
+                      disabled={!!uploading} />
+                  </label>
                 </div>
               </div>
               <div className="p-4">
                 <p className="font-semibold text-[#1A3A52] text-sm">{bien.titre}</p>
-                <p className="text-xs text-slate-400 mt-0.5">{bien.location}</p>
-                <p className="text-xs text-[#C9A961] mt-2 flex items-center gap-1">
-                  <ExternalLink className="h-3 w-3" />
-                  Modifiable depuis "Nos Biens & Réalisations"
-                </p>
+                <p className="text-xs text-slate-400 mt-0.5">{bien.location} • {bien.logements} • {bien.surface}</p>
               </div>
             </div>
           ))}
         </div>
       )}
+
+      {/* Crop Modal */}
+      <Dialog open={!!cropModal} onOpenChange={(open) => { if (!open) setCropModal(null); }}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>Recadrer la photo</DialogTitle>
+          </DialogHeader>
+          {cropModal && (
+            <ImageCropper
+              imageSrc={cropModal.src}
+              onCropComplete={handleCropComplete}
+              onCancel={() => setCropModal(null)}
+              aspectRatio={16 / 9}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
@@ -258,7 +326,7 @@ export default function GestionPhotos({ embedded = false }) {
               <span className="text-sm text-slate-400">{currentImages.length} image{currentImages.length > 1 ? 's' : ''}</span>
             </div>
 
-            {currentPage?.special === 'realisations' ? (
+            {(currentPage?.special === 'realisations' || currentPage?.special === 'portefeuille') ? (
               <RealisationsBiensSection />
             ) : currentImages.length > 0 ? (
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5">

@@ -24,6 +24,7 @@ import GestionPhotos from './GestionPhotos';
 import AdminSections from '../components/admin/AdminSections';
 import AdminContenu from '../components/admin/AdminContenu';
 import AIPageGenerator from '../components/admin/AIPageGenerator';
+import AdminVisiteurs from '../components/admin/AdminVisiteurs';
 
 // ─── Login ───────────────────────────────────────────────────────────────────
 function AdminLogin({ onLogin }) {
@@ -266,6 +267,7 @@ const navGroups = [
     items: [
       { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
       { id: 'contacts', label: 'Demandes de contact', icon: MessageSquare, badge: true },
+      { id: 'visiteurs', label: 'Statistiques visiteurs', icon: Globe },
     ]
   },
   {
@@ -318,6 +320,7 @@ export default function AdminBackOffice() {
   const tabTitles = {
     dashboard: 'Dashboard',
     contacts: 'Demandes de Contact',
+    visiteurs: 'Statistiques Visiteurs',
     photos: 'Photos & Média',
     contenu: 'Textes & Contenu du site',
     sections: 'Ajouter une section',
@@ -400,6 +403,7 @@ export default function AdminBackOffice() {
         <div className="flex-1 p-6 lg:p-8">
           {activeTab === 'dashboard' && <DashboardSection />}
           {activeTab === 'contacts' && <DemandesContactSection />}
+          {activeTab === 'visiteurs' && <AdminVisiteurs />}
           {activeTab === 'photos' && <GestionPhotos embedded />}
           {activeTab === 'contenu' && <AdminContenu />}
           {activeTab === 'sections' && <AdminSections />}
