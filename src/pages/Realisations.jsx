@@ -169,7 +169,7 @@ export default function Realisations() {
                 {/* Description */}
                 <div className="bg-slate-50 rounded-xl p-5 mb-4">
                   <p className="text-sm text-slate-600 leading-relaxed">
-                    {showAfter[item.id] ? item.descriptionApres : item.descriptionAvant}
+                    {item.descriptionApres || item.descriptionAvant}
                   </p>
                 </div>
 
