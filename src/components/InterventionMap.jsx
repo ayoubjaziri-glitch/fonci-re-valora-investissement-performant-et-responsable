@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import React, { useRef, useState, useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useQuery } from '@tanstack/react-query';
@@ -13,7 +13,7 @@ L.Icon.Default.mergeOptions({
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
 });
 
-// Custom gold marker
+// Custom gold marker for individual biens
 const goldIcon = new L.Icon({
   iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
   shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
@@ -23,6 +23,28 @@ const goldIcon = new L.Icon({
   shadowSize: [41, 41]
 });
 
+// Create a cluster bubble icon with count
+function createClusterIcon(count) {
+  const size = count > 9 ? 46 : 40;
+  return L.divIcon({
+    html: `<div style="
+      width: ${size}px; height: ${size}px;
+      background: #C9A961;
+      border: 3px solid #1A3A52;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: ${count > 9 ? 14 : 16}px;
+      color: #1A3A52;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+      font-family: sans-serif;
+    ">${count}</div>`,
+    className: '',
+    iconSize: [size, size],
+    iconAnchor: [size / 2, size / 2],
+    popupAnchor: [0, -size / 2],
+  });
+}
+
 // Slightly offset markers that share the same coordinates
 function jitterCoords(items) {
   const seen = {};
@@ -30,8 +52,7 @@ function jitterCoords(items) {
     const key = `${item.lat.toFixed(4)},${item.lng.toFixed(4)}`;
     seen[key] = (seen[key] || 0) + 1;
     const count = seen[key];
-    // Spiral offset so overlapping markers spread out
-    const angle = (count - 1) * 2.4; // golden angle
+    const angle = (count - 1) * 2.4;
     const radius = count === 1 ? 0 : 0.0025 * Math.ceil((count - 1) / 6);
     return {
       ...item,
@@ -41,25 +62,44 @@ function jitterCoords(items) {
   });
 }
 
-const MapController = ({ mapRef }) => {
+// Group biens into city clusters (within ~5km radius)
+function buildClusters(biens) {
+  const CLUSTER_RADIUS = 0.05; // ~5km in degrees
+  const clusters = [];
+
+  biens.forEach(b => {
+    const existing = clusters.find(c =>
+      Math.abs(c.lat - b.lat) < CLUSTER_RADIUS && Math.abs(c.lng - b.lng) < CLUSTER_RADIUS
+    );
+    if (existing) {
+      existing.count += 1;
+      existing.biens.push(b);
+      // Update center to be avg
+      existing.lat = existing.biens.reduce((s, x) => s + x.lat, 0) / existing.biens.length;
+      existing.lng = existing.biens.reduce((s, x) => s + x.lng, 0) / existing.biens.length;
+    } else {
+      clusters.push({ lat: b.lat, lng: b.lng, count: 1, biens: [b], label: b.adresse?.split(',')[0] || 'Zone' });
+    }
+  });
+  return clusters;
+}
+
+const CLUSTER_ZOOM_THRESHOLD = 13; // below this zoom → show clusters; above → show individual
+
+const MapController = ({ mapRef, onZoomChange }) => {
   const map = useMap();
   mapRef.current = map;
-  return null;
-};
 
-const DPE_COLORS = {
-  A: 'bg-emerald-500',
-  B: 'bg-green-500',
-  C: 'bg-lime-500',
-  D: 'bg-yellow-500',
-  E: 'bg-orange-400',
-  F: 'bg-orange-600',
-  G: 'bg-red-600',
+  useMapEvents({
+    zoomend: () => onZoomChange(map.getZoom()),
+  });
+
+  return null;
 };
 
 export default function InterventionMap() {
   const mapRef = useRef(null);
-  const [selectedBien, setSelectedBien] = useState(null);
+  const [currentZoom, setCurrentZoom] = useState(10);
 
   const { data: realisations = [] } = useQuery({
     queryKey: ['realisations-biens'],
@@ -83,8 +123,10 @@ export default function InterventionMap() {
     }));
 
   const jitteredBiens = jitterCoords(allBiens);
+  const clusters = buildClusters(allBiens);
 
-  // Compute map center
+  const showClusters = currentZoom < CLUSTER_ZOOM_THRESHOLD;
+
   const center = allBiens.length > 0
     ? [
         allBiens.reduce((s, b) => s + b.lat, 0) / allBiens.length,
@@ -92,15 +134,13 @@ export default function InterventionMap() {
       ]
     : [46.1313, 3.4304];
 
-  // City grouping for legend — store representative coords
-  const cities = allBiens.reduce((acc, b) => {
-    const isVichy = b.lat > 45.95 && b.lat < 46.35 && b.lng > 3.2 && b.lng < 3.65;
-    const isClermont = b.lat > 45.6 && b.lat < 45.95 && b.lng > 2.9 && b.lng < 3.3;
-    const city = isVichy ? 'Vichy' : isClermont ? 'Clermont-Fd' : b.adresse?.split(',').slice(-1)[0]?.trim() || 'Autre';
-    if (!acc[city]) acc[city] = { count: 0, lat: b.lat, lng: b.lng };
-    acc[city].count += 1;
-    return acc;
-  }, {});
+  // City grouping for legend
+  const cities = clusters.map(c => ({
+    label: c.label,
+    count: c.count,
+    lat: c.lat,
+    lng: c.lng,
+  }));
 
   const flyToCity = (lat, lng) => {
     if (mapRef.current) {
@@ -121,46 +161,42 @@ export default function InterventionMap() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          <MapController mapRef={mapRef} />
+          <MapController mapRef={mapRef} onZoomChange={setCurrentZoom} />
 
-          {jitteredBiens.map((bien) => (
+          {/* Cluster markers (visible when zoomed out) */}
+          {showClusters && clusters.map((cluster, i) => (
+            <Marker
+              key={`cluster-${i}`}
+              position={[cluster.lat, cluster.lng]}
+              icon={createClusterIcon(cluster.count)}
+              eventHandlers={{
+                click: () => flyToCity(cluster.lat, cluster.lng)
+              }}
+            />
+          ))}
+
+          {/* Individual markers (visible when zoomed in) */}
+          {!showClusters && jitteredBiens.map((bien) => (
             <Marker
               key={bien.id}
               position={[bien.displayLat, bien.displayLng]}
               icon={goldIcon}
-              eventHandlers={{
-                click: () => setSelectedBien(bien.id === selectedBien ? null : bien.id)
-              }}
             >
-              <Popup
-                maxWidth={280}
-                minWidth={240}
-                autoPan={true}
-                autoPanPaddingTopLeft={[10, 10]}
-                autoPanPaddingBottomRight={[10, 10]}
-              >
+              <Popup maxWidth={280} minWidth={240} autoPan={true}>
                 <div className="font-sans" style={{ lineHeight: 1.4 }}>
-                  {/* Header */}
                   <div style={{ background: '#1A3A52', margin: '-12px -12px 10px', padding: '12px 14px', borderRadius: '4px 4px 0 0' }}>
                     <p style={{ color: '#C9A961', fontWeight: 700, fontSize: 13, margin: 0 }}>📍 {bien.name}</p>
                     {bien.adresse && (
                       <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: 11, margin: '3px 0 0' }}>{bien.adresse}</p>
                     )}
                   </div>
-
-                  {/* Image */}
                   {bien.image_url && (
                     <div style={{ margin: '0 -12px 10px', height: 130, overflow: 'hidden' }}>
-                      <img
-                        src={bien.image_url}
-                        alt={bien.name}
+                      <img src={bien.image_url} alt={bien.name}
                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        onError={(e) => { e.target.style.display = 'none'; }}
-                      />
+                        onError={(e) => { e.target.style.display = 'none'; }} />
                     </div>
                   )}
-
-                  {/* Details */}
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 6, marginBottom: 8 }}>
                     {bien.logements && (
                       <div style={{ background: '#f8f9fa', borderRadius: 6, padding: '6px 8px' }}>
@@ -186,15 +222,9 @@ export default function InterventionMap() {
                         <span style={{
                           display: 'inline-block',
                           background: bien.dpe === 'A' ? '#10b981' : bien.dpe === 'B' ? '#22c55e' : bien.dpe === 'C' ? '#84cc16' : '#f59e0b',
-                          color: 'white',
-                          fontWeight: 700,
-                          fontSize: 12,
-                          padding: '1px 8px',
-                          borderRadius: 4,
-                          marginTop: 2
-                        }}>
-                          DPE {bien.dpe}
-                        </span>
+                          color: 'white', fontWeight: 700, fontSize: 12,
+                          padding: '1px 8px', borderRadius: 4, marginTop: 2
+                        }}>DPE {bien.dpe}</span>
                       </div>
                     )}
                   </div>
@@ -206,27 +236,26 @@ export default function InterventionMap() {
       </div>
 
       {/* Legend */}
-      <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg z-[1000] min-w-[160px]">
-        <p className="text-xs text-slate-500 mb-3 font-semibold uppercase tracking-wide">Parc immobilier</p>
-        <p className="text-xs text-slate-400 mb-2 italic">Cliquer pour zoomer</p>
+      <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg z-[1000] min-w-[170px]">
+        <p className="text-xs text-slate-500 mb-1 font-semibold uppercase tracking-wide">Parc immobilier</p>
+        <p className="text-xs text-slate-400 mb-3 italic">Cliquer pour zoomer</p>
         {allBiens.length === 0 ? (
           <p className="text-xs text-slate-400 italic">Aucun bien géolocalisé</p>
         ) : (
           <>
-            {Object.entries(cities).map(([city, data]) => (
+            {cities.map((city, i) => (
               <button
-                key={city}
-                onClick={() => flyToCity(data.lat, data.lng)}
-                className="flex items-center justify-between gap-4 mb-1.5 w-full hover:bg-slate-50 rounded-lg px-1 py-0.5 transition-colors group"
+                key={i}
+                onClick={() => flyToCity(city.lat, city.lng)}
+                className="flex items-center justify-between gap-4 mb-1.5 w-full hover:bg-slate-50 rounded-lg px-1 py-1 transition-colors group"
               >
-                <span className="text-sm font-semibold text-slate-700 group-hover:text-[#C9A961] transition-colors">{city}</span>
-                <span className="bg-[#C9A961] text-white text-xs px-2 py-0.5 rounded-full font-bold">{data.count}</span>
+                <span className="text-sm font-semibold text-slate-700 group-hover:text-[#C9A961] transition-colors text-left">{city.label}</span>
+                <span className="bg-[#C9A961] text-[#1A3A52] text-xs px-2 py-0.5 rounded-full font-bold flex-shrink-0">{city.count}</span>
               </button>
             ))}
             <div className="border-t border-slate-100 mt-2 pt-2 flex items-center justify-between">
               <span className="text-xs text-slate-500">Total</span>
               <span className="text-xs font-bold text-[#1A3A52]">{allBiens.length} bien{allBiens.length > 1 ? 's' : ''}</span>
-              
             </div>
           </>
         )}
