@@ -127,12 +127,8 @@ export default function InterventionMap() {
 
   const showClusters = currentZoom < CLUSTER_ZOOM_THRESHOLD;
 
-  const center = allBiens.length > 0
-    ? [
-        allBiens.reduce((s, b) => s + b.lat, 0) / allBiens.length,
-        allBiens.reduce((s, b) => s + b.lng, 0) / allBiens.length,
-      ]
-    : [46.1313, 3.4304];
+  // Centre fixé sur la zone Vichy / Clermont-Ferrand
+  const center = [45.95, 3.35];
 
   // City grouping for legend
   const cities = clusters.map(c => ({
@@ -153,7 +149,7 @@ export default function InterventionMap() {
       <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200" style={{ height: 520 }}>
         <MapContainer
           center={center}
-          zoom={allBiens.length > 0 ? 10 : 9}
+          zoom={10}
           style={{ height: '100%', width: '100%' }}
           scrollWheelZoom={true}
         >
