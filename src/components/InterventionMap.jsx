@@ -92,14 +92,21 @@ export default function InterventionMap() {
       ]
     : [46.1313, 3.4304];
 
-  // City grouping for legend
+  // City grouping for legend — store representative coords
   const cities = allBiens.reduce((acc, b) => {
     const isVichy = b.lat > 45.95 && b.lat < 46.35 && b.lng > 3.2 && b.lng < 3.65;
     const isClermont = b.lat > 45.6 && b.lat < 45.95 && b.lng > 2.9 && b.lng < 3.3;
-    const city = isVichy ? 'Vichy' : isClermont ? 'Clermont-Fd' : 'Autre';
-    acc[city] = (acc[city] || 0) + 1;
+    const city = isVichy ? 'Vichy' : isClermont ? 'Clermont-Fd' : b.adresse?.split(',').slice(-1)[0]?.trim() || 'Autre';
+    if (!acc[city]) acc[city] = { count: 0, lat: b.lat, lng: b.lng };
+    acc[city].count += 1;
     return acc;
   }, {});
+
+  const flyToCity = (lat, lng) => {
+    if (mapRef.current) {
+      mapRef.current.flyTo([lat, lng], 14, { duration: 1.2 });
+    }
+  };
 
   return (
     <div className="relative" style={{ zIndex: 0 }}>
@@ -201,19 +208,25 @@ export default function InterventionMap() {
       {/* Legend */}
       <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl p-4 shadow-lg z-[1000] min-w-[160px]">
         <p className="text-xs text-slate-500 mb-3 font-semibold uppercase tracking-wide">Parc immobilier</p>
+        <p className="text-xs text-slate-400 mb-2 italic">Cliquer pour zoomer</p>
         {allBiens.length === 0 ? (
           <p className="text-xs text-slate-400 italic">Aucun bien géolocalisé</p>
         ) : (
           <>
-            {Object.entries(cities).map(([city, count]) => (
-              <div key={city} className="flex items-center justify-between gap-4 mb-1.5">
-                <span className="text-sm font-semibold text-slate-700">{city}</span>
-                <span className="bg-[#C9A961] text-white text-xs px-2 py-0.5 rounded-full font-bold">{count}</span>
-              </div>
+            {Object.entries(cities).map(([city, data]) => (
+              <button
+                key={city}
+                onClick={() => flyToCity(data.lat, data.lng)}
+                className="flex items-center justify-between gap-4 mb-1.5 w-full hover:bg-slate-50 rounded-lg px-1 py-0.5 transition-colors group"
+              >
+                <span className="text-sm font-semibold text-slate-700 group-hover:text-[#C9A961] transition-colors">{city}</span>
+                <span className="bg-[#C9A961] text-white text-xs px-2 py-0.5 rounded-full font-bold">{data.count}</span>
+              </button>
             ))}
             <div className="border-t border-slate-100 mt-2 pt-2 flex items-center justify-between">
               <span className="text-xs text-slate-500">Total</span>
               <span className="text-xs font-bold text-[#1A3A52]">{allBiens.length} bien{allBiens.length > 1 ? 's' : ''}</span>
+              
             </div>
           </>
         )}
