@@ -1,0 +1,30 @@
+{
+  "name": "PageView",
+  "type": "object",
+  "properties": {
+    "page": {
+      "type": "string",
+      "description": "Nom de la page visit\u00e9e"
+    },
+    "path": {
+      "type": "string",
+      "description": "Chemin URL"
+    },
+    "session_id": {
+      "type": "string",
+      "description": "ID de session anonyme"
+    },
+    "user_agent": {
+      "type": "string",
+      "description": "User agent du navigateur"
+    },
+    "referrer": {
+      "type": "string",
+      "description": "URL de provenance"
+    }
+  },
+  "required": [
+    "page",
+    "path"
+  ]
+}
