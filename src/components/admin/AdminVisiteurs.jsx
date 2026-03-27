@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Users, Globe, MapPin, TrendingUp, Clock, Eye, RefreshCw, Calendar, BarChart3, Monitor, Smartphone, Tablet } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import VisitorsMap from './VisitorsMap';
 
 const MONTHS_FR = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
 
@@ -107,7 +108,15 @@ function VisiteursTempsReel({ pageViews, contacts, refetchPageViews }) {
           )}
         </div>
 
-        {/* Derniers contacts */}
+        {/* Carte visiteurs temps réel */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-6">
+          <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
+            <MapPin className="h-4 w-4 text-[#C9A961]" /> Localisation des visiteurs
+          </h3>
+          <VisitorsMap pageViews={pageViews} mode="realtime" activeThreshold={30} />
+        </div>
+
+      {/* Derniers contacts */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6">
           <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
             <Users className="h-4 w-4 text-[#C9A961]" /> Derniers contacts reçus
@@ -230,6 +239,14 @@ function VisiteursCumul({ pageViews, contacts }) {
             </div>
           </>
         )}
+      </div>
+
+      {/* Carte historique */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-6">
+        <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
+          <MapPin className="h-4 w-4 text-[#C9A961]" /> Carte des visiteurs (12 derniers mois)
+        </h3>
+        <VisitorsMap pageViews={recentViews} mode="history" activeThreshold={30} />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6">

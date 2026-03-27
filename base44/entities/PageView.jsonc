@@ -21,6 +21,26 @@
     "referrer": {
       "type": "string",
       "description": "URL de provenance"
+    },
+    "country": {
+      "type": "string",
+      "description": "Pays du visiteur"
+    },
+    "city": {
+      "type": "string",
+      "description": "Ville du visiteur"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Latitude"
+    },
+    "lng": {
+      "type": "number",
+      "description": "Longitude"
+    },
+    "ip": {
+      "type": "string",
+      "description": "IP (partielle)"
     }
   },
   "required": [

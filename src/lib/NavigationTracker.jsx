@@ -67,13 +67,34 @@ export default function NavigationTracker() {
 
         const label = PAGE_LABELS[pathname] || pathname.replace('/', '') || 'Accueil';
 
-        base44.entities.PageView.create({
-            page: label,
-            path: pathname,
-            session_id: getSessionId(),
-            user_agent: navigator.userAgent.slice(0, 200),
-            referrer: document.referrer ? document.referrer.slice(0, 200) : '',
-        }).catch(() => {});
+        // Fetch geo data from free IP API then save
+        const geoCache = sessionStorage.getItem('_valora_geo');
+        const saveView = (geo = {}) => {
+            base44.entities.PageView.create({
+                page: label,
+                path: pathname,
+                session_id: getSessionId(),
+                user_agent: navigator.userAgent.slice(0, 200),
+                referrer: document.referrer ? document.referrer.slice(0, 200) : '',
+                country: geo.country || '',
+                city: geo.city || '',
+                lat: geo.lat || null,
+                lng: geo.lon || null,
+                ip: geo.query ? geo.query.split('.').slice(0, 3).join('.') + '.x' : '',
+            }).catch(() => {});
+        };
+
+        if (geoCache) {
+            saveView(JSON.parse(geoCache));
+        } else {
+            fetch('https://ip-api.com/json/?fields=country,city,lat,lon,query')
+                .then(r => r.json())
+                .then(geo => {
+                    sessionStorage.setItem('_valora_geo', JSON.stringify(geo));
+                    saveView(geo);
+                })
+                .catch(() => saveView());
+        }
     }, [location.pathname]);
 
     return null;
