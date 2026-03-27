@@ -681,13 +681,13 @@ export default function Home() {
       <DynamicSections page="accueil" minOrdre={800} maxOrdre={Infinity} />
 
       {/* CTA */}
-      <section className="bg-[#C9A961] px-3 py-6">
+      <section className="bg-[#C9A961] px-3 py-8">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-slate-900 mb-2 px-1 text-2xl font-serif md:text-3xl">
+            <h2 className="text-slate-900 mb-2 px-1 text-lg font-serif md:text-3xl">
               {get('home_cta_titre', 'Une plateforme immobilière ouverte aux partenaires')}
             </h2>
-            <p className="text-[#1A3A52] mb-5 text-base leading-relaxed">
+            <p className="text-slate-800 mb-5 text-base leading-relaxed">
               {get('home_cta_description', "Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.")}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
