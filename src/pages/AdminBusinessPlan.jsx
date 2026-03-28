@@ -344,38 +344,105 @@ export default function AdminBusinessPlan() {
 
           <div className="p-6">
 
-            {/* ── BP COMPLET ── */}
+            {/* ── BP COMPLET — Graphiques uniquement ── */}
             {activeTab === 'complet' && (
-              <div className="space-y-1">
-                <BPTable annees={11} rows={[
-                  { label: 'I. EXPLOITATION DU PARC', section: true },
-                  { label: 'Valeur Parc Immobilier Brut (€)', data: BP.valeurParcBrut, fmt: eur, hl: 'gold' },
-                  { label: 'Valeur Parc Immobilier NET (€)', data: BP.valeurNetteParc, fmt: eur },
-                  { label: 'Revenus Locatifs brut (10%)', data: BP.revenusLocatifs, fmt: eur, hl: 'green' },
-                  { label: 'Charges non récupérables (10%)', data: BP.chargesNonRecup, fmt: eur, hl: 'red' },
-                  { label: 'Rémunération direction', data: BP.remuDirection, fmt: eur, hl: 'red' },
-                  { label: 'Bonus Performance (>10%)', data: BP.bonusPerf, fmt: eur },
-                  { label: 'II. FLUX ET DÉSENDETTEMENT', section: true },
-                  { label: 'Service Dette (Intérêts + Cap.)', data: BP.serviceDette, fmt: eur, hl: 'red' },
-                  { label: 'Amortissement', data: BP.amortissement, fmt: eur },
-                  { label: 'Résultat comptable avant IS', data: BP.resultatAvantIS, fmt: eur, hl: 'gold' },
-                  { label: 'IS (15%)', data: BP.IS, fmt: eur, hl: 'red' },
-                  { label: 'Trésorerie Annuelle', data: BP.tresorerieAnnuelle, fmt: eur, hl: 'green' },
-                  { label: 'Trésorerie Cumulée (Sté)', data: BP.tresorerieCumulee, fmt: eur },
-                  { label: 'III. VALORISATION (DCF)', section: true },
-                  { label: 'Valeur de la Société (DCF)', data: BP.valeurSociete, fmt: eur, hl: 'gold' },
-                  { label: "Valeur de l'Action (€ avant carried)", data: BP.valeurAction, fmt: eur2 },
-                  { label: 'IV. RÉPARTITION & INVESTISSEUR', section: true },
-                  { label: 'Valeur créée pour investisseurs', data: BP.valeurCreeInvest, fmt: eur },
-                  { label: 'Hurdle annuel (6,5% × 275k)', data: Array(11).fill(BP.hurdleAnnuel), fmt: eur },
-                  { label: 'Carried Interest', data: BP.carriedInterest, fmt: v => v == null ? '—' : eur(v) },
-                  { label: 'Retour sur investissement NET', data: BP.retourInvestNet, fmt: v => v == null ? '—' : eur(v), hl: 'green' },
-                  { label: 'TRI NET', data: BP.triNet, fmt: v => v == null ? '—' : pct2(v), hl: 'gold' },
-                  { label: 'V. RATIOS', section: true },
-                  { label: 'DSCR sur loyer BRUT', data: BP.dscrBrut, fmt: v => v == null ? '—' : f4(v) },
-                  { label: 'DSCR sur loyer NET', data: BP.dscrNet, fmt: v => v == null ? '—' : f4(v) },
-                  { label: 'LTC', data: BP.ltc, fmt: pct2, hl: 'gold' },
-                ]} />
+              <div className="space-y-8">
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* 1 */}
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    <h3 className="text-sm font-semibold text-slate-700 mb-3">Parc Brut, Valeur Nette & Trésorerie Cumulée (€)</h3>
+                    <ResponsiveContainer width="100%" height={260}>
+                      <LineChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                        <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
+                        <Tooltip formatter={v => eur(v)} />
+                        <Legend wrapperStyle={{ fontSize: 11 }} />
+                        <Line type="monotone" dataKey="Parc Brut" stroke="#1A3A52" strokeWidth={2.5} dot={false} />
+                        <Line type="monotone" dataKey="Valeur Nette" stroke="#C9A961" strokeWidth={2.5} dot={false} />
+                        <Line type="monotone" dataKey="Tréso Cumulée" stroke="#10b981" strokeWidth={2} dot={false} strokeDasharray="5 3" />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* 2 */}
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    <h3 className="text-sm font-semibold text-slate-700 mb-3">TRI Net par Scénario de Sortie (%)</h3>
+                    <ResponsiveContainer width="100%" height={260}>
+                      <BarChart data={triData} barSize={36}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                        <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${v}%`} domain={[0, 14]} />
+                        <Tooltip formatter={(v, name) => name === 'TRI %' ? `${v} %` : eur(v)} />
+                        <ReferenceLine y={6.5} stroke="#ef4444" strokeDasharray="4 4" label={{ value: 'Hurdle 6,5%', position: 'insideTopRight', fontSize: 10, fill: '#ef4444' }} />
+                        <Bar dataKey="TRI %" fill="#C9A961" radius={[6,6,0,0]}>
+                        </Bar>
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* 3 */}
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    <h3 className="text-sm font-semibold text-slate-700 mb-3">Revenus Locatifs vs Service de la Dette (€)</h3>
+                    <ResponsiveContainer width="100%" height={260}>
+                      <BarChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                        <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
+                        <Tooltip formatter={v => eur(v)} />
+                        <Legend wrapperStyle={{ fontSize: 11 }} />
+                        <Bar dataKey="Revenus Loc." fill="#1A3A52" radius={[4,4,0,0]} />
+                        <Bar dataKey="Service Dette" fill="#C9A961" radius={[4,4,0,0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* 4 */}
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    <h3 className="text-sm font-semibold text-slate-700 mb-3">Valeur de l'Action (€/action)</h3>
+                    <ResponsiveContainer width="100%" height={260}>
+                      <LineChart data={anneesLabels.map((name, i) => ({ name, "Action (€)": BP.valeurAction[i] }))}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                        <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${v} €`} domain={[0, 9]} />
+                        <Tooltip formatter={v => eur2(v)} />
+                        <Line type="monotone" dataKey="Action (€)" stroke="#C9A961" strokeWidth={3} dot={{ fill: '#C9A961', r: 5 }} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* 5 */}
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    <h3 className="text-sm font-semibold text-slate-700 mb-3">DSCR (loyer brut) & LTC (%)</h3>
+                    <ResponsiveContainer width="100%" height={260}>
+                      <LineChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                        <YAxis tick={{ fontSize: 10 }} />
+                        <Tooltip />
+                        <Legend wrapperStyle={{ fontSize: 11 }} />
+                        <ReferenceLine y={1.2} stroke="#ef4444" strokeDasharray="4 4" label={{ value: 'Min DSCR 1.2x', fontSize: 9, fill: '#ef4444' }} />
+                        <Line type="monotone" dataKey="DSCR Brut" stroke="#C9A961" strokeWidth={2.5} dot={false} />
+                        <Line type="monotone" dataKey="LTC %" stroke="#1A3A52" strokeWidth={2.5} dot={false} />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+
+                  {/* 6 */}
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
+                    <h3 className="text-sm font-semibold text-slate-700 mb-3">Retour Net Investisseurs par Scénario (€)</h3>
+                    <ResponsiveContainer width="100%" height={260}>
+                      <BarChart data={triData.filter(d => d['Retour Net'] != null)} barSize={36}>
+                        <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+                        <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                        <YAxis tick={{ fontSize: 10 }} tickFormatter={v => `${(v/1000).toFixed(0)}k`} />
+                        <Tooltip formatter={v => eur(v)} />
+                        <ReferenceLine y={275000} stroke="#1A3A52" strokeDasharray="4 4" label={{ value: 'Investissement 275k', position: 'insideTopLeft', fontSize: 9, fill: '#1A3A52' }} />
+                        <Bar dataKey="Retour Net" fill="#1A3A52" radius={[6,6,0,0]} />
+                      </BarChart>
+                    </ResponsiveContainer>
+                  </div>
+                </div>
               </div>
             )}
 
