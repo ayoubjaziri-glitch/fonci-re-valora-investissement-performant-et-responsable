@@ -1500,22 +1500,16 @@ Le PEA-PME est une **enveloppe fiscale** créée en 2014 pour orienter l'épargn
   if (!article) {
     return (
       <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-4xl font-serif text-[#1A3A52] mb-4">Article non trouvé</h1>
-          <Link to={createPageUrl("Blog")}>
-            <Button className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52]">
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Retour au blog
-            </Button>
-          </Link>
-        </div>
+        <div className="w-8 h-8 border-4 border-[#C9A961] border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
-  const relatedArticles = allArticles.filter(a => a.id !== article.id && a.category === article.category).slice(0, 2);
-
   const [copied, setCopied] = useState(false);
+
+  const relatedArticles = article
+    ? allArticles.filter(a => a.id !== article.id && a.category === article.category).slice(0, 2)
+    : [];
 
   const handleShare = (platform) => {
     const url = window.location.href;
