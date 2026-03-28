@@ -18,9 +18,20 @@ const C = {
 };
 
 // ─── SAFE STRING ────────────────────────────────────────────────────────────
-function s(val, fallback = '—') {
+function s(val, fallback = '-') {
   if (val === null || val === undefined) return fallback;
-  return String(val);
+  return String(val)
+    .replace(/≤/g, '<=')
+    .replace(/≥/g, '>=')
+    .replace(/≈/g, '~')
+    .replace(/—/g, '-')
+    .replace(/–/g, '-')
+    .replace(/CO₂/g, 'CO2')
+    .replace(/[^\x00-\x7F]/g, (c) => {
+      // Remplacer tout autre caractère non-ASCII par son équivalent ou le supprimer
+      const map = { '°': 'deg', '×': 'x', '²': '2', '³': '3', '¹': '1', '\u2019': "'", '\u2018': "'", '\u201C': '"', '\u201D': '"' };
+      return map[c] !== undefined ? map[c] : c;
+    });
 }
 
 export function genererRapportPDF({
@@ -323,7 +334,7 @@ export function genererRapportPDF({
     ['Dette résiduelle', s(indicRaw.dette)],
     ['Couverture loyers / dette', s(indicRaw.couvertureLoyers, '~1,4x')],
     ['LTV (Loan to Value)', s(kpis[2]?.value, '68%')],
-    ['Seuil cible LTV', '≤ 80%'],
+    ['Seuil cible LTV', '<= 80%'],
   ];
   indics.forEach(([label, val], i) => row(label, val, i % 2 === 0));
   y += 4;
@@ -343,7 +354,7 @@ export function genererRapportPDF({
   // ── Performance Énergétique ──
   sectionHeader('Performance Énergétique');
   [
-    ['CO₂ économisées par an', s(energieRaw.co2)],
+    ['CO2 économisées par an', s(energieRaw.co2)],
     ['Réduction de la consommation énergétique', s(energieRaw.conso)],
     ['Classe DPE moyenne du parc', 'C (Basse Consommation)'],
   ].forEach(([label, val], i) => row(label, val, i % 2 === 0));
@@ -503,7 +514,7 @@ export function genererRapportPDF({
   [
     ['Dette totale résiduelle', s(indicRaw.dette)],
     ['LTV (Loan to Value)', s(kpis[2]?.value, '68%')],
-    ['Seuil cible LTV', '≤ 80%'],
+    ['Seuil cible LTV', '<= 80%'],
     ['Nombre d\'actifs financés', s(indicRaw.nbActifs)],
     ['Couverture loyers / dette', s(indicRaw.couvertureLoyers, '~1,4x')],
   ].forEach(([label, val], i) => row(label, val, i % 2 === 0));
@@ -515,7 +526,7 @@ export function genererRapportPDF({
   font('normal', 7.5); tc(C.gray600);
   doc.text('Visualisation du Ratio LTV', MARGIN + 4, y + 5);
   font('bold', 7.5); tc(C.navy);
-  doc.text(`${ltvPct}% / Cible ≤ 80%`, W - MARGIN - 4, y + 5, { align: 'right' });
+  doc.text(`${ltvPct}% / Cible <= 80%`, W - MARGIN - 4, y + 5, { align: 'right' });
   y += 8;
   fc(C.gray200); doc.roundedRect(MARGIN + 4, y, CONTENT_W - 8, 5, 2, 2, 'F');
   fc(ltvPct <= 80 ? C.green : C.red);
