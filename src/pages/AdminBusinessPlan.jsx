@@ -408,8 +408,15 @@ export default function AdminBusinessPlan() {
   const removeAcq = id => set('acquisitions', params.acquisitions.filter(a => a.id !== id));
   const updateAcq = (id, k, v) => set('acquisitions', params.acquisitions.map(a => a.id === id ? { ...a, [k]: v } : a));
 
-  // Calcul BP
-  const annees = useMemo(() => calculerBP(params), [params]);
+  // Calcul BP — nbActions = valeurSociete An1 pour que valeurAction An1 = 1€
+  const annees = useMemo(() => {
+    // Premier calcul pour obtenir la valeur société An1
+    const first = calculerBP(params);
+    const valSocAn1 = first[0]?.valeurSociete || params.nbActions;
+    // Recalculer avec nbActions = valeurSociete An1
+    const paramsAjustes = { ...params, nbActions: Math.round(valSocAn1) };
+    return calculerBP(paramsAjustes);
+  }, [params]);
   const N = annees.length;
   const labels = annees.map(a => `An ${a.annee}`);
 
