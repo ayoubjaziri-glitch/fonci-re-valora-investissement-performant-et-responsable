@@ -47,16 +47,12 @@
  *
  * The mainPage value must match a key in the PAGES object exactly.
  */
-import AdminBackOffice from './pages/AdminBackOffice';
-import AdminEspaceAssocie from './pages/AdminEspaceAssocie';
 import Blog from './pages/Blog';
 import BlogArticle from './pages/BlogArticle';
 import Contact from './pages/Contact';
 import Durabilite from './pages/Durabilite';
 import Equipe from './pages/Equipe';
 import EspaceAssocie from './pages/EspaceAssocie';
-import GererAcces from './pages/GererAcces';
-import GestionPhotos from './pages/GestionPhotos';
 import Home from './pages/Home';
 import InvestirDansFonciere from './pages/InvestirDansFonciere';
 import MentionsLegales from './pages/MentionsLegales';
@@ -69,16 +65,12 @@ import __Layout from './Layout.jsx';
 
 
 export const PAGES = {
-    "AdminBackOffice": AdminBackOffice,
-    "AdminEspaceAssocie": AdminEspaceAssocie,
     "Blog": Blog,
     "BlogArticle": BlogArticle,
     "Contact": Contact,
     "Durabilite": Durabilite,
     "Equipe": Equipe,
     "EspaceAssocie": EspaceAssocie,
-    "GererAcces": GererAcces,
-    "GestionPhotos": GestionPhotos,
     "Home": Home,
     "InvestirDansFonciere": InvestirDansFonciere,
     "MentionsLegales": MentionsLegales,
