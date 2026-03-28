@@ -1696,7 +1696,7 @@ Plus votre Tranche Marginale d'Imposition (TMI) est élevée, plus l'effet de le
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-16">
-          <Link to={createPageUrl(`BlogArticle?slug=${featuredArticle.slug}`)}>
+          <Link to={`/blog/${featuredArticle.slug}`}>
             <div className="bg-slate-50 rounded-3xl overflow-hidden hover:shadow-xl transition-all duration-300 group">
               <div className="grid md:grid-cols-2 gap-0">
                 <div className="relative h-80 md:h-auto overflow-hidden">
@@ -1751,7 +1751,7 @@ Plus votre Tranche Marginale d'Imposition (TMI) est élevée, plus l'effet de le
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}>
 
-              <Link to={createPageUrl(`BlogArticle?slug=${article.slug}`)}>
+              <Link to={`/blog/${article.slug}`}>
                 <div className="bg-white rounded-2xl overflow-hidden border border-slate-200 hover:shadow-xl transition-all duration-300 h-full flex flex-col group">
                   <div className="relative h-48 overflow-hidden">
                     <img

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
 import ReactMarkdown from 'react-markdown';
@@ -45,8 +45,9 @@ function ShareButtons({ handleShare, copied }) {
 
 export default function BlogArticle() {
   const location = useLocation();
-  const urlParams = new URLSearchParams(location.search);
-  const slug = urlParams.get('slug');
+  const params = useParams();
+  // Support both /blog/:slug (clean URL) and ?slug= (legacy)
+  const slug = params.slug || new URLSearchParams(location.search).get('slug');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -1655,7 +1656,7 @@ Le PEA-PME est une **enveloppe fiscale** créée en 2014 pour orienter l'épargn
           <h3 className="text-2xl font-serif text-[#1A3A52] mb-8">Articles similaires</h3>
           <div className="grid md:grid-cols-2 gap-8">
             {relatedArticles.map((relatedArticle) =>
-            <Link key={relatedArticle.id} to={createPageUrl(`BlogArticle?slug=${relatedArticle.slug}`)}>
+            <Link key={relatedArticle.id} to={`/blog/${relatedArticle.slug}`}>
                 <div className="group">
                   <div className="relative h-48 rounded-xl overflow-hidden mb-4">
                     <img 
