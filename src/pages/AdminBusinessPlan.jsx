@@ -332,36 +332,97 @@ const CTooltip = ({ active, payload, label, fmt }) => {
 };
 
 // ─── BPTable ──────────────────────────────────────────────────────────────────
-function BPTable({ rows }) {
-  const N = 11;
+const SECTION_STYLES = {
+  patrimoine:   { bg: 'bg-[#1A3A52]',   text: 'text-white',          icon: '🏢' },
+  flux:         { bg: 'bg-slate-700',    text: 'text-white',          icon: '💸' },
+  valorisation: { bg: 'bg-[#C9A961]',   text: 'text-[#1A3A52]',      icon: '📈' },
+  capital:      { bg: 'bg-slate-600',   text: 'text-white',          icon: '⚖️' },
+  ratios:       { bg: 'bg-indigo-700',  text: 'text-white',          icon: '📊' },
+  investisseur: { bg: 'bg-emerald-700', text: 'text-white',          icon: '💼' },
+};
+
+function BPTable({ rows, N = 11 }) {
   return (
-    <div className="overflow-x-auto rounded-xl border border-slate-200">
-      <table className="w-full text-xs">
+    <div className="overflow-x-auto rounded-2xl border border-slate-200 shadow-sm">
+      <table className="w-full text-xs border-collapse">
         <thead>
-          <tr className="bg-[#1A3A52] text-white">
-            <th className="px-3 py-2.5 text-left min-w-[240px] sticky left-0 bg-[#1A3A52]">Indicateur</th>
-            {Array.from({ length: N }, (_, i) => <th key={i} className="px-3 py-2.5 text-right whitespace-nowrap">An {i+1}</th>)}
+          <tr className="bg-[#0F2537] text-white">
+            <th className="px-4 py-3 text-left min-w-[220px] sticky left-0 bg-[#0F2537] font-semibold tracking-wide text-xs uppercase text-white/60">
+              Indicateur
+            </th>
+            {Array.from({ length: N }, (_, i) => (
+              <th key={i} className="px-3 py-3 text-right whitespace-nowrap font-bold text-sm text-[#C9A961] min-w-[90px]">
+                An {i + 1}
+              </th>
+            ))}
           </tr>
         </thead>
-        <tbody className="divide-y divide-slate-100">
-          {rows.map((row, ri) => (
-            <tr key={ri} className={
-              row.section ? 'bg-[#1A3A52]/8' :
-              row.hl === 'gold' ? 'bg-[#C9A961]/10 font-semibold' :
-              row.hl === 'green' ? 'bg-emerald-50 font-semibold' :
-              row.hl === 'red' ? 'bg-red-50/60' :
-              ri % 2 === 0 ? 'bg-white' : 'bg-slate-50/60'
-            }>
-              <td className={`px-3 py-2 sticky left-0 bg-inherit text-xs ${row.section ? 'font-bold text-[#1A3A52] uppercase tracking-wider' : row.hl === 'red' ? 'text-red-700' : row.hl === 'green' ? 'text-emerald-700' : 'text-slate-700'}`}>
-                {row.section ? `▸ ${row.label}` : row.label}
-              </td>
-              {Array.from({ length: N }, (_, i) => (
-                <td key={i} className={`px-3 py-2 text-right font-mono text-xs ${row.section ? '' : row.hl === 'red' ? 'text-red-700' : row.hl === 'green' ? 'text-emerald-700' : 'text-slate-800'}`}>
-                  {row.section ? '' : (row.fmt ? row.fmt(row.data[i]) : '—')}
+        <tbody>
+          {rows.map((row, ri) => {
+            if (row.section) {
+              const st = SECTION_STYLES[row.sectionKey] || SECTION_STYLES.patrimoine;
+              return (
+                <tr key={ri}>
+                  <td colSpan={N + 1} className={`px-4 py-2.5 ${st.bg} ${st.text} font-bold text-xs uppercase tracking-widest`}>
+                    <span className="mr-2">{st.icon}</span>{row.label}
+                  </td>
+                </tr>
+              );
+            }
+
+            // Déterminer les styles de la ligne
+            const isSub     = row.hl === 'sub';
+            const isGold    = row.hl === 'gold';
+            const isGreen   = row.hl === 'green';
+            const isRed     = row.hl === 'red';
+            const isTri     = row.hl === 'tri';
+            const isTotal   = row.hl === 'total';
+
+            const rowBg = isGold   ? 'bg-amber-50'
+                        : isGreen  ? 'bg-emerald-50'
+                        : isRed    ? 'bg-red-50/40'
+                        : isTotal  ? 'bg-[#1A3A52]/5'
+                        : isTri    ? 'bg-indigo-50'
+                        : ri % 2 === 0 ? 'bg-white' : 'bg-slate-50/50';
+
+            const labelColor = isGold   ? 'text-amber-800 font-semibold'
+                             : isGreen  ? 'text-emerald-800 font-semibold'
+                             : isRed    ? 'text-red-700'
+                             : isTotal  ? 'text-[#1A3A52] font-bold'
+                             : isTri    ? 'text-indigo-700 font-bold'
+                             : 'text-slate-600';
+
+            const valColor = isGold   ? 'text-amber-900 font-bold'
+                           : isGreen  ? 'text-emerald-800 font-bold'
+                           : isRed    ? 'text-red-700 font-medium'
+                           : isTotal  ? 'text-[#1A3A52] font-bold'
+                           : isTri    ? 'text-indigo-700 font-bold'
+                           : 'text-slate-800';
+
+            const prefix = isGold ? '  ●' : isGreen ? '  ●' : isRed ? '  –' : isTotal ? '' : '   ';
+
+            return (
+              <tr key={ri} className={`${rowBg} border-b border-slate-100 hover:brightness-95 transition-all`}>
+                <td className={`px-4 py-2.5 sticky left-0 bg-inherit ${labelColor} leading-snug`}>
+                  <span className={`mr-1.5 text-xs ${isGold ? 'text-amber-400' : isGreen ? 'text-emerald-400' : isRed ? 'text-red-400' : 'text-transparent'}`}>
+                    {isTotal ? '' : isRed ? '▼' : isGreen ? '▲' : isGold ? '◆' : ''}
+                  </span>
+                  {row.label}
                 </td>
-              ))}
-            </tr>
-          ))}
+                {Array.from({ length: N }, (_, i) => {
+                  const raw = row.data[i];
+                  const val = row.fmt ? row.fmt(raw) : '—';
+                  // Colorer les valeurs négatives en rouge même si la ligne est "green"
+                  const isNeg = typeof raw === 'number' && raw < 0;
+                  return (
+                    <td key={i} className={`px-3 py-2.5 text-right font-mono ${isNeg ? 'text-red-600 font-medium' : valColor}`}>
+                      {val}
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>
@@ -701,39 +762,69 @@ export default function AdminBusinessPlan() {
 
         {/* ══════════════════ BP COMPLET ══════════════════ */}
         {activeTab === 'complet' && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-4">
-            <BPTable rows={[
-              { label: 'I. EXPLOITATION DU PARC', section: true },
-              { label: 'Valeur Parc Brut (€)',           data: annees.map(a => a.parcBrut),        fmt: eur, hl: 'gold' },
-              { label: 'Capital Restant Dettes (€)',      data: annees.map(a => a.capitalRestant),  fmt: eur },
-              { label: 'Valeur Nette Parc (€)',           data: annees.map(a => a.valeurNette),     fmt: eur },
-              { label: 'Revenus Locatifs brut (10%)',     data: annees.map(a => a.loyers),          fmt: eur, hl: 'green' },
-              { label: 'Charges non récupérables (10%)', data: annees.map(a => a.charges),         fmt: eur, hl: 'red' },
-              { label: 'Rémunération direction',          data: annees.map(a => a.remuDir),         fmt: eur, hl: 'red' },
-              { label: 'II. FLUX & DÉSENDETTEMENT', section: true },
-              { label: 'Service de la Dette',             data: annees.map(a => a.serviceDette),    fmt: eur, hl: 'red' },
-              { label: 'Amortissement comptable',        data: annees.map(a => a.amortissement),   fmt: eur },
-              { label: 'Résultat comptable avant IS',    data: annees.map(a => a.resultatAvIS),    fmt: eur, hl: 'gold' },
-              { label: `IS (${params.tauxIS}%)`,         data: annees.map(a => a.IS),              fmt: eur, hl: 'red' },
-              { label: 'Trésorerie Annuelle',             data: annees.map(a => a.tresoAnn),        fmt: eur, hl: 'green' },
-              { label: 'Trésorerie Cumulée',              data: annees.map(a => a.tresCum),         fmt: eur },
-              { label: 'Plus-value Potentielle',          data: annees.map(a => a.plusValuePot),    fmt: v => v == null ? '—' : eur(v) },
-              { label: 'III. VALORISATION', section: true },
-              { label: 'Valeur de la Société (DCF)',      data: annees.map(a => a.valeurSociete),   fmt: eur, hl: 'gold' },
-              { label: "Valeur de l'Action (€)",          data: annees.map(a => a.valeurAction),    fmt: eur2 },
-              { label: 'IV. RÉPARTITION CAPITAL', section: true },
-              { label: `% Détention Cat. A (${(params.detentionA*100).toFixed(2)}%)`, data: Array(N).fill(params.detentionA), fmt: pct2 },
-              { label: `% Détention Cat. B/C (${(params.detentionBC*100).toFixed(2)}%)`, data: Array(N).fill(params.detentionBC), fmt: pct2 },
-              { label: 'V. RATIOS', section: true },
-              { label: 'DSCR sur loyer BRUT',             data: annees.map(a => a.dscrBrut),       fmt: v => v == null ? '—' : f4(v) },
-              { label: 'DSCR sur loyer NET',              data: annees.map(a => a.dscrNet),         fmt: v => v == null ? '—' : f4(v) },
-              { label: 'LTC (Capital Restant / Parc)',    data: annees.map(a => a.ltc),             fmt: pct2, hl: 'gold' },
-              { label: 'VI. INVESTISSEUR', section: true },
-              { label: 'Valeur créée pour investisseurs', data: annees.map(a => a.valeurInvest),    fmt: eur },
-              { label: `Hurdle annuel (${params.hurdle}%)`, data: annees.map(a => a.hurdle),        fmt: eur },
-              { label: 'Carried Interest',                 data: annees.map(a => a.carriedInterest),fmt: v => v == null ? '—' : eur(v) },
-              { label: 'Retour NET',                       data: annees.map(a => a.retourNet),      fmt: v => v == null ? '—' : eur(v), hl: 'green' },
-              { label: 'TRI NET',                          data: annees.map(a => a.triNet),         fmt: v => v == null ? '—' : pct2(v), hl: 'gold' },
+          <div className="space-y-2">
+            {/* Légende */}
+            <div className="flex flex-wrap gap-3 px-1 pb-1 text-xs text-slate-500">
+              {[
+                { color: 'bg-amber-400', label: 'Indicateur clé' },
+                { color: 'bg-emerald-400', label: 'Flux positif' },
+                { color: 'bg-red-400', label: 'Charge / sortie' },
+                { color: 'bg-indigo-400', label: 'Performance' },
+              ].map((l, i) => (
+                <div key={i} className="flex items-center gap-1.5">
+                  <div className={`w-2.5 h-2.5 rounded-full ${l.color}`}/>
+                  <span>{l.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <BPTable N={N} rows={[
+              // ── I. PATRIMOINE ─────────────────────────────────────────────
+              { label: 'I. PATRIMOINE & ENDETTEMENT', section: true, sectionKey: 'patrimoine' },
+              { label: 'Valeur du parc brut',          data: annees.map(a => a.parcBrut),       fmt: eur,  hl: 'gold' },
+              { label: 'Capital restant dû (dettes)',  data: annees.map(a => a.capitalRestant),  fmt: eur,  hl: 'red' },
+              { label: 'Valeur nette du parc',         data: annees.map(a => a.valeurNette),     fmt: eur,  hl: 'total' },
+
+              // ── II. EXPLOITATION ─────────────────────────────────────────
+              { label: 'II. EXPLOITATION', section: true, sectionKey: 'flux' },
+              { label: `Revenus locatifs bruts (${params.tauxLocatif}%)`,       data: annees.map(a => a.loyers),       fmt: eur, hl: 'green' },
+              { label: `Charges non récupérables (${params.tauxCharges}%)`,    data: annees.map(a => a.charges),      fmt: eur, hl: 'red' },
+              { label: `Rémunération direction (${params.tauxRemuDir}%)`,       data: annees.map(a => a.remuDir),      fmt: eur, hl: 'red' },
+              { label: 'Service de la dette (annuités)',                        data: annees.map(a => a.serviceDette), fmt: eur, hl: 'red' },
+              { label: 'Amortissement comptable',                               data: annees.map(a => a.amortissement),fmt: eur },
+              { label: 'Résultat comptable avant IS',                           data: annees.map(a => a.resultatAvIS), fmt: eur, hl: 'gold' },
+              { label: `Impôt sur les sociétés (IS ${params.tauxIS}%)`,        data: annees.map(a => a.IS),           fmt: eur, hl: 'red' },
+
+              // ── III. TRÉSORERIE ───────────────────────────────────────────
+              { label: 'III. TRÉSORERIE', section: true, sectionKey: 'flux' },
+              { label: 'Trésorerie nette annuelle',    data: annees.map(a => a.tresoAnn),  fmt: eur, hl: 'green' },
+              { label: 'Trésorerie nette cumulée',     data: annees.map(a => a.tresCum),   fmt: eur, hl: 'total' },
+              { label: 'Plus-value potentielle (An5+)',data: annees.map(a => a.plusValuePot), fmt: v => v == null ? '—' : eur(v) },
+
+              // ── IV. VALORISATION DCF ─────────────────────────────────────
+              { label: `IV. VALORISATION DCF (×${(1 + params.primeSynergie/100).toFixed(2)} synergie · CMPC ${(cmpcAffiche*100).toFixed(2)}%)`, section: true, sectionKey: 'valorisation' },
+              { label: 'Valeur de la société (DCF)',   data: annees.map(a => a.valeurSociete), fmt: eur,  hl: 'gold' },
+              { label: "Valeur de l'action",           data: annees.map(a => a.valeurAction),  fmt: eur2, hl: 'gold' },
+              { label: 'Nb actions (= valeur An1)',    data: annees.map(() => annees[0]?.valeurSociete || 0), fmt: v => f0(Math.round(v)) },
+
+              // ── V. RÉPARTITION ────────────────────────────────────────────
+              { label: 'V. RÉPARTITION DU CAPITAL', section: true, sectionKey: 'capital' },
+              { label: `Détention Cat. A — ${(params.detentionA*100).toFixed(2)}%`,   data: Array(N).fill(params.detentionA),  fmt: pct2 },
+              { label: `Détention Cat. B/C — ${(params.detentionBC*100).toFixed(2)}%`,data: Array(N).fill(params.detentionBC), fmt: pct2 },
+
+              // ── VI. RATIOS ────────────────────────────────────────────────
+              { label: 'VI. RATIOS FINANCIERS', section: true, sectionKey: 'ratios' },
+              { label: 'LTC — Capital dû / Parc brut',  data: annees.map(a => a.ltc),      fmt: pct2, hl: 'gold' },
+              { label: 'DSCR brut — Loyers / Service',  data: annees.map(a => a.dscrBrut), fmt: v => v == null ? '—' : f4(v) },
+              { label: 'DSCR net — (Loyers–Charges) / Service', data: annees.map(a => a.dscrNet), fmt: v => v == null ? '—' : f4(v) },
+
+              // ── VII. INVESTISSEUR ─────────────────────────────────────────
+              { label: `VII. INVESTISSEUR — Hurdle ${params.hurdle}% · Carried ${params.carriedPct}%`, section: true, sectionKey: 'investisseur' },
+              { label: 'Valeur part investisseur (B/C)', data: annees.map(a => a.valeurInvest),    fmt: eur },
+              { label: `Hurdle annuel (${params.hurdle}%)`,data: annees.map(a => a.hurdle),        fmt: eur, hl: 'red' },
+              { label: 'Carried Interest',               data: annees.map(a => a.carriedInterest), fmt: v => v == null ? '—' : eur(v), hl: 'red' },
+              { label: 'Retour net investisseur',        data: annees.map(a => a.retourNet),       fmt: v => v == null ? '—' : eur(v), hl: 'green' },
+              { label: 'TRI net investisseur',           data: annees.map(a => a.triNet),          fmt: v => v == null ? '—' : pct2(v), hl: 'tri' },
             ]} />
           </div>
         )}
