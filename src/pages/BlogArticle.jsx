@@ -54,7 +54,7 @@ export default function BlogArticle() {
   }, [slug]);
 
   // Charger tous les articles de la BDD
-  const { data: articlesDB = [], isLoading } = useQuery({
+  const { data: articlesDB = [] } = useQuery({
     queryKey: ['blog-articles'],
     queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 100),
   });
@@ -1496,14 +1496,6 @@ Le PEA-PME est une **enveloppe fiscale** créée en 2014 pour orienter l'épargn
   ];
 
   const article = allArticles.find(a => a.slug === slug);
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-[#C9A961] border-t-transparent rounded-full animate-spin" />
-      </div>
-    );
-  }
 
   if (!article) {
     return (
