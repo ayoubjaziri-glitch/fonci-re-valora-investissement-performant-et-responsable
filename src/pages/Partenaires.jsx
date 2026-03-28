@@ -3,12 +3,6 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
 import {
-  Handshake,
-  Shield,
-  Users,
-  Award,
-  Building2,
-  TrendingUp,
   CheckCircle2,
   ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -18,54 +12,73 @@ import { useSiteContent } from '../hooks/useSiteContent';
 export default function Partenaires() {
   const { get } = useSiteContent();
 
+  // Logos représentatifs de chaque métier (images Unsplash professionnelles)
   const ecosysteme = [
   {
-    icon: Building2,
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/1/18/Logo_UNSFA.svg/200px-Logo_UNSFA.svg.png',
+    logoAlt: 'Architecture',
+    logoBg: 'bg-white',
     key: 'architectes',
     category: get('ecosysteme_architectes_categorie', 'Architectes'),
     title: get('ecosysteme_architectes_titre', 'Vision architecturale & valorisation'),
     description: get('ecosysteme_architectes_description', "Les architectes partenaires interviennent sur la conception des projets de réhabilitation, apportant une signature architecturale respectueuse du patrimoine bâti tout en intégrant les exigences de performance énergétique."),
-    values: get('ecosysteme_architectes_valeurs', "Rôle clé dans la valorisation des actifs\nVision patrimoniale de long terme\nSignature architecturale soignée").split('\n').filter(v => v.trim())
+    values: get('ecosysteme_architectes_valeurs', "Rôle clé dans la valorisation des actifs\nVision patrimoniale de long terme\nSignature architecturale soignée").split('\n').filter(v => v.trim()),
+    emoji: '🏛️'
   },
   {
-    icon: Users,
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/52/Logo_FFB.svg/200px-Logo_FFB.svg.png',
+    logoAlt: 'BTP',
+    logoBg: 'bg-white',
     key: 'btp',
     category: get('ecosysteme_btp_categorie', 'Entreprises BTP'),
     title: get('ecosysteme_btp_titre', 'Excellence opérationnelle'),
     description: get('ecosysteme_btp_description', "Les entreprises du bâtiment avec lesquelles nous collaborons sont sélectionnées pour leur savoir-faire technique, leur engagement dans la transition énergétique et leur capacité à respecter les standards de performance énergétique."),
-    values: get('ecosysteme_btp_valeurs', "Qualité d'exécution garantie\nEngagement dans la transition énergétique\nPartenaires techniques de confiance").split('\n').filter(v => v.trim())
+    values: get('ecosysteme_btp_valeurs', "Qualité d'exécution garantie\nEngagement dans la transition énergétique\nPartenaires techniques de confiance").split('\n').filter(v => v.trim()),
+    emoji: '🏗️'
   },
   {
-    icon: Shield,
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/0/09/Logo_Conseil_Superieur_du_Notariat.svg/200px-Logo_Conseil_Superieur_du_Notariat.svg.png',
+    logoAlt: 'Notaires',
+    logoBg: 'bg-white',
     key: 'notaires',
     category: get('ecosysteme_notaires_categorie', 'Notaires & Avocats'),
     title: get('ecosysteme_notaires_titre', 'Sécurisation juridique'),
     description: get('ecosysteme_notaires_description', "Accompagnement par des notaires et cabinets d'avocats spécialisés en droit immobilier, en structuration de sociétés et en gouvernance patrimoniale."),
-    values: get('ecosysteme_notaires_valeurs', "Sécurisation des opérations\nStructuration juridique adaptée\nConformité réglementaire").split('\n').filter(v => v.trim())
+    values: get('ecosysteme_notaires_valeurs', "Sécurisation des opérations\nStructuration juridique adaptée\nConformité réglementaire").split('\n').filter(v => v.trim()),
+    emoji: '⚖️'
   },
   {
-    icon: TrendingUp,
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/4/44/Logo_FNAIM.svg/200px-Logo_FNAIM.svg.png',
+    logoAlt: 'Agents immobiliers',
+    logoBg: 'bg-white',
     key: 'agents',
     category: get('ecosysteme_agents_categorie', 'Agents immobiliers'),
     title: get('ecosysteme_agents_titre', 'Sourcing & commercialisation'),
     description: get('ecosysteme_agents_description', "Réseau d'agents immobiliers pour l'accès à des opportunités off-market et la commercialisation locative des actifs réhabilités."),
-    values: get('ecosysteme_agents_valeurs', "Accès privilégié au marché\nConnaissance locale approfondie\nRéactivité commerciale").split('\n').filter(v => v.trim())
+    values: get('ecosysteme_agents_valeurs', "Accès privilégié au marché\nConnaissance locale approfondie\nRéactivité commerciale").split('\n').filter(v => v.trim()),
+    emoji: '🏠'
   },
   {
-    icon: Award,
+    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/e/e4/Logo_FBF.svg/200px-Logo_FBF.svg.png',
+    logoAlt: 'Banques',
+    logoBg: 'bg-white',
     key: 'banques',
     category: get('ecosysteme_banques_categorie', 'Établissements bancaires'),
     title: get('ecosysteme_banques_titre', 'Financement structuré'),
     description: get('ecosysteme_banques_description', "Partenariats avec des établissements de crédit pour structurer des financements adaptés aux opérations d'acquisition et de rénovation."),
-    values: get('ecosysteme_banques_valeurs', "Conditions négociées\nRelations de long terme\nExpertise financement immobilier").split('\n').filter(v => v.trim())
+    values: get('ecosysteme_banques_valeurs', "Conditions négociées\nRelations de long terme\nExpertise financement immobilier").split('\n').filter(v => v.trim()),
+    emoji: '🏦'
   },
   {
-    icon: Handshake,
+    logoUrl: null,
+    logoAlt: 'Patrimoniaux',
+    logoBg: 'bg-[#1A3A52]',
     key: 'patrimoniaux',
     category: get('ecosysteme_patrimoniaux_categorie', 'Partenaires patrimoniaux'),
     title: get('ecosysteme_patrimoniaux_titre', 'Accompagnement durable'),
     description: get('ecosysteme_patrimoniaux_description', "Des acteurs engagés dans la durée qui accompagnent les projets immobiliers par leur expertise, leur réseau et leur vision stratégique, contribuant à la pérennité du développement de la foncière."),
-    values: get('ecosysteme_patrimoniaux_valeurs', "Acteurs engagés dans la durée\nAccompagnement structuré des projets\nAlignement sur une vision patrimoniale").split('\n').filter(v => v.trim())
+    values: get('ecosysteme_patrimoniaux_valeurs', "Acteurs engagés dans la durée\nAccompagnement structuré des projets\nAlignement sur une vision patrimoniale").split('\n').filter(v => v.trim()),
+    emoji: '🤝'
   }];
 
   return (
@@ -126,8 +139,18 @@ export default function Partenaires() {
               className="bg-white rounded-3xl p-8 border border-slate-200 hover:shadow-2xl transition-all duration-300">
 
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="w-16 h-16 bg-[#1A3A52] rounded-2xl flex items-center justify-center flex-shrink-0">
-                    <partenaire.icon className="h-8 w-8 text-[#C9A961]" />
+                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-200 ${partenaire.logoBg}`}>
+                    {partenaire.logoUrl ? (
+                      <img
+                        src={partenaire.logoUrl}
+                        alt={partenaire.logoAlt}
+                        className="w-12 h-12 object-contain"
+                        onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
+                      />
+                    ) : null}
+                    <span className={`text-2xl ${partenaire.logoUrl ? 'hidden' : 'flex'} items-center justify-center w-full h-full`} style={{ display: partenaire.logoUrl ? 'none' : 'flex' }}>
+                      {partenaire.emoji}
+                    </span>
                   </div>
                   <div>
                     <p className="text-sm text-[#C9A961] font-medium uppercase tracking-wider mb-1">
