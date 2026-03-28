@@ -207,40 +207,42 @@ function calculerBP(p) {
   const valeurNette = parcBrut.map((pb, i) => pb - capitalRestant[i]);
 
   // ── DCF selon annexe §2 ───────────────────────────────────────────────────
-  // Pour chaque année n (position de valorisation), on projette 5 ans en avant :
-  //   - Flux Fk = tresoAnn[n + k] (k=1..5) avec croissance 1.5%/an déjà incluse
-  //   - VT = valeur du parc à l'an n+5 (dettes supposées soldées)
-  //   - Trésorerie = tresCum[n] (solde cumulé au moment de la valorisation)
-  // Valeur_Société[n] = (Tréso + Σ Fk/(1+i)^k + VT/(1+i)^5) × 1.05
+  // Valeur_Société en An n = (Tréso_antérieure + Σ Fk/(1+i)^k + VT/(1+i)^5) × 1.05
   //
-  // Pour les années sans 5 ans de projection disponibles (n > N-5),
-  // on projette les flux restants et complète par extrapolation (croissance 1.5%).
+  // - Tréso_antérieure = tresCum[n-1] (cash accumulé AVANT l'année n ; = 0 pour An 1)
+  // - F1..F5 = tresoAnn[n-1], tresoAnn[n], ..., tresoAnn[n+3]
+  //   (l'année n elle-même est F1, projetée sur 5 ans)
+  // - VT = parc brut à l'horizon An n+4 (= An 5 pour n=1, dettes supposées soldées)
+  //
+  // Exemple An 1 : Tréso=0, F1=tresoAnn[0], F2=tresoAnn[1], ..., F5=tresoAnn[4], VT=parcBrut[4]
 
   const valeurSociete = [];
   for (let n = 0; n < N; n++) {
-    const treso = tresCum[n];
+    // Trésorerie accumulée avant cette année (= 0 pour An 1)
+    const treso = n === 0 ? 0 : tresCum[n - 1];
 
-    // Flux futurs sur 5 ans (à partir de l'année suivante)
+    // Flux F1..F5 : l'année courante est F1, actualisés sur 5 ans
     let dcfFlux = 0;
     for (let k = 1; k <= 5; k++) {
+      const idx = n + k - 1; // tresoAnn index : An n = idx n-1, F1=tresoAnn[n-1]
       let flux;
-      if (n + k < N) {
-        flux = tresoAnn[n + k]; // flux réel disponible
+      if (idx < N) {
+        flux = tresoAnn[idx];
       } else {
-        // Extrapolation : dernier flux disponible × (1+revalo)^(écart)
-        const dernierIdx = N - 1;
-        const ecart = (n + k) - dernierIdx;
-        flux = tresoAnn[dernierIdx] * Math.pow(1 + p.tauxRevalo / 100, ecart);
+        // Extrapolation au-delà de l'horizon
+        const ecart = idx - (N - 1);
+        flux = tresoAnn[N - 1] * Math.pow(1 + p.tauxRevalo / 100, ecart);
       }
       dcfFlux += flux / Math.pow(1 + cmpc, k);
     }
 
-    // Valeur Terminale (§2) : valeur du parc à l'horizon n+5 (dettes soldées = parc brut)
+    // Valeur Terminale : valeur du parc à l'horizon n+4 (An n+5, 0-indexed = n+4)
+    const idxVT = n + 4;
     let parcHorizon;
-    if (n + 5 < N) {
-      parcHorizon = parcBrut[n + 5];
+    if (idxVT < N) {
+      parcHorizon = parcBrut[idxVT];
     } else {
-      const ecart = (n + 5) - (N - 1);
+      const ecart = idxVT - (N - 1);
       parcHorizon = parcBrut[N - 1] * Math.pow(1 + p.tauxRevalo / 100, ecart);
     }
     const vtActualisee = parcHorizon / Math.pow(1 + cmpc, 5);
