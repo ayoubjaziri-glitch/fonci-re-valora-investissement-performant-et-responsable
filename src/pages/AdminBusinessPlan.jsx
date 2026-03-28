@@ -83,45 +83,47 @@ function calcTRI(flux) {
 const DEFAULT_PARAMS = {
   // Général
   valeurParcAn1: 1250000,
-  tauxRevalo: 1.5,        // % revalorisation annuelle du parc (convention)
-  tauxLocatif: 10.0,      // % rendement locatif brut
-  tauxCharges: 10.0,      // % charges non récupérables
-  tauxRemuDir: 15.0,      // % rémunération direction (sauf An1=0)
+  tauxRevalo: 1.5,
+  tauxLocatif: 10.0,
+  tauxCharges: 10.0,
+  tauxRemuDir: 15.0,      // % des loyers de l'année précédente (sauf An1=0)
   tauxIS: 15.0,
-  primeSynergie: 5.0,     // % prime de synergie (× 1.05 sur la DCF)
+  primeSynergie: 5.0,
 
-  // CMPC selon l'annexe méthodologique :
-  // i = (6.5% × 20%) + (coût_dette × 80%)
-  // LTC cible : 80% dette / 20% fonds propres
-  ltcDette: 80,           // % part dette dans le financement
-  ltcFondsPropres: 20,    // % part fonds propres
-  coutFondsPropres: 6.5,  // % rendement attendu investisseurs (hurdle)
-  // coût de la dette = taux moyen des prêts (calculé dynamiquement)
+  // CMPC : i = (6.5% × 22%) + (3.3% × 78%) = 0.04004
+  ltcDette: 78,
+  ltcFondsPropres: 22,
+  coutFondsPropres: 6.5,
 
   // Investisseur
   investissement: 275000,
-  nbActions: 200000,
+  nbActions: 200000,      // fixe, 200 000 actions (Excel)
   hurdle: 6.5,
   carriedPct: 20.0,
 
-  // Répartition (fixe)
-  detentionA: 0.5340703962269258,
+  // Répartition exacte Excel
+  detentionA:  0.5340703962269258,
   detentionBC: 0.4659296037730742,
 
   // 5 prêts exacts de l'Excel
   prets: [
-    { id: 1, label: 'Prêt 1 (initial)',  montant: 1025000,           taux: 3.3, duree: 15, anneeDebut: 1 },
-    { id: 2, label: 'Prêt 2 (An 6)',     montant: 206884.39609947032, taux: 3.3, duree: 15, anneeDebut: 6 },
-    { id: 3, label: 'Prêt 3 (An 8)',     montant: 157031.13352050213, taux: 3.3, duree: 15, anneeDebut: 8 },
-    { id: 4, label: 'Prêt 4 (An 10)',    montant: 107208.58150780172, taux: 3.3, duree: 15, anneeDebut: 10 },
-    { id: 5, label: 'Prêt 5 (An 11)',    montant: 82392.81625715252,  taux: 3.3, duree: 15, anneeDebut: 11 },
+    { id: 1, label: 'Prêt 1 (An 1)',  montant: 1025000,            taux: 3.3, duree: 15, anneeDebut: 1 },
+    { id: 2, label: 'Prêt 2 (An 6)',  montant: 206884.39609947032,  taux: 3.3, duree: 15, anneeDebut: 6 },
+    { id: 3, label: 'Prêt 3 (An 8)',  montant: 157031.13352050213,  taux: 3.3, duree: 15, anneeDebut: 8 },
+    { id: 4, label: 'Prêt 4 (An 10)', montant: 107208.58150780172,  taux: 3.3, duree: 15, anneeDebut: 10 },
+    { id: 5, label: 'Prêt 5 (An 11)', montant: 82392.81625715252,   taux: 3.3, duree: 15, anneeDebut: 11 },
   ],
 
+  // Acquisitions déduites de la différence de parc brut dans l'Excel
+  // An6: 1605210.50 - 1268750*(1.015) = ~278506
+  // An8: 1850016.90 - 1629288.66*(1.015) = ~220728
+  // An10: 2039944.39 - 1877767.16*(1.015) = ~162177
+  // An11: 2173534.58 - 2039944.39*(1.015) = ~133590
   acquisitions: [
-    { id: 1, label: 'Acquisition An 6',  annee: 6,  valeur: 278506.10 },
-    { id: 2, label: 'Acquisition An 8',  annee: 8,  valeur: 220728.23 },
-    { id: 3, label: 'Acquisition An 10', annee: 10, valeur: 162176.97 },
-    { id: 4, label: 'Acquisition An 11', annee: 11, valeur: 133590.16 },
+    { id: 1, label: 'Acquisition An 6',  annee: 6,  valeur: 278506.0617985567  },
+    { id: 2, label: 'Acquisition An 8',  annee: 8,  valeur: 220728.24729284515 },
+    { id: 3, label: 'Acquisition An 10', annee: 10, valeur: 162176.234751938   },
+    { id: 4, label: 'Acquisition An 11', annee: 11, valeur: 133590.18618130613 },
   ],
 };
 
@@ -138,7 +140,7 @@ const DEFAULT_PARAMS = {
 //   Croissance annuelle actifs & loyers = 1.5%/an (§5)
 // ═════════════════════════════════════════════════════════════════════════════
 function calculerBP(p) {
-  const N = 11;
+  const N = 15;
 
   // ── Taux moyen pondéré des prêts (coût de la dette) ──────────────────────
   const totalPretsMontant = p.prets.reduce((s, pr) => s + pr.montant, 0);
@@ -262,6 +264,7 @@ function calculerBP(p) {
   const ltc     = parcBrut.map((pb, i) => pb > 0 ? capitalRestant[i] / pb : 0);
   const dscrBrut = loyers.map((l, i) => serviceDette[i] > 0 ? l / serviceDette[i] : null);
   const dscrNet  = loyers.map((l, i) => serviceDette[i] > 0 ? (l - charges[i]) / serviceDette[i] : null);
+  // Plus-value potentielle = parc brut - parc An1, uniquement à partir d'An 5
   const plusValuePot = parcBrut.map((pb, i) => i >= 4 ? pb - p.valeurParcAn1 : null);
 
   // ── Investisseur ──────────────────────────────────────────────────────────
@@ -475,15 +478,8 @@ export default function AdminBusinessPlan() {
   const removeAcq = id => set('acquisitions', params.acquisitions.filter(a => a.id !== id));
   const updateAcq = (id, k, v) => set('acquisitions', params.acquisitions.map(a => a.id === id ? { ...a, [k]: v } : a));
 
-  // Calcul BP — nbActions = valeurSociete An1 pour que valeurAction An1 = 1€
-  const annees = useMemo(() => {
-    // Premier calcul pour obtenir la valeur société An1
-    const first = calculerBP(params);
-    const valSocAn1 = first[0]?.valeurSociete || params.nbActions;
-    // Recalculer avec nbActions = valeurSociete An1
-    const paramsAjustes = { ...params, nbActions: Math.round(valSocAn1) };
-    return calculerBP(paramsAjustes);
-  }, [params]);
+  // Calcul BP — nbActions fixe (200 000 comme dans l'Excel)
+  const annees = useMemo(() => calculerBP(params), [params]);
   const N = annees.length;
   const labels = annees.map(a => `An ${a.annee}`);
 
@@ -554,10 +550,10 @@ export default function AdminBusinessPlan() {
         <div className="grid grid-cols-2 md:grid-cols-5 gap-3">
           {[
             { label: 'Parc An 1',          val: eur(annees[0]?.parcBrut),      sub: 'Valeur brute initiale' },
-            { label: 'Parc An 11',         val: eur(derniere.parcBrut),         sub: `+${((derniere.parcBrut / (annees[0]?.parcBrut||1) - 1)*100).toFixed(0)}%` },
+            { label: 'Parc An 15',         val: eur(derniere.parcBrut),         sub: `+${((derniere.parcBrut / (annees[0]?.parcBrut||1) - 1)*100).toFixed(0)}%` },
             { label: 'TRI Net An 5',        val: triAn5 ? `${(triAn5*100).toFixed(2)}%` : '—',  sub: 'Hurdle 6,5%', ok: triAn5 >= 0.065 },
             { label: 'TRI Net An 10',       val: triAn10 ? `${(triAn10*100).toFixed(2)}%` : '—', sub: 'Hurdle 6,5%', ok: triAn10 >= 0.065 },
-            { label: 'Valeur Société An 11',val: eur(derniere.valeurSociete),    sub: `Action : ${derniere.valeurAction ? eur2(derniere.valeurAction) : '—'}` },
+            { label: 'Valeur Société An 11',val: eur(annees[10]?.valeurSociete), sub: `Action : ${annees[10]?.valeurAction ? eur2(annees[10].valeurAction) : '—'}` },
           ].map((k, i) => (
             <div key={i} className="bg-white/10 rounded-xl p-3">
               <p className="text-white/40 text-xs mb-1">{k.label}</p>
@@ -785,52 +781,50 @@ export default function AdminBusinessPlan() {
             </div>
 
             <BPTable N={N} rows={[
-              // ── I. PATRIMOINE ─────────────────────────────────────────────
-              { label: 'I. PATRIMOINE & ENDETTEMENT', section: true, sectionKey: 'patrimoine' },
-              { label: 'Valeur du parc brut',          data: annees.map(a => a.parcBrut),       fmt: eur,  hl: 'gold' },
-              { label: 'Capital restant dû (dettes)',  data: annees.map(a => a.capitalRestant),  fmt: eur,  hl: 'red' },
-              { label: 'Valeur nette du parc',         data: annees.map(a => a.valeurNette),     fmt: eur,  hl: 'total' },
+              // ── I. EXPLOITATION DU PARC ───────────────────────────────────
+              { label: 'I. EXPLOITATION DU PARC', section: true, sectionKey: 'patrimoine' },
+              { label: 'Valeur du Parc Immobilier Brut (€)',                     data: annees.map(a => a.parcBrut),        fmt: eur,  hl: 'gold' },
+              { label: 'Valeur du Parc Immobilier NET (€)',                      data: annees.map(a => a.valeurNette),      fmt: eur,  hl: 'total' },
+              { label: `Revenus Locatifs brut (${params.tauxLocatif}%)`,         data: annees.map(a => a.loyers),           fmt: eur,  hl: 'green' },
+              { label: `Charges non récupérables (${params.tauxCharges}%)`,      data: annees.map(a => a.charges),          fmt: eur,  hl: 'red' },
+              { label: `Rémunération direction (${params.tauxRemuDir}% loyers N-1)`, data: annees.map(a => a.remuDir),     fmt: v => v === 0 ? '—' : eur(v), hl: 'red' },
+              { label: 'Bonus Performance si évolution >10%',                   data: Array(N).fill(0),                    fmt: () => '0 €' },
 
-              // ── II. EXPLOITATION ─────────────────────────────────────────
-              { label: 'II. EXPLOITATION', section: true, sectionKey: 'flux' },
-              { label: `Revenus locatifs bruts (${params.tauxLocatif}%)`,       data: annees.map(a => a.loyers),       fmt: eur, hl: 'green' },
-              { label: `Charges non récupérables (${params.tauxCharges}%)`,    data: annees.map(a => a.charges),      fmt: eur, hl: 'red' },
-              { label: `Rémunération direction (${params.tauxRemuDir}%)`,       data: annees.map(a => a.remuDir),      fmt: eur, hl: 'red' },
-              { label: 'Service de la dette (annuités)',                        data: annees.map(a => a.serviceDette), fmt: eur, hl: 'red' },
-              { label: 'Amortissement comptable',                               data: annees.map(a => a.amortissement),fmt: eur },
-              { label: 'Résultat comptable avant IS',                           data: annees.map(a => a.resultatAvIS), fmt: eur, hl: 'gold' },
-              { label: `Impôt sur les sociétés (IS ${params.tauxIS}%)`,        data: annees.map(a => a.IS),           fmt: eur, hl: 'red' },
+              // ── II. FLUX ET DÉSENDETTEMENT ────────────────────────────────
+              { label: 'II. FLUX ET DÉSENDETTEMENT', section: true, sectionKey: 'flux' },
+              { label: 'Service Dette (Intérêts + Cap.)',                        data: annees.map(a => a.serviceDette),     fmt: eur,  hl: 'red' },
+              { label: 'Amortissement comptable',                                data: annees.map(a => a.amortissement),    fmt: v => v === 0 ? '—' : eur(v) },
+              { label: 'Plus-value potentielle (objectif refinancement)',         data: annees.map(a => a.plusValuePot),     fmt: v => v == null ? '—' : eur(v) },
+              { label: 'Résultat comptable avant IS',                            data: annees.map(a => a.resultatAvIS),     fmt: eur,  hl: 'gold' },
+              { label: `IS (${params.tauxIS}%)`,                                 data: annees.map(a => a.IS),               fmt: eur,  hl: 'red' },
+              { label: 'Trésorerie Cumulée (Sté)',                               data: annees.map(a => a.tresCum),          fmt: eur,  hl: 'total' },
+              { label: 'Trésorerie annuelle',                                    data: annees.map(a => a.tresoAnn),         fmt: eur,  hl: 'green' },
 
-              // ── III. TRÉSORERIE ───────────────────────────────────────────
-              { label: 'III. TRÉSORERIE', section: true, sectionKey: 'flux' },
-              { label: 'Trésorerie nette annuelle',    data: annees.map(a => a.tresoAnn),  fmt: eur, hl: 'green' },
-              { label: 'Trésorerie nette cumulée',     data: annees.map(a => a.tresCum),   fmt: eur, hl: 'total' },
-              { label: 'Plus-value potentielle (An5+)',data: annees.map(a => a.plusValuePot), fmt: v => v == null ? '—' : eur(v) },
+              // ── III. VALORISATION DCF ─────────────────────────────────────
+              { label: `III. VALORISATION (DCF) — CMPC ${(cmpcAffiche*100).toFixed(3)}% · ×${(1+params.primeSynergie/100).toFixed(2)} synergie`, section: true, sectionKey: 'valorisation' },
+              { label: 'Valeur de la Société (DCF)',                             data: annees.map(a => a.valeurSociete),    fmt: eur,  hl: 'gold' },
+              { label: 'Nombre d\'actions totale',                               data: Array(N).fill(params.nbActions),     fmt: f0 },
+              { label: 'Valeur de l\'Action (€) avant carried',                  data: annees.map(a => a.valeurAction),     fmt: v => f4(v) + ' €', hl: 'gold' },
 
-              // ── IV. VALORISATION DCF ─────────────────────────────────────
-              { label: `IV. VALORISATION DCF (×${(1 + params.primeSynergie/100).toFixed(2)} synergie · CMPC ${(cmpcAffiche*100).toFixed(2)}%)`, section: true, sectionKey: 'valorisation' },
-              { label: 'Valeur de la société (DCF)',   data: annees.map(a => a.valeurSociete), fmt: eur,  hl: 'gold' },
-              { label: "Valeur de l'action",           data: annees.map(a => a.valeurAction),  fmt: eur2, hl: 'gold' },
-              { label: 'Nb actions (= valeur An1)',    data: annees.map(() => annees[0]?.valeurSociete || 0), fmt: v => f0(Math.round(v)) },
+              // ── IV. RÉPARTITION CAPITAL ───────────────────────────────────
+              { label: 'IV. RÉPARTITION CAPITAL', section: true, sectionKey: 'capital' },
+              { label: `% Détention Catégorie A (${(params.detentionA*100).toFixed(4)}%)`,    data: Array(N).fill(params.detentionA),  fmt: pct2 },
+              { label: `% Détention Catégories B/C (${(params.detentionBC*100).toFixed(4)}%)`,data: Array(N).fill(params.detentionBC), fmt: pct2 },
 
-              // ── V. RÉPARTITION ────────────────────────────────────────────
-              { label: 'V. RÉPARTITION DU CAPITAL', section: true, sectionKey: 'capital' },
-              { label: `Détention Cat. A — ${(params.detentionA*100).toFixed(2)}%`,   data: Array(N).fill(params.detentionA),  fmt: pct2 },
-              { label: `Détention Cat. B/C — ${(params.detentionBC*100).toFixed(2)}%`,data: Array(N).fill(params.detentionBC), fmt: pct2 },
+              // ── V. RATIOS ─────────────────────────────────────────────────
+              { label: 'V. RATIOS', section: true, sectionKey: 'ratios' },
+              { label: 'DSCR SUR LOYER BRUT',                                   data: annees.map(a => a.dscrBrut),         fmt: v => v == null ? '—' : f4(v) },
+              { label: 'DSCR SUR LOYER NET',                                    data: annees.map(a => a.dscrNet),          fmt: v => v == null ? '—' : f4(v) },
+              { label: 'LTC',                                                    data: annees.map(a => a.ltc),              fmt: pct2, hl: 'gold' },
 
-              // ── VI. RATIOS ────────────────────────────────────────────────
-              { label: 'VI. RATIOS FINANCIERS', section: true, sectionKey: 'ratios' },
-              { label: 'LTC — Capital dû / Parc brut',  data: annees.map(a => a.ltc),      fmt: pct2, hl: 'gold' },
-              { label: 'DSCR brut — Loyers / Service',  data: annees.map(a => a.dscrBrut), fmt: v => v == null ? '—' : f4(v) },
-              { label: 'DSCR net — (Loyers–Charges) / Service', data: annees.map(a => a.dscrNet), fmt: v => v == null ? '—' : f4(v) },
-
-              // ── VII. INVESTISSEUR ─────────────────────────────────────────
-              { label: `VII. INVESTISSEUR — Hurdle ${params.hurdle}% · Carried ${params.carriedPct}%`, section: true, sectionKey: 'investisseur' },
-              { label: 'Valeur part investisseur (B/C)', data: annees.map(a => a.valeurInvest),    fmt: eur },
-              { label: `Hurdle annuel (${params.hurdle}%)`,data: annees.map(a => a.hurdle),        fmt: eur, hl: 'red' },
-              { label: 'Carried Interest',               data: annees.map(a => a.carriedInterest), fmt: v => v == null ? '—' : eur(v), hl: 'red' },
-              { label: 'Retour net investisseur',        data: annees.map(a => a.retourNet),       fmt: v => v == null ? '—' : eur(v), hl: 'green' },
-              { label: 'TRI net investisseur',           data: annees.map(a => a.triNet),          fmt: v => v == null ? '—' : pct2(v), hl: 'tri' },
+              // ── VI. INVESTISSEUR ──────────────────────────────────────────
+              { label: `VI. INVESTISSEUR — Hurdle ${params.hurdle}% · Carried ${params.carriedPct}%`, section: true, sectionKey: 'investisseur' },
+              { label: 'Investissement initial',                                 data: annees.map((_, i) => i === 0 ? params.investissement : null), fmt: v => v == null ? '—' : eur(v) },
+              { label: 'Valeur créée pour les investisseurs',                   data: annees.map(a => a.valeurInvest),     fmt: eur },
+              { label: `Rendement annuel investisseur — Hurdle (${params.hurdle}%)`, data: annees.map(a => a.hurdle),      fmt: eur,  hl: 'red' },
+              { label: 'Carried Interest',                                       data: annees.map(a => a.carriedInterest), fmt: v => v == null ? '—' : eur(v), hl: 'red' },
+              { label: 'Retour sur investissement NET',                         data: annees.map(a => a.retourNet),        fmt: v => v == null ? '—' : eur(v), hl: 'green' },
+              { label: 'TRI NET',                                                data: annees.map(a => a.triNet),           fmt: v => v == null ? '—' : pct2(v), hl: 'tri' },
             ]} />
           </div>
         )}
