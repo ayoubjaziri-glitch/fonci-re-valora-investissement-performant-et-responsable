@@ -78,26 +78,33 @@ function calcTRI(flux) {
 }
 
 // ═════════════════════════════════════════════════════════════════════════════
-// PARAMÈTRES PAR DÉFAUT — calqués exactement sur l'Excel
+// PARAMÈTRES PAR DÉFAUT
 // ═════════════════════════════════════════════════════════════════════════════
 const DEFAULT_PARAMS = {
   // Général
-  valeurParcAn1: 1250000,          // parc brut An 1 (fixe dans l'Excel)
-  tauxRevalo: 1.5,                  // % revalorisation annuelle du parc
-  tauxLocatif: 10.0,               // % rendement locatif brut (du parc brut)
-  tauxCharges: 10.0,               // % charges non récup (des loyers bruts)
-  tauxRemuDir: 15.0,               // % rémunération direction (des loyers, sauf An1=0)
-  tauxIS: 15.0,                    // % IS sur résultat avant IS
-  amortissementAn1a5: 50000,       // amortissement comptable An1–5
-  cmpc: 4.004,                     // % CMPC
+  valeurParcAn1: 1250000,
+  tauxRevalo: 1.5,        // % revalorisation annuelle du parc (convention)
+  tauxLocatif: 10.0,      // % rendement locatif brut
+  tauxCharges: 10.0,      // % charges non récupérables
+  tauxRemuDir: 15.0,      // % rémunération direction (sauf An1=0)
+  tauxIS: 15.0,
+  primeSynergie: 5.0,     // % prime de synergie (× 1.05 sur la DCF)
+
+  // CMPC selon l'annexe méthodologique :
+  // i = (6.5% × 20%) + (coût_dette × 80%)
+  // LTC cible : 80% dette / 20% fonds propres
+  ltcDette: 80,           // % part dette dans le financement
+  ltcFondsPropres: 20,    // % part fonds propres
+  coutFondsPropres: 6.5,  // % rendement attendu investisseurs (hurdle)
+  // coût de la dette = taux moyen des prêts (calculé dynamiquement)
 
   // Investisseur
   investissement: 275000,
   nbActions: 200000,
-  hurdle: 6.5,                     // % hurdle annuel
-  carriedPct: 20.0,                // % du surplus
+  hurdle: 6.5,
+  carriedPct: 20.0,
 
-  // Répartition (fixe dans l'Excel)
+  // Répartition (fixe)
   detentionA: 0.5340703962269258,
   detentionBC: 0.4659296037730742,
 
@@ -110,9 +117,6 @@ const DEFAULT_PARAMS = {
     { id: 5, label: 'Prêt 5 (An 11)',    montant: 82392.81625715252,  taux: 3.3, duree: 15, anneeDebut: 11 },
   ],
 
-  // Acquisitions (ajout de valeur au parc au début de l'année indiquée)
-  // Dans l'Excel : le parc An6 saute de ~1 327k → ~1 605k (+278k acquis financement prêt2)
-  // et An8 +221k, An10 +162k, An11 +134k — ces montants sont les prêts correspondants
   acquisitions: [
     { id: 1, label: 'Acquisition An 6',  annee: 6,  valeur: 278506.10 },
     { id: 2, label: 'Acquisition An 8',  annee: 8,  valeur: 220728.23 },
@@ -122,144 +126,143 @@ const DEFAULT_PARAMS = {
 };
 
 // ═════════════════════════════════════════════════════════════════════════════
-// MOTEUR DE CALCUL — reproduit exactement les formules Excel cellule par cellule
+// MOTEUR DE CALCUL DCF — Annexe Méthodologie d'Évaluation de la Société
+//
+// Formule DCF (§2) :
+//   Valeur_Société = (Tréso + F1/(1+i)^1 + ... + F5/(1+i)^5 + VT/(1+i)^5) × 1.05
+//
+//   i (CMPC §2) = (coutFondsPropres × ltcFondsPropres/100) + (coutDette × ltcDette/100)
+//   VT = valeur du parc immobilier à l'année de valorisation (dettes supposées soldées)
+//   Prime de synergie (§4) = 5% → coefficient × 1.05
+//   Horizon glissant de projection = 5 ans (§5)
+//   Croissance annuelle actifs & loyers = 1.5%/an (§5)
 // ═════════════════════════════════════════════════════════════════════════════
 function calculerBP(p) {
   const N = 11;
 
-  // ── Parc Brut ──────────────────────────────────────────────────────────────
-  // An1 = valeurParcAn1 (fixe)
-  // An_n = An_{n-1} * (1 + revalo) + acquisition_this_year
+  // ── Taux moyen pondéré des prêts (coût de la dette) ──────────────────────
+  const totalPretsMontant = p.prets.reduce((s, pr) => s + pr.montant, 0);
+  const coutDette = totalPretsMontant > 0
+    ? p.prets.reduce((s, pr) => s + (pr.taux / 100) * pr.montant, 0) / totalPretsMontant
+    : 0.033;
+
+  // ── CMPC selon annexe : i = (coutFP × ltcFP%) + (coutDette × ltcDette%) ─
+  const cmpc = (p.coutFondsPropres / 100) * (p.ltcFondsPropres / 100)
+             + coutDette * (p.ltcDette / 100);
+
+  const primeSynergie = 1 + (p.primeSynergie / 100); // 1.05
+
+  // ── Parc Brut par année ───────────────────────────────────────────────────
   const parcBrut = [];
   for (let i = 0; i < N; i++) {
     if (i === 0) {
       parcBrut.push(p.valeurParcAn1);
     } else {
       let val = parcBrut[i - 1] * (1 + p.tauxRevalo / 100);
-      // ajouter les acquisitions de cette année
       p.acquisitions.forEach(a => { if (a.annee === i + 1) val += a.valeur; });
       parcBrut.push(val);
     }
   }
 
-  // ── Service de dette et capital restant par année ──────────────────────────
-  // Pour chaque prêt, on calcule le tableau d'amortissement, puis pour chaque
-  // année du BP on prend la bonne période (décalée de anneeDebut).
-  // serviceDette[i] = somme des annuités de tous les prêts actifs en An(i+1)
-  // capitalRestant[i] = somme des K fin de tous les prêts actifs à la fin de An(i+1)
+  // ── Service de dette et capital restant ───────────────────────────────────
   const serviceDette = Array(N).fill(0);
   const capitalRestant = Array(N).fill(0);
-
-  p.prets.forEach(pret => {
-    const taux = pret.taux / 100;
-    const rows = tableauAmortissement(pret.montant, taux, pret.duree);
-    for (let i = 0; i < N; i++) {
-      const periodeLocal = (i + 1) - pret.anneeDebut; // 0-indexed depuis le démarrage du prêt
-      if (periodeLocal >= 0 && periodeLocal < pret.duree) {
-        serviceDette[i]   += rows[periodeLocal].ann;
-        capitalRestant[i] += rows[periodeLocal].kFin;
-      } else if (periodeLocal < 0) {
-        // prêt pas encore démarré
-        capitalRestant[i] += pret.montant;
-      }
-      // prêt terminé → 0
-    }
-  });
-
-  // ── Valeur Nette = ParcBrut - CapitalRestant ───────────────────────────────
-  const valeurNette = parcBrut.map((pb, i) => pb - capitalRestant[i]);
-
-  // ── Revenus Locatifs = ParcBrut × tauxLocatif% ───────────────────────────
-  const loyers = parcBrut.map(pb => pb * (p.tauxLocatif / 100));
-
-  // ── Charges non récupérables = Loyers × tauxCharges% ─────────────────────
-  const charges = loyers.map(l => l * (p.tauxCharges / 100));
-
-  // ── Rémunération direction ─────────────────────────────────────────────────
-  // An1 = 0, An_n = loyers[n-1] * tauxRemuDir% (loyers de l'année précédente × taux)
-  // NB: dans l'Excel An2 remu = 19031.25 = loyers_an1 × 15.22% ≈ 125000 × 15.225 = 19031.25
-  // En fait remu_An_n = loyers[n-1] × (15%) → 125000 × 0.1522 = 19031.25... cherchons le taux exact
-  // 19031.25 / 125000 = 0.152250 = 15.225%
-  // Mais on laisse le paramètre ajustable, on calcule: remu[i] = i===0 ? 0 : loyers[i-1] * tauxRemuDir/100
-  const remuDir = loyers.map((l, i) => {
-    if (i === 0) return 0;
-    return loyers[i - 1] * (p.tauxRemuDir / 100);
-  });
-
-  // ── Amortissement comptable ────────────────────────────────────────────────
-  // Excel: An1–5 = 50000, An6–7 = 60344.22, An8–9 = 68195.78, An10 = 71985.89, An11 = 77675.85
-  // Ces chiffres semblent être = serviceDette × (cap moyen / annuité) → simplification
-  // On les recalcule comme = somme capital remboursé des prêts actifs
   const amortissement = Array(N).fill(0);
+
   p.prets.forEach(pret => {
     const taux = pret.taux / 100;
     const rows = tableauAmortissement(pret.montant, taux, pret.duree);
     for (let i = 0; i < N; i++) {
       const periodeLocal = (i + 1) - pret.anneeDebut;
       if (periodeLocal >= 0 && periodeLocal < pret.duree) {
-        amortissement[i] += rows[periodeLocal].cap;
+        serviceDette[i]   += rows[periodeLocal].ann;
+        capitalRestant[i] += rows[periodeLocal].kFin;
+        amortissement[i]  += rows[periodeLocal].cap; // capital remboursé = amortissement
+      } else if (periodeLocal < 0) {
+        capitalRestant[i] += pret.montant;
       }
     }
   });
 
-  // ── Résultat comptable avant IS ───────────────────────────────────────────
-  // = Loyers - Charges - RemuDir - ServiceDette + Amortissement
+  // ── Revenus & Charges ────────────────────────────────────────────────────
+  const loyers   = parcBrut.map(pb => pb * (p.tauxLocatif / 100));
+  const charges  = loyers.map(l => l * (p.tauxCharges / 100));
+  const remuDir  = loyers.map((l, i) => i === 0 ? 0 : loyers[i - 1] * (p.tauxRemuDir / 100));
+
+  // ── Résultat comptable & IS ──────────────────────────────────────────────
   const resultatAvIS = loyers.map((l, i) =>
     l - charges[i] - remuDir[i] - serviceDette[i] + amortissement[i]
   );
-
-  // ── IS = Résultat × tauxIS% ───────────────────────────────────────────────
   const IS = resultatAvIS.map(r => Math.max(0, r * (p.tauxIS / 100)));
 
-  // ── Trésorerie Annuelle = Revenus - Charges - RemuDir - ServiceDette - IS ─
-  // (pas l'amortissement car c'est comptable, pas cash)
+  // ── Trésorerie (cash) annuelle = loyers - charges - remuDir - service dette - IS
   const tresoAnn = loyers.map((l, i) =>
     l - charges[i] - remuDir[i] - serviceDette[i] - IS[i]
   );
-
-  // ── Trésorerie Cumulée ────────────────────────────────────────────────────
   const tresCum = [];
   let cumul = 0;
-  for (let i = 0; i < N; i++) {
-    cumul += tresoAnn[i];
-    tresCum.push(cumul);
+  for (let i = 0; i < N; i++) { cumul += tresoAnn[i]; tresCum.push(cumul); }
+
+  // ── Valeur Nette comptable = ParcBrut - CapitalRestant ───────────────────
+  const valeurNette = parcBrut.map((pb, i) => pb - capitalRestant[i]);
+
+  // ── DCF selon annexe §2 ───────────────────────────────────────────────────
+  // Pour chaque année n (position de valorisation), on projette 5 ans en avant :
+  //   - Flux Fk = tresoAnn[n + k] (k=1..5) avec croissance 1.5%/an déjà incluse
+  //   - VT = valeur du parc à l'an n+5 (dettes supposées soldées)
+  //   - Trésorerie = tresCum[n] (solde cumulé au moment de la valorisation)
+  // Valeur_Société[n] = (Tréso + Σ Fk/(1+i)^k + VT/(1+i)^5) × 1.05
+  //
+  // Pour les années sans 5 ans de projection disponibles (n > N-5),
+  // on projette les flux restants et complète par extrapolation (croissance 1.5%).
+
+  const valeurSociete = [];
+  for (let n = 0; n < N; n++) {
+    const treso = tresCum[n];
+
+    // Flux futurs sur 5 ans (à partir de l'année suivante)
+    let dcfFlux = 0;
+    for (let k = 1; k <= 5; k++) {
+      let flux;
+      if (n + k < N) {
+        flux = tresoAnn[n + k]; // flux réel disponible
+      } else {
+        // Extrapolation : dernier flux disponible × (1+revalo)^(écart)
+        const dernierIdx = N - 1;
+        const ecart = (n + k) - dernierIdx;
+        flux = tresoAnn[dernierIdx] * Math.pow(1 + p.tauxRevalo / 100, ecart);
+      }
+      dcfFlux += flux / Math.pow(1 + cmpc, k);
+    }
+
+    // Valeur Terminale (§2) : valeur du parc à l'horizon n+5 (dettes soldées = parc brut)
+    let parcHorizon;
+    if (n + 5 < N) {
+      parcHorizon = parcBrut[n + 5];
+    } else {
+      const ecart = (n + 5) - (N - 1);
+      parcHorizon = parcBrut[N - 1] * Math.pow(1 + p.tauxRevalo / 100, ecart);
+    }
+    const vtActualisee = parcHorizon / Math.pow(1 + cmpc, 5);
+
+    const dcfBrut = treso + dcfFlux + vtActualisee;
+    valeurSociete.push(dcfBrut * primeSynergie);
   }
 
-  // ── Valeur de la Société (DCF) ────────────────────────────────────────────
-  // = Valeur Nette + Trésorerie Cumulée
-  const valeurSociete = valeurNette.map((vn, i) => vn + tresCum[i]);
-
-  // ── Valeur de l'action = ValeurSociété / NbActions ───────────────────────
+  // ── Valeur action ─────────────────────────────────────────────────────────
   const valeurAction = valeurSociete.map(vs => p.nbActions > 0 ? vs / p.nbActions : 0);
 
-  // ── LTC = CapitalRestant / ParcBrut ──────────────────────────────────────
-  const ltc = parcBrut.map((pb, i) => pb > 0 ? capitalRestant[i] / pb : 0);
-
-  // ── DSCR sur loyer brut = Loyers / ServiceDette ──────────────────────────
+  // ── Ratios ────────────────────────────────────────────────────────────────
+  const ltc     = parcBrut.map((pb, i) => pb > 0 ? capitalRestant[i] / pb : 0);
   const dscrBrut = loyers.map((l, i) => serviceDette[i] > 0 ? l / serviceDette[i] : null);
-
-  // ── DSCR sur loyer net = (Loyers - Charges) / ServiceDette ───────────────
-  const dscrNet = loyers.map((l, i) => serviceDette[i] > 0 ? (l - charges[i]) / serviceDette[i] : null);
-
-  // ── Plus-value potentielle (objectif refinancement) ───────────────────────
-  // = ParcBrut - ParcBrut_initial (uniquement à partir de An5)
+  const dscrNet  = loyers.map((l, i) => serviceDette[i] > 0 ? (l - charges[i]) / serviceDette[i] : null);
   const plusValuePot = parcBrut.map((pb, i) => i >= 4 ? pb - p.valeurParcAn1 : null);
 
-  // ── INVESTISSEUR ──────────────────────────────────────────────────────────
-  // Valeur créée pour les investisseurs = ValeurSociete × (investissement / TotalCapitalFondsPropres)
-  // Dans l'Excel: valeur investisseurs An1 = 275000 (= investissement)
-  // puis croît proportionnellement à la valeur société
-  // Taux de détention investisseur = investissement / valeurSociete[0]
-  // → 275000 / 590217.92 = 0.4659... = detentionBC !
-  // Donc: valeurInvest[i] = valeurSociete[i] * detentionBC
+  // ── Investisseur ──────────────────────────────────────────────────────────
+  // Détention B/C = investissement / valeurSociete[0]
   const valeurInvest = valeurSociete.map(vs => vs * p.detentionBC);
+  const hurdle = p.investissement * (p.hurdle / 100);
 
-  // ── Hurdle = investissement × 6.5% par an (fixe) ─────────────────────────
-  const hurdle = p.investissement * (p.hurdle / 100); // montant annuel fixe
-
-  // ── Carried Interest ─────────────────────────────────────────────────────
-  // À partir de An5: (ValeurInvest - InvestissementInitial - HurdlesCumulés) × carriedPct%
-  // Mais si surplus négatif → 0
   const carriedInterest = valeurInvest.map((vi, i) => {
     if (i < 4) return null;
     const hurdleCumule = p.investissement * Math.pow(1 + p.hurdle / 100, i + 1) - p.investissement;
@@ -267,25 +270,20 @@ function calculerBP(p) {
     return surplus > 0 ? surplus * (p.carriedPct / 100) : 0;
   });
 
-  // ── Retour sur investissement NET = ValeurInvest - Carried ───────────────
   const retourNet = valeurInvest.map((vi, i) => {
     if (i < 4) return null;
     return vi - (carriedInterest[i] || 0);
   });
 
-  // ── TRI NET ───────────────────────────────────────────────────────────────
-  // Flux pour le TRI: An0 = -investissement, An1..n-1 = tréso annuelle × detentionBC, An_n = retourNet
+  // ── TRI ───────────────────────────────────────────────────────────────────
   const triNet = Array(N).fill(null);
   for (let sortie = 4; sortie < N; sortie++) {
     const flux = [-p.investissement];
-    for (let j = 0; j < sortie; j++) {
-      flux.push(tresoAnn[j] * p.detentionBC);
-    }
+    for (let j = 0; j < sortie; j++) flux.push(tresoAnn[j] * p.detentionBC);
     flux.push(retourNet[sortie] || 0);
     triNet[sortie] = calcTRI(flux);
   }
 
-  // ── Assembler les années ──────────────────────────────────────────────────
   return Array.from({ length: N }, (_, i) => ({
     annee: i + 1,
     parcBrut: parcBrut[i],
@@ -311,6 +309,9 @@ function calculerBP(p) {
     carriedInterest: carriedInterest[i],
     retourNet: retourNet[i],
     triNet: triNet[i],
+    cmpc,
+    coutDette,
+    primeSynergie: primeSynergie - 1,
   }));
 }
 
@@ -417,6 +418,12 @@ export default function AdminBusinessPlan() {
   const triAn10 = annees[9]?.triNet;
   const derniere = annees[N - 1] || {};
   const totalCapitalEmprunte = params.prets.reduce((s, p) => s + p.montant, 0);
+  // CMPC affiché (recalculé pour l'affichage)
+  const totalMontant = params.prets.reduce((s,p) => s + p.montant, 0);
+  const coutDetteAffiche = totalMontant > 0
+    ? params.prets.reduce((s,p) => s + (p.taux/100)*p.montant, 0) / totalMontant
+    : 0.033;
+  const cmpcAffiche = (params.coutFondsPropres/100)*(params.ltcFondsPropres/100) + coutDetteAffiche*(params.ltcDette/100);
 
   // Données graphiques
   const chartPat = annees.map((a, i) => ({
@@ -667,16 +674,18 @@ export default function AdminBusinessPlan() {
             </div>
 
             {/* Bottom bar */}
-            <div className="bg-gradient-to-r from-[#0F2537] to-[#1A4A6A] rounded-2xl p-5 grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+            <div className="bg-gradient-to-r from-[#0F2537] to-[#1A4A6A] rounded-2xl p-5 grid grid-cols-2 md:grid-cols-5 gap-4 text-center">
               {[
-                { label: 'CMPC', val: `${params.cmpc.toFixed(2)} %` },
-                { label: 'Effet de levier', val: `×${(totalCapitalEmprunte / params.investissement).toFixed(1)}` },
-                { label: 'Rendement locatif', val: `${params.tauxLocatif} %` },
-                { label: 'Nb actions', val: f0(params.nbActions) },
+                { label: 'CMPC (calculé)', val: `${(cmpcAffiche*100).toFixed(3)} %`, sub: `${params.coutFondsPropres}%×${params.ltcFondsPropres}% + ${(coutDetteAffiche*100).toFixed(2)}%×${params.ltcDette}%` },
+                { label: 'Coût dette moyen', val: `${(coutDetteAffiche*100).toFixed(2)} %`, sub: 'Taux pondéré des prêts' },
+                { label: 'Prime synergie', val: `×${(1 + params.primeSynergie/100).toFixed(2)}`, sub: `+${params.primeSynergie}% DCF` },
+                { label: 'Rendement locatif', val: `${params.tauxLocatif} %`, sub: 'Du parc brut' },
+                { label: 'Nb actions', val: f0(params.nbActions), sub: 'Actions émises' },
               ].map((s, i) => (
                 <div key={i}>
                   <p className="text-white/40 text-xs mb-1">{s.label}</p>
-                  <p className="text-white font-bold text-xl">{s.val}</p>
+                  <p className="text-white font-bold text-lg">{s.val}</p>
+                  {s.sub && <p className="text-white/25 text-xs mt-0.5">{s.sub}</p>}
                 </div>
               ))}
             </div>
@@ -909,13 +918,36 @@ export default function AdminBusinessPlan() {
               <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2"><Building2 className="h-4 w-4 text-[#C9A961]"/> Paramètres Généraux du Parc</h3>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <InputParam label="Valeur parc An1 (€)" value={params.valeurParcAn1} onChange={v => set('valeurParcAn1', v)} suffix="€" step="1000"/>
-                <InputParam label="Revalorisation annuelle" value={params.tauxRevalo} onChange={v => set('tauxRevalo', v)} suffix="%"/>
+                <InputParam label="Croissance annuelle actifs (§5)" value={params.tauxRevalo} onChange={v => set('tauxRevalo', v)} suffix="%" />
                 <InputParam label="Rendement locatif brut" value={params.tauxLocatif} onChange={v => set('tauxLocatif', v)} suffix="%"/>
                 <InputParam label="Charges non récupérables" value={params.tauxCharges} onChange={v => set('tauxCharges', v)} suffix="%"/>
                 <InputParam label="Rémunération direction" value={params.tauxRemuDir} onChange={v => set('tauxRemuDir', v)} suffix="%"/>
                 <InputParam label="Taux IS" value={params.tauxIS} onChange={v => set('tauxIS', v)} suffix="%"/>
-                <InputParam label="CMPC" value={params.cmpc} onChange={v => set('cmpc', v)} suffix="%"/>
+                <InputParam label="Prime synergie (§4)" value={params.primeSynergie} onChange={v => set('primeSynergie', v)} suffix="%"/>
               </div>
+            </div>
+
+            {/* CMPC selon annexe */}
+            <div className="bg-white rounded-2xl border border-slate-200 p-5">
+              <h3 className="font-semibold text-[#1A3A52] mb-1 flex items-center gap-2"><TrendingUp className="h-4 w-4 text-[#C9A961]"/> CMPC — Coût Moyen Pondéré du Capital (§2 Annexe)</h3>
+              <p className="text-xs text-slate-500 mb-4">
+                Formule : <strong>i = (Coût FP × Part FP%) + (Coût Dette × Part Dette%)</strong>
+                &nbsp;→ CMPC calculé : <strong className="text-[#C9A961]">{(cmpcAffiche*100).toFixed(3)} %</strong>
+                &nbsp;· Coût dette pondéré : <strong>{(coutDetteAffiche*100).toFixed(3)} %</strong>
+              </p>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <InputParam label="Coût fonds propres (hurdle, §2)" value={params.coutFondsPropres} onChange={v => set('coutFondsPropres', v)} suffix="%"/>
+                <InputParam label="Part fonds propres (LTC, §2)" value={params.ltcFondsPropres} onChange={v => { set('ltcFondsPropres', v); set('ltcDette', 100 - v); }} suffix="%"/>
+                <InputParam label="Part dette bancaire (LTC, §2)" value={params.ltcDette} onChange={v => { set('ltcDette', v); set('ltcFondsPropres', 100 - v); }} suffix="%"/>
+                <div className="bg-[#C9A961]/10 rounded-xl border border-[#C9A961]/30 p-3 flex flex-col justify-center">
+                  <p className="text-xs text-slate-500 mb-1">CMPC résultant</p>
+                  <p className="text-xl font-bold text-[#1A3A52]">{(cmpcAffiche*100).toFixed(3)} %</p>
+                  <p className="text-xs text-slate-400 mt-0.5">Taux d'actualisation DCF</p>
+                </div>
+              </div>
+              <p className="text-xs text-slate-400 mt-3 bg-slate-50 rounded-lg p-2">
+                ℹ️ Le coût de la dette est calculé automatiquement comme le taux moyen pondéré des prêts renseignés ci-dessous (<strong>{(coutDetteAffiche*100).toFixed(3)}%</strong>). Toute modification des taux de prêts met à jour le CMPC en temps réel.
+              </p>
             </div>
 
             {/* Investisseur */}
