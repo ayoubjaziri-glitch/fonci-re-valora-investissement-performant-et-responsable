@@ -236,16 +236,20 @@ function calculerBP(p) {
       dcfFlux += flux / Math.pow(1 + cmpc, k);
     }
 
-    // Valeur Terminale : valeur du parc à l'horizon n+4 (An n+5, 0-indexed = n+4)
+    // Valeur Terminale : valeur NETTE du parc à l'horizon An n+5 (0-indexed = n+4)
+    // VT = ParcBrut[n+4] - CapitalRestant[n+4]  (dettes restantes déduites)
     const idxVT = n + 4;
-    let parcHorizon;
+    let parcHorizon, detteHorizon;
     if (idxVT < N) {
       parcHorizon = parcBrut[idxVT];
+      detteHorizon = capitalRestant[idxVT];
     } else {
       const ecart = idxVT - (N - 1);
       parcHorizon = parcBrut[N - 1] * Math.pow(1 + p.tauxRevalo / 100, ecart);
+      detteHorizon = 0; // dettes soldées au-delà de l'horizon
     }
-    const vtActualisee = parcHorizon / Math.pow(1 + cmpc, 5);
+    const vtNette = parcHorizon - detteHorizon;
+    const vtActualisee = vtNette / Math.pow(1 + cmpc, 5);
 
     const dcfBrut = treso + dcfFlux + vtActualisee;
     valeurSociete.push(dcfBrut * primeSynergie);
