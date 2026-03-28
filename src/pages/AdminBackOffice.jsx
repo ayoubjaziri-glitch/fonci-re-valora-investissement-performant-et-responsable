@@ -6,7 +6,7 @@ import {
   Lock, Eye, EyeOff, Settings, Image, Users, BarChart3, Newspaper,
   Building2, Rocket, MapPin, LogOut, Shield, LayoutDashboard,
   FileText, Mail, TrendingUp, Euro, MessageSquare, CheckCircle2,
-  Clock, AlertCircle, ChevronRight, Globe, Phone, Star, Trash2, ImageIcon, Wand2, Calculator
+  Clock, AlertCircle, ChevronRight, Globe, Phone, Star, Trash2, ImageIcon, Wand2
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,7 +25,6 @@ import AdminSections from '../components/admin/AdminSections';
 import AdminContenu from '../components/admin/AdminContenu';
 import AIPageGenerator from '../components/admin/AIPageGenerator';
 import AdminVisiteurs from '../components/admin/AdminVisiteurs';
-import AdminBusinessPlan from './AdminBusinessPlan';
 
 // ─── Login ───────────────────────────────────────────────────────────────────
 function AdminLogin({ onLogin }) {
@@ -284,12 +283,6 @@ const navGroups = [
     ]
   },
   {
-    label: 'Finance',
-    items: [
-      { id: 'businessplan', label: 'Business Plan', icon: Calculator },
-    ]
-  },
-  {
     label: 'Espace Associés',
     items: [
       { id: 'acces', label: 'Accès Associés', icon: Users },
@@ -342,7 +335,6 @@ export default function AdminBackOffice() {
     actu: 'Actualités',
     biens: 'Biens & Acquisitions',
     roadmap: 'Roadmap',
-    businessplan: 'Business Plan Interactif',
   };
 
   return (
@@ -434,7 +426,7 @@ export default function AdminBackOffice() {
           {activeTab === 'actu' && <EspaceAssocieTabWrapper tab="actu" />}
           {activeTab === 'biens' && <EspaceAssocieTabWrapper tab="acq" />}
           {activeTab === 'roadmap' && <EspaceAssocieTabWrapper tab="roadmap" />}
-          {activeTab === 'businessplan' && <AdminBusinessPlan />}
+
         </div>
       </div>
 
