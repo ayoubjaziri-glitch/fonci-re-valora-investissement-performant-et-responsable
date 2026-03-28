@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { genererRapportPDF } from '../components/GenerateurRapportPDF';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
@@ -736,9 +737,25 @@ export default function EspaceAssocie() {
                 )}
               </div>
 
-              <Button className="w-full bg-[#1A3A52] hover:bg-[#2A4A6F] text-white font-semibold">
-                <FileSpreadsheet className="mr-2 h-5 w-5" />
-                Générer Rapport Financier
+              <Button
+                className="w-full bg-[#1A3A52] hover:bg-[#2A4A6F] text-white font-semibold"
+                onClick={() => genererRapportPDF({
+                  associeName,
+                  kpis,
+                  valorisationSociete,
+                  leveeEnCours,
+                  indicRaw,
+                  energieRaw,
+                  resultatsRaw,
+                  gouvernanceRaw,
+                  patrimoine,
+                  acquisitionsEnCours,
+                  chantiers,
+                  roadmap,
+                  actualites,
+                })}>
+                <Download className="mr-2 h-5 w-5" />
+                Générer Rapport PDF
               </Button>
             </motion.div>
 
