@@ -69,7 +69,8 @@ export function genererRapportPDF({
   function kpiBox(x, yPos, w, h, label, value, sub, positive = true) {
     doc.setFillColor(...lightGray);
     doc.roundedRect(x, yPos, w, h, 2, 2, 'F');
-    doc.setFillColor(...(positive ? emerald : [239, 68, 68]));
+    const accentColor = positive ? emerald : [239, 68, 68];
+    doc.setFillColor(accentColor[0], accentColor[1], accentColor[2]);
     doc.rect(x, yPos, 3, h, 'F');
     doc.setFontSize(7);
     doc.setFont('helvetica', 'normal');
@@ -244,7 +245,7 @@ export function genererRapportPDF({
   doc.text(leveeEnCours.titre || 'Série A — Levée de Fonds Inaugurale', 20, y + 9);
   doc.setFontSize(7.5);
   doc.setFont('helvetica', 'normal');
-  doc.setTextColor([26, 58, 82, 0.8]);
+  doc.setTextColor(26, 58, 82);
   if (leveeEnCours.description) {
     const lines = doc.splitTextToSize(leveeEnCours.description, W - 40);
     doc.text(lines[0], 20, y + 16);
@@ -406,11 +407,13 @@ export function genererRapportPDF({
     checkY(14);
     const isActive = item.statut === 'en_cours';
     const isDone = item.statut === 'termine';
-    doc.setFillColor(...(isDone ? [16, 185, 129] : isActive ? gold : [210, 214, 220]));
+    const circleColor = isDone ? [16, 185, 129] : isActive ? gold : [210, 214, 220];
+    doc.setFillColor(circleColor[0], circleColor[1], circleColor[2]);
     doc.circle(20, y + 5, 3, 'F');
     doc.setFontSize(8.5);
     doc.setFont('helvetica', isActive ? 'bold' : 'normal');
-    doc.setTextColor(...(isActive ? navy : textGray));
+    const stepColor = isActive ? navy : textGray;
+    doc.setTextColor(stepColor[0], stepColor[1], stepColor[2]);
     doc.text(item.etape, 28, y + 6);
     doc.setFontSize(7.5);
     doc.setFont('helvetica', 'normal');
