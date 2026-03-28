@@ -57,7 +57,6 @@ export default function BlogArticle() {
   const { data: articlesDB = [], isLoading } = useQuery({
     queryKey: ['blog-articles'],
     queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 100),
-    initialData: []
   });
 
   // Mapper les articles de la BDD au format utilisé
