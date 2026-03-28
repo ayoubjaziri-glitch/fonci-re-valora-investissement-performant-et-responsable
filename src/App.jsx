@@ -6,6 +6,7 @@ import { pagesConfig } from './pages.config'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import AdminBackOffice from './pages/AdminBackOffice';
+import AdminBusinessPlan from './pages/AdminBusinessPlan';
 import BlogArticle from './pages/BlogArticle';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
@@ -61,6 +62,7 @@ const AuthenticatedApp = () => {
         />
       ))}
       <Route path="/admin" element={<AdminBackOffice />} />
+      <Route path="/admin/business-plan" element={<AdminBusinessPlan />} />
       <Route path="/blog/:slug" element={<LayoutWrapper currentPageName="BlogArticle"><BlogArticle /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
