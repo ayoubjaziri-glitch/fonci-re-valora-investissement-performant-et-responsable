@@ -233,23 +233,23 @@ export default function EspaceAssocie() {
 
   // DB data - Synchronize from both RealisationBien (actifs réalisés) and AcquisitionAssocie (patrimoine)
   const patrimoine = [
-    // Biens réalisés actifs (RealisationBien)
-    ...realisationDb.map((r) => ({
-      nom: r.titre,
-      lots: r.logements ? parseInt(r.logements) : 0,
-      valeur: r.investissement || '—',
-      dpe: r.dpe_apres,
-      occupation: r.plus_value || '—'
-    })),
-    // Acquisitions de type patrimoine
-    ...acqDb.filter((a) => a.type === 'patrimoine').map((a) => ({
-      nom: a.ville,
-      lots: a.lots,
-      valeur: a.valeur,
-      dpe: a.dpe,
-      occupation: a.occupation
-    }))
-  ];
+  // Biens réalisés actifs (RealisationBien)
+  ...realisationDb.map((r) => ({
+    nom: r.titre,
+    lots: r.logements ? parseInt(r.logements) : 0,
+    valeur: r.investissement || '—',
+    dpe: r.dpe_apres,
+    occupation: r.plus_value || '—'
+  })),
+  // Acquisitions de type patrimoine
+  ...acqDb.filter((a) => a.type === 'patrimoine').map((a) => ({
+    nom: a.ville,
+    lots: a.lots,
+    valeur: a.valeur,
+    dpe: a.dpe,
+    occupation: a.occupation
+  }))];
+
 
 
   const acquisitionsEnCours = acqDb.filter((a) => a.type === 'acquisition_en_cours').length > 0 ?
@@ -752,7 +752,7 @@ export default function EspaceAssocie() {
                   acquisitionsEnCours,
                   chantiers,
                   roadmap,
-                  actualites,
+                  actualites
                 })}>
                 <Download className="mr-2 h-5 w-5" />
                 Générer Rapport PDF
@@ -891,24 +891,24 @@ export default function EspaceAssocie() {
             </motion.div>
 
             {/* Gouvernance */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-              className="bg-gradient-to-br from-[#1A3A52] to-[#2A4A6F] rounded-2xl p-6 shadow-sm">
+            
 
-              <div className="flex items-center gap-3 mb-4">
-                <Users className="h-6 w-6 text-[#C9A961]" />
-                <h3 className="text-lg font-semibold text-white">Comité Opérationnel</h3>
-              </div>
-              <p className="text-white/70 text-sm mb-4">
-                {gouvernanceRaw.texte}
-              </p>
-              <Button className="w-full bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-                Accéder au Comité
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </motion.div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
           </div>
         </div>
 
