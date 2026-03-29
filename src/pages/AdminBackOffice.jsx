@@ -29,6 +29,7 @@ import AdminVisiteurs from '../components/admin/AdminVisiteurs';
 import AdminTaches from '../components/taches/AdminTaches';
 import ValoraAI from '../components/admin/ValoraAI';
 import AdminContactConfig from '../components/admin/AdminContactConfig';
+import AuditGlobal from '../components/admin/AuditGlobal';
 
 // ─── Login ───────────────────────────────────────────────────────────────────
 function AdminLogin({ onLogin }) {
@@ -530,7 +531,8 @@ const navGroups = [
   items: [
   { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
   { id: 'acces', label: 'Accès Associés', icon: Users },
-  { id: 'admin', label: 'Accès Admin', icon: Shield }]
+  { id: 'admin', label: 'Accès Admin', icon: Shield },
+  { id: 'audit', label: '🔍 Audit Global', icon: Shield }]
 
 }];
 
@@ -560,6 +562,7 @@ export default function AdminBackOffice() {
     dashboard: 'Dashboard',
     ai: '✦ Valora AI — Agent de Direction',
     memoire: '🧠 Mémoire de Valora AI',
+    audit: '🔍 Audit Global du Contenu',
     taches: 'Gestion des Tâches',
     contacts: 'Demandes de Contact',
     contact_config: 'Paramètres des contacts',
@@ -648,6 +651,7 @@ export default function AdminBackOffice() {
         {/* Content */}
         <div className="flex-1 p-6 lg:p-8">
           {activeTab === 'ai' && <ValoraAI />}
+          {activeTab === 'audit' && <AuditGlobal />}
           {activeTab === 'dashboard' && <DashboardSection onNavigate={setActiveTab} />}
           {activeTab === 'taches' && <AdminTaches />}
           {activeTab === 'contacts' && <DemandesContactSection />}
