@@ -88,7 +88,7 @@ export default function Equipe() {
 
 
   const groupStats = [
-  { labelKey: "equipe_stat1_label", valueKey: "equipe_stat1_valeur", labelFallback: "Actifs sous gestion", valueFallback: "3 M€" },
+  { labelKey: "equipe_stat1_label", valueKey: "equipe_stat1_valeur", labelFallback: "Actifs sous gestion", valueFallback: "3,7 M€" },
   { labelKey: "equipe_stat2_label", valueKey: "equipe_stat2_valeur", labelFallback: "Entreprises BTP", valueFallback: "30+" },
   { labelKey: "equipe_stat3_label", valueKey: "equipe_stat3_valeur", labelFallback: "Collaborateurs", valueFallback: "4" },
   { labelKey: "equipe_stat4_label", valueKey: "equipe_stat4_valeur", labelFallback: "Années d'expertise", valueFallback: "18 ans" }];
@@ -294,7 +294,7 @@ export default function Equipe() {
                   <p className="text-white/60 text-sm">{get('equipe_holding_stat1_label', "D'expertise")}</p>
                 </div>
                 <div className="bg-white/5 rounded-xl p-4">
-                  <p className="text-2xl font-bold text-[#C9A961]">{get('equipe_holding_stat2_val', '3.7 M€')}</p>
+                  <p className="text-2xl font-bold text-[#C9A961]">{get('equipe_holding_stat2_val', '3,7 M€')}</p>
                   <p className="text-white/60 text-sm">{get('equipe_holding_stat2_label', 'Valorisation')}</p>
                 </div>
               </div>
@@ -442,9 +442,9 @@ export default function Equipe() {
               {get('equipe_cta_description', 'Portée par un groupe solide depuis 2008, contribuez à la création de valeur patrimoniale durable.')}
             </p>
             <Link to={createPageUrl("Contact")}>
-              <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
+              <Button className="bg-slate-900 hover:bg-[#2A4A6F] text-white px-8 py-4 text-base font-semibold rounded-md gap-2">
                 Devenir associé
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="h-5 w-5" />
               </Button>
             </Link>
           </motion.div>

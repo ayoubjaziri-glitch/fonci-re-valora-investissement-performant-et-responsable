@@ -56,7 +56,7 @@ export default function Home() {
 
   const stats = [
   { value: get('home_stat1_valeur', '18 ans'), label: get('home_stat1_label', "D'expertise immobilière"), icon: Calendar },
-  { value: get('home_stat2_valeur', '3 M€'), label: get('home_stat2_label', "D'actifs sous gestion"), icon: Building2 },
+  { value: get('home_stat2_valeur', '3.7 M€'), label: get('home_stat2_label', "D'actifs sous gestion"), icon: Building2 },
   { value: get('home_stat3_valeur', '>10%'), label: get('home_stat3_label', "TRI net visé"), icon: Percent },
   { value: get('home_stat4_valeur', '20 M€'), label: get('home_stat4_label', "Objectif 5 ans"), icon: Target }];
 
@@ -227,7 +227,7 @@ export default function Home() {
               </div>
               <div className="bg-slate-900 p-6 text-center rounded-2xl">
                 <Building2 className="h-8 w-8 text-[#C9A961] mx-auto mb-3" />
-                <p className="text-3xl font-bold text-white mb-1">{get('home_chiffre2_valeur', '3.7 M€')}</p>
+                <p className="text-3xl font-bold text-white mb-1">{get('home_chiffre2_valeur', '3,7 M€')}</p>
                 <p className="text-sm text-white/60">{get('home_chiffre2_label', "D'actifs sous gestion")}</p>
               </div>
               <div className="bg-[#C9A961] rounded-2xl p-6 text-center">

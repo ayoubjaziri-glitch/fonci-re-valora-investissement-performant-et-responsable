@@ -106,7 +106,7 @@ export default function Realisations() {
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <div className="text-center">
-              <p className="text-3xl font-bold text-[#C9A961]">{get('realisations_stat1_valeur', '3.7 M€')}</p>
+              <p className="text-3xl font-bold text-[#C9A961]">{get('realisations_stat1_valeur', '3,7 M€')}</p>
               <p className="text-sm text-slate-600">{get('realisations_stat1_label', 'Patrimoine sous gestion')}</p>
             </div>
             <div className="text-center">
@@ -249,9 +249,9 @@ export default function Realisations() {
             {get('realisations_cta_description', 'Accédez à une exposition immobilière structurée et à un pilotage professionnel.')}
           </p>
           <Link to={createPageUrl("Contact")}>
-            <Button className="bg-slate-900 text-white px-8 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 hover:bg-[#2A4A6F]">
+            <Button className="bg-slate-900 hover:bg-[#2A4A6F] text-white px-8 py-4 text-base font-semibold rounded-md gap-2">
               Entrer en relation
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="h-5 w-5" />
             </Button>
           </Link>
         </div>

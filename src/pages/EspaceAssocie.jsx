@@ -185,9 +185,9 @@ export default function EspaceAssocie() {
                 </div>
               }
 
-              <Button type="submit" className="bg-slate-900 text-white px-4 py-6 text-sm font-semibold rounded-md inline-flex items-center justify-center gap-2 whitespace-nowrap transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 shadow h-9 w-full hover:bg-[#2A4A6F]">
+              <Button type="submit" className="bg-slate-900 hover:bg-[#2A4A6F] text-white w-full py-4 text-base font-semibold rounded-md gap-2">
                 Connexion sécurisée
-                <ArrowRight className="ml-2 h-5 w-5" />
+                <ArrowRight className="h-5 w-5" />
               </Button>
             </form>
 
