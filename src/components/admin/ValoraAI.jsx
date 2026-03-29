@@ -4,10 +4,22 @@ import {
   Send, Plus, Sparkles, Trash2, Bot, User, Loader2, Zap, Globe,
   Database, FileText, CheckSquare, Calendar, Share2, Check, X,
   RotateCcw, Image, Linkedin, Instagram, AlertTriangle, ChevronDown,
-  ChevronUp, Play, Eye, Clock
+  ChevronUp, Play, Eye, Clock, Brain, Edit2, Power, Tag
 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
+const CATEGORIES = ['Stratégie', 'Patrimoine', 'Finances', 'Équipe', 'Investisseurs', 'Communication', 'Marché', 'Autre'];
+const CAT_COLORS = {
+  'Stratégie': 'bg-blue-100 text-blue-700', 'Patrimoine': 'bg-amber-100 text-amber-700',
+  'Finances': 'bg-green-100 text-green-700', 'Équipe': 'bg-purple-100 text-purple-700',
+  'Investisseurs': 'bg-orange-100 text-orange-700', 'Communication': 'bg-pink-100 text-pink-700',
+  'Marché': 'bg-teal-100 text-teal-700', 'Autre': 'bg-slate-100 text-slate-600',
+};
+const EMPTY_NOTE = { titre: '', categorie: 'Autre', contenu: '', actif: true };
 
 const SUGGESTIONS = [
   "Rédige un article de blog SEO sur l'investissement immobilier à Vichy avec image",
@@ -293,6 +305,103 @@ function MessageBubble({ message, onApprove, onReject, isExecuting, convId }) {
   );
 }
 
+// ─── Panneau Mémoire ──────────────────────────────────────────────────────────
+function MemoirePanel() {
+  const qc = useQueryClient();
+  const [form, setForm] = useState(null);
+
+  const { data: notes = [] } = useQuery({
+    queryKey: ['valora-memoire'],
+    queryFn: () => base44.entities.ValoraAIMemoire.list('-created_date', 200),
+  });
+
+  const invalidate = () => qc.invalidateQueries({ queryKey: ['valora-memoire'] });
+  const createMut = useMutation({ mutationFn: (d) => base44.entities.ValoraAIMemoire.create(d), onSuccess: invalidate });
+  const updateMut = useMutation({ mutationFn: ({ id, data }) => base44.entities.ValoraAIMemoire.update(id, data), onSuccess: invalidate });
+  const deleteMut = useMutation({ mutationFn: (id) => base44.entities.ValoraAIMemoire.delete(id), onSuccess: invalidate });
+
+  const handleSave = async () => {
+    if (!form.titre?.trim() || !form.contenu?.trim()) return;
+    if (form.id) await updateMut.mutateAsync({ id: form.id, data: { titre: form.titre, categorie: form.categorie, contenu: form.contenu, actif: form.actif } });
+    else await createMut.mutateAsync({ titre: form.titre, categorie: form.categorie, contenu: form.contenu, actif: form.actif ?? true });
+    setForm(null);
+  };
+
+  const activeCount = notes.filter(n => n.actif).length;
+
+  return (
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Header */}
+      <div className="p-4 border-b border-white/10 flex items-center justify-between flex-shrink-0">
+        <div>
+          <p className="text-white font-semibold text-sm flex items-center gap-2"><Brain className="h-4 w-4 text-[#C9A961]" /> Mémoire AI</p>
+          <p className="text-white/40 text-xs mt-0.5">{activeCount} note{activeCount !== 1 ? 's' : ''} active{activeCount !== 1 ? 's' : ''}</p>
+        </div>
+        <button onClick={() => setForm({ ...EMPTY_NOTE })}
+          className="w-8 h-8 bg-[#C9A961] hover:bg-[#B8994F] rounded-lg flex items-center justify-center flex-shrink-0 transition-colors">
+          <Plus className="h-4 w-4 text-[#1A3A52]" />
+        </button>
+      </div>
+
+      {/* Formulaire */}
+      {form && (
+        <div className="p-3 bg-[#0A1E2F] border-b border-white/10 space-y-2 flex-shrink-0">
+          <Input placeholder="Titre (ex: Projet Lyon 2025)"
+            value={form.titre} onChange={e => setForm(f => ({ ...f, titre: e.target.value }))}
+            className="bg-white/10 border-white/20 text-white placeholder-white/30 text-xs h-8" />
+          <select value={form.categorie} onChange={e => setForm(f => ({ ...f, categorie: e.target.value }))}
+            className="w-full px-2 py-1.5 rounded-lg bg-white/10 border border-white/20 text-white text-xs focus:outline-none">
+            {CATEGORIES.map(c => <option key={c} value={c} className="text-black">{c}</option>)}
+          </select>
+          <Textarea placeholder="Contexte, chiffres, décisions, informations clés à mémoriser..."
+            value={form.contenu} onChange={e => setForm(f => ({ ...f, contenu: e.target.value }))}
+            rows={4} className="bg-white/10 border-white/20 text-white placeholder-white/30 text-xs resize-none" />
+          <div className="flex gap-2">
+            <button onClick={() => setForm(null)} className="flex-1 py-1.5 text-xs text-white/50 hover:text-white border border-white/20 rounded-lg transition-colors">Annuler</button>
+            <button onClick={handleSave} disabled={!form.titre?.trim() || !form.contenu?.trim()}
+              className="flex-1 py-1.5 text-xs bg-[#C9A961] text-[#1A3A52] font-bold rounded-lg hover:bg-[#B8994F] disabled:opacity-40 transition-colors">
+              Enregistrer
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Liste notes */}
+      <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
+        {notes.length === 0 && !form && (
+          <div className="text-center py-8">
+            <Brain className="h-8 w-8 text-white/10 mx-auto mb-2" />
+            <p className="text-white/30 text-xs">Aucune note de mémoire</p>
+            <p className="text-white/20 text-xs mt-1">Ajoutez du contexte pour enrichir les connaissances de l'IA</p>
+          </div>
+        )}
+        {notes.map(note => (
+          <div key={note.id} className={`rounded-xl p-2.5 border transition-all ${note.actif ? 'bg-white/5 border-white/10' : 'bg-transparent border-white/5 opacity-50'}`}>
+            <div className="flex items-start justify-between gap-1.5 mb-1">
+              <p className="text-white text-xs font-semibold flex-1 truncate">{note.titre}</p>
+              <div className="flex items-center gap-1 flex-shrink-0">
+                <button onClick={() => updateMut.mutate({ id: note.id, data: { actif: !note.actif } })}
+                  className={`w-5 h-5 rounded flex items-center justify-center transition-colors ${note.actif ? 'text-emerald-400 hover:text-emerald-300' : 'text-white/30 hover:text-white/60'}`}>
+                  <Power className="h-3 w-3" />
+                </button>
+                <button onClick={() => setForm({ ...note })} className="w-5 h-5 rounded flex items-center justify-center text-white/30 hover:text-white/70 transition-colors">
+                  <Edit2 className="h-3 w-3" />
+                </button>
+                <button onClick={() => { if (confirm('Supprimer ?')) deleteMut.mutate(note.id); }}
+                  className="w-5 h-5 rounded flex items-center justify-center text-white/30 hover:text-red-400 transition-colors">
+                  <Trash2 className="h-3 w-3" />
+                </button>
+              </div>
+            </div>
+            <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-medium ${CAT_COLORS[note.categorie] || CAT_COLORS['Autre']}`}>{note.categorie}</span>
+            <p className="text-white/40 text-xs mt-1.5 line-clamp-2">{note.contenu}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Main ValoraAI ────────────────────────────────────────────────────────────
 export default function ValoraAI() {
   const [conversations, setConversations] = useState([]);
@@ -302,6 +411,7 @@ export default function ValoraAI() {
   const [loading, setLoading] = useState(false);
   const [isExecuting, setIsExecuting] = useState(false);
   const [loadingConvs, setLoadingConvs] = useState(true);
+  const [sidebarTab, setSidebarTab] = useState('missions'); // 'missions' | 'memoire'
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const activeConvRef = useRef(null);
@@ -492,7 +602,8 @@ export default function ValoraAI() {
 
       {/* Sidebar */}
       <div className="w-64 bg-[#0F2537] flex flex-col flex-shrink-0">
-        <div className="p-4 border-b border-white/10">
+        {/* Logo + onglets */}
+        <div className="p-4 border-b border-white/10 flex-shrink-0">
           <div className="flex items-center gap-2 mb-3">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#C9A961] to-[#8B6F1E] flex items-center justify-center">
               <Sparkles className="h-4 w-4 text-white" />
@@ -502,54 +613,54 @@ export default function ValoraAI() {
               <p className="text-white/40 text-xs">Validation avant action</p>
             </div>
           </div>
-          <button onClick={newConversation}
-            className="w-full flex items-center justify-center gap-2 py-2 bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] rounded-xl text-sm font-bold transition-colors">
-            <Plus className="h-4 w-4" /> Nouvelle mission
-          </button>
+          {/* Onglets */}
+          <div className="flex gap-1 bg-white/5 rounded-xl p-1">
+            <button onClick={() => setSidebarTab('missions')}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${sidebarTab === 'missions' ? 'bg-[#C9A961] text-[#1A3A52]' : 'text-white/50 hover:text-white'}`}>
+              <Bot className="h-3 w-3" /> Missions
+            </button>
+            <button onClick={() => setSidebarTab('memoire')}
+              className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${sidebarTab === 'memoire' ? 'bg-[#C9A961] text-[#1A3A52]' : 'text-white/50 hover:text-white'}`}>
+              <Brain className="h-3 w-3" /> Mémoire
+            </button>
+          </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto p-2 space-y-1">
-          {loadingConvs ? (
-            <div className="flex justify-center py-8">
-              <Loader2 className="h-5 w-5 text-white/30 animate-spin" />
+        {/* Contenu sidebar selon onglet */}
+        {sidebarTab === 'missions' ? (
+          <>
+            <div className="p-2 flex-shrink-0">
+              <button onClick={newConversation}
+                className="w-full flex items-center justify-center gap-2 py-2 bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] rounded-xl text-sm font-bold transition-colors">
+                <Plus className="h-4 w-4" /> Nouvelle mission
+              </button>
             </div>
-          ) : conversations.length === 0 ? (
-            <p className="text-white/30 text-xs text-center py-8">Aucune mission encore</p>
-          ) : (
-            conversations.map(conv => (
-              <div key={conv.id} onClick={() => selectConversation(conv)}
-                className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-left transition-all group cursor-pointer ${
-                  activeConvId === conv.id ? 'bg-white/15 text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'}`}>
-                <Bot className="h-3.5 w-3.5 flex-shrink-0 opacity-60" />
-                <span className="flex-1 text-xs truncate">{conv.metadata?.name || 'Mission'}</span>
-                <span onClick={(e) => deleteConversation(e, conv.id)}
-                  className="opacity-0 group-hover:opacity-100 text-white/40 hover:text-red-400 transition-all flex-shrink-0 p-0.5 rounded cursor-pointer">
-                  <Trash2 className="h-3 w-3" />
-                </span>
-              </div>
-            ))
-          )}
-        </div>
-
-        {/* Capacités */}
-        <div className="p-3 border-t border-white/10 space-y-1">
-          <p className="text-white/30 text-[10px] uppercase tracking-widest font-semibold px-1 mb-2">Capacités</p>
-          {[
-            { icon: Eye, label: 'Propose un plan d\'abord' },
-            { icon: Check, label: 'Validation avant exécution' },
-            { icon: RotateCcw, label: 'Revert disponible' },
-            { icon: Image, label: 'Génération d\'images' },
-            { icon: Linkedin, label: 'Contenu LinkedIn' },
-            { icon: Instagram, label: 'Contenu Instagram' },
-            { icon: FileText, label: 'Rédaction blog & contenu' },
-            { icon: Database, label: 'Modification site' },
-          ].map(({ icon: Icon, label }) => (
-            <div key={label} className="flex items-center gap-2 px-2 py-0.5">
-              <Icon className="h-3 w-3 text-[#C9A961]" />
-              <span className="text-white/50 text-xs">{label}</span>
+            <div className="flex-1 overflow-y-auto p-2 space-y-1">
+              {loadingConvs ? (
+                <div className="flex justify-center py-8"><Loader2 className="h-5 w-5 text-white/30 animate-spin" /></div>
+              ) : conversations.length === 0 ? (
+                <p className="text-white/30 text-xs text-center py-8">Aucune mission encore</p>
+              ) : (
+                conversations.map(conv => (
+                  <div key={conv.id} onClick={() => selectConversation(conv)}
+                    className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-left transition-all group cursor-pointer ${
+                      activeConvId === conv.id ? 'bg-white/15 text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'}`}>
+                    <Bot className="h-3.5 w-3.5 flex-shrink-0 opacity-60" />
+                    <span className="flex-1 text-xs truncate">{conv.metadata?.name || 'Mission'}</span>
+                    <span onClick={(e) => deleteConversation(e, conv.id)}
+                      className="opacity-0 group-hover:opacity-100 text-white/40 hover:text-red-400 transition-all flex-shrink-0 p-0.5 rounded cursor-pointer">
+                      <Trash2 className="h-3 w-3" />
+                    </span>
+                  </div>
+                ))
+              )}
             </div>
-          ))}
-        </div>
+          </>
+        ) : (
+          <div className="flex-1 overflow-hidden">
+            <MemoirePanel />
+          </div>
+        )}
       </div>
 
       {/* Zone chat */}
