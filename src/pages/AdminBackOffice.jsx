@@ -520,12 +520,6 @@ const navGroups = [
     ]
   },
   {
-    label: 'Paramètres',
-    items: [
-      { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
-    ]
-  },
-  {
     label: 'Espace Associés',
     items: [
       { id: 'acces', label: 'Accès Associés', icon: Users },
@@ -535,6 +529,12 @@ const navGroups = [
       { id: 'actu', label: 'Actualités', icon: Newspaper },
       { id: 'biens', label: 'Biens & Acquisitions', icon: Building2 },
       { id: 'roadmap', label: 'Roadmap', icon: Rocket },
+    ]
+  },
+  {
+    label: 'Paramètres',
+    items: [
+      { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
     ]
   },
 ];
