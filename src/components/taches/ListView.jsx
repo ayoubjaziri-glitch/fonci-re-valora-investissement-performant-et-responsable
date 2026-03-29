@@ -149,12 +149,26 @@ function SectionGroup({ titre, taches, onTacheClick, onDelete }) {
 }
 
 export default function ListView({ taches, onTacheClick, onDelete }) {
+  const qc = useQueryClient();
+  const [addingSection, setAddingSection] = useState(false);
+  const [newSectionName, setNewSectionName] = useState('');
+
   const sections = {};
   taches.forEach(t => {
     const s = t.section || 'Sans section';
     if (!sections[s]) sections[s] = [];
     sections[s].push(t);
   });
+
+  const handleAddSection = async () => {
+    const name = newSectionName.trim();
+    if (!name) return;
+    // Créer une tâche placeholder dans la nouvelle section pour l'initialiser
+    await base44.entities.Tache.create({ titre: 'Nouvelle tâche', statut: 'A faire', section: name });
+    qc.invalidateQueries({ queryKey: ['taches'] });
+    setNewSectionName('');
+    setAddingSection(false);
+  };
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
@@ -173,12 +187,34 @@ export default function ListView({ taches, onTacheClick, onDelete }) {
       ))}
 
       {taches.length === 0 && (
-        <div className="py-16 text-center text-slate-400">
+        <div className="py-10 text-center text-slate-400">
           <p className="text-4xl mb-3">📋</p>
           <p className="font-medium">Aucune tâche pour le moment</p>
-          <p className="text-sm mt-1">Créez votre première tâche</p>
+          <p className="text-sm mt-1">Créez votre première tâche ou ajoutez une section</p>
         </div>
       )}
+
+      {/* Ajouter une section */}
+      <div className="border-t border-slate-100 px-4 py-2">
+        {addingSection ? (
+          <div className="flex items-center gap-2">
+            <input autoFocus
+              className="flex-1 text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-[#C9A961]"
+              placeholder="Nom de la section…"
+              value={newSectionName}
+              onChange={e => setNewSectionName(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') handleAddSection(); if (e.key === 'Escape') { setAddingSection(false); setNewSectionName(''); } }}
+            />
+            <button onClick={handleAddSection} className="text-xs bg-[#1A3A52] text-white px-3 py-1.5 rounded-lg">Créer</button>
+            <button onClick={() => { setAddingSection(false); setNewSectionName(''); }} className="text-xs text-slate-400">✕</button>
+          </div>
+        ) : (
+          <button onClick={() => setAddingSection(true)}
+            className="flex items-center gap-2 text-slate-400 hover:text-[#1A3A52] text-sm py-1 transition-colors">
+            <Plus className="h-3.5 w-3.5" /> Ajouter une section
+          </button>
+        )}
+      </div>
     </div>
   );
 }
