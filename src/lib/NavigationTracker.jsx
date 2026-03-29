@@ -70,12 +70,23 @@ export default function NavigationTracker() {
         // Fetch geo data from free IP API then save
         const geoCache = sessionStorage.getItem('_valora_geo');
         const saveView = (geo = {}) => {
-            base44.entities.PageView.create({
+            // Extraire les mots-clés de la recherche depuis le referrer
+        let searchKeywords = '';
+        if (document.referrer) {
+            try {
+                const refUrl = new URL(document.referrer);
+                // Google : ?q=... Bing : ?q=... Yahoo : ?p=...
+                searchKeywords = refUrl.searchParams.get('q') || refUrl.searchParams.get('p') || '';
+            } catch (e) {}
+        }
+
+        base44.entities.PageView.create({
                 page: label,
                 path: pathname,
                 session_id: getSessionId(),
                 user_agent: navigator.userAgent.slice(0, 200),
-                referrer: document.referrer ? document.referrer.slice(0, 200) : '',
+                referrer: document.referrer ? document.referrer.slice(0, 500) : '',
+                search_keywords: searchKeywords.slice(0, 200),
                 country: geo.country || '',
                 city: geo.city || '',
                 lat: geo.lat || null,

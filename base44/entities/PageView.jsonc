@@ -20,7 +20,11 @@
     },
     "referrer": {
       "type": "string",
-      "description": "URL de provenance"
+      "description": "URL compl\u00e8te de provenance"
+    },
+    "search_keywords": {
+      "type": "string",
+      "description": "Mots-cl\u00e9s tap\u00e9s dans Google/Bing pour arriver sur le site"
     },
     "country": {
       "type": "string",
