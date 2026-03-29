@@ -43,6 +43,11 @@
       "type": "string",
       "description": "Nom de la personne assign\u00e9e"
     },
+    "responsable_email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email du responsable (pour les notifications)"
+    },
     "date_debut": {
       "type": "string",
       "format": "date"

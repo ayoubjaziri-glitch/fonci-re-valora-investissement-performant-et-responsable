@@ -1,14 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
-import { Plus, List, LayoutDashboard, Calendar, BarChart2, Search, Filter, SlidersHorizontal, ChevronDown, Flag, User, Clock, CheckCircle2, AlertCircle, X } from 'lucide-react';
+import { Plus, List, Calendar, BarChart2, Search, SlidersHorizontal, Users, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import KanbanView from './KanbanView';
 import ListView from './ListView';
 import GanttChart from './GanttChart';
 import CalendrierView from './CalendrierView';
 import TacheDetail from './TacheDetail';
 import ProjetsSidebar from './ProjetsSidebar';
+import GestionResponsables from './GestionResponsables';
 
 const STATUTS = ['A faire', 'En cours', 'En révision', 'Terminé', 'Bloqué'];
 const PRIORITES = ['Urgente', 'Haute', 'Moyenne', 'Basse'];
@@ -105,6 +105,7 @@ export default function AdminTaches() {
   const [tacheDetail, setTacheDetail] = useState(null);
   const [showNew, setShowNew] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
+  const [showResponsables, setShowResponsables] = useState(false);
 
   const { data: taches = [] } = useQuery({
     queryKey: ['taches'],
@@ -162,9 +163,14 @@ export default function AdminTaches() {
           <h2 className="text-xl font-bold text-[#1A3A52]">Gestion des tâches</h2>
           <p className="text-slate-400 text-sm">{stats.total} tâche{stats.total > 1 ? 's' : ''} · {stats.enCours} en cours · {stats.terminees} terminées{stats.enRetard > 0 ? ` · ⚠️ ${stats.enRetard} en retard` : ''}</p>
         </div>
-        <Button onClick={() => setShowNew(true)} className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white gap-2">
-          <Plus className="h-4 w-4" /> Nouvelle tâche
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline" onClick={() => setShowResponsables(true)} className="gap-2 border-slate-200 text-slate-600">
+            <Users className="h-4 w-4" /> Responsables
+          </Button>
+          <Button onClick={() => setShowNew(true)} className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white gap-2">
+            <Plus className="h-4 w-4" /> Nouvelle tâche
+          </Button>
+        </div>
       </div>
 
       <div className="flex gap-4 items-start">
@@ -232,6 +238,7 @@ export default function AdminTaches() {
       {/* Modals */}
       {showNew && <NouvellesTacheModal projets={projets} onClose={() => setShowNew(false)} onCreate={handleCreate} />}
       {tacheDetail && <TacheDetail tache={tacheDetail} onClose={() => setTacheDetail(null)} projets={projets} />}
+      {showResponsables && <GestionResponsables onClose={() => setShowResponsables(false)} />}
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { X, Calendar, User, Tag, Flag, CheckSquare, Plus, Trash2, MessageSquare, Paperclip, ChevronDown, ChevronRight, AlertCircle, Clock, BarChart2 } from 'lucide-react';
+import { X, Calendar, User, Tag, Flag, CheckSquare, Plus, Trash2, MessageSquare, ChevronDown, Clock, BarChart2, Mail, Bell } from 'lucide-react';
 import { base44 } from '@/api/base44Client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 
 const STATUTS = ['A faire', 'En cours', 'En révision', 'Terminé', 'Bloqué'];
@@ -15,20 +15,6 @@ const STATUT_COLORS = {
   'Bloqué': 'bg-red-100 text-red-700',
 };
 
-const PRIORITE_COLORS = {
-  'Urgente': 'text-red-500',
-  'Haute': 'text-orange-500',
-  'Moyenne': 'text-yellow-500',
-  'Basse': 'text-slate-400',
-};
-
-const PRIORITE_FLAGS = {
-  'Urgente': '🔴',
-  'Haute': '🟠',
-  'Moyenne': '🟡',
-  'Basse': '⚪',
-};
-
 function parseJSON(str, fallback = []) {
   try { return JSON.parse(str || '[]'); } catch { return fallback; }
 }
@@ -39,10 +25,19 @@ export default function TacheDetail({ tache, onClose, projets = [] }) {
   const [newSousTache, setNewSousTache] = useState('');
   const [newComment, setNewComment] = useState('');
   const [saving, setSaving] = useState(false);
+  const [sendingNotif, setSendingNotif] = useState(false);
+  const [notifMsg, setNotifMsg] = useState('');
+
+  const { data: responsables = [] } = useQuery({
+    queryKey: ['responsables'],
+    queryFn: () => base44.entities.Responsable.list(),
+  });
 
   const sousTaches = parseJSON(data.sous_taches);
   const commentaires = parseJSON(data.commentaires);
   const tags = (data.tags || '').split(',').map(t => t.trim()).filter(Boolean);
+
+  const prevStatut = tache.statut;
 
   const save = async (patch) => {
     const updated = { ...data, ...patch };
@@ -51,6 +46,36 @@ export default function TacheDetail({ tache, onClose, projets = [] }) {
     await base44.entities.Tache.update(tache.id, patch);
     qc.invalidateQueries({ queryKey: ['taches'] });
     setSaving(false);
+
+    // Notifier si tâche terminée
+    if (patch.statut === 'Terminé' && prevStatut !== 'Terminé' && updated.responsable_email) {
+      sendNotif('completed', tache.id);
+    }
+  };
+
+  const sendNotif = async (type, tacheId) => {
+    setSendingNotif(true);
+    try {
+      await base44.functions.invoke('notifyResponsable', { type, tacheId: tacheId || tache.id });
+      setNotifMsg(`✓ Email "${type}" envoyé`);
+      setTimeout(() => setNotifMsg(''), 3000);
+    } catch (e) {
+      setNotifMsg('Erreur envoi email');
+    }
+    setSendingNotif(false);
+  };
+
+  const handleResponsableChange = async (responsableId) => {
+    const resp = responsables.find(r => r.id === responsableId);
+    if (!resp) {
+      await save({ assigne_a: '', responsable_email: '' });
+      return;
+    }
+    await save({ assigne_a: resp.nom, responsable_email: resp.email });
+    // Envoyer email d'assignation
+    if (resp.email) {
+      setTimeout(() => sendNotif('assigned', tache.id), 500);
+    }
   };
 
   const addSousTache = async () => {
@@ -80,10 +105,12 @@ export default function TacheDetail({ tache, onClose, projets = [] }) {
   const faitCount = sousTaches.filter(s => s.fait).length;
   const pct = sousTaches.length > 0 ? Math.round((faitCount / sousTaches.length) * 100) : (data.avancement || 0);
 
+  const isOverdue = data.date_echeance && new Date(data.date_echeance) < new Date() && data.statut !== 'Terminé';
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/40" onClick={onClose}>
       <div className="bg-white h-full w-full max-w-2xl shadow-2xl flex flex-col overflow-hidden" onClick={e => e.stopPropagation()}>
-        
+
         {/* Header */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-slate-200 bg-white">
           <div className="flex items-center gap-3 flex-1 min-w-0">
@@ -102,11 +129,25 @@ export default function TacheDetail({ tache, onClose, projets = [] }) {
           </div>
           <div className="flex items-center gap-2">
             {saving && <span className="text-xs text-slate-400">Enregistrement…</span>}
+            {notifMsg && <span className="text-xs text-emerald-600 font-medium">{notifMsg}</span>}
             <button onClick={onClose} className="p-1.5 rounded-lg hover:bg-slate-100 text-slate-500">
               <X className="h-5 w-5" />
             </button>
           </div>
         </div>
+
+        {/* Alerte retard */}
+        {isOverdue && (
+          <div className="bg-red-50 border-b border-red-200 px-6 py-2 flex items-center gap-2">
+            <span className="text-red-600 text-sm font-medium">⚠️ Cette tâche est en retard</span>
+            {data.responsable_email && (
+              <button onClick={() => sendNotif('overdue')} disabled={sendingNotif}
+                className="ml-auto text-xs bg-red-100 hover:bg-red-200 text-red-700 px-3 py-1 rounded-lg font-medium transition-colors">
+                <Bell className="h-3 w-3 inline mr-1" />Alerter le responsable
+              </button>
+            )}
+          </div>
+        )}
 
         <div className="flex-1 overflow-y-auto">
           <div className="p-6 space-y-6">
@@ -137,16 +178,41 @@ export default function TacheDetail({ tache, onClose, projets = [] }) {
                 </select>
               </div>
 
-              {/* Assigné à */}
-              <div>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5 flex items-center gap-1"><User className="h-3 w-3" /> Assigné à</p>
-                <input
-                  className="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-full focus:outline-none focus:border-[#C9A961]"
-                  value={data.assigne_a || ''}
-                  placeholder="Personne…"
-                  onChange={e => setData(d => ({ ...d, assigne_a: e.target.value }))}
-                  onBlur={() => save({ assigne_a: data.assigne_a })}
-                />
+              {/* Responsable */}
+              <div className="col-span-2">
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                  <User className="h-3 w-3" /> Responsable
+                </p>
+                <div className="flex items-center gap-2">
+                  <select
+                    value={responsables.find(r => r.email === data.responsable_email)?.id || ''}
+                    onChange={e => handleResponsableChange(e.target.value)}
+                    className="flex-1 text-sm border border-slate-200 rounded-lg px-3 py-1.5 focus:outline-none focus:border-[#C9A961]"
+                  >
+                    <option value="">— Aucun responsable —</option>
+                    {responsables.filter(r => r.actif !== false).map(r => (
+                      <option key={r.id} value={r.id}>{r.nom} ({r.email})</option>
+                    ))}
+                  </select>
+                  {data.responsable_email && (
+                    <div className="flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs px-2.5 py-1.5 rounded-lg">
+                      <Mail className="h-3 w-3" />
+                      <span className="max-w-[120px] truncate">{data.responsable_email}</span>
+                    </div>
+                  )}
+                </div>
+                {data.responsable_email && (
+                  <div className="mt-2 flex gap-2">
+                    <button onClick={() => sendNotif('assigned')} disabled={sendingNotif}
+                      className="text-xs text-slate-500 hover:text-[#1A3A52] bg-slate-50 hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1">
+                      <Mail className="h-3 w-3" /> Envoyer assignation
+                    </button>
+                    <button onClick={() => sendNotif('reminder')} disabled={sendingNotif || !data.date_echeance}
+                      className="text-xs text-slate-500 hover:text-[#1A3A52] bg-slate-50 hover:bg-slate-100 border border-slate-200 px-2.5 py-1 rounded-lg transition-colors flex items-center gap-1 disabled:opacity-40">
+                      <Bell className="h-3 w-3" /> Envoyer rappel
+                    </button>
+                  </div>
+                )}
               </div>
 
               {/* Projet */}
@@ -173,8 +239,11 @@ export default function TacheDetail({ tache, onClose, projets = [] }) {
 
               {/* Date échéance */}
               <div>
-                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5 flex items-center gap-1"><Clock className="h-3 w-3" /> Échéance</p>
-                <input type="date" className="text-sm border border-slate-200 rounded-lg px-3 py-1.5 w-full focus:outline-none focus:border-[#C9A961]"
+                <p className="text-xs font-semibold text-slate-400 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+                  <Clock className="h-3 w-3" /> Échéance
+                  {isOverdue && <span className="text-red-500 ml-1">⚠️ Retard</span>}
+                </p>
+                <input type="date" className={`text-sm border rounded-lg px-3 py-1.5 w-full focus:outline-none focus:border-[#C9A961] ${isOverdue ? 'border-red-300 bg-red-50' : 'border-slate-200'}`}
                   value={data.date_echeance || ''}
                   onChange={e => save({ date_echeance: e.target.value })}
                 />
