@@ -1,18 +1,25 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Send, Plus, Sparkles, Trash2, Bot, User, Loader2, Zap, Globe, Database, FileText, CheckSquare } from 'lucide-react';
+import { Send, Plus, Sparkles, Trash2, Bot, User, Loader2, Zap, Globe, Database, FileText, CheckSquare, Calendar, Share2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 const SUGGESTIONS = [
-  "Analyse les statistiques de visiteurs et rédige un rapport complet",
-  "Crée un article de blog sur l'investissement immobilier à Vichy",
-  "Planifie une roadmap complète pour le prochain trimestre",
+  "Génère un calendrier éditorial LinkedIn pour les 2 prochaines semaines",
+  "Rédige 3 posts Instagram sur nos dernières rénovations",
+  "Analyse les stats visiteurs et propose une stratégie de contenu",
+  "Crée un article de blog SEO sur l'investissement immobilier à Vichy",
+  "Modifie le texte d'accroche de la page d'accueil",
+  "Planifie les tâches du prochain trimestre avec jalons",
   "Rédige une newsletter pour les associés sur l'avancement des projets",
-  "Analyse toutes les tâches en retard et propose un plan d'action",
-  "Crée 3 nouvelles actualités pour l'espace associés",
-  "Optimise le contenu SEO de la page d'accueil",
-  "Génère un rapport stratégique sur le portefeuille immobilier",
+  "Génère un rapport stratégique sur notre portefeuille immobilier",
 ];
+
+// Appel au proxy backend (contourne l'auth Base44 du back-office custom)
+async function agentProxy(action, payload = {}) {
+  const res = await base44.functions.invoke('valoraAiProxy', { action, payload });
+  if (!res.data?.success) throw new Error(res.data?.error || 'Erreur proxy agent');
+  return res.data.data;
+}
 
 function MessageBubble({ message }) {
   const isUser = message.role === 'user';
@@ -32,7 +39,9 @@ function MessageBubble({ message }) {
                 <Database className="h-3 w-3 text-[#C9A961]" />
                 <span className="font-mono">{tc.name?.replace(/_/g, ' ')}</span>
                 {tc.status === 'completed' && <span className="ml-auto text-emerald-500">✓</span>}
-                {(tc.status === 'running' || tc.status === 'in_progress') && <Loader2 className="ml-auto h-3 w-3 animate-spin text-[#C9A961]" />}
+                {(tc.status === 'running' || tc.status === 'in_progress') && (
+                  <Loader2 className="ml-auto h-3 w-3 animate-spin text-[#C9A961]" />
+                )}
               </div>
             ))}
           </div>
@@ -56,7 +65,16 @@ function MessageBubble({ message }) {
                   h2: ({ children }) => <h2 className="text-sm font-bold my-2 text-[#1A3A52]">{children}</h2>,
                   h3: ({ children }) => <h3 className="text-sm font-semibold my-1 text-[#1A3A52]">{children}</h3>,
                   code: ({ children }) => <code className="bg-slate-100 px-1 py-0.5 rounded text-xs font-mono">{children}</code>,
-                  blockquote: ({ children }) => <blockquote className="border-l-2 border-[#C9A961] pl-3 my-2 text-slate-600 italic">{children}</blockquote>,
+                  blockquote: ({ children }) => (
+                    <blockquote className="border-l-2 border-[#C9A961] pl-3 my-2 text-slate-600 italic">{children}</blockquote>
+                  ),
+                  table: ({ children }) => (
+                    <div className="overflow-x-auto my-2">
+                      <table className="text-xs border-collapse w-full">{children}</table>
+                    </div>
+                  ),
+                  th: ({ children }) => <th className="border border-slate-200 bg-slate-50 px-2 py-1 text-left font-semibold">{children}</th>,
+                  td: ({ children }) => <td className="border border-slate-200 px-2 py-1">{children}</td>,
                 }}
               >
                 {message.content}
@@ -84,29 +102,42 @@ export default function ValoraAI() {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const activeConvRef = useRef(null);
+  const pollIntervalRef = useRef(null);
 
   useEffect(() => {
     loadConversations();
+    return () => clearInterval(pollIntervalRef.current);
   }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Subscribe to real-time updates whenever the active conversation changes
-  useEffect(() => {
-    if (!activeConvId) return;
-    const unsub = base44.agents.subscribeToConversation(activeConvId, (data) => {
-      setMessages(data.messages || []);
-      setLoading(false);
-    });
-    return unsub;
-  }, [activeConvId]);
+  // Polling pour récupérer les réponses de l'agent (remplace la subscription WebSocket qui nécessite auth Base44)
+  const startPolling = (convId) => {
+    clearInterval(pollIntervalRef.current);
+    pollIntervalRef.current = setInterval(async () => {
+      try {
+        const conv = await agentProxy('getConversation', { conversationId: convId });
+        const newMessages = conv.messages || [];
+        setMessages(newMessages);
+        // Arrêter de loader si l'agent a répondu (dernier message = assistant)
+        const lastMsg = newMessages[newMessages.length - 1];
+        if (lastMsg && lastMsg.role === 'assistant') {
+          setLoading(false);
+        }
+      } catch (e) {
+        // silent
+      }
+    }, 2000);
+  };
+
+  const stopPolling = () => clearInterval(pollIntervalRef.current);
 
   const loadConversations = async () => {
     setLoadingConvs(true);
     try {
-      const convs = await base44.agents.listConversations({ agent_name: 'valora_ai' });
+      const convs = await agentProxy('listConversations', {});
       setConversations(convs || []);
     } catch (e) {
       console.error('Error loading conversations', e);
@@ -115,19 +146,20 @@ export default function ValoraAI() {
   };
 
   const newConversation = async () => {
-    const conv = await base44.agents.createConversation({
-      agent_name: 'valora_ai',
+    const conv = await agentProxy('createConversation', {
       metadata: { name: `Mission ${new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}` }
     });
     activeConvRef.current = conv;
     setConversations(prev => [conv, ...prev]);
     setActiveConvId(conv.id);
     setMessages([]);
+    stopPolling();
     setTimeout(() => inputRef.current?.focus(), 100);
   };
 
   const selectConversation = async (conv) => {
-    const full = await base44.agents.getConversation(conv.id);
+    stopPolling();
+    const full = await agentProxy('getConversation', { conversationId: conv.id });
     activeConvRef.current = full;
     setActiveConvId(full.id);
     setMessages(full.messages || []);
@@ -137,6 +169,7 @@ export default function ValoraAI() {
     e.stopPropagation();
     setConversations(prev => prev.filter(c => c.id !== convId));
     if (activeConvId === convId) {
+      stopPolling();
       activeConvRef.current = null;
       setActiveConvId(null);
       setMessages([]);
@@ -150,8 +183,7 @@ export default function ValoraAI() {
 
     let conv = activeConvRef.current;
     if (!conv) {
-      conv = await base44.agents.createConversation({
-        agent_name: 'valora_ai',
+      conv = await agentProxy('createConversation', {
         metadata: { name: msg.slice(0, 50) }
       });
       activeConvRef.current = conv;
@@ -162,16 +194,22 @@ export default function ValoraAI() {
     setLoading(true);
     setMessages(prev => [...prev, { role: 'user', content: msg }]);
 
-    await base44.agents.addMessage(conv, { role: 'user', content: msg });
-    // loading will be set to false by the subscription callback
+    await agentProxy('addMessage', {
+      conversation: conv,
+      content: msg
+    });
+
+    // Démarrer le polling pour récupérer la réponse
+    startPolling(conv.id);
   };
 
-  const activeConvName = conversations.find(c => c.id === activeConvId)?.metadata?.name || (activeConvId ? 'Mission en cours' : 'Nouvelle mission');
+  const activeConvName = conversations.find(c => c.id === activeConvId)?.metadata?.name
+    || (activeConvId ? 'Mission en cours' : 'Nouvelle mission');
 
   return (
     <div className="flex h-[calc(100vh-120px)] min-h-[600px] bg-slate-50 rounded-2xl overflow-hidden border border-slate-200">
 
-      {/* Sidebar conversations */}
+      {/* Sidebar */}
       <div className="w-64 bg-[#0F2537] flex flex-col flex-shrink-0">
         <div className="p-4 border-b border-white/10">
           <div className="flex items-center gap-2 mb-3">
@@ -180,7 +218,7 @@ export default function ValoraAI() {
             </div>
             <div>
               <p className="text-white font-bold text-sm">Valora AI</p>
-              <p className="text-white/40 text-xs">Agent de direction</p>
+              <p className="text-white/40 text-xs">DG Délégué & CM</p>
             </div>
           </div>
           <button
@@ -193,7 +231,9 @@ export default function ValoraAI() {
 
         <div className="flex-1 overflow-y-auto p-2 space-y-1">
           {loadingConvs ? (
-            <div className="flex justify-center py-8"><Loader2 className="h-5 w-5 text-white/30 animate-spin" /></div>
+            <div className="flex justify-center py-8">
+              <Loader2 className="h-5 w-5 text-white/30 animate-spin" />
+            </div>
           ) : conversations.length === 0 ? (
             <p className="text-white/30 text-xs text-center py-8">Aucune mission encore</p>
           ) : (
@@ -201,13 +241,15 @@ export default function ValoraAI() {
               <div
                 key={conv.id}
                 onClick={() => selectConversation(conv)}
-                className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-left transition-all group cursor-pointer ${activeConvId === conv.id ? 'bg-white/15 text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'}`}
+                className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-left transition-all group cursor-pointer ${
+                  activeConvId === conv.id ? 'bg-white/15 text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'
+                }`}
               >
                 <Bot className="h-3.5 w-3.5 flex-shrink-0 opacity-60" />
                 <span className="flex-1 text-xs truncate">{conv.metadata?.name || 'Mission'}</span>
                 <span
                   onClick={(e) => deleteConversation(e, conv.id)}
-                  className="opacity-0 group-hover:opacity-100 text-white/40 hover:text-red-400 transition-all flex-shrink-0 p-0.5 rounded"
+                  className="opacity-0 group-hover:opacity-100 text-white/40 hover:text-red-400 transition-all flex-shrink-0 p-0.5 rounded cursor-pointer"
                 >
                   <Trash2 className="h-3 w-3" />
                 </span>
@@ -222,10 +264,12 @@ export default function ValoraAI() {
           {[
             { icon: Globe, label: 'Recherche web' },
             { icon: Database, label: 'Toutes les données' },
-            { icon: FileText, label: 'Rédaction & contenu' },
-            { icon: CheckSquare, label: 'Tâches & projets' },
+            { icon: FileText, label: 'Contenu & Blog' },
+            { icon: Share2, label: 'Community Management' },
+            { icon: Calendar, label: 'Calendrier éditorial' },
+            { icon: CheckSquare, label: 'Tâches & Projets' },
           ].map(({ icon: Icon, label }) => (
-            <div key={label} className="flex items-center gap-2 px-2 py-1">
+            <div key={label} className="flex items-center gap-2 px-2 py-0.5">
               <Icon className="h-3 w-3 text-[#C9A961]" />
               <span className="text-white/50 text-xs">{label}</span>
             </div>
@@ -241,22 +285,25 @@ export default function ValoraAI() {
           <span className="text-sm font-semibold text-[#1A3A52] flex-1 truncate">{activeConvName}</span>
           <div className="flex items-center gap-1.5 bg-gradient-to-r from-[#C9A961]/10 to-amber-50 border border-[#C9A961]/30 rounded-full px-3 py-1">
             <Zap className="h-3 w-3 text-[#C9A961]" />
-            <span className="text-xs font-semibold text-[#8B6F1E]">Puissance maximale</span>
+            <span className="text-xs font-semibold text-[#8B6F1E]">DG Délégué + Community Manager</span>
           </div>
         </div>
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
           {!activeConvId && messages.length === 0 && (
-            <div className="flex flex-col items-center justify-center h-full text-center">
+            <div className="flex flex-col items-center justify-center h-full text-center px-4">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C9A961] to-[#8B6F1E] flex items-center justify-center mb-4 shadow-lg">
                 <Sparkles className="h-8 w-8 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-[#1A3A52] mb-2">Valora AI — Agent de Direction</h3>
-              <p className="text-slate-500 text-sm max-w-md mb-8">
-                Donnez-moi une mission et je l'exécute de A à Z. Gestion du contenu, tâches, projets, rédaction, analyse stratégique — je m'occupe de tout.
+              <h3 className="text-xl font-bold text-[#1A3A52] mb-2">Valora AI</h3>
+              <p className="text-slate-500 text-sm max-w-md mb-2">
+                Directeur Général Délégué & Community Manager de La Foncière Valora.
               </p>
-              <div className="grid grid-cols-2 gap-2 w-full max-w-lg">
+              <p className="text-slate-400 text-xs max-w-md mb-8">
+                Je modifie le contenu du site, gère les tâches, rédige des posts LinkedIn & Instagram, crée des calendriers éditoriaux, analyse les performances — de A à Z.
+              </p>
+              <div className="grid grid-cols-2 gap-2 w-full max-w-xl">
                 {SUGGESTIONS.map((s, i) => (
                   <button
                     key={i}
@@ -296,7 +343,7 @@ export default function ValoraAI() {
             <textarea
               ref={inputRef}
               className="flex-1 bg-transparent text-sm text-slate-800 placeholder-slate-400 resize-none focus:outline-none max-h-32 min-h-[20px]"
-              placeholder="Donnez-moi une mission… (ex: Crée un article de blog complet sur la rénovation énergétique)"
+              placeholder="Ex: Génère 5 posts LinkedIn pour cette semaine, crée les articles de blog associés et planifie les tâches de publication…"
               value={input}
               onChange={e => setInput(e.target.value)}
               rows={1}
@@ -316,7 +363,7 @@ export default function ValoraAI() {
               <Send className="h-4 w-4 text-white" />
             </button>
           </div>
-          <p className="text-center text-[10px] text-slate-300 mt-2">Shift+Entrée pour sauter une ligne · Entrée pour envoyer</p>
+          <p className="text-center text-[10px] text-slate-300 mt-2">Shift+Entrée pour nouvelle ligne · Entrée pour envoyer</p>
         </div>
       </div>
     </div>
