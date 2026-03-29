@@ -102,6 +102,7 @@ export default function AdminTaches() {
   const [search, setSearch] = useState('');
   const [filterStatut, setFilterStatut] = useState('');
   const [filterPriorite, setFilterPriorite] = useState('');
+  const [showTerminees, setShowTerminees] = useState(false);
   const [tacheDetail, setTacheDetail] = useState(null);
   const [showNew, setShowNew] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
@@ -119,6 +120,7 @@ export default function AdminTaches() {
 
   const filteredTaches = useMemo(() => {
     return taches.filter(t => {
+      if (!showTerminees && t.statut === 'Terminé') return false;
       if (projetActif && t.projet !== projetActif) return false;
       if (filterStatut && t.statut !== filterStatut) return false;
       if (filterPriorite && t.priorite !== filterPriorite) return false;
@@ -128,7 +130,7 @@ export default function AdminTaches() {
       }
       return true;
     });
-  }, [taches, projetActif, filterStatut, filterPriorite, search]);
+  }, [taches, projetActif, filterStatut, filterPriorite, search, showTerminees]);
 
   const handleCreate = async (form) => {
     await base44.entities.Tache.create(form);
@@ -197,6 +199,13 @@ export default function AdminTaches() {
               <input className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-[#C9A961]"
                 placeholder="Rechercher…" value={search} onChange={e => setSearch(e.target.value)} />
             </div>
+
+            {/* Toggle tâches terminées */}
+            <button onClick={() => setShowTerminees(v => !v)}
+              className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium border transition-all ${showTerminees ? 'bg-emerald-50 border-emerald-300 text-emerald-700' : 'border-slate-200 text-slate-500 hover:bg-slate-50'}`}>
+              <span className={`w-2 h-2 rounded-full ${showTerminees ? 'bg-emerald-500' : 'bg-slate-300'}`} />
+              Terminées {showTerminees ? 'visibles' : 'masquées'}
+            </button>
 
             {/* Filtres */}
             <button onClick={() => setShowFilters(v => !v)}
