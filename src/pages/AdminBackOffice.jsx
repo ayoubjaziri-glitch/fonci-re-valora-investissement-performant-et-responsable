@@ -269,6 +269,7 @@ const navGroups = [
     items: [
       { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
       { id: 'taches', label: 'Gestion des tâches', icon: CheckCircle2 },
+      { id: 'crm', label: 'CRM Investisseurs', icon: Users },
       { id: 'contacts', label: 'Demandes de contact', icon: MessageSquare, badge: true },
       { id: 'visiteurs', label: 'Statistiques visiteurs', icon: Globe },
     ]
@@ -296,7 +297,6 @@ const navGroups = [
       { id: 'actu', label: 'Actualités', icon: Newspaper },
       { id: 'biens', label: 'Biens & Acquisitions', icon: Building2 },
       { id: 'roadmap', label: 'Roadmap', icon: Rocket },
-      { id: 'crm', label: 'CRM Investisseurs', icon: Users },
     ]
   },
 ];
