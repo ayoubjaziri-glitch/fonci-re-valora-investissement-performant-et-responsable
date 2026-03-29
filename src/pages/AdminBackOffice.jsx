@@ -3,10 +3,10 @@ import { motion } from 'framer-motion';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
-  Lock, Eye, EyeOff, Settings, Image, Users, BarChart3, Newspaper,
+  Lock, Eye, EyeOff, Image, Users, BarChart3, Newspaper,
   Building2, Rocket, MapPin, LogOut, Shield, LayoutDashboard,
   FileText, Mail, TrendingUp, Euro, MessageSquare, CheckCircle2, Globe,
-  Clock, AlertCircle, ChevronRight, Phone, Star, Trash2, ImageIcon, Wand2
+  Clock, AlertCircle, ChevronRight, Phone, Trash2
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
