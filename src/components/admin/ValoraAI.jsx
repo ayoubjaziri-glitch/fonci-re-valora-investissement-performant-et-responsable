@@ -1,28 +1,203 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Send, Plus, Sparkles, Trash2, Bot, User, Loader2, Zap, Globe, Database, FileText, CheckSquare, Calendar, Share2 } from 'lucide-react';
+import {
+  Send, Plus, Sparkles, Trash2, Bot, User, Loader2, Zap, Globe,
+  Database, FileText, CheckSquare, Calendar, Share2, Check, X,
+  RotateCcw, Image, Linkedin, Instagram, AlertTriangle, ChevronDown,
+  ChevronUp, Play, Eye, Clock
+} from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { Button } from '@/components/ui/button';
 
 const SUGGESTIONS = [
-  "Génère un calendrier éditorial LinkedIn pour les 2 prochaines semaines",
-  "Rédige 3 posts Instagram sur nos dernières rénovations",
-  "Analyse les stats visiteurs et propose une stratégie de contenu",
-  "Crée un article de blog SEO sur l'investissement immobilier à Vichy",
-  "Modifie le texte d'accroche de la page d'accueil",
-  "Planifie les tâches du prochain trimestre avec jalons",
-  "Rédige une newsletter pour les associés sur l'avancement des projets",
-  "Génère un rapport stratégique sur notre portefeuille immobilier",
+  "Rédige un article de blog SEO sur l'investissement immobilier à Vichy avec image",
+  "Génère 3 posts LinkedIn pour cette semaine avec visuels",
+  "Crée un calendrier éditorial complet pour avril avec posts Instagram",
+  "Rédige une newsletter pour les associés sur nos derniers projets",
+  "Modifie le texte d'accroche de la page d'accueil avec un ton plus percutant",
+  "Crée 2 posts Instagram sur nos rénovations avec images",
+  "Analyse notre présence et propose une stratégie de contenu sur 1 mois",
+  "Génère un rapport sur l'avancement de nos chantiers",
 ];
 
-// Appel au proxy backend (contourne l'auth Base44 du back-office custom)
+// Détecter si le message contient un plan validable
+function isPlanMessage(content) {
+  return content && (
+    content.includes('## 📋 Mon plan d\'action') ||
+    content.includes('Valides-tu ce plan') ||
+    content.includes('Mon plan d\'action')
+  );
+}
+
+// Appel proxy existant
 async function agentProxy(action, payload = {}) {
   const res = await base44.functions.invoke('valoraAiProxy', { action, payload });
   if (!res.data?.success) throw new Error(res.data?.error || 'Erreur proxy agent');
   return res.data.data;
 }
 
-function MessageBubble({ message }) {
+// Appel executor
+async function executor(action, payload = {}) {
+  const res = await base44.functions.invoke('valoraAiExecutor', { action, payload });
+  if (!res.data?.success) throw new Error(res.data?.error || 'Erreur executor');
+  return res.data;
+}
+
+// ─── Plan Approval Card ───────────────────────────────────────────────────────
+function PlanApprovalCard({ message, onApprove, onReject, isExecuting, convId }) {
+  const [expanded, setExpanded] = useState(true);
+
+  return (
+    <div className="rounded-2xl border-2 border-[#C9A961] bg-amber-50/50 overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-[#1A3A52] to-[#2A4A6F]">
+        <div className="flex items-center gap-2">
+          <Sparkles className="h-4 w-4 text-[#C9A961]" />
+          <span className="text-white font-semibold text-sm">Plan d'action proposé</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="text-white/50 text-xs">En attente de validation</span>
+          <button onClick={() => setExpanded(v => !v)} className="text-white/60 hover:text-white">
+            {expanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+          </button>
+        </div>
+      </div>
+      {expanded && (
+        <div className="px-4 py-3">
+          <ReactMarkdown
+            className="text-sm prose prose-sm max-w-none prose-headings:text-[#1A3A52] prose-strong:text-[#1A3A52]"
+            components={{
+              p: ({ children }) => <p className="my-1 leading-relaxed text-slate-700">{children}</p>,
+              ul: ({ children }) => <ul className="my-1 ml-4 list-disc space-y-0.5">{children}</ul>,
+              ol: ({ children }) => <ol className="my-1 ml-4 list-decimal space-y-0.5">{children}</ol>,
+              li: ({ children }) => <li className="text-sm text-slate-700">{children}</li>,
+              h2: ({ children }) => <h2 className="text-base font-bold my-2 text-[#1A3A52]">{children}</h2>,
+              h3: ({ children }) => <h3 className="text-sm font-semibold my-1 text-[#1A3A52]">{children}</h3>,
+              strong: ({ children }) => <strong className="font-semibold text-[#1A3A52]">{children}</strong>,
+            }}
+          >{message.content}</ReactMarkdown>
+        </div>
+      )}
+      <div className="flex items-center gap-3 px-4 py-3 bg-white border-t border-amber-200">
+        <Button
+          onClick={() => onApprove(message)}
+          disabled={isExecuting}
+          className="flex-1 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white gap-2"
+        >
+          {isExecuting ? <Loader2 className="h-4 w-4 animate-spin" /> : <Play className="h-4 w-4" />}
+          {isExecuting ? 'Exécution en cours…' : '✓ Valider & Exécuter'}
+        </Button>
+        <Button
+          onClick={() => onReject(message)}
+          disabled={isExecuting}
+          variant="outline"
+          className="border-red-200 text-red-500 hover:bg-red-50 gap-2"
+        >
+          <X className="h-4 w-4" /> Annuler
+        </Button>
+      </div>
+    </div>
+  );
+}
+
+// ─── Execution Result Card ────────────────────────────────────────────────────
+function ExecutionResultCard({ results, onRevert }) {
+  const [reverted, setReverted] = useState(false);
+  const [reverting, setReverting] = useState(false);
+
+  const successCount = results.filter(r => r.success).length;
+  const failCount = results.filter(r => !r.success).length;
+
+  const handleRevert = async () => {
+    if (!confirm('Annuler toutes les actions effectuées ?')) return;
+    setReverting(true);
+    const actionIds = results.filter(r => r.success && r.actionId).map(r => r.actionId);
+    await onRevert(actionIds);
+    setReverted(true);
+    setReverting(false);
+  };
+
+  if (reverted) {
+    return (
+      <div className="rounded-xl border border-orange-200 bg-orange-50 px-4 py-3 flex items-center gap-3">
+        <RotateCcw className="h-4 w-4 text-orange-500" />
+        <span className="text-sm text-orange-700 font-medium">Actions annulées — retour à l'état précédent.</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-emerald-200 bg-emerald-50/50 overflow-hidden">
+      <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-emerald-600 to-emerald-700">
+        <div className="flex items-center gap-2">
+          <Check className="h-4 w-4 text-white" />
+          <span className="text-white font-semibold text-sm">
+            {successCount} action{successCount > 1 ? 's' : ''} exécutée{successCount > 1 ? 's' : ''}
+            {failCount > 0 && ` · ${failCount} erreur${failCount > 1 ? 's' : ''}`}
+          </span>
+        </div>
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={handleRevert}
+          disabled={reverting}
+          className="text-white/70 hover:text-white hover:bg-white/10 gap-1.5 text-xs"
+        >
+          {reverting ? <Loader2 className="h-3 w-3 animate-spin" /> : <RotateCcw className="h-3 w-3" />}
+          Revert
+        </Button>
+      </div>
+      <div className="px-4 py-3 space-y-2">
+        {results.map((r, i) => (
+          <div key={i} className={`flex items-start gap-3 text-sm ${r.success ? 'text-emerald-800' : 'text-red-700'}`}>
+            {r.success
+              ? <Check className="h-4 w-4 text-emerald-500 mt-0.5 flex-shrink-0" />
+              : <X className="h-4 w-4 text-red-500 mt-0.5 flex-shrink-0" />}
+            <div className="flex-1">
+              <span className="font-medium">{r.label}</span>
+              {r.error && <p className="text-xs text-red-500 mt-0.5">{r.error}</p>}
+              {r.imageUrl && (
+                <div className="mt-2">
+                  <img src={r.imageUrl} alt="Générée" className="h-24 w-auto rounded-lg object-cover" />
+                </div>
+              )}
+              {r.type === 'linkedin_post' && r.success && (
+                <div className="mt-1 flex items-center gap-2">
+                  <a
+                    href="https://www.linkedin.com/company/la-fonciere-patrimoniale/posts/"
+                    target="_blank" rel="noopener noreferrer"
+                    className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded flex items-center gap-1 hover:bg-blue-700"
+                  >
+                    <Linkedin className="h-3 w-3" /> Publier sur LinkedIn
+                  </a>
+                  <span className="text-xs text-slate-400">(contenu copié ci-dessus)</span>
+                </div>
+              )}
+              {r.type === 'instagram_post' && r.success && (
+                <div className="mt-1">
+                  <a
+                    href="https://www.instagram.com/lafoncierepatrimoniale"
+                    target="_blank" rel="noopener noreferrer"
+                    className="text-xs bg-gradient-to-r from-purple-500 to-pink-500 text-white px-2 py-0.5 rounded flex items-center gap-1 w-fit hover:opacity-90"
+                  >
+                    <Instagram className="h-3 w-3" /> Publier sur Instagram
+                  </a>
+                </div>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ─── Message Bubble ───────────────────────────────────────────────────────────
+function MessageBubble({ message, onApprove, onReject, isExecuting, convId }) {
   const isUser = message.role === 'user';
+  const isSystem = message.role === 'system';
+  if (isSystem) return null;
+
+  const hasPlan = !isUser && isPlanMessage(message.content);
 
   return (
     <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
@@ -31,7 +206,7 @@ function MessageBubble({ message }) {
           <Sparkles className="h-4 w-4 text-white" />
         </div>
       )}
-      <div className={`max-w-[85%] ${isUser ? 'items-end' : 'items-start'} flex flex-col gap-1`}>
+      <div className={`max-w-[88%] ${isUser ? 'items-end' : 'items-start'} flex flex-col gap-2`}>
         {message.tool_calls?.length > 0 && (
           <div className="space-y-1 w-full">
             {message.tool_calls.map((tc, i) => (
@@ -46,7 +221,25 @@ function MessageBubble({ message }) {
             ))}
           </div>
         )}
-        {message.content && (
+
+        {/* Plan avec boutons validation */}
+        {hasPlan && !message.approved && !message.rejected ? (
+          <PlanApprovalCard
+            message={message}
+            onApprove={onApprove}
+            onReject={onReject}
+            isExecuting={isExecuting}
+            convId={convId}
+          />
+        ) : message.executionResults ? (
+          // Résultats d'exécution
+          <ExecutionResultCard
+            results={message.executionResults}
+            onRevert={async (ids) => {
+              await executor('revertActions', { actionIds: ids });
+            }}
+          />
+        ) : message.content ? (
           <div className={`rounded-2xl px-4 py-3 ${isUser
             ? 'bg-[#1A3A52] text-white rounded-br-sm'
             : 'bg-white border border-slate-200 text-slate-800 rounded-bl-sm shadow-sm'
@@ -61,8 +254,7 @@ function MessageBubble({ message }) {
                   ul: ({ children }) => <ul className="my-1 ml-4 list-disc space-y-0.5">{children}</ul>,
                   ol: ({ children }) => <ol className="my-1 ml-4 list-decimal space-y-0.5">{children}</ol>,
                   li: ({ children }) => <li className="text-sm">{children}</li>,
-                  h1: ({ children }) => <h1 className="text-base font-bold my-2 text-[#1A3A52]">{children}</h1>,
-                  h2: ({ children }) => <h2 className="text-sm font-bold my-2 text-[#1A3A52]">{children}</h2>,
+                  h2: ({ children }) => <h2 className="text-base font-bold my-2 text-[#1A3A52]">{children}</h2>,
                   h3: ({ children }) => <h3 className="text-sm font-semibold my-1 text-[#1A3A52]">{children}</h3>,
                   code: ({ children }) => <code className="bg-slate-100 px-1 py-0.5 rounded text-xs font-mono">{children}</code>,
                   blockquote: ({ children }) => (
@@ -76,10 +268,19 @@ function MessageBubble({ message }) {
                   th: ({ children }) => <th className="border border-slate-200 bg-slate-50 px-2 py-1 text-left font-semibold">{children}</th>,
                   td: ({ children }) => <td className="border border-slate-200 px-2 py-1">{children}</td>,
                 }}
-              >
-                {message.content}
-              </ReactMarkdown>
+              >{message.content}</ReactMarkdown>
             )}
+          </div>
+        ) : null}
+
+        {message.approved && !message.executionResults && (
+          <div className="flex items-center gap-2 text-xs text-emerald-600 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200">
+            <Check className="h-3.5 w-3.5" /> Plan validé — exécution en cours…
+          </div>
+        )}
+        {message.rejected && (
+          <div className="flex items-center gap-2 text-xs text-slate-500 bg-slate-50 px-3 py-1.5 rounded-xl border border-slate-200">
+            <X className="h-3.5 w-3.5" /> Plan annulé par l'utilisateur
           </div>
         )}
       </div>
@@ -92,12 +293,14 @@ function MessageBubble({ message }) {
   );
 }
 
+// ─── Main ValoraAI ────────────────────────────────────────────────────────────
 export default function ValoraAI() {
   const [conversations, setConversations] = useState([]);
   const [activeConvId, setActiveConvId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isExecuting, setIsExecuting] = useState(false);
   const [loadingConvs, setLoadingConvs] = useState(true);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
@@ -113,16 +316,25 @@ export default function ValoraAI() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  // Polling pour récupérer les réponses de l'agent (remplace la subscription WebSocket qui nécessite auth Base44)
   const startPolling = (convId) => {
     clearInterval(pollIntervalRef.current);
     pollIntervalRef.current = setInterval(async () => {
       try {
         const conv = await agentProxy('getConversation', { conversationId: convId });
-        const newMessages = conv.messages || [];
-        setMessages(newMessages);
-        // Arrêter de loader si l'agent a répondu (dernier message = assistant)
-        const lastMsg = newMessages[newMessages.length - 1];
+        const rawMessages = conv.messages || [];
+
+        // Préserver les états locaux (approved, rejected, executionResults)
+        setMessages(prev => {
+          return rawMessages.map((newMsg, i) => {
+            const existing = prev[i];
+            if (existing && (existing.approved || existing.rejected || existing.executionResults)) {
+              return { ...newMsg, approved: existing.approved, rejected: existing.rejected, executionResults: existing.executionResults };
+            }
+            return newMsg;
+          });
+        });
+
+        const lastMsg = rawMessages[rawMessages.length - 1];
         if (lastMsg && lastMsg.role === 'assistant') {
           setLoading(false);
         }
@@ -140,7 +352,7 @@ export default function ValoraAI() {
       const convs = await agentProxy('listConversations', {});
       setConversations(convs || []);
     } catch (e) {
-      console.error('Error loading conversations', e);
+      console.error(e);
     }
     setLoadingConvs(false);
   };
@@ -194,13 +406,82 @@ export default function ValoraAI() {
     setLoading(true);
     setMessages(prev => [...prev, { role: 'user', content: msg }]);
 
-    await agentProxy('addMessage', {
-      conversation: conv,
-      content: msg
-    });
-
-    // Démarrer le polling pour récupérer la réponse
+    // D'abord : générer un plan via l'executor (pas l'agent)
+    // On envoie quand même à l'agent pour avoir le contexte conversationnel
+    await agentProxy('addMessage', { conversation: conv, content: msg });
     startPolling(conv.id);
+  };
+
+  // Approuver un plan → parser + exécuter
+  const handleApprove = async (planMessage) => {
+    setIsExecuting(true);
+
+    // Marquer le message comme approuvé
+    setMessages(prev => prev.map(m =>
+      m === planMessage ? { ...m, approved: true } : m
+    ));
+
+    try {
+      // Parser le plan en actions concrètes
+      const parseResult = await executor('parsePlan', {
+        planText: planMessage.content,
+        userRequest: messages.filter(m => m.role === 'user').slice(-1)[0]?.content || ''
+      });
+
+      const { actions, has_social_media } = parseResult.parsed;
+
+      // Pour les posts réseaux sociaux : générer les images d'abord si nécessaire
+      const enrichedActions = [];
+      for (const act of actions) {
+        if ((act.type === 'linkedin_post' || act.type === 'instagram_post') && act.data?.image_prompt) {
+          const imgResult = await executor('generateImage', { prompt: act.data.image_prompt });
+          act.data.image_url = imgResult.url;
+        }
+        enrichedActions.push(act);
+      }
+
+      // Exécuter toutes les actions
+      const execResult = await executor('executeActions', {
+        actions: enrichedActions,
+        conversationId: activeConvId
+      });
+
+      // Mettre à jour le message avec les résultats
+      setMessages(prev => prev.map(m =>
+        m === planMessage ? { ...m, approved: true, executionResults: execResult.results } : m
+      ));
+
+      // Envoyer un message de résumé dans la conversation
+      const successCount = execResult.results.filter(r => r.success).length;
+      const summaryMsg = `✅ **${successCount} action${successCount > 1 ? 's' : ''} exécutée${successCount > 1 ? 's' : ''}** avec succès.\n\nTu peux utiliser le bouton **Revert** pour annuler si nécessaire.${has_social_media ? '\n\n📱 Pour les publications réseaux sociaux, clique sur les liens pour les poster directement.' : ''}`;
+
+      if (activeConvRef.current) {
+        await agentProxy('addMessage', {
+          conversation: activeConvRef.current,
+          content: summaryMsg
+        });
+      }
+
+    } catch (err) {
+      setMessages(prev => prev.map(m =>
+        m === planMessage ? { ...m, approved: false, executionResults: [{ success: false, label: 'Erreur', error: err.message }] } : m
+      ));
+    }
+
+    setIsExecuting(false);
+  };
+
+  const handleReject = (planMessage) => {
+    setMessages(prev => prev.map(m =>
+      m === planMessage ? { ...m, rejected: true } : m
+    ));
+    // Envoyer un message d'annulation
+    if (activeConvRef.current) {
+      agentProxy('addMessage', {
+        conversation: activeConvRef.current,
+        content: "L'utilisateur a annulé ce plan. Propose une alternative ou demande des précisions."
+      });
+    }
   };
 
   const activeConvName = conversations.find(c => c.id === activeConvId)?.metadata?.name
@@ -218,13 +499,11 @@ export default function ValoraAI() {
             </div>
             <div>
               <p className="text-white font-bold text-sm">Valora AI</p>
-              <p className="text-white/40 text-xs">DG Délégué & CM</p>
+              <p className="text-white/40 text-xs">Validation avant action</p>
             </div>
           </div>
-          <button
-            onClick={newConversation}
-            className="w-full flex items-center justify-center gap-2 py-2 bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] rounded-xl text-sm font-bold transition-colors"
-          >
+          <button onClick={newConversation}
+            className="w-full flex items-center justify-center gap-2 py-2 bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] rounded-xl text-sm font-bold transition-colors">
             <Plus className="h-4 w-4" /> Nouvelle mission
           </button>
         </div>
@@ -238,19 +517,13 @@ export default function ValoraAI() {
             <p className="text-white/30 text-xs text-center py-8">Aucune mission encore</p>
           ) : (
             conversations.map(conv => (
-              <div
-                key={conv.id}
-                onClick={() => selectConversation(conv)}
+              <div key={conv.id} onClick={() => selectConversation(conv)}
                 className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-left transition-all group cursor-pointer ${
-                  activeConvId === conv.id ? 'bg-white/15 text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'
-                }`}
-              >
+                  activeConvId === conv.id ? 'bg-white/15 text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'}`}>
                 <Bot className="h-3.5 w-3.5 flex-shrink-0 opacity-60" />
                 <span className="flex-1 text-xs truncate">{conv.metadata?.name || 'Mission'}</span>
-                <span
-                  onClick={(e) => deleteConversation(e, conv.id)}
-                  className="opacity-0 group-hover:opacity-100 text-white/40 hover:text-red-400 transition-all flex-shrink-0 p-0.5 rounded cursor-pointer"
-                >
+                <span onClick={(e) => deleteConversation(e, conv.id)}
+                  className="opacity-0 group-hover:opacity-100 text-white/40 hover:text-red-400 transition-all flex-shrink-0 p-0.5 rounded cursor-pointer">
                   <Trash2 className="h-3 w-3" />
                 </span>
               </div>
@@ -259,15 +532,17 @@ export default function ValoraAI() {
         </div>
 
         {/* Capacités */}
-        <div className="p-3 border-t border-white/10 space-y-1.5">
-          <p className="text-white/30 text-[10px] uppercase tracking-widest font-semibold px-1">Capacités</p>
+        <div className="p-3 border-t border-white/10 space-y-1">
+          <p className="text-white/30 text-[10px] uppercase tracking-widest font-semibold px-1 mb-2">Capacités</p>
           {[
-            { icon: Globe, label: 'Recherche web' },
-            { icon: Database, label: 'Toutes les données' },
-            { icon: FileText, label: 'Contenu & Blog' },
-            { icon: Share2, label: 'Community Management' },
-            { icon: Calendar, label: 'Calendrier éditorial' },
-            { icon: CheckSquare, label: 'Tâches & Projets' },
+            { icon: Eye, label: 'Propose un plan d\'abord' },
+            { icon: Check, label: 'Validation avant exécution' },
+            { icon: RotateCcw, label: 'Revert disponible' },
+            { icon: Image, label: 'Génération d\'images' },
+            { icon: Linkedin, label: 'Contenu LinkedIn' },
+            { icon: Instagram, label: 'Contenu Instagram' },
+            { icon: FileText, label: 'Rédaction blog & contenu' },
+            { icon: Database, label: 'Modification site' },
           ].map(({ icon: Icon, label }) => (
             <div key={label} className="flex items-center gap-2 px-2 py-0.5">
               <Icon className="h-3 w-3 text-[#C9A961]" />
@@ -283,9 +558,9 @@ export default function ValoraAI() {
         <div className="bg-white border-b border-slate-200 px-6 py-3 flex items-center gap-3">
           <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
           <span className="text-sm font-semibold text-[#1A3A52] flex-1 truncate">{activeConvName}</span>
-          <div className="flex items-center gap-1.5 bg-gradient-to-r from-[#C9A961]/10 to-amber-50 border border-[#C9A961]/30 rounded-full px-3 py-1">
-            <Zap className="h-3 w-3 text-[#C9A961]" />
-            <span className="text-xs font-semibold text-[#8B6F1E]">DG Délégué + Community Manager</span>
+          <div className="flex items-center gap-1.5 bg-amber-50 border border-[#C9A961]/30 rounded-full px-3 py-1">
+            <AlertTriangle className="h-3 w-3 text-[#C9A961]" />
+            <span className="text-xs font-semibold text-[#8B6F1E]">Mode Validation Obligatoire</span>
           </div>
         </div>
 
@@ -297,19 +572,17 @@ export default function ValoraAI() {
                 <Sparkles className="h-8 w-8 text-white" />
               </div>
               <h3 className="text-xl font-bold text-[#1A3A52] mb-2">Valora AI</h3>
-              <p className="text-slate-500 text-sm max-w-md mb-2">
-                Directeur Général Délégué & Community Manager de La Foncière Valora.
-              </p>
-              <p className="text-slate-400 text-xs max-w-md mb-8">
-                Je modifie le contenu du site, gère les tâches, rédige des posts LinkedIn & Instagram, crée des calendriers éditoriaux, analyse les performances — de A à Z.
-              </p>
+              <p className="text-slate-500 text-sm max-w-md mb-1">Je propose un <strong>plan complet</strong> avant d'agir.</p>
+              <p className="text-slate-400 text-xs max-w-md mb-2">Tu valides, puis j'exécute tout. Un bouton <strong>Revert</strong> est toujours disponible.</p>
+              <div className="flex items-center gap-4 text-xs text-slate-300 mb-8">
+                <span className="flex items-center gap-1"><Check className="h-3 w-3 text-emerald-400" /> Validation unique</span>
+                <span className="flex items-center gap-1"><RotateCcw className="h-3 w-3 text-orange-400" /> Revert possible</span>
+                <span className="flex items-center gap-1"><Image className="h-3 w-3 text-blue-400" /> Images générées</span>
+              </div>
               <div className="grid grid-cols-2 gap-2 w-full max-w-xl">
                 {SUGGESTIONS.map((s, i) => (
-                  <button
-                    key={i}
-                    onClick={() => sendMessage(s)}
-                    className="text-left text-xs bg-white border border-slate-200 hover:border-[#C9A961] hover:bg-amber-50 rounded-xl px-3 py-2.5 text-slate-600 hover:text-[#1A3A52] transition-all"
-                  >
+                  <button key={i} onClick={() => sendMessage(s)}
+                    className="text-left text-xs bg-white border border-slate-200 hover:border-[#C9A961] hover:bg-amber-50 rounded-xl px-3 py-2.5 text-slate-600 hover:text-[#1A3A52] transition-all">
                     {s}
                   </button>
                 ))}
@@ -318,7 +591,14 @@ export default function ValoraAI() {
           )}
 
           {messages.filter(m => m.role !== 'system').map((msg, i) => (
-            <MessageBubble key={i} message={msg} />
+            <MessageBubble
+              key={i}
+              message={msg}
+              onApprove={handleApprove}
+              onReject={handleReject}
+              isExecuting={isExecuting}
+              convId={activeConvId}
+            />
           ))}
 
           {loading && (
@@ -329,7 +609,7 @@ export default function ValoraAI() {
               <div className="bg-white border border-slate-200 rounded-2xl rounded-bl-sm px-4 py-3 shadow-sm">
                 <div className="flex items-center gap-2">
                   <Loader2 className="h-4 w-4 text-[#C9A961] animate-spin" />
-                  <span className="text-sm text-slate-500">En train de travailler…</span>
+                  <span className="text-sm text-slate-500">En train de réfléchir…</span>
                 </div>
               </div>
             </div>
@@ -343,7 +623,7 @@ export default function ValoraAI() {
             <textarea
               ref={inputRef}
               className="flex-1 bg-transparent text-sm text-slate-800 placeholder-slate-400 resize-none focus:outline-none max-h-32 min-h-[20px]"
-              placeholder="Ex: Génère 5 posts LinkedIn pour cette semaine, crée les articles de blog associés et planifie les tâches de publication…"
+              placeholder="Décris ce que tu veux faire… Je te proposerai un plan avant d'agir."
               value={input}
               onChange={e => setInput(e.target.value)}
               rows={1}
@@ -357,13 +637,13 @@ export default function ValoraAI() {
             />
             <button
               onClick={() => sendMessage()}
-              disabled={!input.trim() || loading}
+              disabled={!input.trim() || loading || isExecuting}
               className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A961] to-[#8B6F1E] hover:from-[#B8994F] hover:to-[#7A5F0D] flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
             >
               <Send className="h-4 w-4 text-white" />
             </button>
           </div>
-          <p className="text-center text-[10px] text-slate-300 mt-2">Shift+Entrée pour nouvelle ligne · Entrée pour envoyer</p>
+          <p className="text-center text-[10px] text-slate-300 mt-2">L'AI propose toujours un plan — tu valides avant toute exécution</p>
         </div>
       </div>
     </div>

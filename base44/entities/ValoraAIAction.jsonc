@@ -1,0 +1,59 @@
+{
+  "name": "ValoraAIAction",
+  "type": "object",
+  "properties": {
+    "conversation_id": {
+      "type": "string",
+      "description": "ID de la conversation associ\u00e9e"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "blog_create",
+        "blog_update",
+        "site_content_update",
+        "image_generate",
+        "linkedin_post",
+        "instagram_post",
+        "tache_create",
+        "actu_create",
+        "levee_update"
+      ],
+      "description": "Type d'action ex\u00e9cut\u00e9e"
+    },
+    "label": {
+      "type": "string",
+      "description": "Description lisible de l'action"
+    },
+    "payload": {
+      "type": "string",
+      "description": "Donn\u00e9es JSON de l'action (pour revert)"
+    },
+    "snapshot_avant": {
+      "type": "string",
+      "description": "Snapshot JSON de l'\u00e9tat avant (pour revert)"
+    },
+    "entity_id": {
+      "type": "string",
+      "description": "ID de l'entit\u00e9 cr\u00e9\u00e9e/modifi\u00e9e (pour revert)"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "success",
+        "reverted",
+        "failed"
+      ],
+      "default": "success"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de l'image g\u00e9n\u00e9r\u00e9e si applicable"
+    }
+  },
+  "required": [
+    "type",
+    "label",
+    "statut"
+  ]
+}
