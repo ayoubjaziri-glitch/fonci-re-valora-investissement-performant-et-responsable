@@ -5,6 +5,7 @@ import { Users, Globe, MapPin, TrendingUp, Clock, Eye, RefreshCw, Calendar, BarC
 import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import VisitorsMap from './VisitorsMap';
+import VisitorDetail from './VisitorDetail';
 
 const MONTHS_FR = ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'];
 
@@ -561,6 +562,134 @@ function VisiteursSources({ pageViews }) {
   );
 }
 
+// ── Onglet Par Visiteur ───────────────────────────────────────────────────────
+function VisiteursListe({ pageViews }) {
+  const [selected, setSelected] = useState(null);
+  const [search, setSearch] = useState('');
+
+  const visitors = useMemo(() => {
+    const map = {};
+    pageViews.forEach(v => {
+      if (!map[v.session_id]) map[v.session_id] = [];
+      map[v.session_id].push(v);
+    });
+    return Object.entries(map)
+      .map(([session_id, pages]) => {
+        const sorted = [...pages].sort((a, b) => new Date(a.created_date) - new Date(b.created_date));
+        const first = sorted[0];
+        const last = sorted[sorted.length - 1];
+        const totalTime = sorted.reduce((s, p) => s + (p.time_on_page || 0), 0);
+        const source = getSource(first?.referrer || '');
+        const keywords = sorted.map(p => p.search_keywords).filter(Boolean).filter((v, i, a) => a.indexOf(v) === i);
+        return { session_id, pages: sorted, first, last, totalTime, source, keywords, device: getDeviceType(first?.user_agent), country: first?.country || '', city: first?.city || '' };
+      })
+      .sort((a, b) => new Date(b.last.created_date) - new Date(a.last.created_date));
+  }, [pageViews]);
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return visitors;
+    const q = search.toLowerCase();
+    return visitors.filter(v =>
+      v.country.toLowerCase().includes(q) ||
+      v.city.toLowerCase().includes(q) ||
+      v.source.toLowerCase().includes(q) ||
+      v.device.toLowerCase().includes(q) ||
+      v.keywords.some(k => k.toLowerCase().includes(q)) ||
+      v.pages.some(p => p.page.toLowerCase().includes(q))
+    );
+  }, [visitors, search]);
+
+  function fmtTime(seconds) {
+    if (!seconds || seconds <= 0) return '—';
+    if (seconds < 60) return `${Math.round(seconds)}s`;
+    return `${Math.floor(seconds / 60)}m ${Math.round(seconds % 60)}s`;
+  }
+
+  function DeviceIcon({ ua }) {
+    const d = getDeviceType(ua);
+    if (d === 'Mobile') return <Smartphone className="h-3.5 w-3.5" />;
+    if (d === 'Tablette') return <Tablet className="h-3.5 w-3.5" />;
+    return <Monitor className="h-3.5 w-3.5" />;
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center gap-3">
+        <div className="relative flex-1 max-w-sm">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-400" />
+          <input
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            placeholder="Rechercher par pays, source, page…"
+            className="w-full pl-9 pr-4 py-2 text-sm border border-slate-200 rounded-xl focus:outline-none focus:border-[#C9A961]"
+          />
+        </div>
+        <span className="text-sm text-slate-400">{filtered.length} visiteur{filtered.length > 1 ? 's' : ''}</span>
+      </div>
+
+      <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="bg-slate-50 border-b border-slate-200">
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide">Visiteur</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide hidden md:table-cell">Source</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide hidden lg:table-cell">Appareil</th>
+              <th className="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wide">Pages</th>
+              <th className="px-4 py-3 text-center text-xs font-semibold text-slate-500 uppercase tracking-wide hidden md:table-cell">Temps</th>
+              <th className="px-4 py-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wide hidden lg:table-cell">Mots-clés</th>
+              <th className="px-4 py-3 text-right text-xs font-semibold text-slate-500 uppercase tracking-wide">Dernière visite</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-slate-100">
+            {filtered.length === 0 && (
+              <tr><td colSpan={7} className="px-4 py-12 text-center text-slate-400">Aucun visiteur enregistré</td></tr>
+            )}
+            {filtered.map((v) => (
+              <tr key={v.session_id}
+                onClick={() => setSelected(v)}
+                className="hover:bg-amber-50 cursor-pointer transition-colors">
+                <td className="px-4 py-3">
+                  <div className="flex items-center gap-2">
+                    <div className="w-8 h-8 rounded-full bg-[#1A3A52]/10 flex items-center justify-center text-[#1A3A52] flex-shrink-0">
+                      <DeviceIcon ua={v.first?.user_agent} />
+                    </div>
+                    <div>
+                      <p className="font-medium text-slate-800 text-sm">{v.city || v.country || 'Inconnu'}{v.city && v.country && v.city !== v.country ? `, ${v.country}` : ''}</p>
+                      <p className="text-xs text-slate-400 font-mono">{v.session_id.slice(0, 12)}…</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-4 py-3 hidden md:table-cell">
+                  <span className="text-sm font-medium" style={{ color: getSourceColor(v.source) }}>{v.source}</span>
+                </td>
+                <td className="px-4 py-3 hidden lg:table-cell text-slate-500 text-sm">{v.device}</td>
+                <td className="px-4 py-3 text-center">
+                  <span className="bg-slate-100 text-slate-700 text-xs font-bold px-2 py-0.5 rounded-full">{v.pages.length}</span>
+                </td>
+                <td className="px-4 py-3 text-center hidden md:table-cell">
+                  <span className="text-sm text-slate-600">{fmtTime(v.totalTime)}</span>
+                </td>
+                <td className="px-4 py-3 hidden lg:table-cell">
+                  {v.keywords.length > 0 ? (
+                    <span className="flex items-center gap-1 text-xs bg-amber-50 border border-amber-200 text-amber-700 rounded-full px-2 py-0.5">
+                      <Tag className="h-3 w-3" />{v.keywords[0]}{v.keywords.length > 1 ? ` +${v.keywords.length - 1}` : ''}
+                    </span>
+                  ) : <span className="text-slate-300 text-xs">—</span>}
+                </td>
+                <td className="px-4 py-3 text-right text-xs text-slate-400 whitespace-nowrap">
+                  {new Date(v.last.created_date).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      {selected && <VisitorDetail visitor={selected} onClose={() => setSelected(null)} />}
+    </div>
+  );
+}
+
 // ── Composant Principal ───────────────────────────────────────────────────────
 export default function AdminVisiteurs() {
   const [tab, setTab] = useState('realtime');
@@ -597,11 +726,16 @@ export default function AdminVisiteurs() {
           className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${tab === 'sources' ? 'bg-[#1A3A52] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
           <Search className="h-4 w-4" /> Sources & Mots-clés
         </button>
+        <button onClick={() => setTab('visitors')}
+          className={`px-4 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${tab === 'visitors' ? 'bg-[#1A3A52] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
+          <Users className="h-4 w-4" /> Par visiteur
+        </button>
       </div>
 
       {tab === 'realtime' && <VisiteursTempsReel pageViews={pageViews} contacts={contacts} refetchPageViews={refetchPageViews} />}
       {tab === 'stats' && <VisiteursCumul pageViews={pageViews} contacts={contacts} />}
       {tab === 'sources' && <VisiteursSources pageViews={pageViews} />}
+      {tab === 'visitors' && <VisiteursListe pageViews={pageViews} />}
     </div>
   );
 }
