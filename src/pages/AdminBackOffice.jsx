@@ -594,7 +594,7 @@ export default function AdminBackOffice() {
           <div className="flex items-center gap-3">
             <img
               src="https://base44.app/api/apps/699460f1b03f6285dc8513a7/files/mp/public/699460f1b03f6285dc8513a7/eb47cc5e5_cropped.jpg"
-              alt="Logo" className="pr-16 pl-16 h-9 w-auto" />
+              alt="Logo" className="h-16 w-auto" />
             
             
             <div>
