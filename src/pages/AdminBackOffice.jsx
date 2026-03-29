@@ -504,7 +504,6 @@ const navGroups = [
       { id: 'taches', label: 'Gestion des tâches', icon: CheckCircle2 },
       { id: 'crm', label: 'CRM Investisseurs', icon: Users },
       { id: 'contacts', label: 'Demandes de contact', icon: MessageSquare, badge: true },
-      { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
       { id: 'visiteurs', label: 'Statistiques visiteurs', icon: Globe },
     ]
   },
@@ -520,6 +519,12 @@ const navGroups = [
       { id: 'realisations', label: 'Nos Biens', icon: Building2 },
       { id: 'blog', label: 'Blog & Articles', icon: Newspaper },
       { id: 'levees', label: 'Levées de Fonds', icon: TrendingUp },
+    ]
+  },
+  {
+    label: 'Paramètres',
+    items: [
+      { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
     ]
   },
   {
