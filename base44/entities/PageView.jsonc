@@ -26,6 +26,10 @@
       "type": "string",
       "description": "Mots-cl\u00e9s tap\u00e9s dans Google/Bing pour arriver sur le site"
     },
+    "time_on_page": {
+      "type": "number",
+      "description": "Temps pass\u00e9 sur la page en secondes"
+    },
     "country": {
       "type": "string",
       "description": "Pays du visiteur"

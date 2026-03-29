@@ -211,11 +211,24 @@ function VisiteursCumul({ pageViews, contacts }) {
     };
   });
 
-  // Top pages
-  const pageCounts = {};
-  recentViews.forEach(v => { pageCounts[v.page] = (pageCounts[v.page] || 0) + 1; });
-  const topPages = Object.entries(pageCounts).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  // Top pages + temps moyen
+  const pageStats = {};
+  recentViews.forEach(v => {
+    if (!pageStats[v.page]) pageStats[v.page] = { count: 0, totalTime: 0, timedCount: 0 };
+    pageStats[v.page].count++;
+    if (v.time_on_page > 0) {
+      pageStats[v.page].totalTime += v.time_on_page;
+      pageStats[v.page].timedCount++;
+    }
+  });
+  const topPages = Object.entries(pageStats).sort((a, b) => b[1].count - a[1].count).slice(0, 5);
   const totalPageViews = recentViews.length;
+
+  function fmtTime(seconds) {
+    if (!seconds || seconds <= 0) return '—';
+    if (seconds < 60) return `${seconds}s`;
+    return `${Math.floor(seconds / 60)}m ${seconds % 60}s`;
+  }
 
   // Appareils
   const deviceCounts = { Desktop: 0, Mobile: 0, Tablette: 0 };
@@ -282,20 +295,30 @@ function VisiteursCumul({ pageViews, contacts }) {
             <p className="text-slate-400 text-sm text-center py-6">Aucune donnée</p>
           ) : (
             <div className="space-y-3">
-              {topPages.map(([page, count], i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <span className="text-xs text-slate-400 w-4">{i + 1}</span>
-                  <div className="flex-1">
-                    <div className="flex justify-between mb-1">
-                      <span className="text-sm text-slate-700">{page}</span>
-                      <span className="text-sm font-bold text-[#1A3A52]">{Math.round((count / totalPageViews) * 100)}%</span>
-                    </div>
-                    <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
-                      <div className="h-full bg-[#C9A961] rounded-full" style={{ width: `${(count / (topPages[0]?.[1] || 1)) * 100}%` }} />
+              {topPages.map(([page, data], i) => {
+                const avgTime = data.timedCount > 0 ? Math.round(data.totalTime / data.timedCount) : 0;
+                return (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="text-xs text-slate-400 w-4">{i + 1}</span>
+                    <div className="flex-1">
+                      <div className="flex justify-between mb-1">
+                        <span className="text-sm text-slate-700">{page}</span>
+                        <div className="flex items-center gap-3">
+                          {avgTime > 0 && (
+                            <span className="text-xs bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium flex items-center gap-1">
+                              <Clock className="h-3 w-3" />{fmtTime(avgTime)} moy.
+                            </span>
+                          )}
+                          <span className="text-sm font-bold text-[#1A3A52]">{Math.round((data.count / totalPageViews) * 100)}%</span>
+                        </div>
+                      </div>
+                      <div className="w-full h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#C9A961] rounded-full" style={{ width: `${(data.count / (topPages[0]?.[1]?.count || 1)) * 100}%` }} />
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           )}
         </div>
