@@ -59,9 +59,10 @@ export default function Contact() {
     // 2. Récupérer les destinataires configurés
     let destinataires = ['Ayoubcontact33@gmail.com', 'Ayoubjaziri@gmail.com'];
     try {
-      const configs = await base44.entities.ContactConfig.filter({ cle: 'email_destinataires' });
-      if (configs && configs.length > 0 && configs[0].valeur) {
-        destinataires = configs[0].valeur.split(',').map(e => e.trim()).filter(Boolean);
+      const configs = await base44.entities.ContactConfig.list();
+      const cfg = configs.find(c => c.cle === 'email_destinataires');
+      if (cfg && cfg.valeur) {
+        destinataires = cfg.valeur.split(',').map(e => e.trim()).filter(Boolean);
       }
     } catch (e) { /* fallback */ }
 

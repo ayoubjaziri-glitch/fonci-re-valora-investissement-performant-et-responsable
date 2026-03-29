@@ -12,6 +12,7 @@ export default function AdminContactConfig() {
   const { data: config = [], isLoading } = useQuery({
     queryKey: ['contact-config'],
     queryFn: () => base44.entities.ContactConfig.list(),
+    staleTime: 0,
   });
 
   const emailConfig = config.find(c => c.cle === 'email_destinataires');
