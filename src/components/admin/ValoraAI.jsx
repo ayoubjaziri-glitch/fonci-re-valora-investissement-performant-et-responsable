@@ -334,35 +334,49 @@ function MemoirePanel() {
       const uploadRes = await base44.integrations.Core.UploadFile({ file });
       console.log('Upload réussi:', uploadRes);
       
-      // 2. Extrait le contenu avec schéma flexible
-      const extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
-        file_url: uploadRes.file_url,
-        json_schema: {
-          type: 'object',
-          properties: {
-            text: { type: 'string' },
-            content: { type: 'string' },
-            data: { type: 'string' },
-            full_text: { type: 'string' }
+      // 2. Extrait le contenu - schéma très simple pour éviter les erreurs
+      let extractRes;
+      try {
+        extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
+          file_url: uploadRes.file_url,
+          json_schema: {
+            type: 'object',
+            properties: {
+              text: { type: 'string' }
+            }
           }
-        }
-      });
-
-      console.log('Extraction résultat:', extractRes);
+        });
+        console.log('Extraction résultat:', extractRes);
+      } catch (extractErr) {
+        console.warn('Première tentative échouée, retry avec schéma minimal:', extractErr);
+        // Retry avec schéma ultra minimal
+        extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
+          file_url: uploadRes.file_url,
+          json_schema: {
+            type: 'object'
+          }
+        });
+        console.log('Retry résultat:', extractRes);
+      }
 
       let extractedContent = '';
-      if (extractRes.status === 'success' && extractRes.output) {
+      if (extractRes?.status === 'success' && extractRes.output) {
         // Cherche le contenu dans plusieurs champs possibles
         if (typeof extractRes.output === 'string') {
           extractedContent = extractRes.output;
         } else if (extractRes.output.text) {
           extractedContent = extractRes.output.text;
-        } else if (extractRes.output.full_text) {
-          extractedContent = extractRes.output.full_text;
         } else if (extractRes.output.content) {
           extractedContent = extractRes.output.content;
         } else if (extractRes.output.data) {
           extractedContent = extractRes.output.data;
+        } else if (extractRes.output.full_text) {
+          extractedContent = extractRes.output.full_text;
+        } else if (Array.isArray(extractRes.output)) {
+          // Si c'est un array, join les éléments
+          extractedContent = extractRes.output.map(item => 
+            typeof item === 'string' ? item : JSON.stringify(item)
+          ).join('\n');
         } else {
           // Stringify tout le résultat
           extractedContent = JSON.stringify(extractRes.output, null, 2);
@@ -379,12 +393,12 @@ function MemoirePanel() {
         setUploadStatus('success');
         setTimeout(() => setUploadStatus(''), 3000);
       } else {
-        setUploadStatus('error');
-        console.warn('Contenu vide:', extractRes);
+        throw new Error('Aucun contenu extrait. Vérifiez que le fichier n\'est pas vide.');
       }
     } catch (err) {
-      console.error('Erreur upload:', err);
+      console.error('Erreur upload/extraction:', err);
       setUploadStatus('error');
+      alert('❌ Erreur lors de l\'extraction: ' + err.message + '\n\nVérifiez que le fichier est valide et non vide.');
     }
     setUploading(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
