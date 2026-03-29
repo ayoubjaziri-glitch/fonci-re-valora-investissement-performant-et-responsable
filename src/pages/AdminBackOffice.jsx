@@ -6,7 +6,8 @@ import {
   Lock, Eye, EyeOff, Image, Users, BarChart3, Newspaper,
   Building2, Rocket, MapPin, LogOut, Shield, LayoutDashboard,
   FileText, Mail, TrendingUp, Euro, MessageSquare, CheckCircle2, Globe,
-  Clock, AlertCircle, ChevronRight, Phone, Trash2
+  Clock, AlertCircle, ChevronRight, Phone, Trash2, ArrowRight,
+  Activity, Target, Zap, UserCheck, CalendarClock, TriangleAlert
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -103,64 +104,294 @@ function AdminLogin({ onLogin }) {
 }
 
 // ─── Dashboard Overview ───────────────────────────────────────────────────────
-function DashboardSection() {
-  const { data: contacts = [] } = useQuery({ queryKey: ['contacts'], queryFn: () => base44.entities.ContactRequest.list('-created_date', 100) });
+function DashboardSection({ onNavigate }) {
+  const now = new Date();
+
+  const { data: contacts = [] } = useQuery({ queryKey: ['contacts'], queryFn: () => base44.entities.ContactRequest.list('-created_date', 200) });
   const { data: docs = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => base44.entities.DocumentAssocie.list() });
   const { data: actu = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => base44.entities.ActualiteAssocie.list() });
   const { data: acq = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => base44.entities.AcquisitionAssocie.list() });
   const { data: accesAssocies = [] } = useQuery({ queryKey: ['acces-associes'], queryFn: () => base44.entities.AccesAssocie.list() });
+  const { data: taches = [] } = useQuery({ queryKey: ['taches'], queryFn: () => base44.entities.Tache.list('-created_date', 500) });
+  const { data: crm = [] } = useQuery({ queryKey: ['crm-investisseurs'], queryFn: () => base44.entities.InvestisseurCRM.list() });
+  const { data: levees = [] } = useQuery({ queryKey: ['levees'], queryFn: () => base44.entities.LeveeFonds.list() });
+  const { data: articles = [] } = useQuery({ queryKey: ['articles'], queryFn: () => base44.entities.ArticleBlog.list() });
 
+  // Calculs tâches
+  const tachesActives = taches.filter(t => t.statut !== 'Terminé');
+  const tachesEnCours = taches.filter(t => t.statut === 'En cours');
+  const tachesEnRetard = taches.filter(t => t.date_echeance && new Date(t.date_echeance) < now && t.statut !== 'Terminé');
+  const tachesUrgentes = taches.filter(t => t.priorite === 'Urgente' && t.statut !== 'Terminé');
+  const tachesTerminees7j = taches.filter(t => {
+    if (t.statut !== 'Terminé') return false;
+    const updated = new Date(t.updated_date);
+    return (now - updated) < 7 * 24 * 3600 * 1000;
+  });
+
+  // CRM
+  const crmAssocies = crm.filter(c => c.statut === 'Associé actif');
+  const crmEngages = crm.filter(c => ['Engagé', 'En discussion', 'Qualifié'].includes(c.statut));
+  const crmRelances = crm.filter(c => c.date_prochain_contact && new Date(c.date_prochain_contact) <= now);
+  const capitalTotal = crm.reduce((sum, c) => sum + (c.montant_investi || 0), 0);
+
+  // Contacts
   const nonTraites = contacts.filter(c => !c.email_envoye);
+  const contactsSemaine = contacts.filter(c => (now - new Date(c.created_date)) < 7 * 24 * 3600 * 1000);
 
-  const stats = [
-    { label: 'Demandes de contact', value: contacts.length, sub: `${nonTraites.length} non traitées`, icon: MessageSquare, color: 'bg-blue-50 text-blue-600', alert: nonTraites.length > 0 },
-    { label: 'Documents', value: docs.length, sub: `${docs.filter(d => d.type_acces === 'privé').length} privés`, icon: FileText, color: 'bg-amber-50 text-amber-600' },
-    { label: 'Actualités', value: actu.length, sub: 'Espace associé', icon: Newspaper, color: 'bg-purple-50 text-purple-600' },
-    { label: 'Biens / Chantiers', value: acq.length, sub: `${acq.filter(a => a.statut === 'Travaux').length} en travaux`, icon: Building2, color: 'bg-emerald-50 text-emerald-600' },
-    { label: 'Associés actifs', value: accesAssocies.filter(a => a.actif).length, sub: `${accesAssocies.length} total`, icon: Users, color: 'bg-indigo-50 text-indigo-600' },
-  ];
+  // Levées
+  const leveeActive = levees.find(l => l.statut === 'Ouverte' || l.statut === 'En cours');
+
+  const alertes = [
+    tachesEnRetard.length > 0 && { msg: `${tachesEnRetard.length} tâche${tachesEnRetard.length > 1 ? 's' : ''} en retard`, color: 'text-red-600 bg-red-50 border-red-200', icon: TriangleAlert, tab: 'taches' },
+    tachesUrgentes.length > 0 && { msg: `${tachesUrgentes.length} tâche${tachesUrgentes.length > 1 ? 's urgentes' : ' urgente'}`, color: 'text-orange-600 bg-orange-50 border-orange-200', icon: Zap, tab: 'taches' },
+    nonTraites.length > 0 && { msg: `${nonTraites.length} demande${nonTraites.length > 1 ? 's' : ''} de contact non traitée${nonTraites.length > 1 ? 's' : ''}`, color: 'text-blue-600 bg-blue-50 border-blue-200', icon: MessageSquare, tab: 'contacts' },
+    crmRelances.length > 0 && { msg: `${crmRelances.length} relance${crmRelances.length > 1 ? 's' : ''} CRM à effectuer`, color: 'text-purple-600 bg-purple-50 border-purple-200', icon: CalendarClock, tab: 'crm' },
+  ].filter(Boolean);
 
   return (
-    <div className="space-y-8">
-      <div>
-        <h2 className="text-xl font-semibold text-[#1A3A52] mb-1">Vue d'ensemble</h2>
-        <p className="text-slate-500 text-sm">Tableau de bord global du back-office</p>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-[#1A3A52]">Vue d'ensemble</h2>
+          <p className="text-slate-400 text-sm">{now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
+        </div>
+        <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
+          <Activity className="h-4 w-4 text-emerald-500" />
+          <span className="text-xs font-semibold text-emerald-700">Système opérationnel</span>
+        </div>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-        {stats.map((s, i) => (
-          <div key={i} className={`bg-white rounded-2xl p-5 border ${s.alert ? 'border-red-200 shadow-red-100 shadow-md' : 'border-slate-200'}`}>
-            <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 ${s.color}`}>
-              <s.icon className="h-5 w-5" />
+      {/* Alertes */}
+      {alertes.length > 0 && (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+          {alertes.map((a, i) => (
+            <button key={i} onClick={() => onNavigate(a.tab)}
+              className={`flex items-center gap-3 px-4 py-2.5 rounded-xl border text-left transition-all hover:shadow-sm ${a.color}`}>
+              <a.icon className="h-4 w-4 flex-shrink-0" />
+              <span className="text-sm font-medium flex-1">{a.msg}</span>
+              <ArrowRight className="h-4 w-4 opacity-50" />
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* KPIs principaux */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <button onClick={() => onNavigate('taches')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+              <CheckCircle2 className="h-5 w-5 text-blue-600" />
             </div>
-            <div className="text-2xl font-bold text-[#1A3A52]">{s.value}</div>
-            <div className="text-sm font-medium text-slate-700 mt-0.5">{s.label}</div>
-            <div className={`text-xs mt-1 ${s.alert ? 'text-red-500 font-semibold' : 'text-slate-400'}`}>{s.sub}</div>
+            <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-[#C9A961] transition-colors" />
           </div>
-        ))}
+          <div className="text-2xl font-bold text-[#1A3A52]">{tachesActives.length}</div>
+          <div className="text-sm font-medium text-slate-700 mt-0.5">Tâches actives</div>
+          <div className="text-xs text-slate-400 mt-1">{tachesEnCours.length} en cours · {tachesTerminees7j.length} finies cette semaine</div>
+        </button>
+
+        <button onClick={() => onNavigate('crm')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+              <UserCheck className="h-5 w-5 text-amber-600" />
+            </div>
+            <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-[#C9A961] transition-colors" />
+          </div>
+          <div className="text-2xl font-bold text-[#1A3A52]">{crm.length}</div>
+          <div className="text-sm font-medium text-slate-700 mt-0.5">Investisseurs CRM</div>
+          <div className="text-xs text-slate-400 mt-1">{crmAssocies.length} associés · {crmEngages.length} en discussion</div>
+        </button>
+
+        <button onClick={() => onNavigate('contacts')} className={`bg-white rounded-2xl p-5 border text-left hover:shadow-md transition-all group ${nonTraites.length > 0 ? 'border-orange-200' : 'border-slate-200 hover:border-[#C9A961]'}`}>
+          <div className="flex items-center justify-between mb-3">
+            <div className={`w-10 h-10 rounded-xl flex items-center justify-center ${nonTraites.length > 0 ? 'bg-orange-50' : 'bg-green-50'}`}>
+              <MessageSquare className={`h-5 w-5 ${nonTraites.length > 0 ? 'text-orange-600' : 'text-green-600'}`} />
+            </div>
+            <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-[#C9A961] transition-colors" />
+          </div>
+          <div className="text-2xl font-bold text-[#1A3A52]">{contacts.length}</div>
+          <div className="text-sm font-medium text-slate-700 mt-0.5">Demandes de contact</div>
+          <div className={`text-xs mt-1 ${nonTraites.length > 0 ? 'text-orange-500 font-semibold' : 'text-slate-400'}`}>
+            {nonTraites.length > 0 ? `⚠️ ${nonTraites.length} non traitées` : '✓ Tout traité'} · {contactsSemaine.length} cette semaine
+          </div>
+        </button>
+
+        <button onClick={() => onNavigate('levees')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
+              <TrendingUp className="h-5 w-5 text-emerald-600" />
+            </div>
+            <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-[#C9A961] transition-colors" />
+          </div>
+          <div className="text-2xl font-bold text-[#1A3A52]">{capitalTotal > 0 ? `${(capitalTotal / 1000).toFixed(0)}k€` : levees.length}</div>
+          <div className="text-sm font-medium text-slate-700 mt-0.5">{capitalTotal > 0 ? 'Capital collecté' : 'Levées de fonds'}</div>
+          <div className="text-xs text-slate-400 mt-1">{leveeActive ? `🟢 ${leveeActive.nom} ouverte` : `${levees.length} levée${levees.length > 1 ? 's' : ''} · ${crmAssocies.length} associés`}</div>
+        </button>
       </div>
 
-      {/* Dernières demandes */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6">
-        <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
-          <MessageSquare className="h-5 w-5 text-[#C9A961]" />
-          Dernières demandes de contact
-          {nonTraites.length > 0 && <span className="ml-2 bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">{nonTraites.length} nouvelle{nonTraites.length > 1 ? 's' : ''}</span>}
-        </h3>
-        <div className="space-y-3">
-          {contacts.slice(0, 5).map(c => (
-            <div key={c.id} className="flex items-center justify-between p-3 bg-slate-50 rounded-xl">
-              <div>
-                <p className="font-medium text-sm text-slate-900">{c.prenom} {c.nom}</p>
-                <p className="text-xs text-slate-500">{c.email} • {c.type_demande || 'Contact général'}</p>
+      {/* Ligne 2 */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <button onClick={() => onNavigate('biens')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center">
+              <Building2 className="h-5 w-5 text-indigo-600" />
+            </div>
+            <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-[#C9A961] transition-colors" />
+          </div>
+          <div className="text-2xl font-bold text-[#1A3A52]">{acq.length}</div>
+          <div className="text-sm font-medium text-slate-700 mt-0.5">Biens & Chantiers</div>
+          <div className="text-xs text-slate-400 mt-1">{acq.filter(a => a.statut === 'Travaux').length} en travaux · {acq.filter(a => a.statut === 'Livré').length} livrés</div>
+        </button>
+
+        <button onClick={() => onNavigate('blog')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
+              <Newspaper className="h-5 w-5 text-purple-600" />
+            </div>
+            <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-[#C9A961] transition-colors" />
+          </div>
+          <div className="text-2xl font-bold text-[#1A3A52]">{articles.length}</div>
+          <div className="text-sm font-medium text-slate-700 mt-0.5">Articles Blog</div>
+          <div className="text-xs text-slate-400 mt-1">{articles.filter(a => a.publie).length} publiés · {articles.filter(a => !a.publie).length} brouillons</div>
+        </button>
+
+        <button onClick={() => onNavigate('acces')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-teal-50 flex items-center justify-center">
+              <Users className="h-5 w-5 text-teal-600" />
+            </div>
+            <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-[#C9A961] transition-colors" />
+          </div>
+          <div className="text-2xl font-bold text-[#1A3A52]">{accesAssocies.filter(a => a.actif).length}</div>
+          <div className="text-sm font-medium text-slate-700 mt-0.5">Associés actifs</div>
+          <div className="text-xs text-slate-400 mt-1">{accesAssocies.length} total · {docs.length} documents</div>
+        </button>
+
+        <button onClick={() => onNavigate('visiteurs')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all group">
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-10 h-10 rounded-xl bg-rose-50 flex items-center justify-center">
+              <Globe className="h-5 w-5 text-rose-600" />
+            </div>
+            <ArrowRight className="h-4 w-4 text-slate-300 group-hover:text-[#C9A961] transition-colors" />
+          </div>
+          <div className="text-2xl font-bold text-[#1A3A52]">Stats</div>
+          <div className="text-sm font-medium text-slate-700 mt-0.5">Visiteurs site</div>
+          <div className="text-xs text-slate-400 mt-1">Voir analytics →</div>
+        </button>
+      </div>
+
+      {/* Bas : 2 colonnes */}
+      <div className="grid lg:grid-cols-2 gap-4">
+        {/* Tâches urgentes / en retard */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-[#1A3A52] flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-[#C9A961]" /> Tâches à traiter
+            </h3>
+            <button onClick={() => onNavigate('taches')} className="text-xs text-[#C9A961] hover:underline font-medium flex items-center gap-1">
+              Tout voir <ArrowRight className="h-3 w-3" />
+            </button>
+          </div>
+          <div className="space-y-2">
+            {[...tachesEnRetard.slice(0, 3), ...tachesUrgentes.filter(t => !tachesEnRetard.includes(t)).slice(0, 2)].slice(0, 5).map(t => (
+              <div key={t.id} className="flex items-center gap-3 p-2.5 bg-slate-50 rounded-xl">
+                <span className={`w-2 h-2 rounded-full flex-shrink-0 ${t.priorite === 'Urgente' ? 'bg-red-500' : t.priorite === 'Haute' ? 'bg-orange-400' : 'bg-slate-300'}`} />
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-slate-800 truncate">{t.titre}</p>
+                  <p className="text-xs text-slate-400">{t.projet || 'Sans projet'} · {t.assigne_a || 'Non assigné'}</p>
+                </div>
+                <div className="flex flex-col items-end gap-1">
+                  <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
+                    t.statut === 'En cours' ? 'bg-blue-100 text-blue-700' :
+                    t.statut === 'Bloqué' ? 'bg-red-100 text-red-700' : 'bg-slate-100 text-slate-600'
+                  }`}>{t.statut}</span>
+                  {t.date_echeance && new Date(t.date_echeance) < now && (
+                    <span className="text-xs text-red-500 font-semibold">En retard</span>
+                  )}
+                </div>
               </div>
-              <span className={`text-xs px-2 py-1 rounded-full ${c.email_envoye ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-700'}`}>
-                {c.email_envoye ? 'Traité' : 'En attente'}
-              </span>
+            ))}
+            {tachesEnRetard.length === 0 && tachesUrgentes.length === 0 && (
+              <div className="text-center py-6 text-slate-300">
+                <CheckCircle2 className="h-8 w-8 mx-auto mb-2" />
+                <p className="text-sm">Aucune tâche urgente</p>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Dernières demandes de contact */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-5">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-[#1A3A52] flex items-center gap-2">
+              <MessageSquare className="h-4 w-4 text-[#C9A961]" /> Dernières demandes
+              {nonTraites.length > 0 && <span className="bg-red-500 text-white text-xs px-1.5 py-0.5 rounded-full">{nonTraites.length}</span>}
+            </h3>
+            <button onClick={() => onNavigate('contacts')} className="text-xs text-[#C9A961] hover:underline font-medium flex items-center gap-1">
+              Tout voir <ArrowRight className="h-3 w-3" />
+            </button>
+          </div>
+          <div className="space-y-2">
+            {contacts.slice(0, 5).map(c => (
+              <div key={c.id} className={`flex items-center gap-3 p-2.5 rounded-xl ${!c.email_envoye ? 'bg-orange-50 border border-orange-100' : 'bg-slate-50'}`}>
+                <div className="w-7 h-7 bg-[#1A3A52] rounded-full flex items-center justify-center text-white text-xs font-semibold flex-shrink-0">
+                  {c.prenom?.[0]}{c.nom?.[0]}
+                </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-slate-800 truncate">{c.prenom} {c.nom}</p>
+                  <p className="text-xs text-slate-400 truncate">{c.type_demande || 'Contact général'}</p>
+                </div>
+                <span className={`text-xs px-2 py-0.5 rounded-full flex-shrink-0 ${c.email_envoye ? 'bg-emerald-100 text-emerald-700' : 'bg-orange-100 text-orange-600 font-semibold'}`}>
+                  {c.email_envoye ? 'Traité' : '⏳ En attente'}
+                </span>
+              </div>
+            ))}
+            {contacts.length === 0 && <p className="text-slate-400 text-sm text-center py-6">Aucune demande</p>}
+          </div>
+        </div>
+      </div>
+
+      {/* CRM Pipeline résumé */}
+      <div className="bg-white rounded-2xl border border-slate-200 p-5">
+        <div className="flex items-center justify-between mb-4">
+          <h3 className="font-semibold text-[#1A3A52] flex items-center gap-2">
+            <Target className="h-4 w-4 text-[#C9A961]" /> Pipeline Investisseurs
+            {crmRelances.length > 0 && <span className="bg-purple-500 text-white text-xs px-1.5 py-0.5 rounded-full">{crmRelances.length} relance{crmRelances.length > 1 ? 's' : ''}</span>}
+          </h3>
+          <button onClick={() => onNavigate('crm')} className="text-xs text-[#C9A961] hover:underline font-medium flex items-center gap-1">
+            Gérer CRM <ArrowRight className="h-3 w-3" />
+          </button>
+        </div>
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
+          {[
+            { label: 'Prospect', count: crm.filter(c => c.statut === 'Prospect').length, color: 'bg-slate-100 text-slate-600' },
+            { label: 'Contact', count: crm.filter(c => c.statut === 'Contact').length, color: 'bg-blue-100 text-blue-700' },
+            { label: 'Qualifié', count: crm.filter(c => c.statut === 'Qualifié').length, color: 'bg-indigo-100 text-indigo-700' },
+            { label: 'Discussion', count: crm.filter(c => c.statut === 'En discussion').length, color: 'bg-purple-100 text-purple-700' },
+            { label: 'Engagé', count: crm.filter(c => c.statut === 'Engagé').length, color: 'bg-amber-100 text-amber-700' },
+            { label: 'Associé', count: crm.filter(c => c.statut === 'Associé actif').length, color: 'bg-emerald-100 text-emerald-700' },
+            { label: 'Inactif', count: crm.filter(c => c.statut === 'Inactif').length, color: 'bg-slate-100 text-slate-500' },
+            { label: 'Perdu', count: crm.filter(c => c.statut === 'Perdu').length, color: 'bg-red-100 text-red-500' },
+          ].map(s => (
+            <div key={s.label} className={`rounded-xl p-2.5 text-center ${s.color}`}>
+              <div className="text-lg font-bold">{s.count}</div>
+              <div className="text-xs font-medium mt-0.5">{s.label}</div>
             </div>
           ))}
-          {contacts.length === 0 && <p className="text-slate-400 text-sm text-center py-4">Aucune demande</p>}
         </div>
+        {crmRelances.length > 0 && (
+          <div className="mt-3 pt-3 border-t border-slate-100">
+            <p className="text-xs text-purple-600 font-semibold mb-2">🔔 Relances à effectuer aujourd'hui :</p>
+            <div className="flex flex-wrap gap-2">
+              {crmRelances.slice(0, 5).map(c => (
+                <span key={c.id} className="text-xs bg-purple-50 border border-purple-200 text-purple-700 px-2 py-1 rounded-lg">
+                  {c.prenom} {c.nom}
+                </span>
+              ))}
+              {crmRelances.length > 5 && <span className="text-xs text-purple-400">+{crmRelances.length - 5} autres</span>}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -410,7 +641,7 @@ export default function AdminBackOffice() {
         {/* Content */}
         <div className="flex-1 p-6 lg:p-8">
           {activeTab === 'ai' && <ValoraAI />}
-          {activeTab === 'dashboard' && <DashboardSection />}
+          {activeTab === 'dashboard' && <DashboardSection onNavigate={setActiveTab} />}
           {activeTab === 'taches' && <AdminTaches />}
           {activeTab === 'contacts' && <DemandesContactSection />}
           {activeTab === 'visiteurs' && <AdminVisiteurs />}
