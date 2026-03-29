@@ -49,7 +49,7 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
   { name: 'Nos biens', page: 'Realisations' },
-  { name: 'Blog', page: 'Blog' }];
+];
 
   return (
     <div className="min-h-screen bg-white">
