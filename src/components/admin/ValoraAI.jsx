@@ -331,31 +331,49 @@ function MemoirePanel() {
       // 1. Upload le fichier
       const uploadRes = await base44.integrations.Core.UploadFile({ file });
       
-      // 2. Extrait le contenu
+      // 2. Extrait le contenu avec schéma flexible
       const extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
         file_url: uploadRes.file_url,
         json_schema: {
           type: 'object',
           properties: {
-            content: { type: 'string' }
+            text: { type: 'string' },
+            content: { type: 'string' },
+            data: { type: 'string' }
           }
         }
       });
 
-      if (extractRes.status === 'success') {
+      let extractedContent = '';
+      if (extractRes.status === 'success' && extractRes.output) {
+        // Cherche le contenu dans plusieurs champs possibles
+        if (typeof extractRes.output === 'string') {
+          extractedContent = extractRes.output;
+        } else if (extractRes.output.text) {
+          extractedContent = extractRes.output.text;
+        } else if (extractRes.output.content) {
+          extractedContent = extractRes.output.content;
+        } else if (extractRes.output.data) {
+          extractedContent = extractRes.output.data;
+        } else {
+          // Stringify tout le résultat
+          extractedContent = JSON.stringify(extractRes.output, null, 2);
+        }
+      }
+
+      if (extractedContent) {
         // 3. Ajoute le contenu au formulaire
-        const extractedContent = typeof extractRes.output === 'string' 
-          ? extractRes.output 
-          : extractRes.output?.content || '';
-        
         setForm(f => ({
           ...f,
           titre: f?.titre || file.name.replace(/\.[^/.]+$/, ''),
-          contenu: (f?.contenu || '') + '\n\n--- Contenu du document ---\n' + extractedContent
+          contenu: (f?.contenu || '') + (f?.contenu ? '\n\n' : '') + '📄 ' + file.name + ':\n' + extractedContent
         }));
+      } else {
+        alert('Impossible d\'extraire le contenu du document. Vérifiez le format.');
       }
     } catch (err) {
       console.error('Erreur upload:', err);
+      alert('Erreur lors du traitement du document: ' + err.message);
     }
     setUploading(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
@@ -476,9 +494,12 @@ export default function ValoraAI() {
     return () => clearInterval(pollIntervalRef.current);
   }, []);
 
+  // Scroll uniquement au chargement initial, pas à chaque message
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    if (messages.length === 1) {
+      messagesEndRef.current?.scrollIntoView({ behavior: 'auto' });
+    }
+  }, [activeConvId]);
 
   const startPolling = (convId) => {
     clearInterval(pollIntervalRef.current);
