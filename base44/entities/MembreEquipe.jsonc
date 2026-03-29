@@ -1,0 +1,52 @@
+{
+  "name": "MembreEquipe",
+  "type": "object",
+  "properties": {
+    "nom": {
+      "type": "string",
+      "description": "Nom complet"
+    },
+    "role": {
+      "type": "string",
+      "description": "Titre / poste"
+    },
+    "focus": {
+      "type": "string",
+      "description": "Domaine d'expertise"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description courte"
+    },
+    "experience": {
+      "type": "string",
+      "description": "D\u00e9tail exp\u00e9rience (fondateurs)"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de la photo"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "fondateur",
+        "membre"
+      ],
+      "default": "membre",
+      "description": "Fondateur ou membre de l'\u00e9quipe"
+    },
+    "ordre": {
+      "type": "number",
+      "default": 0,
+      "description": "Ordre d'affichage"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "nom",
+    "role"
+  ]
+}

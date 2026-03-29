@@ -1,0 +1,31 @@
+{
+  "name": "EspaceAssocieConfig",
+  "type": "object",
+  "properties": {
+    "cle": {
+      "type": "string",
+      "description": "Identifiant unique (ex: levee_fonds, valorisation, kpis)"
+    },
+    "section": {
+      "type": "string",
+      "enum": [
+        "levee_fonds",
+        "valorisation",
+        "kpis",
+        "indicateurs",
+        "energie",
+        "resultats"
+      ],
+      "description": "Section du dashboard"
+    },
+    "donnees": {
+      "type": "string",
+      "description": "Donn\u00e9es JSON s\u00e9rialis\u00e9es"
+    }
+  },
+  "required": [
+    "cle",
+    "section",
+    "donnees"
+  ]
+}

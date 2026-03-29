@@ -1,0 +1,34 @@
+{
+  "name": "ContactRequest",
+  "type": "object",
+  "properties": {
+    "prenom": {
+      "type": "string"
+    },
+    "nom": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "telephone": {
+      "type": "string"
+    },
+    "type_demande": {
+      "type": "string"
+    },
+    "message": {
+      "type": "string"
+    },
+    "email_envoye": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "required": [
+    "prenom",
+    "nom",
+    "email",
+    "message"
+  ]
+}

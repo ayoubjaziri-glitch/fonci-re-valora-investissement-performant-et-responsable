@@ -1,0 +1,61 @@
+{
+  "name": "SiteSection",
+  "type": "object",
+  "properties": {
+    "page": {
+      "type": "string",
+      "enum": [
+        "accueil",
+        "strategie",
+        "missions",
+        "equipe",
+        "ecosysteme",
+        "durabilite",
+        "nos_biens"
+      ],
+      "description": "Page du site concern\u00e9e"
+    },
+    "titre": {
+      "type": "string",
+      "description": "Titre de la section"
+    },
+    "sous_titre": {
+      "type": "string",
+      "description": "Sous-titre ou accroche"
+    },
+    "contenu": {
+      "type": "string",
+      "description": "Contenu principal (texte, Markdown)"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de l'image de la section"
+    },
+    "type_section": {
+      "type": "string",
+      "enum": [
+        "texte",
+        "texte_image",
+        "chiffres",
+        "cta",
+        "temoignage",
+        "liste"
+      ],
+      "default": "texte",
+      "description": "Type d'affichage"
+    },
+    "ordre": {
+      "type": "number",
+      "default": 0,
+      "description": "Ordre d'affichage"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "page",
+    "titre"
+  ]
+}

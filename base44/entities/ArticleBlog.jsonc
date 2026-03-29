@@ -1,0 +1,58 @@
+{
+  "name": "ArticleBlog",
+  "type": "object",
+  "properties": {
+    "titre": {
+      "type": "string",
+      "description": "Titre de l'article"
+    },
+    "slug": {
+      "type": "string",
+      "description": "URL slug (ex: mon-article)"
+    },
+    "extrait": {
+      "type": "string",
+      "description": "R\u00e9sum\u00e9 court"
+    },
+    "contenu": {
+      "type": "string",
+      "description": "Contenu complet en Markdown"
+    },
+    "categorie": {
+      "type": "string",
+      "enum": [
+        "March\u00e9",
+        "Investissement",
+        "Fiscalit\u00e9",
+        "R\u00e9novation",
+        "Gouvernance"
+      ],
+      "default": "Investissement"
+    },
+    "auteur": {
+      "type": "string",
+      "default": "La Fonci\u00e8re Valora"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de l'image de couverture"
+    },
+    "temps_lecture": {
+      "type": "string",
+      "description": "Ex: 5 min"
+    },
+    "date_publication": {
+      "type": "string",
+      "format": "date"
+    },
+    "publie": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "titre",
+    "slug",
+    "extrait"
+  ]
+}

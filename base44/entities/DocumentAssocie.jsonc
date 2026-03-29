@@ -1,0 +1,53 @@
+{
+  "name": "DocumentAssocie",
+  "type": "object",
+  "properties": {
+    "nom": {
+      "type": "string",
+      "description": "Nom du document"
+    },
+    "categorie": {
+      "type": "string",
+      "enum": [
+        "Juridique",
+        "Financier",
+        "Fiscal",
+        "ESG",
+        "Gouvernance",
+        "Investissement",
+        "Autre"
+      ],
+      "description": "Cat\u00e9gorie du document"
+    },
+    "type_acces": {
+      "type": "string",
+      "enum": [
+        "public",
+        "priv\u00e9"
+      ],
+      "default": "priv\u00e9"
+    },
+    "file_url": {
+      "type": "string",
+      "description": "URL du fichier upload\u00e9"
+    },
+    "taille": {
+      "type": "string",
+      "description": "Taille affich\u00e9e (ex: 2.4 MB)"
+    },
+    "date_document": {
+      "type": "string",
+      "format": "date",
+      "description": "Date du document"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "nom",
+    "categorie",
+    "type_acces"
+  ]
+}

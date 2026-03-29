@@ -1,0 +1,65 @@
+{
+  "name": "AcquisitionAssocie",
+  "type": "object",
+  "properties": {
+    "ville": {
+      "type": "string",
+      "description": "Ville et quartier"
+    },
+    "prix": {
+      "type": "string",
+      "description": "Prix affich\u00e9 (ex: 1 850 000 \u20ac)"
+    },
+    "lots": {
+      "type": "number",
+      "description": "Nombre de lots"
+    },
+    "dpe": {
+      "type": "string",
+      "description": "Evolution DPE (ex: F \u2192 B)"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "N\u00e9gociation",
+        "Due Diligence",
+        "Compromis",
+        "Acte",
+        "Travaux",
+        "Livr\u00e9"
+      ],
+      "default": "N\u00e9gociation"
+    },
+    "avancement": {
+      "type": "number",
+      "description": "Avancement en %",
+      "minimum": 0,
+      "maximum": 100
+    },
+    "livraison": {
+      "type": "string",
+      "description": "Livraison pr\u00e9vue (ex: Juin 2026)"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "acquisition_en_cours",
+        "patrimoine",
+        "chantier"
+      ],
+      "default": "acquisition_en_cours"
+    },
+    "valeur": {
+      "type": "string",
+      "description": "Valeur affich\u00e9e pour le patrimoine"
+    },
+    "occupation": {
+      "type": "string",
+      "description": "Taux d'occupation (ex: 92%)"
+    }
+  },
+  "required": [
+    "ville",
+    "statut"
+  ]
+}

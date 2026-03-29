@@ -1,0 +1,102 @@
+{
+  "name": "RealisationBien",
+  "type": "object",
+  "properties": {
+    "titre": {
+      "type": "string",
+      "description": "Titre de la r\u00e9alisation"
+    },
+    "location": {
+      "type": "string",
+      "description": "Ville, D\u00e9partement"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Latitude pour la carte"
+    },
+    "lng": {
+      "type": "number",
+      "description": "Longitude pour la carte"
+    },
+    "annee": {
+      "type": "string",
+      "description": "Ann\u00e9e de r\u00e9alisation"
+    },
+    "image_avant": {
+      "type": "string",
+      "description": "URL photo avant"
+    },
+    "image_apres": {
+      "type": "string",
+      "description": "URL photo apr\u00e8s"
+    },
+    "surface": {
+      "type": "string",
+      "description": "Ex: 1 200 m\u00b2"
+    },
+    "logements": {
+      "type": "string",
+      "description": "Ex: 12 lots"
+    },
+    "investissement": {
+      "type": "string",
+      "description": "Ex: 1 450 000 \u20ac"
+    },
+    "dpe_avant": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+      ],
+      "description": "DPE initial"
+    },
+    "dpe_apres": {
+      "type": "string",
+      "enum": [
+        "A",
+        "B",
+        "C",
+        "D",
+        "E",
+        "F",
+        "G"
+      ],
+      "description": "DPE final"
+    },
+    "description_avant": {
+      "type": "string"
+    },
+    "description_apres": {
+      "type": "string"
+    },
+    "travaux": {
+      "type": "string",
+      "description": "Travaux s\u00e9par\u00e9s par des virgules"
+    },
+    "rendement_brut": {
+      "type": "string",
+      "description": "Ex: 8,2%"
+    },
+    "plus_value": {
+      "type": "string",
+      "description": "Ex: +18%"
+    },
+    "ordre": {
+      "type": "number",
+      "default": 0
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "titre",
+    "location"
+  ]
+}

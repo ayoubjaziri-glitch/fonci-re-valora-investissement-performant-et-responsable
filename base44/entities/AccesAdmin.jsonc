@@ -1,0 +1,29 @@
+{
+  "name": "AccesAdmin",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email de l'administrateur"
+    },
+    "password": {
+      "type": "string",
+      "description": "Mot de passe de l'administrateur"
+    },
+    "nom": {
+      "type": "string",
+      "description": "Nom de l'administrateur"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true,
+      "description": "Compte actif ou non"
+    }
+  },
+  "required": [
+    "email",
+    "password",
+    "nom"
+  ]
+}

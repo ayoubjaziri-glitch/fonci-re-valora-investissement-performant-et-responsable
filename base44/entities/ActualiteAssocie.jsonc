@@ -1,0 +1,40 @@
+{
+  "name": "ActualiteAssocie",
+  "type": "object",
+  "properties": {
+    "titre": {
+      "type": "string",
+      "description": "Titre de l'actualit\u00e9"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description courte"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "acquisition",
+        "travaux",
+        "note",
+        "levee_fonds",
+        "gouvernance",
+        "autre"
+      ],
+      "default": "note"
+    },
+    "date_publication": {
+      "type": "string",
+      "format": "date",
+      "description": "Date de publication"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "titre",
+    "description",
+    "date_publication"
+  ]
+}

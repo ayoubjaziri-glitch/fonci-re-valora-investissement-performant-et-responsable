@@ -1,0 +1,38 @@
+{
+  "name": "RoadmapAssocie",
+  "type": "object",
+  "properties": {
+    "etape": {
+      "type": "string",
+      "description": "Nom de l'\u00e9tape"
+    },
+    "date_prevue": {
+      "type": "string",
+      "description": "Date pr\u00e9vue (ex: Q1 2026)"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "planifie",
+        "en_cours",
+        "termine"
+      ],
+      "default": "planifie"
+    },
+    "avancement": {
+      "type": "number",
+      "description": "Avancement en %",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0
+    },
+    "ordre": {
+      "type": "number",
+      "description": "Ordre d'affichage"
+    }
+  },
+  "required": [
+    "etape",
+    "date_prevue"
+  ]
+}

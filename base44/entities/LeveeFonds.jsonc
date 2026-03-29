@@ -1,0 +1,84 @@
+{
+  "name": "LeveeFonds",
+  "type": "object",
+  "properties": {
+    "nom": {
+      "type": "string",
+      "description": "Nom de la lev\u00e9e (ex: Lev\u00e9e inaugurale)"
+    },
+    "objectif": {
+      "type": "string",
+      "description": "Montant objectif (ex: 1 250 000 \u20ac)"
+    },
+    "collecte": {
+      "type": "string",
+      "description": "Montant collect\u00e9 \u00e0 date (ex: 450 000 \u20ac)"
+    },
+    "avancement": {
+      "type": "number",
+      "description": "Pourcentage atteint (0-100)",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0
+    },
+    "date_ouverture": {
+      "type": "string",
+      "format": "date"
+    },
+    "date_cloture": {
+      "type": "string",
+      "format": "date"
+    },
+    "ticket_min": {
+      "type": "string",
+      "description": "Ticket minimum (ex: 10 000 \u20ac)"
+    },
+    "rendement_cible": {
+      "type": "string",
+      "description": "TRI cible (ex: 10% net)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description et objectifs de la lev\u00e9e"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "Pr\u00e9paration",
+        "Ouverte",
+        "En cours",
+        "Cl\u00f4tur\u00e9e"
+      ],
+      "default": "Pr\u00e9paration"
+    },
+    "nb_investisseurs": {
+      "type": "number",
+      "default": 0
+    },
+    "horizon": {
+      "type": "string",
+      "description": "Horizon recommand\u00e9 (ex: 5 ans)",
+      "default": "5 ans"
+    },
+    "effet_levier": {
+      "type": "string",
+      "description": "Effet de levier (ex: x5)"
+    },
+    "valorisation_an5": {
+      "type": "string",
+      "description": "Valorisation An 5 estim\u00e9e (ex: +61%)"
+    },
+    "sous_titre": {
+      "type": "string",
+      "description": "Sous-titre affich\u00e9 sous le montant objectif (ex: Premi\u00e8re op\u00e9ration \u00e0 1,25 M\u20ac)"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "nom",
+    "statut"
+  ]
+}

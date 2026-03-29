@@ -1,0 +1,48 @@
+{
+  "name": "SiteContent",
+  "type": "object",
+  "properties": {
+    "cle": {
+      "type": "string",
+      "description": "Identifiant unique du contenu (ex: home_hero_titre)"
+    },
+    "valeur": {
+      "type": "string",
+      "description": "Contenu textuel"
+    },
+    "page": {
+      "type": "string",
+      "enum": [
+        "accueil",
+        "strategie",
+        "missions",
+        "equipe",
+        "ecosysteme",
+        "durabilite",
+        "nos_biens",
+        "global"
+      ],
+      "description": "Page concern\u00e9e"
+    },
+    "label": {
+      "type": "string",
+      "description": "Libell\u00e9 lisible pour l'admin (ex: Titre hero)"
+    },
+    "type_champ": {
+      "type": "string",
+      "enum": [
+        "texte",
+        "textarea",
+        "liste"
+      ],
+      "default": "texte",
+      "description": "Type d'\u00e9diteur"
+    }
+  },
+  "required": [
+    "cle",
+    "valeur",
+    "page",
+    "label"
+  ]
+}

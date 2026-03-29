@@ -1,0 +1,35 @@
+{
+  "name": "SiteImage",
+  "type": "object",
+  "properties": {
+    "key": {
+      "type": "string",
+      "description": "Identifiant unique de l'image (ex: hero_home, photo_ayoub, etc.)"
+    },
+    "url": {
+      "type": "string",
+      "description": "URL de l'image"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description de l'emplacement de l'image"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "hero",
+        "equipe",
+        "realisations",
+        "services",
+        "autres"
+      ],
+      "description": "Cat\u00e9gorie de l'image"
+    }
+  },
+  "required": [
+    "key",
+    "url",
+    "description",
+    "category"
+  ]
+}

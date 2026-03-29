@@ -1,0 +1,29 @@
+{
+  "name": "AccesAssocie",
+  "type": "object",
+  "properties": {
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Email de l'associ\u00e9"
+    },
+    "password": {
+      "type": "string",
+      "description": "Mot de passe de l'associ\u00e9"
+    },
+    "nom": {
+      "type": "string",
+      "description": "Nom de l'associ\u00e9"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true,
+      "description": "Compte actif ou non"
+    }
+  },
+  "required": [
+    "email",
+    "password",
+    "nom"
+  ]
+}

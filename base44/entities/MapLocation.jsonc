@@ -1,0 +1,44 @@
+{
+  "name": "MapLocation",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Nom de l'immeuble"
+    },
+    "lat": {
+      "type": "number",
+      "description": "Latitude"
+    },
+    "lng": {
+      "type": "number",
+      "description": "Longitude"
+    },
+    "adresse": {
+      "type": "string",
+      "description": "Adresse compl\u00e8te"
+    },
+    "image_url": {
+      "type": "string",
+      "description": "URL de la photo de l'immeuble"
+    },
+    "logements": {
+      "type": "string",
+      "description": "Ex: 12 logements"
+    },
+    "dpe": {
+      "type": "string",
+      "description": "Classe DPE (A, B, C...)"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true
+    }
+  },
+  "required": [
+    "name",
+    "lat",
+    "lng",
+    "adresse"
+  ]
+}

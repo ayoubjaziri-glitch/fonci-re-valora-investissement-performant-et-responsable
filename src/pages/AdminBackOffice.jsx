@@ -545,7 +545,6 @@ export default function AdminBackOffice() {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const [showPageGenerator, setShowPageGenerator] = useState(false);
-  const [espaceAssociesOpen, setEspaceAssociesOpen] = useState(false);
 
   const { data: contacts = [] } = useQuery({
     queryKey: ['contacts'],
@@ -609,50 +608,23 @@ export default function AdminBackOffice() {
         <nav className="flex-1 p-3 space-y-5 pt-4">
           {navGroups.map((group) =>
           <div key={group.label}>
-              {group.label === 'Espace Associés' ? (
-                <>
-                  <button 
-                    onClick={() => setEspaceAssociesOpen(!espaceAssociesOpen)}
-                    className="w-full flex items-center gap-2 px-3 py-2 text-white/30 text-xs font-semibold uppercase tracking-widest hover:text-white/50 transition-all">
-                    <ChevronRight className={`h-4 w-4 transition-transform ${espaceAssociesOpen ? 'rotate-90' : ''}`} />
-                    Contenu de l'espace
-                  </button>
-                  {espaceAssociesOpen && (
-                    <div className="space-y-0.5 mt-2">
-                      {group.items.map((item) => {
-                        const isActive = activeTab === item.id;
-                        return (
-                          <button key={item.id} onClick={() => setActiveTab(item.id)}
-                          className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive ? 'bg-[#C9A961] text-[#1A3A52]' : 'text-white/70 hover:bg-white/10 hover:text-white'}`}>
-                            <item.icon className="h-4 w-4 flex-shrink-0" />
-                            <span className="flex-1 text-left">{item.label}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <>
-                  <p className="text-white/30 text-xs font-semibold uppercase tracking-widest px-3 mb-2">{group.label}</p>
-                  <div className="space-y-0.5">
-                    {group.items.map((item) => {
-                      const isActive = activeTab === item.id;
-                      const badgeCount = item.badge ? nonTraites : 0;
-                      return (
-                        <button key={item.id} onClick={() => setActiveTab(item.id)}
-                        className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive ? 'bg-[#C9A961] text-[#1A3A52]' : 'text-white/70 hover:bg-white/10 hover:text-white'}`}>
-                          <item.icon className="h-4 w-4 flex-shrink-0" />
-                          <span className="flex-1 text-left">{item.label}</span>
-                          {badgeCount > 0 &&
-                          <span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${isActive ? 'bg-[#1A3A52] text-white' : 'bg-red-500 text-white'}`}>{badgeCount}</span>
-                          }
-                        </button>
-                      );
-                    })}
-                  </div>
-                </>
-              )}
+              <p className="text-white/30 text-xs font-semibold uppercase tracking-widest px-3 mb-2">{group.label}</p>
+              <div className="space-y-0.5">
+                {group.items.map((item) => {
+                const isActive = activeTab === item.id;
+                const badgeCount = item.badge ? nonTraites : 0;
+                return (
+                  <button key={item.id} onClick={() => setActiveTab(item.id)}
+                  className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all ${isActive ? 'bg-[#C9A961] text-[#1A3A52]' : 'text-white/70 hover:bg-white/10 hover:text-white'}`}>
+                      <item.icon className="h-4 w-4 flex-shrink-0" />
+                      <span className="flex-1 text-left">{item.label}</span>
+                      {badgeCount > 0 &&
+                    <span className={`text-xs px-1.5 py-0.5 rounded-full font-bold ${isActive ? 'bg-[#1A3A52] text-white' : 'bg-red-500 text-white'}`}>{badgeCount}</span>
+                    }
+                    </button>);
+
+              })}
+              </div>
             </div>
           )}
         </nav>
