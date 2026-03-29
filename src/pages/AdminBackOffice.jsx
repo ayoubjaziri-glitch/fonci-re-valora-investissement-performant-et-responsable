@@ -522,7 +522,11 @@ const navGroups = [
 {
   label: 'Espace Associés',
   items: [
-  { id: 'espace-associes', label: 'Contenu de l\'espace', icon: Building2 }]
+  { id: 'kpis', label: 'KPIs & Métriques', icon: BarChart3 },
+  { id: 'docs', label: 'Documents', icon: FileText },
+  { id: 'actu', label: 'Actualités', icon: Newspaper },
+  { id: 'biens', label: 'Biens & Acquisitions', icon: Building2 },
+  { id: 'roadmap', label: 'Roadmap', icon: Rocket }]
 
 },
 {
