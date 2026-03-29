@@ -178,44 +178,48 @@ ${planText}
 
 Demande originale : ${userRequest}
 
-Génère un JSON avec la structure suivante :
+Génère EXACTEMENT ce JSON (pas d'autres clés) :
 {
   "actions": [
     {
       "type": "blog_create|blog_update|site_content_update|image_generate|linkedin_post|instagram_post|tache_create|actu_create",
       "label": "Description courte de l'action",
       "data": { ... données spécifiques ... },
-      "entity_id": "ID si update (optionnel)",
-      "requires_oauth": "linkedin|instagram|null"
+      "entity_id": "ID si update (optionnel)"
     }
   ],
-  "summary": "Résumé en 1 phrase de ce qui va être fait",
-  "has_social_media": true/false,
-  "has_images": true/false
+  "has_social_media": true/false
 }
 
-Pour blog_create, data doit contenir : titre, slug, extrait, contenu (markdown), categorie, auteur, publie, generate_image (bool)
+Pour blog_create : titre, slug, extrait, contenu (markdown), categorie, auteur, publie
 Pour site_content_update : cle, valeur, page
-Pour linkedin_post : texte, hashtags, image_prompt (si image nécessaire)
+Pour linkedin_post : texte, hashtags, image_prompt
 Pour instagram_post : caption, hashtags, image_prompt
 Pour tache_create : titre, statut, priorite, projet, description
-Pour actu_create : titre, description, type, date_publication, actif
+Pour actu_create : titre, description, type, date_publication
 
-IMPORTANT : génère un contenu RÉEL et complet, pas des placeholders. Le contenu doit être professionnel, en français, dans le style de La Foncière Valora.`;
+IMPORTANT : Contenu RÉEL, professionnel, français, style Foncière Valora. Minimum 1 action.`;
 
       const response = await base44.asServiceRole.integrations.Core.InvokeLLM({
         prompt: parsePrompt,
         response_json_schema: {
           type: "object",
           properties: {
-            actions: { type: "array" },
-            summary: { type: "string" },
-            has_social_media: { type: "boolean" },
-            has_images: { type: "boolean" }
-          }
+            actions: { 
+              type: "array",
+              items: { type: "object" }
+            },
+            has_social_media: { type: "boolean" }
+          },
+          required: ["actions"]
         },
         model: 'claude_sonnet_4_6'
       });
+
+      // Valider et retourner directement
+      if (!response.actions || !Array.isArray(response.actions) || response.actions.length === 0) {
+        throw new Error('Impossible de parser le plan - aucune action générée');
+      }
 
       return Response.json({ success: true, parsed: response });
     }

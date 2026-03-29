@@ -615,18 +615,18 @@ export default function ValoraAI() {
     startPolling(conv.id);
   };
 
-  // Approuver un plan → parser + exécuter
+  // Approuver un plan → parser + exécuter DIRECTEMENT (sans polling)
   const handleApprove = async (planMessage) => {
     setIsExecuting(true);
     stopPolling();
 
     // Marquer comme approuvé immédiatement
     setMessages(prev => prev.map(m =>
-      m === planMessage ? { ...m, approved: true, executionResults: [{ success: false, label: '⏳ Exécution démarrée...', error: '' }] } : m
+      m === planMessage ? { ...m, approved: true, executionResults: [{ success: false, label: '⏳ Parsing et exécution...', error: '' }] } : m
     ));
 
     try {
-      // Parser le plan
+      // 1️⃣ Parser le plan
       console.log('📋 Parsing du plan...');
       const parseRes = await base44.functions.invoke('valoraAiExecutor', {
         action: 'parsePlan',
@@ -636,65 +636,57 @@ export default function ValoraAI() {
         }
       });
 
-      if (!parseRes.data?.success) {
-        throw new Error(parseRes.data?.error || 'Erreur lors du parsing du plan');
+      if (!parseRes.data?.success || !parseRes.data?.parsed) {
+        throw new Error(parseRes.data?.error || 'Erreur parsing');
       }
 
-      const { actions = [], has_social_media } = parseRes.data.parsed || {};
+      const { actions = [], has_social_media } = parseRes.data.parsed;
 
       if (!actions || actions.length === 0) {
-        throw new Error('Aucune action trouvée dans le plan');
+        throw new Error('Aucune action à exécuter');
       }
 
-      console.log(`📝 ${actions.length} action(s) à exécuter`);
+      console.log(`📝 ${actions.length} action(s) parsées`);
 
-      // Générer images pour réseaux sociaux
-      const enrichedActions = [];
+      // 2️⃣ Générer images si nécessaire
+      console.log('🎨 Génération d\'images...');
       for (const act of actions) {
         if ((act.type === 'linkedin_post' || act.type === 'instagram_post') && act.data?.image_prompt) {
           try {
-            console.log('🎨 Génération d\'image...');
             const imgRes = await base44.functions.invoke('valoraAiExecutor', {
               action: 'generateImage',
               payload: { prompt: act.data.image_prompt }
             });
             if (imgRes.data?.success && imgRes.data.url) {
               act.data.image_url = imgRes.data.url;
-              console.log('✓ Image générée');
             }
-          } catch (imgErr) {
-            console.warn('Image generation failed:', imgErr);
-          }
+          } catch (e) { console.warn('Image fail:', e); }
         }
-        enrichedActions.push(act);
       }
 
-      // Exécuter les actions
+      // 3️⃣ EXÉCUTER les actions (appel direct, pas de polling)
       console.log('🚀 Exécution des actions...');
       const execRes = await base44.functions.invoke('valoraAiExecutor', {
         action: 'executeActions',
-        payload: {
-          actions: enrichedActions,
-          conversationId: activeConvId
-        }
+        payload: { actions, conversationId: activeConvId }
       });
 
       if (!execRes.data?.success) {
-        throw new Error(execRes.data?.error || 'Erreur lors de l\'exécution');
+        throw new Error(execRes.data?.error || 'Erreur exécution');
       }
 
       const results = execRes.data.results || [];
-      console.log('✅ Exécution terminée:', results.length, 'résultats');
+      console.log('✅ Exécution complète:', results.length, 'résultats');
 
-      // Mettre à jour avec les résultats réels
+      // 4️⃣ Afficher les résultats
       setMessages(prev => prev.map(m =>
         m === planMessage ? { ...m, approved: true, executionResults: results } : m
       ));
 
-      // Message résumé
+      // 5️⃣ Message de confirmation
       const successCount = results.filter(r => r.success).length;
       const failCount = results.filter(r => !r.success).length;
-      const summaryMsg = `✅ **${successCount} action${successCount > 1 ? 's' : ''} réussie${successCount > 1 ? 's' : ''}**${failCount > 0 ? ` · ⚠️ ${failCount} erreur${failCount > 1 ? 's' : ''}` : ''}.${has_social_media ? '\n\n📱 Posts réseaux à publier via les liens.' : ''}`;
+      const summaryMsg = `✅ **${successCount} action${successCount > 1 ? 's' : ''} exécutée${successCount > 1 ? 's' : ''}** avec succès${failCount > 0 ? ` · ⚠️ ${failCount} erreur${failCount > 1 ? 's' : ''}` : ''}.${has_social_media ? '\n\n📱 **Posts réseaux générés** — À publier manuellement via les liens ci-dessus.' : ''}`;
 
       if (activeConvRef.current) {
         await agentProxy('addMessage', {
@@ -705,30 +697,21 @@ export default function ValoraAI() {
 
     } catch (err) {
       console.error('❌ Erreur complète:', err);
-      const errorMsg = err.message || 'Erreur inconnue lors de l\'exécution';
+      const errorMsg = err.message || 'Erreur inconnue';
       
       setMessages(prev => prev.map(m =>
-        m === planMessage ? { 
-          ...m, 
-          approved: false,
-          executionResults: [{ 
-            success: false, 
-            label: 'Erreur exécution', 
-            error: errorMsg 
-          }] 
-        } : m
+        m === planMessage ? { ...m, approved: false, executionResults: [{ success: false, label: '❌ Erreur', error: errorMsg }] } : m
       ));
 
-      // Envoyer message d'erreur à l'agent
       if (activeConvRef.current) {
         await agentProxy('addMessage', {
           conversation: activeConvRef.current,
-          content: `❌ Erreur lors de l'exécution: ${errorMsg}`
+          content: `❌ Erreur : ${errorMsg}`
         });
       }
+    } finally {
+      setIsExecuting(false);
     }
-
-    setIsExecuting(false);
   };
 
   const handleReject = (planMessage) => {
