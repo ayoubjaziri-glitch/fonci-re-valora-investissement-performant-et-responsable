@@ -1,0 +1,22 @@
+{
+  "name": "ContactConfig",
+  "type": "object",
+  "properties": {
+    "cle": {
+      "type": "string",
+      "description": "Identifiant unique (ex: email_destinataires)"
+    },
+    "valeur": {
+      "type": "string",
+      "description": "Valeur de la configuration (ex: emails s\u00e9par\u00e9s par virgule)"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description lisible de ce param\u00e8tre"
+    }
+  },
+  "required": [
+    "cle",
+    "valeur"
+  ]
+}

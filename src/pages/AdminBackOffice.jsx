@@ -29,6 +29,7 @@ import AdminVisiteurs from '../components/admin/AdminVisiteurs';
 import AdminTaches from '../components/taches/AdminTaches';
 import ValoraAI from '../components/admin/ValoraAI';
 import AdminMemoire from '../components/admin/AdminMemoire';
+import AdminContactConfig from '../components/admin/AdminContactConfig';
 
 // ─── Login ───────────────────────────────────────────────────────────────────
 function AdminLogin({ onLogin }) {
@@ -503,6 +504,7 @@ const navGroups = [
       { id: 'taches', label: 'Gestion des tâches', icon: CheckCircle2 },
       { id: 'crm', label: 'CRM Investisseurs', icon: Users },
       { id: 'contacts', label: 'Demandes de contact', icon: MessageSquare, badge: true },
+      { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
       { id: 'visiteurs', label: 'Statistiques visiteurs', icon: Globe },
     ]
   },
@@ -561,6 +563,7 @@ export default function AdminBackOffice() {
     memoire: '🧠 Mémoire de Valora AI',
     taches: 'Gestion des Tâches',
     contacts: 'Demandes de Contact',
+    contact_config: 'Paramètres des contacts',
     visiteurs: 'Statistiques Visiteurs',
     photos: 'Photos & Média',
     contenu: 'Textes & Contenu du site',
@@ -648,6 +651,7 @@ export default function AdminBackOffice() {
           {activeTab === 'dashboard' && <DashboardSection onNavigate={setActiveTab} />}
           {activeTab === 'taches' && <AdminTaches />}
           {activeTab === 'contacts' && <DemandesContactSection />}
+          {activeTab === 'contact_config' && <AdminContactConfig />}
           {activeTab === 'visiteurs' && <AdminVisiteurs />}
           {activeTab === 'photos' && <GestionPhotos embedded />}
           {activeTab === 'contenu' && <AdminContenu />}

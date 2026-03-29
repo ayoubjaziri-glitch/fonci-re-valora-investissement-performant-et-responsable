@@ -56,7 +56,16 @@ export default function Contact() {
       message: formData.message
     });
 
-    // 2. Envoyer l'email de notification aux deux destinataires
+    // 2. Récupérer les destinataires configurés
+    let destinataires = ['Ayoubcontact33@gmail.com', 'Ayoubjaziri@gmail.com'];
+    try {
+      const configs = await base44.entities.ContactConfig.filter({ cle: 'email_destinataires' });
+      if (configs && configs.length > 0 && configs[0].valeur) {
+        destinataires = configs[0].valeur.split(',').map(e => e.trim()).filter(Boolean);
+      }
+    } catch (e) { /* fallback */ }
+
+    // 3. Envoyer l'email de notification à tous les destinataires
     const emailBody = `<!DOCTYPE html>
 <html>
 <head><meta charset="UTF-8"></head>
@@ -122,18 +131,15 @@ export default function Contact() {
 </html>`;
 
     try {
-      await Promise.all([
-        base44.integrations.Core.SendEmail({
-          to: 'ayoubjaziri@gmail.com',
-          subject: `📩 Nouvelle demande - ${typeLabel} | La Foncière Valora`,
-          body: emailBody,
-        }),
-        base44.integrations.Core.SendEmail({
-          to: 's.naili@gabrielconseil.com',
-          subject: `📩 Nouvelle demande - ${typeLabel} | La Foncière Valora`,
-          body: emailBody,
-        }),
-      ]);
+      await Promise.all(
+        destinataires.map(to =>
+          base44.integrations.Core.SendEmail({
+            to,
+            subject: `📩 Nouvelle demande - ${typeLabel} | La Foncière Valora`,
+            body: emailBody,
+          })
+        )
+      );
     } catch (err) {
       console.error('Email send error:', err);
     }
