@@ -592,9 +592,11 @@ export default function AdminBackOffice() {
         {/* Logo */}
         <div className="p-5 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#C9A961] rounded-xl flex items-center justify-center">
-              <Shield className="h-5 w-5 text-[#1A3A52]" />
-            </div>
+            <img 
+              src="https://base44.app/api/apps/699460f1b03f6285dc8513a7/files/mp/public/699460f1b03f6285dc8513a7/eb47cc5e5_cropped.jpg"
+              alt="Logo"
+              className="h-9 w-auto"
+            />
             <div>
               <p className="text-white font-semibold text-sm">Back-Office</p>
               <p className="text-white/40 text-xs">Foncière Valora</p>
