@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
-import { Button } from '@/components/ui/button';
-import { Send, Plus, Sparkles, Trash2, ChevronDown, Bot, User, Loader2, Zap, Globe, Database, FileText, CheckSquare } from 'lucide-react';
+import { Send, Plus, Sparkles, Trash2, Bot, User, Loader2, Zap, Globe, Database, FileText, CheckSquare } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 const SUGGESTIONS = [
@@ -17,7 +16,6 @@ const SUGGESTIONS = [
 
 function MessageBubble({ message }) {
   const isUser = message.role === 'user';
-  const isAssistant = message.role === 'assistant';
 
   return (
     <div className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
@@ -78,13 +76,14 @@ function MessageBubble({ message }) {
 
 export default function ValoraAI() {
   const [conversations, setConversations] = useState([]);
-  const [activeConv, setActiveConv] = useState(null);
+  const [activeConvId, setActiveConvId] = useState(null);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [loadingConvs, setLoadingConvs] = useState(true);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const activeConvRef = useRef(null);
 
   useEffect(() => {
     loadConversations();
@@ -94,18 +93,24 @@ export default function ValoraAI() {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
+  // Subscribe to real-time updates whenever the active conversation changes
   useEffect(() => {
-    if (!activeConv) return;
-    const unsub = base44.agents.subscribeToConversation(activeConv.id, (data) => {
+    if (!activeConvId) return;
+    const unsub = base44.agents.subscribeToConversation(activeConvId, (data) => {
       setMessages(data.messages || []);
+      setLoading(false);
     });
     return unsub;
-  }, [activeConv?.id]);
+  }, [activeConvId]);
 
   const loadConversations = async () => {
     setLoadingConvs(true);
-    const convs = await base44.agents.listConversations({ agent_name: 'valora_ai' });
-    setConversations(convs || []);
+    try {
+      const convs = await base44.agents.listConversations({ agent_name: 'valora_ai' });
+      setConversations(convs || []);
+    } catch (e) {
+      console.error('Error loading conversations', e);
+    }
     setLoadingConvs(false);
   };
 
@@ -114,22 +119,28 @@ export default function ValoraAI() {
       agent_name: 'valora_ai',
       metadata: { name: `Mission ${new Date().toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' })}` }
     });
+    activeConvRef.current = conv;
     setConversations(prev => [conv, ...prev]);
-    setActiveConv(conv);
+    setActiveConvId(conv.id);
     setMessages([]);
-    inputRef.current?.focus();
+    setTimeout(() => inputRef.current?.focus(), 100);
   };
 
   const selectConversation = async (conv) => {
     const full = await base44.agents.getConversation(conv.id);
-    setActiveConv(full);
+    activeConvRef.current = full;
+    setActiveConvId(full.id);
     setMessages(full.messages || []);
   };
 
   const deleteConversation = async (e, convId) => {
     e.stopPropagation();
     setConversations(prev => prev.filter(c => c.id !== convId));
-    if (activeConv?.id === convId) { setActiveConv(null); setMessages([]); }
+    if (activeConvId === convId) {
+      activeConvRef.current = null;
+      setActiveConvId(null);
+      setMessages([]);
+    }
   };
 
   const sendMessage = async (text) => {
@@ -137,24 +148,25 @@ export default function ValoraAI() {
     if (!msg || loading) return;
     setInput('');
 
-    let conv = activeConv;
+    let conv = activeConvRef.current;
     if (!conv) {
       conv = await base44.agents.createConversation({
         agent_name: 'valora_ai',
         metadata: { name: msg.slice(0, 50) }
       });
+      activeConvRef.current = conv;
       setConversations(prev => [conv, ...prev]);
-      setActiveConv(conv);
+      setActiveConvId(conv.id);
     }
 
     setLoading(true);
     setMessages(prev => [...prev, { role: 'user', content: msg }]);
 
     await base44.agents.addMessage(conv, { role: 'user', content: msg });
-    setLoading(false);
+    // loading will be set to false by the subscription callback
   };
 
-  const activeConvName = activeConv?.metadata?.name || 'Nouvelle mission';
+  const activeConvName = conversations.find(c => c.id === activeConvId)?.metadata?.name || (activeConvId ? 'Mission en cours' : 'Nouvelle mission');
 
   return (
     <div className="flex h-[calc(100vh-120px)] min-h-[600px] bg-slate-50 rounded-2xl overflow-hidden border border-slate-200">
@@ -171,8 +183,10 @@ export default function ValoraAI() {
               <p className="text-white/40 text-xs">Agent de direction</p>
             </div>
           </div>
-          <button onClick={newConversation}
-            className="w-full flex items-center justify-center gap-2 py-2 bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] rounded-xl text-sm font-bold transition-colors">
+          <button
+            onClick={newConversation}
+            className="w-full flex items-center justify-center gap-2 py-2 bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] rounded-xl text-sm font-bold transition-colors"
+          >
             <Plus className="h-4 w-4" /> Nouvelle mission
           </button>
         </div>
@@ -184,15 +198,20 @@ export default function ValoraAI() {
             <p className="text-white/30 text-xs text-center py-8">Aucune mission encore</p>
           ) : (
             conversations.map(conv => (
-              <button key={conv.id} onClick={() => selectConversation(conv)}
-                className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-left transition-all group ${activeConv?.id === conv.id ? 'bg-white/15 text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'}`}>
+              <div
+                key={conv.id}
+                onClick={() => selectConversation(conv)}
+                className={`w-full flex items-center gap-2 px-3 py-2.5 rounded-xl text-left transition-all group cursor-pointer ${activeConvId === conv.id ? 'bg-white/15 text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'}`}
+              >
                 <Bot className="h-3.5 w-3.5 flex-shrink-0 opacity-60" />
                 <span className="flex-1 text-xs truncate">{conv.metadata?.name || 'Mission'}</span>
-                <button onClick={(e) => deleteConversation(e, conv.id)}
-                  className="opacity-0 group-hover:opacity-100 text-white/40 hover:text-red-400 transition-all flex-shrink-0">
+                <span
+                  onClick={(e) => deleteConversation(e, conv.id)}
+                  className="opacity-0 group-hover:opacity-100 text-white/40 hover:text-red-400 transition-all flex-shrink-0 p-0.5 rounded"
+                >
                   <Trash2 className="h-3 w-3" />
-                </button>
-              </button>
+                </span>
+              </div>
             ))
           )}
         </div>
@@ -228,7 +247,7 @@ export default function ValoraAI() {
 
         {/* Messages */}
         <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          {!activeConv && messages.length === 0 && (
+          {!activeConvId && messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center">
               <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#C9A961] to-[#8B6F1E] flex items-center justify-center mb-4 shadow-lg">
                 <Sparkles className="h-8 w-8 text-white" />
@@ -239,8 +258,11 @@ export default function ValoraAI() {
               </p>
               <div className="grid grid-cols-2 gap-2 w-full max-w-lg">
                 {SUGGESTIONS.map((s, i) => (
-                  <button key={i} onClick={() => sendMessage(s)}
-                    className="text-left text-xs bg-white border border-slate-200 hover:border-[#C9A961] hover:bg-amber-50 rounded-xl px-3 py-2.5 text-slate-600 hover:text-[#1A3A52] transition-all">
+                  <button
+                    key={i}
+                    onClick={() => sendMessage(s)}
+                    className="text-left text-xs bg-white border border-slate-200 hover:border-[#C9A961] hover:bg-amber-50 rounded-xl px-3 py-2.5 text-slate-600 hover:text-[#1A3A52] transition-all"
+                  >
                     {s}
                   </button>
                 ))}
@@ -286,8 +308,11 @@ export default function ValoraAI() {
                 if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
               }}
             />
-            <button onClick={() => sendMessage()} disabled={!input.trim() || loading}
-              className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A961] to-[#8B6F1E] hover:from-[#B8994F] hover:to-[#7A5F0D] flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm">
+            <button
+              onClick={() => sendMessage()}
+              disabled={!input.trim() || loading}
+              className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#C9A961] to-[#8B6F1E] hover:from-[#B8994F] hover:to-[#7A5F0D] flex items-center justify-center flex-shrink-0 disabled:opacity-40 disabled:cursor-not-allowed transition-all shadow-sm"
+            >
               <Send className="h-4 w-4 text-white" />
             </button>
           </div>
