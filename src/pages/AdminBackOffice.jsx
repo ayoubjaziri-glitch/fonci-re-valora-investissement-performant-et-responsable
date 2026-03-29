@@ -503,7 +503,7 @@ const navGroups = [
       { id: 'taches', label: 'Gestion des tâches', icon: CheckCircle2 },
       { id: 'crm', label: 'CRM Investisseurs', icon: Users },
       { id: 'contacts', label: 'Demandes de contact', icon: MessageSquare, badge: true },
-      { id: 'visiteurs', label: 'Statistiques visiteurs', icon: Globe },
+      { id: 'visiteurs', label: 'Statistique du site', icon: Globe },
     ]
   },
   {
@@ -567,7 +567,7 @@ export default function AdminBackOffice() {
     taches: 'Gestion des Tâches',
     contacts: 'Demandes de Contact',
     contact_config: 'Paramètres des contacts',
-    visiteurs: 'Statistiques Visiteurs',
+    visiteurs: 'Statistique du site',
     photos: 'Photos & Média',
     contenu: 'Textes & Contenu du site',
     sections: 'Ajouter une section',
