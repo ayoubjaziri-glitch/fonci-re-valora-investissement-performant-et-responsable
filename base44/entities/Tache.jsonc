@@ -1,0 +1,93 @@
+{
+  "name": "Tache",
+  "type": "object",
+  "properties": {
+    "titre": {
+      "type": "string",
+      "description": "Titre de la t\u00e2che"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description d\u00e9taill\u00e9e"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "A faire",
+        "En cours",
+        "En r\u00e9vision",
+        "Termin\u00e9",
+        "Bloqu\u00e9"
+      ],
+      "default": "A faire"
+    },
+    "priorite": {
+      "type": "string",
+      "enum": [
+        "Urgente",
+        "Haute",
+        "Moyenne",
+        "Basse"
+      ],
+      "default": "Moyenne"
+    },
+    "projet": {
+      "type": "string",
+      "description": "Nom du projet"
+    },
+    "section": {
+      "type": "string",
+      "description": "Section / colonne dans le projet"
+    },
+    "assigne_a": {
+      "type": "string",
+      "description": "Nom de la personne assign\u00e9e"
+    },
+    "date_debut": {
+      "type": "string",
+      "format": "date"
+    },
+    "date_echeance": {
+      "type": "string",
+      "format": "date"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Tags s\u00e9par\u00e9s par des virgules"
+    },
+    "sous_taches": {
+      "type": "string",
+      "description": "Sous-t\u00e2ches JSON s\u00e9rialis\u00e9"
+    },
+    "commentaires": {
+      "type": "string",
+      "description": "Commentaires JSON s\u00e9rialis\u00e9"
+    },
+    "pieces_jointes": {
+      "type": "string",
+      "description": "URLs de fichiers joints"
+    },
+    "ordre": {
+      "type": "number",
+      "default": 0
+    },
+    "est_jalon": {
+      "type": "boolean",
+      "default": false
+    },
+    "dependances": {
+      "type": "string",
+      "description": "IDs de t\u00e2ches dont celle-ci d\u00e9pend"
+    },
+    "avancement": {
+      "type": "number",
+      "default": 0,
+      "minimum": 0,
+      "maximum": 100
+    }
+  },
+  "required": [
+    "titre",
+    "statut"
+  ]
+}

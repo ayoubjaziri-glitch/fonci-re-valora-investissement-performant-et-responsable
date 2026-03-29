@@ -1,0 +1,49 @@
+{
+  "name": "Projet",
+  "type": "object",
+  "properties": {
+    "nom": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "couleur": {
+      "type": "string",
+      "default": "#C9A961"
+    },
+    "icone": {
+      "type": "string",
+      "default": "\ud83d\udcc1"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "Actif",
+        "En pause",
+        "Termin\u00e9",
+        "Archiv\u00e9"
+      ],
+      "default": "Actif"
+    },
+    "sections": {
+      "type": "string",
+      "description": "Sections JSON ['A faire','En cours',...]"
+    },
+    "date_debut": {
+      "type": "string",
+      "format": "date"
+    },
+    "date_fin": {
+      "type": "string",
+      "format": "date"
+    },
+    "membres": {
+      "type": "string",
+      "description": "Membres s\u00e9par\u00e9s par virgule"
+    }
+  },
+  "required": [
+    "nom"
+  ]
+}
