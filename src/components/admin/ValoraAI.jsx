@@ -309,6 +309,8 @@ function MessageBubble({ message, onApprove, onReject, isExecuting, convId }) {
 function MemoirePanel() {
   const qc = useQueryClient();
   const [form, setForm] = useState(null);
+  const [uploading, setUploading] = useState(false);
+  const fileInputRef = useRef(null);
 
   const { data: notes = [] } = useQuery({
     queryKey: ['valora-memoire'],
@@ -319,6 +321,45 @@ function MemoirePanel() {
   const createMut = useMutation({ mutationFn: (d) => base44.entities.ValoraAIMemoire.create(d), onSuccess: invalidate });
   const updateMut = useMutation({ mutationFn: ({ id, data }) => base44.entities.ValoraAIMemoire.update(id, data), onSuccess: invalidate });
   const deleteMut = useMutation({ mutationFn: (id) => base44.entities.ValoraAIMemoire.delete(id), onSuccess: invalidate });
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    try {
+      // 1. Upload le fichier
+      const uploadRes = await base44.integrations.Core.UploadFile({ file });
+      
+      // 2. Extrait le contenu
+      const extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
+        file_url: uploadRes.file_url,
+        json_schema: {
+          type: 'object',
+          properties: {
+            content: { type: 'string' }
+          }
+        }
+      });
+
+      if (extractRes.status === 'success') {
+        // 3. Ajoute le contenu au formulaire
+        const extractedContent = typeof extractRes.output === 'string' 
+          ? extractRes.output 
+          : extractRes.output?.content || '';
+        
+        setForm(f => ({
+          ...f,
+          titre: f?.titre || file.name.replace(/\.[^/.]+$/, ''),
+          contenu: (f?.contenu || '') + '\n\n--- Contenu du document ---\n' + extractedContent
+        }));
+      }
+    } catch (err) {
+      console.error('Erreur upload:', err);
+    }
+    setUploading(false);
+    if (fileInputRef.current) fileInputRef.current.value = '';
+  };
 
   const handleSave = async () => {
     if (!form.titre?.trim() || !form.contenu?.trim()) return;
@@ -357,6 +398,19 @@ function MemoirePanel() {
             value={form.contenu} onChange={e => setForm(f => ({ ...f, contenu: e.target.value }))}
             rows={4} className="bg-white/10 border-white/20 text-white placeholder-white/30 text-xs resize-none" />
           <div className="flex gap-2">
+            <button 
+              onClick={() => fileInputRef.current?.click()}
+              disabled={uploading}
+              className="flex-1 py-1.5 text-xs text-white/50 hover:text-white border border-white/20 rounded-lg transition-colors disabled:opacity-40">
+              {uploading ? 'Upload...' : '📎 Ajouter doc'}
+            </button>
+            <input
+              ref={fileInputRef}
+              type="file"
+              onChange={handleFileUpload}
+              className="hidden"
+              accept=".pdf,.txt,.doc,.docx,.xlsx,.csv"
+            />
             <button onClick={() => setForm(null)} className="flex-1 py-1.5 text-xs text-white/50 hover:text-white border border-white/20 rounded-lg transition-colors">Annuler</button>
             <button onClick={handleSave} disabled={!form.titre?.trim() || !form.contenu?.trim()}
               className="flex-1 py-1.5 text-xs bg-[#C9A961] text-[#1A3A52] font-bold rounded-lg hover:bg-[#B8994F] disabled:opacity-40 transition-colors">
