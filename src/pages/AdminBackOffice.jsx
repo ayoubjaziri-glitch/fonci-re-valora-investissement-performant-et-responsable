@@ -522,11 +522,7 @@ const navGroups = [
 {
   label: 'Espace Associés',
   items: [
-  { id: 'kpis', label: 'KPIs & Métriques', icon: BarChart3 },
-  { id: 'docs', label: 'Documents', icon: FileText },
-  { id: 'actu', label: 'Actualités', icon: Newspaper },
-  { id: 'biens', label: 'Biens & Acquisitions', icon: Building2 },
-  { id: 'roadmap', label: 'Roadmap', icon: Rocket }]
+  { id: 'espace-associe-content', label: 'Contenu de l\'espace', icon: Building2 }]
 
 },
 {
@@ -674,6 +670,61 @@ export default function AdminBackOffice() {
              <AdminAcces />
            </div>
           }
+          {activeTab === 'espace-associe-content' && (
+            <div className="space-y-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+                <button onClick={() => setActiveTab('kpis')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center">
+                      <BarChart3 className="h-5 w-5 text-blue-600" />
+                    </div>
+                  </div>
+                  <div className="font-semibold text-[#1A3A52]">KPIs & Métriques</div>
+                  <p className="text-xs text-slate-500 mt-1">Gérer les indicateurs et métriques</p>
+                </button>
+
+                <button onClick={() => setActiveTab('docs')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center">
+                      <FileText className="h-5 w-5 text-amber-600" />
+                    </div>
+                  </div>
+                  <div className="font-semibold text-[#1A3A52]">Documents</div>
+                  <p className="text-xs text-slate-500 mt-1">Gérer les documents de l'espace</p>
+                </button>
+
+                <button onClick={() => setActiveTab('actu')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-purple-50 flex items-center justify-center">
+                      <Newspaper className="h-5 w-5 text-purple-600" />
+                    </div>
+                  </div>
+                  <div className="font-semibold text-[#1A3A52]">Actualités</div>
+                  <p className="text-xs text-slate-500 mt-1">Gérer les actualités et news</p>
+                </button>
+
+                <button onClick={() => setActiveTab('biens')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center">
+                      <Building2 className="h-5 w-5 text-indigo-600" />
+                    </div>
+                  </div>
+                  <div className="font-semibold text-[#1A3A52]">Biens & Acquisitions</div>
+                  <p className="text-xs text-slate-500 mt-1">Gérer les biens et acquisitions</p>
+                </button>
+
+                <button onClick={() => setActiveTab('roadmap')} className="bg-white rounded-2xl p-5 border border-slate-200 text-left hover:border-[#C9A961] hover:shadow-md transition-all">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center">
+                      <Rocket className="h-5 w-5 text-emerald-600" />
+                    </div>
+                  </div>
+                  <div className="font-semibold text-[#1A3A52]">Roadmap</div>
+                  <p className="text-xs text-slate-500 mt-1">Gérer la roadmap et jalons</p>
+                </button>
+              </div>
+            </div>
+          )}
           {activeTab === 'kpis' && <EspaceAssocieTabWrapper tab="kpis" />}
           {activeTab === 'docs' && <EspaceAssocieTabWrapper tab="docs" />}
           {activeTab === 'actu' && <EspaceAssocieTabWrapper tab="actu" />}
