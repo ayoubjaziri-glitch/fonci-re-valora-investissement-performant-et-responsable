@@ -618,46 +618,60 @@ export default function ValoraAI() {
   // Approuver un plan → parser + exécuter
   const handleApprove = async (planMessage) => {
     setIsExecuting(true);
-    stopPolling(); // Arrêter le polling pendant l'exécution
+    stopPolling();
 
-    // Marquer le message comme approuvé
     setMessages(prev => prev.map(m =>
       m === planMessage ? { ...m, approved: true } : m
     ));
 
     try {
-      // Parser le plan en actions concrètes
-      const parseResult = await executor('parsePlan', {
-        planText: planMessage.content,
-        userRequest: messages.filter(m => m.role === 'user').slice(-1)[0]?.content || ''
+      // Parser le plan
+      const parseRes = await base44.functions.invoke('valoraAiExecutor', {
+        action: 'parsePlan',
+        payload: {
+          planText: planMessage.content,
+          userRequest: messages.filter(m => m.role === 'user').slice(-1)[0]?.content || ''
+        }
       });
 
-      const { actions, has_social_media } = parseResult.parsed;
+      if (!parseRes.data?.success) throw new Error('Erreur parsing: ' + parseRes.data?.error);
+      
+      const { actions, has_social_media } = parseRes.data.parsed;
 
-      // Pour les posts réseaux sociaux : générer les images d'abord si nécessaire
+      // Générer images pour réseaux sociaux
       const enrichedActions = [];
       for (const act of actions) {
         if ((act.type === 'linkedin_post' || act.type === 'instagram_post') && act.data?.image_prompt) {
-          const imgResult = await executor('generateImage', { prompt: act.data.image_prompt });
-          act.data.image_url = imgResult.url;
+          const imgRes = await base44.functions.invoke('valoraAiExecutor', {
+            action: 'generateImage',
+            payload: { prompt: act.data.image_prompt }
+          });
+          if (imgRes.data?.success) {
+            act.data.image_url = imgRes.data.url;
+          }
         }
         enrichedActions.push(act);
       }
 
-      // Exécuter toutes les actions
-      const execResult = await executor('executeActions', {
-        actions: enrichedActions,
-        conversationId: activeConvId
+      // Exécuter les actions
+      const execRes = await base44.functions.invoke('valoraAiExecutor', {
+        action: 'executeActions',
+        payload: {
+          actions: enrichedActions,
+          conversationId: activeConvId
+        }
       });
 
-      // Mettre à jour le message avec les résultats
+      if (!execRes.data?.success) throw new Error('Erreur exécution: ' + execRes.data?.error);
+
+      // Mettre à jour avec les résultats
       setMessages(prev => prev.map(m =>
-        m === planMessage ? { ...m, approved: true, executionResults: execResult.results } : m
+        m === planMessage ? { ...m, approved: true, executionResults: execRes.data.results } : m
       ));
 
-      // Envoyer un message de résumé dans la conversation
-      const successCount = execResult.results.filter(r => r.success).length;
-      const summaryMsg = `✅ **${successCount} action${successCount > 1 ? 's' : ''} exécutée${successCount > 1 ? 's' : ''}** avec succès.\n\nTu peux utiliser le bouton **Revert** pour annuler si nécessaire.${has_social_media ? '\n\n📱 Pour les publications réseaux sociaux, clique sur les liens pour les poster directement.' : ''}`;
+      // Message résumé
+      const successCount = execRes.data.results.filter(r => r.success).length;
+      const summaryMsg = `✅ **${successCount} action${successCount > 1 ? 's' : ''} exécutée${successCount > 1 ? 's' : ''}** avec succès.${has_social_media ? '\n\n📱 Posts réseaux à publier manuellement via les liens.' : ''}`;
 
       if (activeConvRef.current) {
         await agentProxy('addMessage', {
@@ -667,8 +681,9 @@ export default function ValoraAI() {
       }
 
     } catch (err) {
+      console.error('Erreur:', err);
       setMessages(prev => prev.map(m =>
-        m === planMessage ? { ...m, approved: false, executionResults: [{ success: false, label: 'Erreur', error: err.message }] } : m
+        m === planMessage ? { ...m, executionResults: [{ success: false, label: 'Erreur exécution', error: err.message }] } : m
       ));
     }
 
