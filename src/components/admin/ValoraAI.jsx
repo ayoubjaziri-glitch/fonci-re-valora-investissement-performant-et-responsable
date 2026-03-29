@@ -310,6 +310,7 @@ function MemoirePanel() {
   const qc = useQueryClient();
   const [form, setForm] = useState(null);
   const [uploading, setUploading] = useState(false);
+  const [uploadStatus, setUploadStatus] = useState(''); // 'success', 'error', ''
   const fileInputRef = useRef(null);
 
   const { data: notes = [] } = useQuery({
@@ -327,9 +328,11 @@ function MemoirePanel() {
     if (!file) return;
 
     setUploading(true);
+    setUploadStatus('');
     try {
       // 1. Upload le fichier
       const uploadRes = await base44.integrations.Core.UploadFile({ file });
+      console.log('Upload réussi:', uploadRes);
       
       // 2. Extrait le contenu avec schéma flexible
       const extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
@@ -339,10 +342,13 @@ function MemoirePanel() {
           properties: {
             text: { type: 'string' },
             content: { type: 'string' },
-            data: { type: 'string' }
+            data: { type: 'string' },
+            full_text: { type: 'string' }
           }
         }
       });
+
+      console.log('Extraction résultat:', extractRes);
 
       let extractedContent = '';
       if (extractRes.status === 'success' && extractRes.output) {
@@ -351,6 +357,8 @@ function MemoirePanel() {
           extractedContent = extractRes.output;
         } else if (extractRes.output.text) {
           extractedContent = extractRes.output.text;
+        } else if (extractRes.output.full_text) {
+          extractedContent = extractRes.output.full_text;
         } else if (extractRes.output.content) {
           extractedContent = extractRes.output.content;
         } else if (extractRes.output.data) {
@@ -361,19 +369,22 @@ function MemoirePanel() {
         }
       }
 
-      if (extractedContent) {
+      if (extractedContent && extractedContent.trim().length > 0) {
         // 3. Ajoute le contenu au formulaire
         setForm(f => ({
           ...f,
           titre: f?.titre || file.name.replace(/\.[^/.]+$/, ''),
           contenu: (f?.contenu || '') + (f?.contenu ? '\n\n' : '') + '📄 ' + file.name + ':\n' + extractedContent
         }));
+        setUploadStatus('success');
+        setTimeout(() => setUploadStatus(''), 3000);
       } else {
-        alert('Impossible d\'extraire le contenu du document. Vérifiez le format.');
+        setUploadStatus('error');
+        console.warn('Contenu vide:', extractRes);
       }
     } catch (err) {
       console.error('Erreur upload:', err);
-      alert('Erreur lors du traitement du document: ' + err.message);
+      setUploadStatus('error');
     }
     setUploading(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
@@ -419,8 +430,12 @@ function MemoirePanel() {
             <button 
               onClick={() => fileInputRef.current?.click()}
               disabled={uploading}
-              className="flex-1 py-1.5 text-xs text-white/50 hover:text-white border border-white/20 rounded-lg transition-colors disabled:opacity-40">
-              {uploading ? 'Upload...' : '📎 Ajouter doc'}
+              className={`flex-1 py-1.5 text-xs rounded-lg transition-colors disabled:opacity-40 ${
+                uploadStatus === 'success' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500' :
+                uploadStatus === 'error' ? 'bg-red-500/20 text-red-400 border border-red-500' :
+                'text-white/50 hover:text-white border border-white/20'
+              }`}>
+              {uploading ? 'Upload...' : uploadStatus === 'success' ? '✓ Contenu extrait' : uploadStatus === 'error' ? '✗ Erreur extraction' : '📎 Ajouter doc'}
             </button>
             <input
               ref={fileInputRef}
