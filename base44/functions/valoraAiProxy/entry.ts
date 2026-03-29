@@ -20,9 +20,18 @@ Deno.serve(async (req) => {
     }
 
     if (action === 'createConversation') {
+      // Charger les notes mémoire actives et les injecter dans le contexte initial
+      const notes = await base44.asServiceRole.entities.ValoraAIMemoire.filter({ actif: true });
+      let metadataWithMemory = payload.metadata || {};
+      if (notes && notes.length > 0) {
+        const memoryText = notes.map(n =>
+          `### ${n.titre} [${n.categorie}]\n${n.contenu}`
+        ).join('\n\n---\n\n');
+        metadataWithMemory.system_context = `## 🧠 MÉMOIRE PERSONNALISÉE — CONTEXTE PROPRE À VALORA\n\nCes informations t'ont été transmises par l'équipe de La Foncière Valora. Tu les connais parfaitement et tu t'y réfères naturellement.\n\n${memoryText}`;
+      }
       const conv = await agentSdk.createConversation({
         agent_name: 'valora_ai',
-        metadata: payload.metadata || {}
+        metadata: metadataWithMemory
       });
       return Response.json({ success: true, data: conv });
     }

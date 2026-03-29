@@ -1,0 +1,37 @@
+{
+  "name": "ValoraAIMemoire",
+  "type": "object",
+  "properties": {
+    "titre": {
+      "type": "string",
+      "description": "Titre court de la note (ex: Projet Lyon 2025)"
+    },
+    "categorie": {
+      "type": "string",
+      "enum": [
+        "Strat\u00e9gie",
+        "Patrimoine",
+        "Finances",
+        "\u00c9quipe",
+        "Investisseurs",
+        "Communication",
+        "March\u00e9",
+        "Autre"
+      ],
+      "default": "Autre"
+    },
+    "contenu": {
+      "type": "string",
+      "description": "Contenu d\u00e9taill\u00e9 de la note (contexte, donn\u00e9es, informations cl\u00e9s)"
+    },
+    "actif": {
+      "type": "boolean",
+      "default": true,
+      "description": "Si actif, cette note est inject\u00e9e dans la m\u00e9moire de l'IA"
+    }
+  },
+  "required": [
+    "titre",
+    "contenu"
+  ]
+}

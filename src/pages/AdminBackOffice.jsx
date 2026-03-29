@@ -28,6 +28,7 @@ import AIPageGenerator from '../components/admin/AIPageGenerator';
 import AdminVisiteurs from '../components/admin/AdminVisiteurs';
 import AdminTaches from '../components/taches/AdminTaches';
 import ValoraAI from '../components/admin/ValoraAI';
+import AdminMemoire from '../components/admin/AdminMemoire';
 
 // ─── Login ───────────────────────────────────────────────────────────────────
 function AdminLogin({ onLogin }) {
@@ -509,6 +510,7 @@ const navGroups = [
     label: 'Contenu du Site',
     items: [
       { id: 'ai', label: '✦ Valora AI', icon: Rocket },
+      { id: 'memoire', label: '🧠 Mémoire AI', icon: FileText },
       { id: 'photos', label: 'Photos & Média', icon: Image },
       { id: 'contenu', label: 'Textes & Contenu', icon: FileText },
       { id: 'sections', label: 'Ajouter une section', icon: LayoutDashboard },
@@ -556,6 +558,7 @@ export default function AdminBackOffice() {
   const tabTitles = {
     dashboard: 'Dashboard',
     ai: '✦ Valora AI — Agent de Direction',
+    memoire: '🧠 Mémoire de Valora AI',
     taches: 'Gestion des Tâches',
     contacts: 'Demandes de Contact',
     visiteurs: 'Statistiques Visiteurs',
@@ -641,6 +644,7 @@ export default function AdminBackOffice() {
         {/* Content */}
         <div className="flex-1 p-6 lg:p-8">
           {activeTab === 'ai' && <ValoraAI />}
+          {activeTab === 'memoire' && <AdminMemoire />}
           {activeTab === 'dashboard' && <DashboardSection onNavigate={setActiveTab} />}
           {activeTab === 'taches' && <AdminTaches />}
           {activeTab === 'contacts' && <DemandesContactSection />}
