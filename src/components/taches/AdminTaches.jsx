@@ -150,7 +150,6 @@ export default function AdminTaches() {
 
   const VIEWS = [
     { id: 'liste', label: 'Liste', icon: List },
-    { id: 'kanban', label: 'Board', icon: LayoutDashboard },
     { id: 'calendrier', label: 'Calendrier', icon: Calendar },
     { id: 'gantt', label: 'Gantt', icon: BarChart2 },
   ];
@@ -225,7 +224,6 @@ export default function AdminTaches() {
 
           {/* Vue */}
           {view === 'liste' && <ListView taches={filteredTaches} onTacheClick={setTacheDetail} onDelete={handleDelete} />}
-          {view === 'kanban' && <KanbanView taches={filteredTaches} projetFiltre={projetActif} onTacheClick={setTacheDetail} />}
           {view === 'calendrier' && <CalendrierView taches={filteredTaches} onTacheClick={setTacheDetail} />}
           {view === 'gantt' && <GanttChart taches={filteredTaches} />}
         </div>
