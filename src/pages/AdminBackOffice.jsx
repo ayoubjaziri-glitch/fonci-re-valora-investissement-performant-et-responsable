@@ -296,6 +296,7 @@ const navGroups = [
       { id: 'actu', label: 'Actualités', icon: Newspaper },
       { id: 'biens', label: 'Biens & Acquisitions', icon: Building2 },
       { id: 'roadmap', label: 'Roadmap', icon: Rocket },
+      { id: 'crm', label: 'CRM Investisseurs', icon: Users },
     ]
   },
 ];
@@ -341,6 +342,7 @@ export default function AdminBackOffice() {
     actu: 'Actualités',
     biens: 'Biens & Acquisitions',
     roadmap: 'Roadmap',
+    crm: 'CRM Investisseurs',
   };
 
   return (
@@ -434,6 +436,7 @@ export default function AdminBackOffice() {
           {activeTab === 'actu' && <EspaceAssocieTabWrapper tab="actu" />}
           {activeTab === 'biens' && <EspaceAssocieTabWrapper tab="acq" />}
           {activeTab === 'roadmap' && <EspaceAssocieTabWrapper tab="roadmap" />}
+          {activeTab === 'crm' && <EspaceAssocieTabWrapper tab="crm" />}
 
         </div>
       </div>

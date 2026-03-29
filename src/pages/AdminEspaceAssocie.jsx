@@ -12,8 +12,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import {
   Plus, Trash2, Edit2, Save, X, Upload, Download, FileText,
   TrendingUp, Building2, Newspaper, Map, Rocket, Settings,
-  CheckCircle2, Clock, AlertCircle, BarChart3, Euro
+  CheckCircle2, Clock, AlertCircle, BarChart3, Euro, Users
 } from 'lucide-react';
+import CRMInvestisseurs from '../components/admin/CRMInvestisseurs';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 const toast = (msg) => alert(msg);
@@ -643,6 +644,7 @@ export default function AdminEspaceAssocie({ defaultTab = 'kpis', embedded = fal
     docs_actu: 'docs',
     acq: 'acq',
     roadmap: 'roadmap',
+    crm: 'crm',
   };
   const resolvedTab = tabMap[defaultTab] || defaultTab;
 
@@ -655,6 +657,7 @@ export default function AdminEspaceAssocie({ defaultTab = 'kpis', embedded = fal
           <TabsTrigger value="actu" className="text-sm">📰 Actualités</TabsTrigger>
           <TabsTrigger value="acq" className="text-sm">🏢 Biens & Acquisitions</TabsTrigger>
           <TabsTrigger value="roadmap" className="text-sm">🚀 Roadmap</TabsTrigger>
+          <TabsTrigger value="crm" className="text-sm">👥 CRM Investisseurs</TabsTrigger>
         </TabsList>
       )}
       <TabsContent value="kpis"><KpisSection /></TabsContent>
@@ -667,6 +670,7 @@ export default function AdminEspaceAssocie({ defaultTab = 'kpis', embedded = fal
       <TabsContent value="actu"><ActualitesSection /></TabsContent>
       <TabsContent value="acq"><AcquisitionsSection /></TabsContent>
       <TabsContent value="roadmap"><RoadmapSection /></TabsContent>
+      <TabsContent value="crm"><CRMInvestisseurs /></TabsContent>
     </Tabs>
   );
 
@@ -693,12 +697,14 @@ export default function AdminEspaceAssocie({ defaultTab = 'kpis', embedded = fal
             <TabsTrigger value="actu" className="text-sm">📰 Actualités</TabsTrigger>
             <TabsTrigger value="acq" className="text-sm">🏢 Biens & Acquisitions</TabsTrigger>
             <TabsTrigger value="roadmap" className="text-sm">🚀 Roadmap</TabsTrigger>
-          </TabsList>
-          <TabsContent value="kpis"><KpisSection /></TabsContent>
-          <TabsContent value="docs"><DocumentsSection /></TabsContent>
-          <TabsContent value="actu"><ActualitesSection /></TabsContent>
-          <TabsContent value="acq"><AcquisitionsSection /></TabsContent>
-          <TabsContent value="roadmap"><RoadmapSection /></TabsContent>
+            <TabsTrigger value="crm" className="text-sm">👥 CRM Investisseurs</TabsTrigger>
+            </TabsList>
+            <TabsContent value="kpis"><KpisSection /></TabsContent>
+            <TabsContent value="docs"><DocumentsSection /></TabsContent>
+            <TabsContent value="actu"><ActualitesSection /></TabsContent>
+            <TabsContent value="acq"><AcquisitionsSection /></TabsContent>
+            <TabsContent value="roadmap"><RoadmapSection /></TabsContent>
+            <TabsContent value="crm"><CRMInvestisseurs /></TabsContent>
         </Tabs>
       </div>
     </div>

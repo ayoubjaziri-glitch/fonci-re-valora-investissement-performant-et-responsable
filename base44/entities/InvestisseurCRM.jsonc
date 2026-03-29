@@ -1,0 +1,162 @@
+{
+  "name": "InvestisseurCRM",
+  "type": "object",
+  "properties": {
+    "prenom": {
+      "type": "string"
+    },
+    "nom": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string",
+      "format": "email"
+    },
+    "telephone": {
+      "type": "string"
+    },
+    "societe": {
+      "type": "string",
+      "description": "Soci\u00e9t\u00e9 / Structure d'investissement"
+    },
+    "statut": {
+      "type": "string",
+      "enum": [
+        "Prospect",
+        "Contact",
+        "Qualifi\u00e9",
+        "En discussion",
+        "Engag\u00e9",
+        "Associ\u00e9 actif",
+        "Inactif",
+        "Perdu"
+      ],
+      "default": "Prospect"
+    },
+    "source": {
+      "type": "string",
+      "enum": [
+        "R\u00e9seau",
+        "LinkedIn",
+        "Recommandation",
+        "Site web",
+        "\u00c9v\u00e9nement",
+        "Partenaire",
+        "Autre"
+      ],
+      "default": "R\u00e9seau"
+    },
+    "profil_investisseur": {
+      "type": "string",
+      "enum": [
+        "Particulier",
+        "Professionnel",
+        "Institutionnel",
+        "Family Office",
+        "Business Angel"
+      ],
+      "default": "Particulier"
+    },
+    "capacite_investissement": {
+      "type": "string",
+      "description": "Capacit\u00e9 d'investissement estim\u00e9e (ex: 50 000 \u20ac)"
+    },
+    "ticket_vise": {
+      "type": "string",
+      "description": "Ticket vis\u00e9 pour la lev\u00e9e (ex: 25 000 \u20ac)"
+    },
+    "montant_investi": {
+      "type": "number",
+      "description": "Montant r\u00e9ellement investi (\u20ac)",
+      "default": 0
+    },
+    "nb_parts": {
+      "type": "number",
+      "description": "Nombre de parts / actions",
+      "default": 0
+    },
+    "date_entree": {
+      "type": "string",
+      "format": "date",
+      "description": "Date d'entr\u00e9e au capital"
+    },
+    "objectifs_investissement": {
+      "type": "string",
+      "description": "Objectifs : rendement, patrimoine, d\u00e9fiscalisation..."
+    },
+    "horizon_placement": {
+      "type": "string",
+      "enum": [
+        "< 3 ans",
+        "3-5 ans",
+        "5-10 ans",
+        "> 10 ans",
+        "Non d\u00e9fini"
+      ],
+      "default": "Non d\u00e9fini"
+    },
+    "tolerance_risque": {
+      "type": "string",
+      "enum": [
+        "Faible",
+        "Mod\u00e9r\u00e9e",
+        "\u00c9lev\u00e9e"
+      ],
+      "default": "Mod\u00e9r\u00e9e"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Notes libres sur l'investisseur"
+    },
+    "interactions": {
+      "type": "string",
+      "description": "Historique des interactions JSON s\u00e9rialis\u00e9"
+    },
+    "documents_signes": {
+      "type": "string",
+      "description": "Documents sign\u00e9s : bulletin, pacte, NDA... (JSON)"
+    },
+    "date_prochain_contact": {
+      "type": "string",
+      "format": "date",
+      "description": "Date du prochain contact planifi\u00e9"
+    },
+    "responsable_suivi": {
+      "type": "string",
+      "description": "Nom du responsable de suivi"
+    },
+    "scoring": {
+      "type": "number",
+      "description": "Score de qualification (0-100)",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 0
+    },
+    "newsletter": {
+      "type": "boolean",
+      "default": true,
+      "description": "Abonn\u00e9 newsletter"
+    },
+    "rgpd_consent": {
+      "type": "boolean",
+      "default": false,
+      "description": "Consentement RGPD"
+    },
+    "tags": {
+      "type": "string",
+      "description": "Tags s\u00e9par\u00e9s par virgule"
+    },
+    "ville": {
+      "type": "string"
+    },
+    "pays": {
+      "type": "string",
+      "default": "France"
+    }
+  },
+  "required": [
+    "nom",
+    "email",
+    "statut"
+  ]
+}
