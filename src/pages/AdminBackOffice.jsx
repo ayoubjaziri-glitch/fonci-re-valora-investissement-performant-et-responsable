@@ -522,8 +522,6 @@ const navGroups = [
   {
     label: 'Espace Associés',
     items: [
-      { id: 'acces', label: 'Accès Associés', icon: Users },
-      { id: 'admin', label: 'Accès Admin', icon: Shield },
       { id: 'kpis', label: 'KPIs & Métriques', icon: BarChart3 },
       { id: 'docs', label: 'Documents', icon: FileText },
       { id: 'actu', label: 'Actualités', icon: Newspaper },
@@ -535,6 +533,8 @@ const navGroups = [
     label: 'Paramètres',
     items: [
       { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
+      { id: 'acces', label: 'Accès Associés', icon: Users },
+      { id: 'admin', label: 'Accès Admin', icon: Shield },
     ]
   },
 ];
