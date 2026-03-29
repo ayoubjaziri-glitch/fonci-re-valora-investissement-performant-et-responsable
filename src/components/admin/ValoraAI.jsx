@@ -332,73 +332,51 @@ function MemoirePanel() {
     try {
       // 1. Upload le fichier
       const uploadRes = await base44.integrations.Core.UploadFile({ file });
-      console.log('Upload réussi:', uploadRes);
       
-      // 2. Extrait le contenu - schéma très simple pour éviter les erreurs
-      let extractRes;
-      try {
-        extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
-          file_url: uploadRes.file_url,
-          json_schema: {
-            type: 'object',
-            properties: {
-              text: { type: 'string' }
-            }
+      // 2. Extrait le contenu avec meilleur support Word/Excel/PDF
+      const extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
+        file_url: uploadRes.file_url,
+        json_schema: {
+          type: 'object',
+          properties: {
+            content: { type: 'string' },
+            text: { type: 'string' },
+            data: { type: 'string' }
           }
-        });
-        console.log('Extraction résultat:', extractRes);
-      } catch (extractErr) {
-        console.warn('Première tentative échouée, retry avec schéma minimal:', extractErr);
-        // Retry avec schéma ultra minimal
-        extractRes = await base44.integrations.Core.ExtractDataFromUploadedFile({
-          file_url: uploadRes.file_url,
-          json_schema: {
-            type: 'object'
-          }
-        });
-        console.log('Retry résultat:', extractRes);
-      }
+        }
+      });
 
       let extractedContent = '';
       if (extractRes?.status === 'success' && extractRes.output) {
-        // Cherche le contenu dans plusieurs champs possibles
-        if (typeof extractRes.output === 'string') {
-          extractedContent = extractRes.output;
-        } else if (extractRes.output.text) {
-          extractedContent = extractRes.output.text;
-        } else if (extractRes.output.content) {
-          extractedContent = extractRes.output.content;
-        } else if (extractRes.output.data) {
-          extractedContent = extractRes.output.data;
-        } else if (extractRes.output.full_text) {
-          extractedContent = extractRes.output.full_text;
-        } else if (Array.isArray(extractRes.output)) {
-          // Si c'est un array, join les éléments
-          extractedContent = extractRes.output.map(item => 
-            typeof item === 'string' ? item : JSON.stringify(item)
-          ).join('\n');
-        } else {
-          // Stringify tout le résultat
-          extractedContent = JSON.stringify(extractRes.output, null, 2);
+        // Tente différentes clés
+        extractedContent = extractRes.output.content || 
+                         extractRes.output.text || 
+                         extractRes.output.data ||
+                         (typeof extractRes.output === 'string' ? extractRes.output : '');
+        
+        // Si c'est encore vide, stringify
+        if (!extractedContent && typeof extractRes.output === 'object') {
+          extractedContent = Object.values(extractRes.output)
+            .filter(v => typeof v === 'string' && v.trim())
+            .join('\n');
         }
       }
 
       if (extractedContent && extractedContent.trim().length > 0) {
-        // 3. Ajoute le contenu au formulaire
         setForm(f => ({
           ...f,
           titre: f?.titre || file.name.replace(/\.[^/.]+$/, ''),
-          contenu: (f?.contenu || '') + (f?.contenu ? '\n\n' : '') + '📄 ' + file.name + ':\n' + extractedContent
+          contenu: (f?.contenu || '') + (f?.contenu ? '\n\n' : '') + '📄 ' + file.name + ':\n' + extractedContent.trim()
         }));
         setUploadStatus('success');
-        setTimeout(() => setUploadStatus(''), 3000);
+        setTimeout(() => setUploadStatus(''), 2000);
       } else {
-        throw new Error('Aucun contenu extrait. Vérifiez que le fichier n\'est pas vide.');
+        throw new Error('Aucun contenu extrait du fichier.');
       }
     } catch (err) {
-      console.error('Erreur upload/extraction:', err);
+      console.error('Erreur extraction:', err);
       setUploadStatus('error');
-      alert('❌ Erreur lors de l\'extraction: ' + err.message + '\n\nVérifiez que le fichier est valide et non vide.');
+      alert('❌ Impossible d\'extraire le contenu. Fichiers acceptés : PDF, Word (.docx), Excel (.xlsx), CSV, TXT');
     }
     setUploading(false);
     if (fileInputRef.current) fileInputRef.current.value = '';
@@ -532,12 +510,22 @@ export default function ValoraAI() {
 
   const startPolling = (convId) => {
     clearInterval(pollIntervalRef.current);
+    let pollCount = 0;
+    const maxPolls = 150; // Max 5 min (150 * 2s)
+    
     pollIntervalRef.current = setInterval(async () => {
+      pollCount++;
+      if (pollCount > maxPolls) {
+        clearInterval(pollIntervalRef.current);
+        setLoading(false);
+        return;
+      }
+
       try {
         const conv = await agentProxy('getConversation', { conversationId: convId });
         const rawMessages = conv.messages || [];
 
-        // Préserver les états locaux (approved, rejected, executionResults)
+        // Préserver les états locaux
         setMessages(prev => {
           return rawMessages.map((newMsg, i) => {
             const existing = prev[i];
@@ -551,9 +539,10 @@ export default function ValoraAI() {
         const lastMsg = rawMessages[rawMessages.length - 1];
         if (lastMsg && lastMsg.role === 'assistant') {
           setLoading(false);
+          clearInterval(pollIntervalRef.current);
         }
       } catch (e) {
-        // silent
+        console.error('Polling error:', e);
       }
     }, 2000);
   };
@@ -629,6 +618,7 @@ export default function ValoraAI() {
   // Approuver un plan → parser + exécuter
   const handleApprove = async (planMessage) => {
     setIsExecuting(true);
+    stopPolling(); // Arrêter le polling pendant l'exécution
 
     // Marquer le message comme approuvé
     setMessages(prev => prev.map(m =>
