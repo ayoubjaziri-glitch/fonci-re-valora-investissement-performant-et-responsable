@@ -396,167 +396,438 @@ function VisiteursCumul({ pageViews, contacts }) {
   );
 }
 
-// ── Onglet Sources & Mots-clés ─────────────────────────────────────────────────
+// ── Helpers enrichis ────────────────────────────────────────────────────────
+function getBrowser(ua = '') {
+  if (/Edg\//i.test(ua)) return 'Edge';
+  if (/OPR\/|Opera/i.test(ua)) return 'Opera';
+  if (/Chrome\/[0-9]/i.test(ua) && !/Chromium/i.test(ua)) return 'Chrome';
+  if (/Firefox\//i.test(ua)) return 'Firefox';
+  if (/Safari\//i.test(ua) && !/Chrome/i.test(ua)) return 'Safari';
+  if (/MSIE|Trident/i.test(ua)) return 'Internet Explorer';
+  return 'Autre';
+}
+
+function getOS(ua = '') {
+  if (/Windows NT 10/i.test(ua)) return 'Windows 10/11';
+  if (/Windows/i.test(ua)) return 'Windows';
+  if (/iPhone|iPad/i.test(ua)) return 'iOS';
+  if (/Android/i.test(ua)) return 'Android';
+  if (/Macintosh|Mac OS X/i.test(ua)) return 'macOS';
+  if (/Linux/i.test(ua)) return 'Linux';
+  return 'Inconnu';
+}
+
+function getHour(dateStr) {
+  return new Date(dateStr).getHours();
+}
+
+function getDetailedSource(referrer = '') {
+  if (!referrer) return { label: 'Direct / Bookmark', category: 'direct', color: '#6366f1' };
+  const r = referrer.toLowerCase();
+  if (/google\./i.test(r)) return { label: 'Google', category: 'search', color: '#ea4335' };
+  if (/bing\.com/i.test(r)) return { label: 'Bing', category: 'search', color: '#00809d' };
+  if (/yahoo\.com/i.test(r)) return { label: 'Yahoo', category: 'search', color: '#720e9e' };
+  if (/duckduckgo\.com/i.test(r)) return { label: 'DuckDuckGo', category: 'search', color: '#de5833' };
+  if (/linkedin\.com/i.test(r)) return { label: 'LinkedIn', category: 'social', color: '#0077b5' };
+  if (/facebook\.com|fb\.com/i.test(r)) return { label: 'Facebook', category: 'social', color: '#1877f2' };
+  if (/instagram\.com/i.test(r)) return { label: 'Instagram', category: 'social', color: '#e1306c' };
+  if (/twitter\.com|t\.co/i.test(r)) return { label: 'Twitter/X', category: 'social', color: '#000000' };
+  if (/whatsapp\.com/i.test(r)) return { label: 'WhatsApp', category: 'social', color: '#25d366' };
+  try {
+    const host = new URL(referrer).hostname.replace('www.', '');
+    return { label: host, category: 'referral', color: '#C9A961' };
+  } catch {
+    return { label: 'Autre', category: 'referral', color: '#94a3b8' };
+  }
+}
+
+// ── Onglet Sources & Analyse Avancée ────────────────────────────────────────
 function VisiteursSources({ pageViews }) {
   const [activeSource, setActiveSource] = useState(null);
+  const [activeTab, setActiveTab] = useState('sources');
 
-  // Toutes les sources avec URL complète
+  // Analyse complète par source
   const sourcesDetail = useMemo(() => {
     const map = {};
     pageViews.forEach(v => {
-      const source = getSource(v.referrer || '');
-      if (!map[source]) map[source] = { count: 0, referrers: {}, keywords: {}, pages: {} };
-      map[source].count++;
-      // URL exacte du referrer
-      if (v.referrer) {
-        map[source].referrers[v.referrer] = (map[source].referrers[v.referrer] || 0) + 1;
-      }
-      // Mots-clés
-      if (v.search_keywords) {
-        const kw = v.search_keywords.toLowerCase().trim();
-        if (kw) map[source].keywords[kw] = (map[source].keywords[kw] || 0) + 1;
-      }
-      // Pages atterrissage
-      map[source].pages[v.page] = (map[source].pages[v.page] || 0) + 1;
+      const src = getDetailedSource(v.referrer || '');
+      const key = src.label;
+      if (!map[key]) map[key] = { ...src, count: 0, sessions: new Set(), referrers: {}, pages: {}, cities: {}, devices: {}, browsers: {}, oses: {}, hours: {} };
+      map[key].count++;
+      map[key].sessions.add(v.session_id);
+      if (v.referrer) map[key].referrers[v.referrer] = (map[key].referrers[v.referrer] || 0) + 1;
+      if (v.page) map[key].pages[v.page] = (map[key].pages[v.page] || 0) + 1;
+      if (v.city) map[key].cities[v.city] = (map[key].cities[v.city] || 0) + 1;
+      const dev = getDeviceType(v.user_agent); map[key].devices[dev] = (map[key].devices[dev] || 0) + 1;
+      const br = getBrowser(v.user_agent); map[key].browsers[br] = (map[key].browsers[br] || 0) + 1;
+      const os = getOS(v.user_agent); map[key].oses[os] = (map[key].oses[os] || 0) + 1;
+      const h = getHour(v.created_date); map[key].hours[h] = (map[key].hours[h] || 0) + 1;
     });
-    return Object.entries(map).sort((a, b) => b[1].count - a[1].count);
+    return Object.entries(map)
+      .map(([k, v]) => [k, { ...v, sessions: v.sessions.size }])
+      .sort((a, b) => b[1].count - a[1].count);
   }, [pageViews]);
 
-  // Tous les mots-clés confondus
-  const allKeywords = useMemo(() => {
-    const kw = {};
-    pageViews.forEach(v => {
-      if (v.search_keywords) {
-        const k = v.search_keywords.toLowerCase().trim();
-        if (k) kw[k] = (kw[k] || 0) + 1;
-      }
-    });
-    return Object.entries(kw).sort((a, b) => b[1] - a[1]);
+  // Stats globales appareils
+  const deviceStats = useMemo(() => {
+    const d = {};
+    pageViews.forEach(v => { const t = getDeviceType(v.user_agent); d[t] = (d[t] || 0) + 1; });
+    return Object.entries(d).sort((a,b) => b[1]-a[1]);
   }, [pageViews]);
 
+  // Stats globales navigateurs
+  const browserStats = useMemo(() => {
+    const d = {};
+    pageViews.forEach(v => { const b = getBrowser(v.user_agent); d[b] = (d[b] || 0) + 1; });
+    return Object.entries(d).sort((a,b) => b[1]-a[1]);
+  }, [pageViews]);
+
+  // Stats OS
+  const osStats = useMemo(() => {
+    const d = {};
+    pageViews.forEach(v => { const o = getOS(v.user_agent); d[o] = (d[o] || 0) + 1; });
+    return Object.entries(d).sort((a,b) => b[1]-a[1]);
+  }, [pageViews]);
+
+  // Heures de pointe
+  const hourStats = useMemo(() => {
+    const h = Array(24).fill(0);
+    pageViews.forEach(v => { h[getHour(v.created_date)]++; });
+    return h.map((count, hour) => ({ hour, count }));
+  }, [pageViews]);
+  const peakHour = hourStats.reduce((best, h) => h.count > best.count ? h : best, { hour: 0, count: 0 });
+
+  // Pays
+  const countryStats = useMemo(() => {
+    const d = {};
+    pageViews.forEach(v => { if (v.country) d[v.country] = (d[v.country] || 0) + 1; });
+    return Object.entries(d).sort((a,b) => b[1]-a[1]);
+  }, [pageViews]);
+
+  // Villes
+  const cityStats = useMemo(() => {
+    const d = {};
+    pageViews.forEach(v => { if (v.city) d[v.city] = (d[v.city] || 0) + 1; });
+    return Object.entries(d).sort((a,b) => b[1]-a[1]).slice(0, 15);
+  }, [pageViews]);
+
+  // Catégories sources
+  const categoryStats = useMemo(() => {
+    const d = { direct: 0, search: 0, social: 0, referral: 0 };
+    pageViews.forEach(v => { const src = getDetailedSource(v.referrer || ''); d[src.category] = (d[src.category] || 0) + 1; });
+    return d;
+  }, [pageViews]);
+
+  const total = pageViews.length || 1;
   const selected = activeSource ? sourcesDetail.find(([s]) => s === activeSource) : null;
 
-  return (
-    <div className="space-y-6">
+  const CATEGORY_LABELS = { direct: 'Direct', search: 'Moteurs de recherche', social: 'Réseaux sociaux', referral: 'Sites référents' };
+  const CATEGORY_COLORS = { direct: '#6366f1', search: '#ea4335', social: '#0077b5', referral: '#C9A961' };
 
-      {/* Mots-clés de recherche */}
-      <div className="bg-white rounded-2xl border border-slate-200 p-6">
-        <h3 className="font-semibold text-[#1A3A52] mb-1 flex items-center gap-2">
-          <Search className="h-4 w-4 text-[#C9A961]" /> Mots-clés tapés dans Google / Bing
-        </h3>
-        <p className="text-xs text-slate-400 mb-4">Termes exacts que les visiteurs ont recherché avant d'arriver sur votre site</p>
-        {allKeywords.length === 0 ? (
-          <div className="text-center py-8">
-            <Search className="h-10 w-10 text-slate-200 mx-auto mb-2" />
-            <p className="text-slate-400 text-sm">Aucun mot-clé détecté pour l'instant</p>
-            <p className="text-slate-300 text-xs mt-1">Les mots-clés s'affichent quand un visiteur arrive via Google ou Bing — Google cache souvent les mots-clés (trafic "not provided"), ce qui est normal.</p>
+  const tabs = [
+    { id: 'sources', label: 'Sources de trafic' },
+    { id: 'geo', label: 'Géographie' },
+    { id: 'tech', label: 'Appareils & Tech' },
+    { id: 'horaires', label: 'Horaires' },
+  ];
+
+  return (
+    <div className="space-y-5">
+      {/* Résumé catégories */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        {Object.entries(categoryStats).map(([cat, count]) => (
+          <div key={cat} className="bg-white rounded-2xl border border-slate-200 p-4">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-semibold text-slate-500 uppercase tracking-wide">{CATEGORY_LABELS[cat]}</span>
+              <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: CATEGORY_COLORS[cat] }} />
+            </div>
+            <p className="text-2xl font-bold text-[#1A3A52]">{count}</p>
+            <div className="mt-2 h-1.5 bg-slate-100 rounded-full overflow-hidden">
+              <div className="h-full rounded-full" style={{ width: `${(count/total)*100}%`, backgroundColor: CATEGORY_COLORS[cat] }} />
+            </div>
+            <p className="text-xs text-slate-400 mt-1">{((count/total)*100).toFixed(0)}% du trafic</p>
           </div>
-        ) : (
-          <div className="flex flex-wrap gap-2">
-            {allKeywords.map(([kw, count], i) => (
-              <div key={i} className="flex items-center gap-1.5 bg-amber-50 border border-amber-200 rounded-full px-3 py-1.5">
-                <Tag className="h-3 w-3 text-amber-600" />
-                <span className="text-sm text-amber-800 font-medium">{kw}</span>
-                <span className="text-xs bg-amber-200 text-amber-700 rounded-full px-1.5 py-0.5 font-bold">{count}</span>
-              </div>
-            ))}
-          </div>
-        )}
+        ))}
       </div>
 
-      {/* Sources détaillées */}
-      <div className="grid lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-2xl border border-slate-200 p-6">
-          <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
-            <Globe className="h-4 w-4 text-[#C9A961]" /> Sources exactes — cliquer pour détails
-          </h3>
-          {sourcesDetail.length === 0 ? (
-            <p className="text-slate-400 text-sm text-center py-8">Aucune donnée</p>
-          ) : (
-            <div className="space-y-2">
-              {sourcesDetail.map(([source, data]) => (
-                <button key={source} onClick={() => setActiveSource(activeSource === source ? null : source)}
-                  className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all text-left ${activeSource === source ? 'border-[#C9A961] bg-amber-50' : 'border-slate-100 bg-slate-50 hover:border-slate-200'}`}>
-                  <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: getSourceColor(source) }} />
-                  <span className="flex-1 text-sm font-medium text-slate-800">{source}</span>
-                  <span className="text-xs bg-white border border-slate-200 rounded-full px-2 py-0.5 text-slate-600 font-bold">{data.count} visites</span>
-                  {Object.keys(data.keywords).length > 0 && (
-                    <span className="text-xs bg-amber-100 text-amber-700 rounded-full px-2 py-0.5">{Object.keys(data.keywords).length} mots-clés</span>
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
-        </div>
+      {/* Sous-onglets */}
+      <div className="flex gap-2 flex-wrap">
+        {tabs.map(t => (
+          <button key={t.id} onClick={() => setActiveTab(t.id)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${activeTab === t.id ? 'bg-[#1A3A52] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
+            {t.label}
+          </button>
+        ))}
+      </div>
 
-        {/* Détail source sélectionnée */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-6">
-          {!selected ? (
-            <div className="flex flex-col items-center justify-center h-full py-12 text-center">
-              <Globe className="h-10 w-10 text-slate-200 mb-3" />
-              <p className="text-slate-400 text-sm">Cliquez sur une source pour voir le détail</p>
-            </div>
-          ) : (
-            <div className="space-y-5">
-              <div className="flex items-center gap-3">
-                <div className="w-4 h-4 rounded-full" style={{ backgroundColor: getSourceColor(selected[0]) }} />
-                <h3 className="font-bold text-[#1A3A52] text-lg">{selected[0]}</h3>
-                <span className="text-sm text-slate-400">{selected[1].count} visites</span>
+      {/* ── SOURCES ── */}
+      {activeTab === 'sources' && (
+        <div className="grid lg:grid-cols-2 gap-5">
+          <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
+              <Globe className="h-4 w-4 text-[#C9A961]" /> Sources détaillées — cliquer pour analyse
+            </h3>
+            {sourcesDetail.length === 0 ? (
+              <p className="text-slate-400 text-sm text-center py-8">Aucune donnée</p>
+            ) : (
+              <div className="space-y-2">
+                {sourcesDetail.map(([source, data]) => (
+                  <button key={source} onClick={() => setActiveSource(activeSource === source ? null : source)}
+                    className={`w-full flex items-center gap-3 p-3 rounded-xl border transition-all text-left ${activeSource === source ? 'border-[#C9A961] bg-amber-50' : 'border-slate-100 bg-slate-50 hover:border-slate-200'}`}>
+                    <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ backgroundColor: data.color }} />
+                    <span className="flex-1 text-sm font-medium text-slate-800">{source}</span>
+                    <span className="text-[10px] bg-slate-100 text-slate-500 rounded px-1.5 py-0.5 font-medium uppercase">{data.category}</span>
+                    <span className="text-xs bg-white border border-slate-200 rounded-full px-2 py-0.5 text-slate-600 font-bold">{data.count} vues</span>
+                    <span className="text-xs text-slate-400">{data.sessions} sess.</span>
+                  </button>
+                ))}
               </div>
+            )}
+          </div>
 
-              {/* Mots-clés de cette source */}
-              {Object.keys(selected[1].keywords).length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1">
-                    <Search className="h-3.5 w-3.5" /> Mots-clés recherchés
-                  </p>
-                  <div className="flex flex-wrap gap-1.5">
-                    {Object.entries(selected[1].keywords).sort((a,b)=>b[1]-a[1]).map(([kw, n], i) => (
-                      <span key={i} className="bg-amber-50 border border-amber-200 text-amber-800 text-xs rounded-full px-2.5 py-1 flex items-center gap-1">
-                        <Tag className="h-2.5 w-2.5" />{kw} <strong>×{n}</strong>
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Pages d'atterrissage */}
-              <div>
-                <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Pages visitées depuis cette source</p>
-                <div className="space-y-1.5">
-                  {Object.entries(selected[1].pages).sort((a,b)=>b[1]-a[1]).map(([page, n], i) => (
-                    <div key={i} className="flex justify-between items-center text-sm bg-slate-50 rounded-lg px-3 py-1.5">
-                      <span className="text-slate-700">{page}</span>
-                      <span className="font-bold text-[#1A3A52] text-xs">{n}×</span>
-                    </div>
-                  ))}
-                </div>
+          <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            {!selected ? (
+              <div className="flex flex-col items-center justify-center h-full py-12 text-center">
+                <Globe className="h-10 w-10 text-slate-200 mb-3" />
+                <p className="text-slate-400 text-sm">Cliquez sur une source pour l'analyser</p>
               </div>
+            ) : (
+              <div className="space-y-4">
+                <div className="flex items-center gap-3 pb-3 border-b border-slate-100">
+                  <div className="w-4 h-4 rounded-full" style={{ backgroundColor: selected[1].color }} />
+                  <h3 className="font-bold text-[#1A3A52] text-lg">{selected[0]}</h3>
+                  <span className="text-xs bg-slate-100 text-slate-500 rounded px-2 py-0.5 font-medium uppercase">{selected[1].category}</span>
+                  <span className="ml-auto text-sm text-slate-400">{selected[1].count} vues · {selected[1].sessions} sessions</span>
+                </div>
 
-              {/* URLs exactes */}
-              {Object.keys(selected[1].referrers).length > 0 && (
+                {/* Pages depuis cette source */}
                 <div>
-                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1">
-                    <ExternalLink className="h-3.5 w-3.5" /> URLs exactes de provenance
-                  </p>
-                  <div className="space-y-1 max-h-40 overflow-y-auto">
-                    {Object.entries(selected[1].referrers).sort((a,b)=>b[1]-a[1]).slice(0, 10).map(([url, n], i) => (
-                      <div key={i} className="flex items-start gap-2 bg-slate-50 rounded-lg px-3 py-1.5">
-                        <span className="text-[10px] font-bold text-slate-400 mt-0.5 flex-shrink-0">×{n}</span>
-                        <a href={url} target="_blank" rel="noopener noreferrer"
-                          className="text-xs text-blue-600 hover:underline break-all">{url}</a>
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Pages visitées depuis cette source</p>
+                  <div className="space-y-1.5 max-h-32 overflow-y-auto">
+                    {Object.entries(selected[1].pages).sort((a,b)=>b[1]-a[1]).map(([page, n], i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <span className="text-xs text-slate-400 w-4">{i+1}</span>
+                        <div className="flex-1 flex justify-between items-center bg-slate-50 rounded-lg px-3 py-1">
+                          <span className="text-xs text-slate-700">{page}</span>
+                          <span className="font-bold text-[#1A3A52] text-xs">{n}×</span>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
-              )}
-            </div>
-          )}
-        </div>
-      </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-xs text-blue-800">
-        <strong>💡 Note sur les mots-clés Google :</strong> Depuis 2013, Google masque la majorité des mots-clés (trafic "not provided") pour des raisons de confidentialité. Les mots-clés s'affichent principalement pour les clics depuis Google Ads ou certaines recherches non sécurisées. Pour voir tous les mots-clés Google, connectez <strong>Google Search Console</strong> à votre site.
+                {/* Villes */}
+                {Object.keys(selected[1].cities).length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Villes d'origine</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {Object.entries(selected[1].cities).sort((a,b)=>b[1]-a[1]).slice(0,8).map(([city, n], i) => (
+                        <span key={i} className="text-xs bg-blue-50 text-blue-700 border border-blue-200 rounded-full px-2 py-0.5">{city} ×{n}</span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Appareils */}
+                <div>
+                  <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2">Appareils utilisés</p>
+                  <div className="flex gap-2">
+                    {Object.entries(selected[1].devices).sort((a,b)=>b[1]-a[1]).map(([dev, n]) => (
+                      <span key={dev} className="text-xs bg-slate-100 text-slate-600 rounded-lg px-2 py-1 font-medium">{dev}: {n}</span>
+                    ))}
+                  </div>
+                </div>
+
+                {/* URLs exactes */}
+                {Object.keys(selected[1].referrers).length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1">
+                      <ExternalLink className="h-3.5 w-3.5" /> URLs exactes de provenance
+                    </p>
+                    <div className="space-y-1 max-h-32 overflow-y-auto">
+                      {Object.entries(selected[1].referrers).sort((a,b)=>b[1]-a[1]).slice(0, 10).map(([url, n], i) => (
+                        <div key={i} className="flex items-start gap-2 bg-slate-50 rounded-lg px-3 py-1.5">
+                          <span className="text-[10px] font-bold text-slate-400 mt-0.5 flex-shrink-0">×{n}</span>
+                          <a href={url} target="_blank" rel="noopener noreferrer" className="text-xs text-blue-600 hover:underline break-all">{url}</a>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── GÉO ── */}
+      {activeTab === 'geo' && (
+        <div className="grid lg:grid-cols-2 gap-5">
+          <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-[#C9A961]" /> Pays d'origine
+            </h3>
+            {countryStats.length === 0 ? <p className="text-slate-400 text-sm text-center py-8">Aucune donnée géographique</p> : (
+              <div className="space-y-2.5">
+                {countryStats.slice(0,12).map(([country, count], i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <span className="text-xs text-slate-400 w-4">{i+1}</span>
+                    <div className="flex-1">
+                      <div className="flex justify-between mb-1">
+                        <span className="text-sm font-medium text-slate-700">{country}</span>
+                        <span className="text-sm font-bold text-[#1A3A52]">{count} vues ({((count/total)*100).toFixed(0)}%)</span>
+                      </div>
+                      <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                        <div className="h-full bg-[#C9A961] rounded-full" style={{ width: `${(count/countryStats[0][1])*100}%` }} />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
+              <MapPin className="h-4 w-4 text-[#C9A961]" /> Top 15 villes
+            </h3>
+            {cityStats.length === 0 ? <p className="text-slate-400 text-sm text-center py-8">Aucune ville détectée</p> : (
+              <div className="space-y-2">
+                {cityStats.map(([city, count], i) => (
+                  <div key={i} className="flex items-center justify-between p-2.5 bg-slate-50 rounded-xl">
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-slate-400 w-5">{i+1}</span>
+                      <span className="text-sm font-medium text-slate-700">{city}</span>
+                    </div>
+                    <span className="text-xs font-bold bg-[#1A3A52] text-white rounded-full px-2 py-0.5">{count}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* ── TECH ── */}
+      {activeTab === 'tech' && (
+        <div className="grid lg:grid-cols-3 gap-5">
+          <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
+              <Monitor className="h-4 w-4 text-[#C9A961]" /> Appareils
+            </h3>
+            <div className="space-y-3">
+              {deviceStats.map(([dev, count]) => (
+                <div key={dev} className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-slate-700">{dev}</span>
+                      <span className="text-sm font-bold text-[#1A3A52]">{((count/total)*100).toFixed(0)}%</span>
+                    </div>
+                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#1A3A52] rounded-full" style={{ width: `${(count/total)*100}%` }} />
+                    </div>
+                  </div>
+                  <span className="text-xs text-slate-400 w-8 text-right">{count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <h3 className="font-semibold text-[#1A3A52] mb-4">Navigateurs</h3>
+            <div className="space-y-3">
+              {browserStats.map(([browser, count]) => (
+                <div key={browser} className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-slate-700">{browser}</span>
+                      <span className="text-sm font-bold text-[#1A3A52]">{((count/total)*100).toFixed(0)}%</span>
+                    </div>
+                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-[#C9A961] rounded-full" style={{ width: `${(count/total)*100}%` }} />
+                    </div>
+                  </div>
+                  <span className="text-xs text-slate-400 w-8 text-right">{count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <h3 className="font-semibold text-[#1A3A52] mb-4">Systèmes d'exploitation</h3>
+            <div className="space-y-3">
+              {osStats.map(([os, count]) => (
+                <div key={os} className="flex items-center gap-3">
+                  <div className="flex-1">
+                    <div className="flex justify-between mb-1">
+                      <span className="text-sm font-medium text-slate-700">{os}</span>
+                      <span className="text-sm font-bold text-[#1A3A52]">{((count/total)*100).toFixed(0)}%</span>
+                    </div>
+                    <div className="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                      <div className="h-full bg-emerald-500 rounded-full" style={{ width: `${(count/total)*100}%` }} />
+                    </div>
+                  </div>
+                  <span className="text-xs text-slate-400 w-8 text-right">{count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ── HORAIRES ── */}
+      {activeTab === 'horaires' && (
+        <div className="bg-white rounded-2xl border border-slate-200 p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-[#1A3A52] flex items-center gap-2">
+              <Clock className="h-4 w-4 text-[#C9A961]" /> Heures de visite (toutes données)
+            </h3>
+            {peakHour.count > 0 && (
+              <span className="text-xs bg-amber-50 border border-amber-200 text-amber-700 rounded-full px-3 py-1 font-medium">
+                🔥 Pic à {peakHour.hour}h — {peakHour.count} visites
+              </span>
+            )}
+          </div>
+          <div className="flex items-end gap-1 h-36">
+            {hourStats.map(({ hour, count }) => {
+              const maxCount = Math.max(...hourStats.map(h => h.count), 1);
+              const heightPct = (count / maxCount) * 100;
+              const isPeak = hour === peakHour.hour;
+              return (
+                <div key={hour} className="flex-1 flex flex-col items-center gap-1 group relative">
+                  <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-slate-800 text-white text-[10px] rounded px-1 py-0.5 opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap z-10">
+                    {hour}h : {count}
+                  </div>
+                  <div
+                    className={`w-full rounded-t transition-all ${isPeak ? 'bg-[#C9A961]' : 'bg-slate-200 group-hover:bg-[#1A3A52]/60'}`}
+                    style={{ height: `${Math.max(heightPct, count > 0 ? 4 : 0)}%` }}
+                  />
+                </div>
+              );
+            })}
+          </div>
+          <div className="flex justify-between text-[10px] text-slate-400 mt-1 px-0.5">
+            {[0, 4, 8, 12, 16, 20, 23].map(h => <span key={h}>{h}h</span>)}
+          </div>
+          <div className="mt-4 grid grid-cols-3 gap-3">
+            {[
+              { label: 'Matin (6h-12h)', range: [6,11] },
+              { label: 'Après-midi (12h-18h)', range: [12,17] },
+              { label: 'Soir (18h-23h)', range: [18,23] },
+            ].map(({ label, range }) => {
+              const count = hourStats.filter(h => h.hour >= range[0] && h.hour <= range[1]).reduce((s,h) => s+h.count, 0);
+              return (
+                <div key={label} className="bg-slate-50 rounded-xl p-3 text-center">
+                  <p className="text-lg font-bold text-[#1A3A52]">{count}</p>
+                  <p className="text-xs text-slate-500">{label}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
+        <strong>💡 Pourquoi pas de mots-clés Google ?</strong> Depuis 2013, Google chiffre toutes les recherches et masque les mots-clés dans le referrer (trafic "not provided"). C'est une décision de Google, aucun outil ne peut les contourner sans Google Search Console. En revanche, toutes les autres sources (LinkedIn, Facebook, Bing, sites tiers...) sont analysées en détail ci-dessus.
       </div>
     </div>
   );
