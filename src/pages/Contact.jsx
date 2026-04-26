@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
-import { useToast } from "@/components/ui/use-toast";
 import { sendEmail } from '@/lib/emailService';
 import {
   Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight, Clock, Loader2 } from
