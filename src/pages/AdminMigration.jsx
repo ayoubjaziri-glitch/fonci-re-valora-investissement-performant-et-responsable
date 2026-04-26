@@ -27,7 +27,7 @@ const TABLES = [
 ];
 
 // Colonnes Base44 à supprimer avant insertion dans Supabase
-const STRIP_KEYS = ['created_date', 'updated_date', 'created_by', 'created_by_id', 'updated_by', 'updated_by_id', '__v', '_id'];
+const STRIP_KEYS = ['created_date', 'updated_date', 'created_by', 'created_by_id', 'updated_by', 'updated_by_id', '__v', '_id', 'is_sample'];
 
 function cleanRecord(record) {
   const cleaned = { ...record };
