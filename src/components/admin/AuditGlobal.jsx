@@ -1,18 +1,198 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { useQuery } from '@tanstack/react-query';
 import {
-  AlertCircle, CheckCircle2, Loader2, RefreshCw, Eye, EyeOff,
-  Database, Link2, Trash2, Plus, Settings, Search
+  AlertCircle, CheckCircle2, Loader2, RefreshCw,
+  Database, ChevronRight, X, Info, ArrowRight, ExternalLink
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+
+// Descriptions détaillées pour chaque type de problème
+const ISSUE_DETAILS = {
+  image_missing_url: {
+    titre: 'Image sans URL',
+    explication: (issue) => `L'image "${issue.data?.key}" est enregistrée dans la base de données mais n'a pas d'URL associée. Elle ne s'affichera pas sur le site.`,
+    impact: 'Cette image sera absente du site — les visiteurs verront une image cassée ou un espace vide à la place.',
+    action: 'Allez dans "Photos & Média" et ajoutez une URL valide pour cette image.',
+    section: 'photos',
+    severity_color: 'red'
+  },
+  article_missing_image: {
+    titre: 'Article sans image de couverture',
+    explication: (issue) => `L'article "${issue.data?.titre}" n'a pas d'image de couverture définie.`,
+    impact: 'L\'article s\'affichera sans vignette dans la liste du blog, ce qui le rend moins attractif pour les visiteurs.',
+    action: 'Allez dans "Blog & Articles", éditez cet article et ajoutez une image de couverture.',
+    section: 'blog',
+    severity_color: 'orange'
+  },
+  article_missing_slug: {
+    titre: 'Article sans slug URL',
+    explication: (issue) => `L'article "${issue.data?.titre}" n'a pas de slug défini. Le slug est l'identifiant URL de l'article (ex: mon-article).`,
+    impact: 'L\'article est inaccessible via son URL — les visiteurs ne peuvent pas y accéder directement et il ne sera pas indexé par Google.',
+    action: 'Allez dans "Blog & Articles", éditez cet article et renseignez un slug unique (ex: nom-de-larticle-en-minuscules-sans-espaces).',
+    section: 'blog',
+    severity_color: 'red'
+  },
+  realisation_missing_image: {
+    titre: 'Réalisation sans photo "avant"',
+    explication: (issue) => `La réalisation "${issue.data?.titre}" n'a pas de photo "avant" travaux.`,
+    impact: 'Le comparateur avant/après ne pourra pas s\'afficher correctement sur la page de réalisations.',
+    action: 'Allez dans "Nos Biens & Réalisations", éditez cette réalisation et ajoutez une photo avant.',
+    section: 'realisations',
+    severity_color: 'orange'
+  },
+  realisation_missing_dpe: {
+    titre: 'Réalisation avec DPE incomplet',
+    explication: (issue) => `La réalisation "${issue.data?.titre}" n'a pas de DPE avant et/ou après renseigné.`,
+    impact: 'La progression DPE (ex: F → B) ne s\'affichera pas, ce qui est un argument de valorisation important.',
+    action: 'Allez dans "Nos Biens & Réalisations", éditez cette réalisation et renseignez les classes DPE avant et après.',
+    section: 'realisations',
+    severity_color: 'orange'
+  },
+  equipe_missing_image: {
+    titre: 'Membre de l\'équipe sans photo',
+    explication: (issue) => `Le membre "${issue.data?.nom}" (${issue.data?.role || 'rôle non défini'}) n'a pas de photo de profil.`,
+    impact: 'La fiche de ce membre s\'affichera sans photo sur la page équipe, ce qui nuit à la crédibilité.',
+    action: 'Allez dans "Équipe", éditez ce membre et uploadez ou renseignez l\'URL de sa photo.',
+    section: 'equipe',
+    severity_color: 'orange'
+  },
+  tache_orphaned_project: {
+    titre: 'Tâche sans projet valide',
+    explication: (issue) => `La tâche "${issue.data?.titre}" est associée au projet "${issue.data?.projet}" qui n'existe plus ou est introuvable.`,
+    impact: 'Cette tâche n\'apparaît dans aucun projet dans le gestionnaire de tâches.',
+    action: 'Allez dans "Gestion des tâches", trouvez cette tâche et réassignez-la à un projet existant.',
+    section: 'taches',
+    severity_color: 'orange'
+  },
+  tache_overdue: {
+    titre: 'Tâche en retard',
+    explication: (issue) => {
+      const days = issue.data?.date_echeance
+        ? Math.ceil((new Date() - new Date(issue.data.date_echeance)) / (1000 * 60 * 60 * 24))
+        : '?';
+      return `La tâche "${issue.data?.titre}" (${issue.data?.statut || ''}) avait une échéance dépassée depuis ${days} jour${days > 1 ? 's' : ''}. Responsable : ${issue.data?.assigne_a || 'non assigné'}.`;
+    },
+    impact: 'Cette tâche bloque potentiellement d\'autres tâches ou projets.',
+    action: 'Allez dans "Gestion des tâches" pour mettre à jour le statut ou reporter l\'échéance.',
+    section: 'taches',
+    severity_color: 'orange'
+  },
+  crm_missing_contact: {
+    titre: 'Investisseur sans coordonnées',
+    explication: (issue) => `L'investisseur "${issue.data?.prenom || ''} ${issue.data?.nom || ''}" (statut: ${issue.data?.statut || 'inconnu'}) n'a ni email ni téléphone renseigné.`,
+    impact: 'Impossible de recontacter cet investisseur. Il disparaîtra des relances automatiques.',
+    action: 'Allez dans "CRM Investisseurs", trouvez cette fiche et ajoutez au moins un moyen de contact.',
+    section: 'crm',
+    severity_color: 'red'
+  },
+  acquisition_missing_price: {
+    titre: 'Acquisition sans prix',
+    explication: (issue) => `L'acquisition "${issue.data?.ville}" (statut: ${issue.data?.statut || 'inconnu'}) n'a pas de prix renseigné.`,
+    impact: 'Cette acquisition s\'affichera sans montant dans l\'espace associés, ce qui manque de clarté pour les investisseurs.',
+    action: 'Allez dans "Biens & Acquisitions" dans l\'espace associés et renseignez le prix de cette acquisition.',
+    section: 'biens',
+    severity_color: 'orange'
+  },
+};
+
+const SECTION_LABELS = {
+  photos: 'Photos & Média',
+  blog: 'Blog & Articles',
+  realisations: 'Nos Biens & Réalisations',
+  equipe: 'Équipe',
+  taches: 'Gestion des tâches',
+  crm: 'CRM Investisseurs',
+  biens: 'Espace Associés > Biens',
+};
+
+// Panneau de détail d'un problème
+function IssueDetailPanel({ issue, onClose }) {
+  const detail = ISSUE_DETAILS[issue.type] || {
+    titre: 'Problème détecté',
+    explication: () => issue.message,
+    impact: 'Vérifiez ce problème pour assurer la cohérence du contenu.',
+    action: 'Corrigez manuellement dans la section concernée.',
+    severity_color: issue.severity === 'high' ? 'red' : 'orange'
+  };
+
+  const colorMap = {
+    red: { bg: 'bg-red-50', border: 'border-red-200', text: 'text-red-700', badge: 'bg-red-100 text-red-700' },
+    orange: { bg: 'bg-orange-50', border: 'border-orange-200', text: 'text-orange-700', badge: 'bg-orange-100 text-orange-700' },
+  };
+  const c = colorMap[detail.severity_color] || colorMap.orange;
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden">
+        {/* Header */}
+        <div className={`p-5 border-b ${c.border} ${c.bg} flex items-start justify-between gap-3`}>
+          <div className="flex items-center gap-3">
+            <AlertCircle className={`h-5 w-5 flex-shrink-0 ${c.text}`} />
+            <div>
+              <p className={`font-bold ${c.text}`}>{detail.titre}</p>
+              <p className="text-xs text-slate-500 mt-0.5">{issue.entity}</p>
+            </div>
+          </div>
+          <button onClick={onClose} className="text-slate-400 hover:text-slate-700 transition-colors flex-shrink-0">
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Corps */}
+        <div className="p-5 space-y-4">
+          {/* Ce qui se passe */}
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+              <Info className="h-3.5 w-3.5" /> Ce qui se passe
+            </p>
+            <p className="text-sm text-slate-800 bg-slate-50 rounded-xl p-3 leading-relaxed">
+              {typeof detail.explication === 'function' ? detail.explication(issue) : detail.explication}
+            </p>
+          </div>
+
+          {/* Impact */}
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+              <AlertCircle className="h-3.5 w-3.5" /> Impact
+            </p>
+            <p className={`text-sm rounded-xl p-3 leading-relaxed ${c.bg} ${c.text}`}>
+              {detail.impact}
+            </p>
+          </div>
+
+          {/* Action corrective */}
+          <div>
+            <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-1.5 flex items-center gap-1">
+              <ArrowRight className="h-3.5 w-3.5" /> Comment corriger
+            </p>
+            <p className="text-sm text-slate-800 bg-emerald-50 border border-emerald-200 rounded-xl p-3 leading-relaxed">
+              {detail.action}
+            </p>
+          </div>
+
+          {detail.section && (
+            <div className="text-xs text-slate-400 flex items-center gap-1 pt-1">
+              <ExternalLink className="h-3.5 w-3.5" />
+              Section concernée : <strong className="text-slate-600">{SECTION_LABELS[detail.section] || detail.section}</strong>
+            </div>
+          )}
+        </div>
+
+        <div className="px-5 pb-5">
+          <button onClick={onClose} className="w-full py-2.5 rounded-xl bg-[#1A3A52] text-white text-sm font-semibold hover:bg-[#2A4A6F] transition-colors">
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function AuditGlobal() {
-  const [activeTab, setActiveTab] = useState('overview');
   const [auditing, setAuditing] = useState(false);
   const [auditResults, setAuditResults] = useState(null);
-  const [fixes, setFixes] = useState([]);
+  const [selectedIssue, setSelectedIssue] = useState(null);
 
   // Récupérer toutes les entités
   const { data: equipe = [] } = useQuery({ queryKey: ['equipe-audit'], queryFn: () => base44.entities.MembreEquipe.list() });
@@ -39,119 +219,59 @@ export default function AuditGlobal() {
     // 1. Vérifier les images cassées
     images.forEach(img => {
       if (!img.url || img.url.trim() === '') {
-        results.issues.push({
-          type: 'image_missing_url',
-          entity: 'SiteImage',
-          id: img.id,
-          message: `Image "${img.key}" sans URL`,
-          severity: 'high'
-        });
+        results.issues.push({ type: 'image_missing_url', entity: 'SiteImage', id: img.id, message: `Image "${img.key}" sans URL`, severity: 'high', data: img });
       }
     });
 
     // 2. Vérifier les articles sans images
     articles.forEach(a => {
       if (!a.image_url || a.image_url.trim() === '') {
-        results.warnings.push({
-          type: 'article_missing_image',
-          entity: 'ArticleBlog',
-          id: a.id,
-          message: `Article "${a.titre}" sans image`,
-          severity: 'medium'
-        });
+        results.warnings.push({ type: 'article_missing_image', entity: 'ArticleBlog', id: a.id, message: `Article "${a.titre}" sans image`, severity: 'medium', data: a });
       }
       if (!a.slug || a.slug.trim() === '') {
-        results.issues.push({
-          type: 'article_missing_slug',
-          entity: 'ArticleBlog',
-          id: a.id,
-          message: `Article "${a.titre}" sans slug`,
-          severity: 'high'
-        });
+        results.issues.push({ type: 'article_missing_slug', entity: 'ArticleBlog', id: a.id, message: `Article "${a.titre}" sans slug`, severity: 'high', data: a });
       }
     });
 
     // 3. Vérifier réalisations
     realisations.forEach(r => {
       if (!r.image_avant || r.image_avant.trim() === '') {
-        results.warnings.push({
-          type: 'realisation_missing_image',
-          entity: 'RealisationBien',
-          id: r.id,
-          message: `Réalisation "${r.titre}" sans image avant`,
-          severity: 'medium'
-        });
+        results.warnings.push({ type: 'realisation_missing_image', entity: 'RealisationBien', id: r.id, message: `Réalisation "${r.titre}" sans image avant`, severity: 'medium', data: r });
       }
       if (!r.dpe_avant || !r.dpe_apres) {
-        results.warnings.push({
-          type: 'realisation_missing_dpe',
-          entity: 'RealisationBien',
-          id: r.id,
-          message: `Réalisation "${r.titre}" DPE incomplet`,
-          severity: 'low'
-        });
+        results.warnings.push({ type: 'realisation_missing_dpe', entity: 'RealisationBien', id: r.id, message: `Réalisation "${r.titre}" DPE incomplet`, severity: 'low', data: r });
       }
     });
 
     // 4. Vérifier équipe
     equipe.forEach(e => {
       if (!e.image_url || e.image_url.trim() === '') {
-        results.warnings.push({
-          type: 'equipe_missing_image',
-          entity: 'MembreEquipe',
-          id: e.id,
-          message: `Membre "${e.nom}" sans photo`,
-          severity: 'medium'
-        });
+        results.warnings.push({ type: 'equipe_missing_image', entity: 'MembreEquipe', id: e.id, message: `Membre "${e.nom}" sans photo`, severity: 'medium', data: e });
       }
     });
 
-    // 5. Vérifier tâches orphelines
+    // 5. Vérifier tâches
     const projectNames = new Set(taches.map(t => t.projet).filter(Boolean));
     taches.forEach(t => {
       if (t.projet && !projectNames.has(t.projet)) {
-        results.warnings.push({
-          type: 'tache_orphaned_project',
-          entity: 'Tache',
-          id: t.id,
-          message: `Tâche "${t.titre}" assignée à un projet inexistant`,
-          severity: 'low'
-        });
+        results.warnings.push({ type: 'tache_orphaned_project', entity: 'Tache', id: t.id, message: `Tâche "${t.titre}" assignée à un projet inexistant`, severity: 'low', data: t });
       }
       if (t.date_echeance && new Date(t.date_echeance) < new Date() && t.statut !== 'Terminé') {
-        results.warnings.push({
-          type: 'tache_overdue',
-          entity: 'Tache',
-          id: t.id,
-          message: `Tâche "${t.titre}" en retard`,
-          severity: 'medium'
-        });
+        results.warnings.push({ type: 'tache_overdue', entity: 'Tache', id: t.id, message: `Tâche "${t.titre}" en retard`, severity: 'medium', data: t });
       }
     });
 
-    // 6. Vérifier CRM - investisseurs sans contact
+    // 6. Vérifier CRM
     crm.forEach(c => {
       if (!c.email && !c.telephone) {
-        results.warnings.push({
-          type: 'crm_missing_contact',
-          entity: 'InvestisseurCRM',
-          id: c.id,
-          message: `Investisseur "${c.prenom} ${c.nom}" sans contact`,
-          severity: 'high'
-        });
+        results.warnings.push({ type: 'crm_missing_contact', entity: 'InvestisseurCRM', id: c.id, message: `Investisseur "${c.prenom} ${c.nom}" sans contact`, severity: 'high', data: c });
       }
     });
 
     // 7. Vérifier acquisitions
     acquisitions.forEach(a => {
       if (a.prix === '0 €' || !a.prix) {
-        results.warnings.push({
-          type: 'acquisition_missing_price',
-          entity: 'AcquisitionAssocie',
-          id: a.id,
-          message: `Acquisition "${a.ville}" sans prix`,
-          severity: 'medium'
-        });
+        results.warnings.push({ type: 'acquisition_missing_price', entity: 'AcquisitionAssocie', id: a.id, message: `Acquisition "${a.ville}" sans prix`, severity: 'medium', data: a });
       }
     });
 
@@ -180,6 +300,7 @@ export default function AuditGlobal() {
 
   return (
     <div className="space-y-6">
+      {selectedIssue && <IssueDetailPanel issue={selectedIssue} onClose={() => setSelectedIssue(null)} />}
       <div className="flex items-center justify-between">
         <div>
           <h2 className="text-2xl font-bold text-[#1A3A52]">Audit Global du Contenu</h2>
@@ -226,13 +347,13 @@ export default function AuditGlobal() {
             </div>
           </div>
 
-          {/* Issues détaillées */}
+          {/* Problèmes critiques */}
           <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden">
             <div className="p-5 border-b border-slate-200 flex items-center gap-3 bg-red-50">
               <AlertCircle className="h-5 w-5 text-red-600" />
               <div>
                 <p className="font-semibold text-red-900">Problèmes critiques ({issuesByType.high?.length || 0})</p>
-                <p className="text-xs text-red-700">À corriger en priorité</p>
+                <p className="text-xs text-red-700">À corriger en priorité — cliquez pour voir le détail</p>
               </div>
             </div>
             <div className="divide-y">
@@ -242,12 +363,16 @@ export default function AuditGlobal() {
                 </div>
               ) : (
                 issuesByType.high?.map((issue, i) => (
-                  <div key={i} className="p-4 hover:bg-red-50 transition-colors">
-                    <p className="text-sm font-medium text-slate-800">{issue.message}</p>
-                    <p className="text-xs text-slate-500 mt-1">
-                      {issue.entity} • ID: {issue.id}
-                    </p>
-                  </div>
+                  <button key={i} onClick={() => setSelectedIssue(issue)}
+                    className="w-full p-4 hover:bg-red-50 transition-colors text-left flex items-center gap-3 group">
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-slate-800">{issue.message}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">{issue.entity}</p>
+                    </div>
+                    <span className="text-xs text-red-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                      Voir le détail <ChevronRight className="h-3.5 w-3.5" />
+                    </span>
+                  </button>
                 ))
               )}
             </div>
@@ -258,14 +383,23 @@ export default function AuditGlobal() {
             <div className="bg-white rounded-2xl border border-orange-200 overflow-hidden">
               <div className="p-5 border-b border-orange-200 flex items-center gap-3 bg-orange-50">
                 <AlertCircle className="h-5 w-5 text-orange-600" />
-                <p className="font-semibold text-orange-900">Avertissements ({issuesByType.medium?.length})</p>
+                <div>
+                  <p className="font-semibold text-orange-900">Avertissements ({issuesByType.medium?.length})</p>
+                  <p className="text-xs text-orange-600">Cliquez sur un avertissement pour voir ce qui se passe</p>
+                </div>
               </div>
               <div className="divide-y max-h-96 overflow-y-auto">
                 {issuesByType.medium?.map((issue, i) => (
-                  <div key={i} className="p-4 hover:bg-orange-50 transition-colors text-sm">
-                    <p className="font-medium text-slate-800">{issue.message}</p>
-                    <p className="text-xs text-slate-500 mt-1">{issue.entity}</p>
-                  </div>
+                  <button key={i} onClick={() => setSelectedIssue(issue)}
+                    className="w-full p-4 hover:bg-orange-50 transition-colors text-left flex items-center gap-3 group">
+                    <div className="flex-1">
+                      <p className="text-sm font-medium text-slate-800">{issue.message}</p>
+                      <p className="text-xs text-slate-500 mt-0.5">{issue.entity}</p>
+                    </div>
+                    <span className="text-xs text-orange-500 font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                      Voir le détail <ChevronRight className="h-3.5 w-3.5" />
+                    </span>
+                  </button>
                 ))}
               </div>
             </div>
