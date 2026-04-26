@@ -108,11 +108,31 @@ async function insertAll(tableKey, data) {
   }
 }
 
+// Colonnes de déduplication côté source (évite 23505 quand le DELETE est bloqué par RLS)
+const DEDUP_COL = {
+  site_images: 'key',
+  site_content: 'cle',
+};
+
+function deduplicate(records, col) {
+  const seen = new Set();
+  return records.filter(r => {
+    const val = r[col];
+    if (seen.has(val)) return false;
+    seen.add(val);
+    return true;
+  });
+}
+
 async function migrateTable(table) {
   const data = await table.src();
   if (!data || data.length === 0) return { empty: true };
 
-  const cleaned = data.map(r => cleanRecord(r, table.key));
+  let cleaned = data.map(r => cleanRecord(r, table.key));
+
+  // Dédupliquer côté source si nécessaire
+  const dedupCol = DEDUP_COL[table.key];
+  if (dedupCol) cleaned = deduplicate(cleaned, dedupCol);
 
   // Tables sans colonne unique : vider d'abord
   if (!CONFLICT_COL[table.key]) {
