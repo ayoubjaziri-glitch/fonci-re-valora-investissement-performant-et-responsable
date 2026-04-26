@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { db } from '@/lib/supabaseClient';
 import { base44 } from '@/api/base44Client';
 import { useToast } from "@/components/ui/use-toast";
+import { sendEmail } from '@/lib/emailService';
 import {
   Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight, Clock, Loader2 } from
 'lucide-react';
@@ -132,18 +133,13 @@ export default function Contact() {
 </body>
 </html>`;
 
-    try {
-      await Promise.all(
-        destinataires.map(to =>
-          base44.integrations.Core.SendEmail({
-            to,
-            subject: `📩 Nouvelle demande - ${typeLabel} | La Foncière Valora`,
-            body: emailBody,
-          })
-        )
-      );
-    } catch (err) {
-      console.error('Email send error:', err);
+    // Envoyer avec le service Resend
+    for (const to of destinataires) {
+      await sendEmail({
+        to,
+        subject: `📩 Nouvelle demande - ${typeLabel} | La Foncière Valora`,
+        body: emailBody
+      });
     }
 
     setSending(false);
