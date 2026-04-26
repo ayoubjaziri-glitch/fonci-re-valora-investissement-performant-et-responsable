@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import PageNotFound from './lib/PageNotFound';
 import AdminBackOffice from './pages/AdminBackOffice';
 import AdminExportBackend from './pages/AdminExportBackend';
+import AdminMigration from './pages/AdminMigration';
 import AdminBusinessPlan from './pages/AdminBusinessPlan';
 import BlogArticle from './pages/BlogArticle';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
@@ -64,6 +65,7 @@ const AuthenticatedApp = () => {
       ))}
       <Route path="/admin" element={<AdminBackOffice />} />
       <Route path="/admin/export-backend" element={<AdminExportBackend />} />
+      <Route path="/admin/migration" element={<AdminMigration />} />
       <Route path="/admin/business-plan" element={<AdminBusinessPlan />} />
       <Route path="/blog/:slug" element={<LayoutWrapper currentPageName="BlogArticle"><BlogArticle /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
