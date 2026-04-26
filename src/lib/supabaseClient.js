@@ -1,124 +1,132 @@
 // lib/supabaseClient.js
-// Client Supabase — remplace @/api/base44Client
-// Configurer VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY dans .env.local
+// Client Supabase via fetch natif — AUCUNE dépendance externe
+// Configurer dans .env.local :
+//   VITE_SUPABASE_URL=https://xxx.supabase.co
+//   VITE_SUPABASE_ANON_KEY=eyJ...
 
-import { createClient } from '@supabase/supabase-js';
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
+const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+const headers = () => ({
+  'Content-Type': 'application/json',
+  'apikey': SUPABASE_KEY,
+  'Authorization': `Bearer ${SUPABASE_KEY}`,
+  'Prefer': 'return=representation',
+});
 
-// Si les variables d'env ne sont pas configurées, on utilise un client factice
-// pour que l'app continue à fonctionner pendant la migration
-let supabase;
-if (supabaseUrl && supabaseKey) {
-  supabase = createClient(supabaseUrl, supabaseKey);
-} else {
-  console.warn('[supabaseClient] Variables VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY non configurées. Configurer .env.local pour activer Supabase.');
-  // Client factice — retourne des données vides sans planter
-  supabase = {
-    from: () => ({
-      select: () => ({ data: [], error: null, order: () => ({ data: [], error: null, limit: () => ({ data: [], error: null }) }), limit: () => ({ data: [], error: null }), eq: () => ({ data: [], error: null, single: () => ({ data: null, error: null }) }) }),
-      insert: () => ({ data: null, error: null, select: () => ({ data: [], error: null, single: () => ({ data: null, error: null }) }) }),
-      update: () => ({ data: null, error: null, eq: () => ({ data: null, error: null, select: () => ({ data: [], error: null, single: () => ({ data: null, error: null }) }) }) }),
-      delete: () => ({ error: null, eq: () => ({ error: null }) }),
-    }),
-    channel: () => ({ on: () => ({ subscribe: () => {} }) }),
-    removeChannel: () => {},
-  };
-}
-
-export { supabase };
+// Retourne des données vides si non configuré (évite les crash pendant migration)
+const notConfigured = () => {
+  if (!SUPABASE_URL || !SUPABASE_KEY) {
+    console.warn('[supabaseClient] VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY non configurés. Configurer .env.local');
+    return true;
+  }
+  return false;
+};
 
 // ── Helper générique CRUD ──────────────────────────────────────────────────────
-// Fournit la même API que base44.entities.X :
-//   db.Tache.list()  db.Tache.create({})  db.Tache.update(id, {})  db.Tache.delete(id)
-
 function makeEntity(tableName) {
+  const base = () => `${SUPABASE_URL}/rest/v1/${tableName}`;
+
   return {
     async list(orderBy = '-created_at', limit = 500) {
+      if (notConfigured()) return [];
       const col = orderBy.replace(/^-/, '');
       const asc = !orderBy.startsWith('-');
-      const { data, error } = await supabase
-        .from(tableName)
-        .select('*')
-        .order(col, { ascending: asc })
-        .limit(limit);
-      if (error) throw error;
-      return data ?? [];
+      const url = `${base()}?order=${col}.${asc ? 'asc' : 'desc'}&limit=${limit}`;
+      const res = await fetch(url, { headers: headers() });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
     },
 
     async filter(filters = {}, orderBy = '-created_at', limit = 500) {
+      if (notConfigured()) return [];
       const col = orderBy.replace(/^-/, '');
       const asc = !orderBy.startsWith('-');
-      let query = supabase.from(tableName).select('*');
-      Object.entries(filters).forEach(([k, v]) => { query = query.eq(k, v); });
-      const { data, error } = await query.order(col, { ascending: asc }).limit(limit);
-      if (error) throw error;
-      return data ?? [];
+      const params = Object.entries(filters).map(([k, v]) => `${k}=eq.${v}`).join('&');
+      const url = `${base()}?${params}&order=${col}.${asc ? 'asc' : 'desc'}&limit=${limit}`;
+      const res = await fetch(url, { headers: headers() });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
     },
 
     async get(id) {
-      const { data, error } = await supabase.from(tableName).select('*').eq('id', id).single();
-      if (error) throw error;
-      return data;
+      if (notConfigured()) return null;
+      const res = await fetch(`${base()}?id=eq.${id}&limit=1`, { headers: { ...headers(), 'Accept': 'application/vnd.pgrst.object+json' } });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
     },
 
     async create(payload) {
-      const { data, error } = await supabase.from(tableName).insert(payload).select().single();
-      if (error) throw error;
-      return data;
+      if (notConfigured()) return { ...payload, id: `local-${Date.now()}`, created_at: new Date().toISOString() };
+      const res = await fetch(base(), {
+        method: 'POST',
+        headers: { ...headers(), 'Accept': 'application/vnd.pgrst.object+json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
     },
 
     async update(id, payload) {
-      const { data, error } = await supabase.from(tableName).update(payload).eq('id', id).select().single();
-      if (error) throw error;
-      return data;
+      if (notConfigured()) return { ...payload, id };
+      const res = await fetch(`${base()}?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: { ...headers(), 'Accept': 'application/vnd.pgrst.object+json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
     },
 
     async delete(id) {
-      const { error } = await supabase.from(tableName).delete().eq('id', id);
-      if (error) throw error;
+      if (notConfigured()) return true;
+      const res = await fetch(`${base()}?id=eq.${id}`, { method: 'DELETE', headers: headers() });
+      if (!res.ok) throw new Error(await res.text());
       return true;
     },
 
     async bulkCreate(items) {
-      const { data, error } = await supabase.from(tableName).insert(items).select();
-      if (error) throw error;
-      return data ?? [];
+      if (notConfigured()) return items;
+      const res = await fetch(base(), {
+        method: 'POST',
+        headers: headers(),
+        body: JSON.stringify(items),
+      });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
     },
 
+    // Realtime via polling (fallback sans WebSocket Supabase)
     subscribe(callback) {
-      const channel = supabase
-        .channel(`realtime:${tableName}:${Date.now()}`)
-        .on('postgres_changes', { event: '*', schema: 'public', table: tableName }, (payload) => {
-          const typeMap = { INSERT: 'create', UPDATE: 'update', DELETE: 'delete' };
-          callback({
-            type: typeMap[payload.eventType],
-            id: payload.new?.id || payload.old?.id,
-            data: payload.new,
+      if (notConfigured()) return () => {};
+      let lastIds = new Set();
+      const poll = async () => {
+        try {
+          const res = await fetch(`${base()}?order=created_at.desc&limit=50`, { headers: headers() });
+          const data = await res.json();
+          data.forEach(row => {
+            if (!lastIds.has(row.id)) {
+              if (lastIds.size > 0) callback({ type: 'create', id: row.id, data: row });
+              lastIds.add(row.id);
+            }
           });
-        })
-        .subscribe();
-      return () => supabase.removeChannel(channel);
+        } catch (e) {}
+      };
+      poll();
+      const interval = setInterval(poll, 5000);
+      return () => clearInterval(interval);
     },
   };
 }
 
-// ── Toutes les entités du projet ───────────────────────────────────────────────
+// ── Toutes les entités ─────────────────────────────────────────────────────────
 export const db = {
-  // Gestion interne
   Tache: makeEntity('taches'),
   Projet: makeEntity('projets'),
-
-  // Analytics
   PageView: makeEntity('page_views'),
-
-  // Contacts & CRM
   ContactRequest: makeEntity('contact_requests'),
   ContactConfig: makeEntity('contact_config'),
   InvestisseurCRM: makeEntity('investisseurs_crm'),
-
-  // Contenu site
   ArticleBlog: makeEntity('articles_blog'),
   RealisationBien: makeEntity('realisations_biens'),
   MembreEquipe: makeEntity('membres_equipe'),
@@ -127,86 +135,75 @@ export const db = {
   SiteContent: makeEntity('site_content'),
   SiteSection: makeEntity('site_sections'),
   MapLocation: makeEntity('map_locations'),
-
-  // Accès
   AccesAdmin: makeEntity('acces_admin'),
   AccesAssocie: makeEntity('acces_associes'),
-
-  // Espace associés
   DocumentAssocie: makeEntity('documents_associes'),
   AcquisitionAssocie: makeEntity('acquisitions_associes'),
   ActualiteAssocie: makeEntity('actualites_associes'),
   EspaceAssocieConfig: makeEntity('espace_associe_config'),
   RoadmapAssocie: makeEntity('roadmap_associes'),
-  LeveeFondsAssocie: makeEntity('levees_fonds'),
-
-  // Responsables
   Responsable: makeEntity('responsables'),
-
-  // Mémoire IA (optionnel)
   ValoraAIMemoire: makeEntity('valora_ai_memoire'),
   ValoraAIAction: makeEntity('valora_ai_actions'),
 };
 
-// ── Compatibilité avec l'ancienne API base44.entities.X ────────────────────────
-// Permet de remplacer `import { base44 } from '@/api/base44Client'`
-// par `import { base44 } from '@/lib/supabaseClient'` sans toucher au reste du code
-
+// ── Compatibilité API base44.entities.X ───────────────────────────────────────
+// Permet import { base44 } from '@/api/base44Client' sans rien changer d'autre
 export const base44 = {
   entities: db,
   integrations: {
     Core: {
-      // SendEmail — à remplacer par Resend ou Supabase Edge Function
-      // Pour une migration simple, garder l'email côté serveur (Edge Function)
       async SendEmail({ to, subject, body, from_name }) {
-        // Option 1 : appeler votre Edge Function Supabase
-        if (supabaseUrl) {
-          await fetch(`${supabaseUrl}/functions/v1/send-email`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${supabaseKey}`,
-            },
-            body: JSON.stringify({ to, subject, body, from_name }),
-          });
+        if (notConfigured()) {
+          console.log('[SendEmail] Non configuré — email non envoyé');
+          return;
         }
-        // Option 2 : ne rien faire (emails désactivés tant que non configuré)
-        console.log('[SendEmail] Non configuré — installer Resend + Edge Function send-email');
+        // Appelle l'Edge Function Supabase "send-email" (à déployer)
+        await fetch(`${SUPABASE_URL}/functions/v1/send-email`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
+          body: JSON.stringify({ to, subject, body, from_name }),
+        });
       },
-
-      // InvokeLLM — à remplacer par OpenAI directement ou Edge Function
-      async InvokeLLM({ prompt, response_json_schema, add_context_from_internet }) {
-        if (supabaseUrl) {
-          const res = await fetch(`${supabaseUrl}/functions/v1/invoke-llm`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${supabaseKey}`,
-            },
-            body: JSON.stringify({ prompt, response_json_schema, add_context_from_internet }),
-          });
-          return res.json();
-        }
-        console.warn('[InvokeLLM] Non configuré');
-        return response_json_schema ? {} : '';
+      async InvokeLLM({ prompt, response_json_schema }) {
+        if (notConfigured()) return response_json_schema ? {} : '';
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/invoke-llm`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
+          body: JSON.stringify({ prompt, response_json_schema }),
+        });
+        return res.json();
       },
-
-      // UploadFile — à remplacer par Supabase Storage
       async UploadFile({ file }) {
-        if (!supabaseUrl) {
-          console.warn('[UploadFile] Non configuré');
-          return { file_url: '' };
-        }
+        if (notConfigured()) return { file_url: '' };
+        const formData = new FormData();
+        formData.append('file', file);
         const fileName = `${Date.now()}-${file.name}`;
-        const { data, error } = await supabase.storage.from('public').upload(fileName, file);
-        if (error) throw error;
-        const { data: urlData } = supabase.storage.from('public').getPublicUrl(fileName);
-        return { file_url: urlData.publicUrl };
+        const res = await fetch(`${SUPABASE_URL}/storage/v1/object/public/${fileName}`, {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${SUPABASE_KEY}` },
+          body: formData,
+        });
+        if (!res.ok) throw new Error(await res.text());
+        return { file_url: `${SUPABASE_URL}/storage/v1/object/public/${fileName}` };
       },
-
       async GenerateImage({ prompt }) {
-        console.warn('[GenerateImage] Non configuré — configurer OpenAI DALL-E via Edge Function');
-        return { url: '' };
+        if (notConfigured()) return { url: '' };
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/generate-image`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
+          body: JSON.stringify({ prompt }),
+        });
+        return res.json();
+      },
+      async ExtractDataFromUploadedFile({ file_url, json_schema }) {
+        if (notConfigured()) return { status: 'error', output: null };
+        const res = await fetch(`${SUPABASE_URL}/functions/v1/extract-data`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
+          body: JSON.stringify({ file_url, json_schema }),
+        });
+        return res.json();
       },
     },
   },
@@ -217,7 +214,15 @@ export const base44 = {
     redirectToLogin() {},
     async updateMe() {},
   },
-  appLogs: {
-    logUserInApp() {},
+  appLogs: { logUserInApp() {} },
+  analytics: { track() {} },
+  agents: {
+    createConversation: async () => ({ id: null, messages: [] }),
+    listConversations: async () => [],
+    getConversation: async () => ({ id: null, messages: [] }),
+    addMessage: async () => {},
+    subscribeToConversation: () => () => {},
+    getWhatsAppConnectURL: () => '#',
+    getTelegramConnectURL: () => '#',
   },
 };

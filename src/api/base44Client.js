@@ -1,12 +1,14 @@
-// api/base44Client.js
-// VERSION INDÉPENDANTE — Sans dépendance @base44/sdk
-// Utilise Supabase comme backend. Configurer .env.local :
-//   VITE_SUPABASE_URL=https://xxx.supabase.co
-//   VITE_SUPABASE_ANON_KEY=eyJ...
-//
-// Si les variables d'env ne sont pas définies, les appels retournent des tableaux vides
-// (l'app reste fonctionnelle, les données ne seront simplement pas chargées).
+import { createClient } from '@base44/sdk';
+import { appParams } from '@/lib/app-params';
 
-import { base44, db } from '@/lib/supabaseClient';
+const { appId, token, functionsVersion, appBaseUrl } = appParams;
 
-export { base44, db };
+//Create a client with authentication required
+export const base44 = createClient({
+  appId,
+  token,
+  functionsVersion,
+  serverUrl: '',
+  requiresAuth: false,
+  appBaseUrl
+});
