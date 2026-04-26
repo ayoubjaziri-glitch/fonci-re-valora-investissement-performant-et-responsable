@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -25,18 +25,18 @@ export default function AdminRealisations() {
 
   const { data: biens = [] } = useQuery({
     queryKey: ['realisations-biens'],
-    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
+    queryFn: () => db.RealisationBien.list('ordre', 50),
   });
 
   const saveMutation = useMutation({
     mutationFn: (data) => editing === 'new'
-      ? base44.entities.RealisationBien.create(data)
-      : base44.entities.RealisationBien.update(editing.id, data),
+      ? db.RealisationBien.create(data)
+      : db.RealisationBien.update(editing.id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['realisations-biens'] }); setEditing(null); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.RealisationBien.delete(id),
+    mutationFn: (id) => db.RealisationBien.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['realisations-biens'] }),
   });
 

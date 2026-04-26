@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, Calendar, User, Tag, Flag, CheckSquare, Plus, Trash2, MessageSquare, ChevronDown, Clock, BarChart2, Mail, Bell } from 'lucide-react';
+import { db } from '@/lib/supabaseClient';
 import { base44 } from '@/api/base44Client';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
@@ -30,7 +31,7 @@ export default function TacheDetail({ tache, onClose, projets = [] }) {
 
   const { data: responsables = [] } = useQuery({
     queryKey: ['responsables'],
-    queryFn: () => base44.entities.Responsable.list(),
+    queryFn: () => db.Responsable.list(),
   });
 
   const sousTaches = parseJSON(data.sous_taches);
@@ -43,7 +44,7 @@ export default function TacheDetail({ tache, onClose, projets = [] }) {
     const updated = { ...data, ...patch };
     setData(updated);
     setSaving(true);
-    await base44.entities.Tache.update(tache.id, patch);
+    await db.Tache.update(tache.id, patch);
     qc.invalidateQueries({ queryKey: ['taches'] });
     setSaving(false);
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -161,11 +161,11 @@ export default function AdminContenu() {
 
   const { data: contents = [], isLoading } = useQuery({
     queryKey: ['site-content'],
-    queryFn: () => base44.entities.SiteContent.list(),
+    queryFn: () => db.SiteContent.list(),
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, valeur }) => base44.entities.SiteContent.update(id, { valeur }),
+    mutationFn: ({ id, valeur }) => db.SiteContent.update(id, { valeur }),
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['site-content'] }),
   });
 

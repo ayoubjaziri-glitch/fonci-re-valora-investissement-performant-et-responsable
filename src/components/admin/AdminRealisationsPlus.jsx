@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { db } from '@/lib/supabaseClient';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,13 +31,13 @@ export default function AdminRealisationsPlus() {
 
   const { data: realisations = [] } = useQuery({
     queryKey: ['realisations-biens'],
-    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
+    queryFn: () => db.RealisationBien.list('ordre', 50),
     initialData: []
   });
 
   const { data: locations = [] } = useQuery({
     queryKey: ['map-locations'],
-    queryFn: () => base44.entities.MapLocation.list(),
+    queryFn: () => db.MapLocation.list(),
     initialData: []
   });
 
@@ -52,9 +53,9 @@ export default function AdminRealisationsPlus() {
       };
 
       if (editId) {
-        return base44.entities.RealisationBien.update(editId, payload);
+        return db.RealisationBien.update(editId, payload);
       } else {
-        return base44.entities.RealisationBien.create(payload);
+        return db.RealisationBien.create(payload);
       }
     },
     onSuccess: () => { 
@@ -68,7 +69,7 @@ export default function AdminRealisationsPlus() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.RealisationBien.delete(id),
+    mutationFn: (id) => db.RealisationBien.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['realisations-biens'] }),
   });
 

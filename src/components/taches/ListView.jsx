@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ChevronDown, ChevronRight, Plus, Calendar, User, Flag, MoreHorizontal, Trash2, CheckSquare } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQueryClient } from '@tanstack/react-query';
 
 const PRIORITE_DOT = {
@@ -30,7 +30,7 @@ function TacheLigne({ tache, onClick, onDelete, level = 0 }) {
 
   const toggleTermine = async (e) => {
     e.stopPropagation();
-    await base44.entities.Tache.update(tache.id, { statut: tache.statut === 'Terminé' ? 'A faire' : 'Terminé' });
+    await db.Tache.update(tache.id, { statut: tache.statut === 'Terminé' ? 'A faire' : 'Terminé' });
     qc.invalidateQueries({ queryKey: ['taches'] });
   };
 
@@ -104,7 +104,7 @@ function SectionGroup({ titre, taches, onTacheClick, onDelete }) {
 
   const handleAdd = async () => {
     if (!newTitre.trim()) return;
-    await base44.entities.Tache.create({ titre: newTitre.trim(), statut: 'A faire', section: titre });
+    await db.Tache.create({ titre: newTitre.trim(), statut: 'A faire', section: titre });
     qc.invalidateQueries({ queryKey: ['taches'] });
     setNewTitre('');
     setAdding(false);
@@ -164,7 +164,7 @@ export default function ListView({ taches, onTacheClick, onDelete }) {
     const name = newSectionName.trim();
     if (!name) return;
     // Créer une tâche placeholder dans la nouvelle section pour l'initialiser
-    await base44.entities.Tache.create({ titre: 'Nouvelle tâche', statut: 'A faire', section: name });
+    await db.Tache.create({ titre: 'Nouvelle tâche', statut: 'A faire', section: name });
     qc.invalidateQueries({ queryKey: ['taches'] });
     setNewSectionName('');
     setAddingSection(false);

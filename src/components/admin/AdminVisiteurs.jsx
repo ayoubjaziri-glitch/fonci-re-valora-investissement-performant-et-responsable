@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import { Users, Globe, MapPin, TrendingUp, Clock, Eye, RefreshCw, Calendar, BarChart3, Monitor, Smartphone, Tablet, Search, ExternalLink, Tag } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -1094,13 +1094,13 @@ export default function AdminVisiteurs() {
 
   const { data: pageViews = [], refetch: refetchPageViews } = useQuery({
     queryKey: ['page-views'],
-    queryFn: () => base44.entities.PageView.list('-created_date', 2000),
+    queryFn: () => db.PageView.list('-created_date', 2000),
     refetchInterval: 60000, // Refresh every minute
   });
 
   const { data: contacts = [] } = useQuery({
     queryKey: ['contacts-analytics'],
-    queryFn: () => base44.entities.ContactRequest.list('-created_date', 500),
+    queryFn: () => db.ContactRequest.list('-created_date', 500),
   });
 
   return (

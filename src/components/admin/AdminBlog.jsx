@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,23 +29,23 @@ export default function AdminBlog() {
 
   const { data: articles = [] } = useQuery({
     queryKey: ['articles-blog-admin'],
-    queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 100),
+    queryFn: () => db.ArticleBlog.list('-date_publication', 100),
   });
 
   const saveMutation = useMutation({
     mutationFn: (data) => editing === 'new'
-      ? base44.entities.ArticleBlog.create(data)
-      : base44.entities.ArticleBlog.update(editing.id, data),
+      ? db.ArticleBlog.create(data)
+      : db.ArticleBlog.update(editing.id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['articles-blog-admin'] }); setView('list'); setEditing(null); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.ArticleBlog.delete(id),
+    mutationFn: (id) => db.ArticleBlog.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['articles-blog-admin'] }),
   });
 
   const togglePublish = (article) => {
-    base44.entities.ArticleBlog.update(article.id, { publie: !article.publie })
+    db.ArticleBlog.update(article.id, { publie: !article.publie })
       .then(() => qc.invalidateQueries({ queryKey: ['articles-blog-admin'] }));
   };
 

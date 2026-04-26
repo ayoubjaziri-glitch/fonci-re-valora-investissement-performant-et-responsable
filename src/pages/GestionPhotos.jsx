@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { db } from '@/lib/supabaseClient';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
@@ -121,11 +122,11 @@ function RealisationsBiensSection() {
 
   const { data: biens = [] } = useQuery({
     queryKey: ['realisations-biens-photos'],
-    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
+    queryFn: () => db.RealisationBien.list('ordre', 50),
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.RealisationBien.update(id, data),
+    mutationFn: ({ id, data }) => db.RealisationBien.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['realisations-biens-photos'] });
       queryClient.invalidateQueries({ queryKey: ['realisations-biens'] });
@@ -237,11 +238,11 @@ export default function GestionPhotos({ embedded = false }) {
 
   const { data: images = [], isLoading } = useQuery({
     queryKey: ['site-images'],
-    queryFn: () => base44.entities.SiteImage.list(),
+    queryFn: () => db.SiteImage.list(),
   });
 
   const updateImageMutation = useMutation({
-    mutationFn: ({ id, url }) => base44.entities.SiteImage.update(id, { url }),
+    mutationFn: ({ id, url }) => db.SiteImage.update(id, { url }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['site-images'] });
       setEditingImage(null);

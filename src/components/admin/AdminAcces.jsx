@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Trash2, Plus, Edit2, Check, X } from 'lucide-react';
@@ -22,13 +22,13 @@ export default function AdminAcces() {
   // Charger les accès admin
   const { data: admins = [] } = useQuery({
     queryKey: ['acces-admin'],
-    queryFn: () => base44.entities.AccesAdmin.list(),
+    queryFn: () => db.AccesAdmin.list(),
     initialData: []
   });
 
   // Créer
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.AccesAdmin.create(data),
+    mutationFn: (data) => db.AccesAdmin.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['acces-admin'] });
       setShowDialog(false);
@@ -38,7 +38,7 @@ export default function AdminAcces() {
 
   // Mettre à jour
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.AccesAdmin.update(id, data),
+    mutationFn: ({ id, data }) => db.AccesAdmin.update(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['acces-admin'] });
       setShowDialog(false);
@@ -49,7 +49,7 @@ export default function AdminAcces() {
 
   // Supprimer
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.AccesAdmin.delete(id),
+    mutationFn: (id) => db.AccesAdmin.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['acces-admin'] });
     },

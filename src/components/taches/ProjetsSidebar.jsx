@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, Folder, MoreHorizontal, Trash2, CheckCircle2 } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQueryClient } from '@tanstack/react-query';
 
 const COULEURS = ['#C9A961', '#1A3A52', '#3b82f6', '#10b981', '#a855f7', '#ef4444', '#f59e0b', '#06b6d4'];
@@ -13,7 +13,7 @@ export default function ProjetsSidebar({ projets, projetActif, onSelectProjet, t
 
   const handleCreate = async () => {
     if (!newNom.trim()) return;
-    await base44.entities.Projet.create({
+    await db.Projet.create({
       nom: newNom.trim(),
       couleur: newCouleur,
       statut: 'Actif',
@@ -27,7 +27,7 @@ export default function ProjetsSidebar({ projets, projetActif, onSelectProjet, t
   const handleDelete = async (e, id) => {
     e.stopPropagation();
     if (!confirm('Supprimer ce projet ?')) return;
-    await base44.entities.Projet.delete(id);
+    await db.Projet.delete(id);
     qc.invalidateQueries({ queryKey: ['projets'] });
     onSelectProjet(null);
   };

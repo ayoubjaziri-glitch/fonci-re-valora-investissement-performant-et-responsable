@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,18 +29,18 @@ export default function AdminLeveeFonds() {
 
   const { data: levees = [] } = useQuery({
     queryKey: ['levees-fonds'],
-    queryFn: () => base44.entities.LeveeFonds.list('-created_date', 50),
+    queryFn: () => db.LeveeFonds.list('-created_date', 50),
   });
 
   const saveMutation = useMutation({
     mutationFn: (data) => editing === 'new'
-      ? base44.entities.LeveeFonds.create(data)
-      : base44.entities.LeveeFonds.update(editing.id, data),
+      ? db.LeveeFonds.create(data)
+      : db.LeveeFonds.update(editing.id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['levees-fonds'] }); setEditing(null); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.LeveeFonds.delete(id),
+    mutationFn: (id) => db.LeveeFonds.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['levees-fonds'] }),
   });
 

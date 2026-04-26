@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -51,7 +51,7 @@ function InteractionForm({ investisseur, onClose }) {
   const save = async () => {
     const existing = investisseur.interactions ? JSON.parse(investisseur.interactions) : [];
     const updated = [{ ...form, id: Date.now() }, ...existing];
-    await base44.entities.InvestisseurCRM.update(investisseur.id, { interactions: JSON.stringify(updated) });
+    await db.InvestisseurCRM.update(investisseur.id, { interactions: JSON.stringify(updated) });
     qc.invalidateQueries({ queryKey: ['crm-investisseurs'] });
     onClose();
   };
@@ -447,13 +447,13 @@ export default function CRMInvestisseurs() {
 
   const { data: investisseurs = [] } = useQuery({
     queryKey: ['crm-investisseurs'],
-    queryFn: () => base44.entities.InvestisseurCRM.list('-created_date', 500),
+    queryFn: () => db.InvestisseurCRM.list('-created_date', 500),
   });
 
   const saveMutation = useMutation({
     mutationFn: (data) => editId
-      ? base44.entities.InvestisseurCRM.update(editId, data)
-      : base44.entities.InvestisseurCRM.create(data),
+      ? db.InvestisseurCRM.update(editId, data)
+      : db.InvestisseurCRM.create(data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ['crm-investisseurs'] });
       setShowModal(false);
@@ -463,7 +463,7 @@ export default function CRMInvestisseurs() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.InvestisseurCRM.delete(id),
+    mutationFn: (id) => db.InvestisseurCRM.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['crm-investisseurs'] }),
   });
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import {
   AlertCircle, CheckCircle2, Loader2, RefreshCw,
@@ -195,18 +195,18 @@ export default function AuditGlobal() {
   const [selectedIssue, setSelectedIssue] = useState(null);
 
   // Récupérer toutes les entités
-  const { data: equipe = [] } = useQuery({ queryKey: ['equipe-audit'], queryFn: () => base44.entities.MembreEquipe.list() });
-  const { data: articles = [] } = useQuery({ queryKey: ['articles-audit'], queryFn: () => base44.entities.ArticleBlog.list() });
-  const { data: realisations = [] } = useQuery({ queryKey: ['realisations-audit'], queryFn: () => base44.entities.RealisationBien.list() });
-  const { data: levees = [] } = useQuery({ queryKey: ['levees-audit'], queryFn: () => base44.entities.LeveeFonds.list() });
-  const { data: docs = [] } = useQuery({ queryKey: ['docs-audit'], queryFn: () => base44.entities.DocumentAssocie.list() });
-  const { data: acquisitions = [] } = useQuery({ queryKey: ['acquisitions-audit'], queryFn: () => base44.entities.AcquisitionAssocie.list() });
-  const { data: taches = [] } = useQuery({ queryKey: ['taches-audit'], queryFn: () => base44.entities.Tache.list('-created_date', 500) });
-  const { data: crm = [] } = useQuery({ queryKey: ['crm-audit'], queryFn: () => base44.entities.InvestisseurCRM.list() });
-  const { data: sections = [] } = useQuery({ queryKey: ['sections-audit'], queryFn: () => base44.entities.SiteSection.list() });
-  const { data: contenu = [] } = useQuery({ queryKey: ['contenu-audit'], queryFn: () => base44.entities.SiteContent.list() });
-  const { data: maps = [] } = useQuery({ queryKey: ['maps-audit'], queryFn: () => base44.entities.MapLocation.list() });
-  const { data: images = [] } = useQuery({ queryKey: ['images-audit'], queryFn: () => base44.entities.SiteImage.list() });
+  const { data: equipe = [] } = useQuery({ queryKey: ['equipe-audit'], queryFn: () => db.MembreEquipe.list() });
+  const { data: articles = [] } = useQuery({ queryKey: ['articles-audit'], queryFn: () => db.ArticleBlog.list() });
+  const { data: realisations = [] } = useQuery({ queryKey: ['realisations-audit'], queryFn: () => db.RealisationBien.list() });
+  const { data: levees = [] } = useQuery({ queryKey: ['levees-audit'], queryFn: () => db.LeveeFonds.list() });
+  const { data: docs = [] } = useQuery({ queryKey: ['docs-audit'], queryFn: () => db.DocumentAssocie.list() });
+  const { data: acquisitions = [] } = useQuery({ queryKey: ['acquisitions-audit'], queryFn: () => db.AcquisitionAssocie.list() });
+  const { data: taches = [] } = useQuery({ queryKey: ['taches-audit'], queryFn: () => db.Tache.list('-created_date', 500) });
+  const { data: crm = [] } = useQuery({ queryKey: ['crm-audit'], queryFn: () => db.InvestisseurCRM.list() });
+  const { data: sections = [] } = useQuery({ queryKey: ['sections-audit'], queryFn: () => db.SiteSection.list() });
+  const { data: contenu = [] } = useQuery({ queryKey: ['contenu-audit'], queryFn: () => db.SiteContent.list() });
+  const { data: maps = [] } = useQuery({ queryKey: ['maps-audit'], queryFn: () => db.MapLocation.list() });
+  const { data: images = [] } = useQuery({ queryKey: ['images-audit'], queryFn: () => db.SiteImage.list() });
 
   const runAudit = () => {
     setAuditing(true);

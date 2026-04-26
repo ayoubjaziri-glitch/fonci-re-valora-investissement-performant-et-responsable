@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -94,26 +94,26 @@ export default function AdminSections() {
 
   const { data: sections = [] } = useQuery({
     queryKey: ['site-sections'],
-    queryFn: () => base44.entities.SiteSection.list('ordre', 200),
+    queryFn: () => db.SiteSection.list('ordre', 200),
   });
 
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.SiteSection.create({ ...data, page: activePage }),
+    mutationFn: (data) => db.SiteSection.create({ ...data, page: activePage }),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['site-sections'] }); setModal(null); },
   });
 
   const updateMutation = useMutation({
-    mutationFn: (data) => base44.entities.SiteSection.update(editingSection.id, data),
+    mutationFn: (data) => db.SiteSection.update(editingSection.id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['site-sections'] }); setEditingSection(null); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.SiteSection.delete(id),
+    mutationFn: (id) => db.SiteSection.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['site-sections'] }),
   });
 
   const toggleMutation = useMutation({
-    mutationFn: ({ id, actif }) => base44.entities.SiteSection.update(id, { actif }),
+    mutationFn: ({ id, actif }) => db.SiteSection.update(id, { actif }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['site-sections'] }),
   });
 

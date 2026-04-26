@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { db } from '@/lib/supabaseClient';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
@@ -45,7 +46,7 @@ function AdminLogin({ onLogin }) {
     setError('');
 
     // Vérifier les comptes admin en base
-    const admins = await base44.entities.AccesAdmin.list();
+    const admins = await db.AccesAdmin.list();
     const match = admins.find(
       (a) => a.actif && a.email === email.trim() && a.password === password
     );
@@ -109,15 +110,15 @@ function AdminLogin({ onLogin }) {
 function DashboardSection({ onNavigate }) {
   const now = new Date();
 
-  const { data: contacts = [] } = useQuery({ queryKey: ['contacts'], queryFn: () => base44.entities.ContactRequest.list('-created_date', 200) });
-  const { data: docs = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => base44.entities.DocumentAssocie.list() });
-  const { data: actu = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => base44.entities.ActualiteAssocie.list() });
-  const { data: acq = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => base44.entities.AcquisitionAssocie.list() });
-  const { data: accesAssocies = [] } = useQuery({ queryKey: ['acces-associes'], queryFn: () => base44.entities.AccesAssocie.list() });
-  const { data: taches = [] } = useQuery({ queryKey: ['taches'], queryFn: () => base44.entities.Tache.list('-created_date', 500) });
-  const { data: crm = [] } = useQuery({ queryKey: ['crm-investisseurs'], queryFn: () => base44.entities.InvestisseurCRM.list() });
-  const { data: levees = [] } = useQuery({ queryKey: ['levees'], queryFn: () => base44.entities.LeveeFonds.list() });
-  const { data: articles = [] } = useQuery({ queryKey: ['articles'], queryFn: () => base44.entities.ArticleBlog.list() });
+  const { data: contacts = [] } = useQuery({ queryKey: ['contacts'], queryFn: () => db.ContactRequest.list('-created_date', 200) });
+  const { data: docs = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => db.DocumentAssocie.list() });
+  const { data: actu = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => db.ActualiteAssocie.list() });
+  const { data: acq = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => db.AcquisitionAssocie.list() });
+  const { data: accesAssocies = [] } = useQuery({ queryKey: ['acces-associes'], queryFn: () => db.AccesAssocie.list() });
+  const { data: taches = [] } = useQuery({ queryKey: ['taches'], queryFn: () => db.Tache.list('-created_date', 500) });
+  const { data: crm = [] } = useQuery({ queryKey: ['crm-investisseurs'], queryFn: () => db.InvestisseurCRM.list() });
+  const { data: levees = [] } = useQuery({ queryKey: ['levees'], queryFn: () => db.LeveeFonds.list() });
+  const { data: articles = [] } = useQuery({ queryKey: ['articles'], queryFn: () => db.ArticleBlog.list() });
 
   // Calculs tâches
   const tachesActives = taches.filter((t) => t.statut !== 'Terminé');
@@ -406,16 +407,16 @@ function DemandesContactSection() {
 
   const { data: contacts = [] } = useQuery({
     queryKey: ['contacts'],
-    queryFn: () => base44.entities.ContactRequest.list('-created_date', 200)
+    queryFn: () => db.ContactRequest.list('-created_date', 200)
   });
 
   const markDoneMutation = useMutation({
-    mutationFn: (id) => base44.entities.ContactRequest.update(id, { email_envoye: true }),
+    mutationFn: (id) => db.ContactRequest.update(id, { email_envoye: true }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['contacts'] })
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.ContactRequest.delete(id),
+    mutationFn: (id) => db.ContactRequest.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['contacts'] })
   });
 
@@ -546,7 +547,7 @@ export default function AdminBackOffice() {
 
   const { data: contacts = [] } = useQuery({
     queryKey: ['contacts'],
-    queryFn: () => base44.entities.ContactRequest.list('-created_date', 200),
+    queryFn: () => db.ContactRequest.list('-created_date', 200),
     enabled: isAuth
   });
   const nonTraites = contacts.filter((c) => !c.email_envoye).length;

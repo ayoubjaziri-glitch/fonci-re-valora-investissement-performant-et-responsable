@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { db } from '@/lib/supabaseClient';
 import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
@@ -42,7 +43,7 @@ function KpisSection() {
   const qc = useQueryClient();
   const { data: configs = [] } = useQuery({
     queryKey: ['ea-config'],
-    queryFn: () => base44.entities.EspaceAssocieConfig.list(),
+    queryFn: () => db.EspaceAssocieConfig.list(),
   });
 
   // Default config structure
@@ -73,8 +74,8 @@ function KpisSection() {
     mutationFn: async ({ key, section, data }) => {
       const existing = configs.find(c => c.cle === key);
       const payload = { cle: key, section, donnees: JSON.stringify(data) };
-      if (existing) return base44.entities.EspaceAssocieConfig.update(existing.id, payload);
-      return base44.entities.EspaceAssocieConfig.create(payload);
+      if (existing) return db.EspaceAssocieConfig.update(existing.id, payload);
+      return db.EspaceAssocieConfig.create(payload);
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['ea-config'] }); toast('Sauvegardé !'); },
   });
@@ -270,16 +271,16 @@ function DocumentsSection() {
 
   const { data: docs = [] } = useQuery({
     queryKey: ['docs-associe'],
-    queryFn: () => base44.entities.DocumentAssocie.list('-date_document'),
+    queryFn: () => db.DocumentAssocie.list('-date_document'),
   });
 
   const createMutation = useMutation({
-    mutationFn: (data) => editId ? base44.entities.DocumentAssocie.update(editId, data) : base44.entities.DocumentAssocie.create(data),
+    mutationFn: (data) => editId ? db.DocumentAssocie.update(editId, data) : db.DocumentAssocie.create(data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['docs-associe'] }); setModal(false); setEditId(null); setForm({ nom: '', categorie: 'Juridique', type_acces: 'privé', date_document: '', file_url: '' }); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.DocumentAssocie.delete(id),
+    mutationFn: (id) => db.DocumentAssocie.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['docs-associe'] }),
   });
 
@@ -378,16 +379,16 @@ function ActualitesSection() {
 
   const { data: actu = [] } = useQuery({
     queryKey: ['actu-associe'],
-    queryFn: () => base44.entities.ActualiteAssocie.list('-date_publication'),
+    queryFn: () => db.ActualiteAssocie.list('-date_publication'),
   });
 
   const createMutation = useMutation({
-    mutationFn: (data) => editId ? base44.entities.ActualiteAssocie.update(editId, data) : base44.entities.ActualiteAssocie.create(data),
+    mutationFn: (data) => editId ? db.ActualiteAssocie.update(editId, data) : db.ActualiteAssocie.create(data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['actu-associe'] }); setModal(false); setEditId(null); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.ActualiteAssocie.delete(id),
+    mutationFn: (id) => db.ActualiteAssocie.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['actu-associe'] }),
   });
 
@@ -456,16 +457,16 @@ function AcquisitionsSection() {
 
   const { data: items = [] } = useQuery({
     queryKey: ['acq-associe'],
-    queryFn: () => base44.entities.AcquisitionAssocie.list(),
+    queryFn: () => db.AcquisitionAssocie.list(),
   });
 
   const saveMutation = useMutation({
-    mutationFn: (data) => editId ? base44.entities.AcquisitionAssocie.update(editId, data) : base44.entities.AcquisitionAssocie.create(data),
+    mutationFn: (data) => editId ? db.AcquisitionAssocie.update(editId, data) : db.AcquisitionAssocie.create(data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['acq-associe'] }); setModal(false); setEditId(null); setForm(emptyForm); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.AcquisitionAssocie.delete(id),
+    mutationFn: (id) => db.AcquisitionAssocie.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['acq-associe'] }),
   });
 
@@ -558,16 +559,16 @@ function RoadmapSection() {
 
   const { data: items = [] } = useQuery({
     queryKey: ['roadmap-associe'],
-    queryFn: () => base44.entities.RoadmapAssocie.list('ordre'),
+    queryFn: () => db.RoadmapAssocie.list('ordre'),
   });
 
   const saveMutation = useMutation({
-    mutationFn: (data) => editId ? base44.entities.RoadmapAssocie.update(editId, data) : base44.entities.RoadmapAssocie.create(data),
+    mutationFn: (data) => editId ? db.RoadmapAssocie.update(editId, data) : db.RoadmapAssocie.create(data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['roadmap-associe'] }); setModal(false); setEditId(null); setForm(emptyForm); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.RoadmapAssocie.delete(id),
+    mutationFn: (id) => db.RoadmapAssocie.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['roadmap-associe'] }),
   });
 

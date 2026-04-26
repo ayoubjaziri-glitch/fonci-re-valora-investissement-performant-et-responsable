@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Plus, Trash2, Mail, User, ToggleLeft, ToggleRight, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -11,13 +11,13 @@ export default function GestionResponsables({ onClose }) {
 
   const { data: responsables = [] } = useQuery({
     queryKey: ['responsables'],
-    queryFn: () => base44.entities.Responsable.list('-created_date'),
+    queryFn: () => db.Responsable.list('-created_date'),
   });
 
   const handleAdd = async (e) => {
     e.preventDefault();
     if (!form.nom.trim() || !form.email.trim()) return;
-    await base44.entities.Responsable.create({ ...form, actif: true });
+    await db.Responsable.create({ ...form, actif: true });
     qc.invalidateQueries({ queryKey: ['responsables'] });
     setForm({ nom: '', email: '' });
     setAdding(false);
@@ -25,12 +25,12 @@ export default function GestionResponsables({ onClose }) {
 
   const handleDelete = async (id) => {
     if (!confirm('Supprimer ce responsable ?')) return;
-    await base44.entities.Responsable.delete(id);
+    await db.Responsable.delete(id);
     qc.invalidateQueries({ queryKey: ['responsables'] });
   };
 
   const toggleActif = async (r) => {
-    await base44.entities.Responsable.update(r.id, { actif: !r.actif });
+    await db.Responsable.update(r.id, { actif: !r.actif });
     qc.invalidateQueries({ queryKey: ['responsables'] });
   };
 

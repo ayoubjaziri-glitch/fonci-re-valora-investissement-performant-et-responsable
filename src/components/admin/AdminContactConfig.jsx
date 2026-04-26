@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Mail, Save, Plus, Trash2, CheckCircle2 } from 'lucide-react';
@@ -11,7 +11,7 @@ export default function AdminContactConfig() {
 
   const { data: config = [], isLoading } = useQuery({
     queryKey: ['contact-config'],
-    queryFn: () => base44.entities.ContactConfig.list(),
+    queryFn: () => db.ContactConfig.list(),
     staleTime: 0,
   });
 
@@ -26,9 +26,9 @@ export default function AdminContactConfig() {
   const updateMutation = useMutation({
     mutationFn: async (newValeur) => {
       if (emailConfig) {
-        return base44.entities.ContactConfig.update(emailConfig.id, { valeur: newValeur });
+        return db.ContactConfig.update(emailConfig.id, { valeur: newValeur });
       } else {
-        return base44.entities.ContactConfig.create({
+        return db.ContactConfig.create({
           cle: 'email_destinataires',
           valeur: newValeur,
           description: 'Adresses email qui reçoivent les demandes de contact (séparées par virgule)'

@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Plus, List, Calendar, BarChart2, Search, SlidersHorizontal, Users, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import ListView from './ListView';
@@ -110,12 +110,12 @@ export default function AdminTaches() {
 
   const { data: taches = [] } = useQuery({
     queryKey: ['taches'],
-    queryFn: () => base44.entities.Tache.list('-created_date', 500),
+    queryFn: () => db.Tache.list('-created_date', 500),
   });
 
   const { data: projets = [] } = useQuery({
     queryKey: ['projets'],
-    queryFn: () => base44.entities.Projet.list(),
+    queryFn: () => db.Projet.list(),
   });
 
   const filteredTaches = useMemo(() => {
@@ -133,13 +133,13 @@ export default function AdminTaches() {
   }, [taches, projetActif, filterStatut, filterPriorite, search, showTerminees]);
 
   const handleCreate = async (form) => {
-    await base44.entities.Tache.create(form);
+    await db.Tache.create(form);
     qc.invalidateQueries({ queryKey: ['taches'] });
   };
 
   const handleDelete = async (id) => {
     if (!confirm('Supprimer cette tâche ?')) return;
-    await base44.entities.Tache.delete(id);
+    await db.Tache.delete(id);
     qc.invalidateQueries({ queryKey: ['taches'] });
   };
 

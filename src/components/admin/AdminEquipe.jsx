@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { db } from '@/lib/supabaseClient';
 import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,18 +20,18 @@ export default function AdminEquipe() {
 
   const { data: membres = [] } = useQuery({
     queryKey: ['membres-equipe'],
-    queryFn: () => base44.entities.MembreEquipe.list('ordre', 100),
+    queryFn: () => db.MembreEquipe.list('ordre', 100),
   });
 
   const saveMutation = useMutation({
     mutationFn: (data) => editing === 'new'
-      ? base44.entities.MembreEquipe.create(data)
-      : base44.entities.MembreEquipe.update(editing.id, data),
+      ? db.MembreEquipe.create(data)
+      : db.MembreEquipe.update(editing.id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['membres-equipe'] }); setEditing(null); },
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.MembreEquipe.delete(id),
+    mutationFn: (id) => db.MembreEquipe.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ['membres-equipe'] }),
   });
 
