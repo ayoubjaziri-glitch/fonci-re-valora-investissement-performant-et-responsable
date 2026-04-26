@@ -132,12 +132,12 @@ function VisiteursTempsReel({ pageViews, contacts, refetchPageViews }) {
           )}
         </div>
 
-        {/* Carte visiteurs temps réel */}
+        {/* Carte visiteurs — aujourd'hui uniquement */}
         <div className="bg-white rounded-2xl border border-slate-200 p-6">
           <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
-            <MapPin className="h-4 w-4 text-[#C9A961]" /> Localisation des visiteurs
+            <MapPin className="h-4 w-4 text-[#C9A961]" /> Localisation des visiteurs — aujourd'hui
           </h3>
-          <VisitorsMap pageViews={pageViews} mode="realtime" activeThreshold={30} />
+          <VisitorsMap pageViews={todayViews} mode="realtime" activeThreshold={30} />
         </div>
 
       {/* Derniers contacts */}
@@ -278,10 +278,10 @@ function VisiteursCumul({ pageViews, contacts }) {
         )}
       </div>
 
-      {/* Carte historique */}
+      {/* Carte historique cumul */}
       <div className="bg-white rounded-2xl border border-slate-200 p-6">
         <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
-          <MapPin className="h-4 w-4 text-[#C9A961]" /> Carte des visiteurs (12 derniers mois)
+          <MapPin className="h-4 w-4 text-[#C9A961]" /> Carte cumulative des visiteurs (12 derniers mois)
         </h3>
         <VisitorsMap pageViews={recentViews} mode="history" activeThreshold={30} />
       </div>
