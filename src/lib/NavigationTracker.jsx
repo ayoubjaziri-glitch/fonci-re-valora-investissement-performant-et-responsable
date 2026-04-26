@@ -80,13 +80,104 @@ export default function NavigationTracker() {
         const label = PAGE_LABELS[pathname] || pathname.replace('/', '') || 'Accueil';
         enterTime.current = Date.now();
 
+        // ── Détection exhaustive des mots-clés ──────────────────────────────
         let searchKeywords = '';
-        if (document.referrer) {
+        const currentUrl = new URL(window.location.href);
+
+        // 1. Paramètres UTM dans l'URL actuelle (campagnes Google Ads, LinkedIn Ads, etc.)
+        const utmTerm = currentUrl.searchParams.get('utm_term');
+        const utmContent = currentUrl.searchParams.get('utm_content');
+        const utmCampaign = currentUrl.searchParams.get('utm_campaign');
+        const utmSource = currentUrl.searchParams.get('utm_source');
+        const utmMedium = currentUrl.searchParams.get('utm_medium');
+
+        if (utmTerm) searchKeywords = utmTerm;
+        else if (utmContent) searchKeywords = utmContent;
+
+        // 2. Mots-clés depuis le referrer (moteurs de recherche)
+        if (!searchKeywords && document.referrer) {
             try {
                 const refUrl = new URL(document.referrer);
-                searchKeywords = refUrl.searchParams.get('q') || refUrl.searchParams.get('p') || '';
+                const host = refUrl.hostname;
+                // Google (tous les pays)
+                if (/google\./i.test(host)) {
+                    searchKeywords = refUrl.searchParams.get('q') || '';
+                }
+                // Bing
+                else if (/bing\.com/i.test(host)) {
+                    searchKeywords = refUrl.searchParams.get('q') || '';
+                }
+                // Yahoo
+                else if (/yahoo\.com/i.test(host)) {
+                    searchKeywords = refUrl.searchParams.get('p') || refUrl.searchParams.get('q') || '';
+                }
+                // DuckDuckGo
+                else if (/duckduckgo\.com/i.test(host)) {
+                    searchKeywords = refUrl.searchParams.get('q') || '';
+                }
+                // Ecosia
+                else if (/ecosia\.org/i.test(host)) {
+                    searchKeywords = refUrl.searchParams.get('q') || '';
+                }
+                // Qwant
+                else if (/qwant\.com/i.test(host)) {
+                    searchKeywords = refUrl.searchParams.get('q') || '';
+                }
+                // Baidu
+                else if (/baidu\.com/i.test(host)) {
+                    searchKeywords = refUrl.searchParams.get('wd') || refUrl.searchParams.get('q') || '';
+                }
+                // Yandex
+                else if (/yandex\./i.test(host)) {
+                    searchKeywords = refUrl.searchParams.get('text') || '';
+                }
+                // Fallback générique — essayer tous les params communs
+                else {
+                    searchKeywords = refUrl.searchParams.get('q') ||
+                        refUrl.searchParams.get('query') ||
+                        refUrl.searchParams.get('search') ||
+                        refUrl.searchParams.get('keyword') ||
+                        refUrl.searchParams.get('s') || '';
+                }
             } catch (e) {}
         }
+
+        // 3. Paramètres de recherche dans l'URL actuelle elle-même
+        if (!searchKeywords) {
+            searchKeywords = currentUrl.searchParams.get('q') ||
+                currentUrl.searchParams.get('query') ||
+                currentUrl.searchParams.get('keyword') ||
+                currentUrl.searchParams.get('search') ||
+                currentUrl.searchParams.get('s') || '';
+        }
+
+        // 4. Hashtag significatif dans l'URL (certaines campagnes l'utilisent)
+        if (!searchKeywords && window.location.hash && window.location.hash.length > 1) {
+            const hashVal = window.location.hash.slice(1).replace(/-|_/g, ' ').trim();
+            if (hashVal.length > 2 && hashVal.length < 100 && !/^\d+$/.test(hashVal)) {
+                searchKeywords = hashVal;
+            }
+        }
+
+        // 5. Stocker le keyword de la 1ère session pour retrouver la source sur les pages suivantes
+        if (searchKeywords) {
+            sessionStorage.setItem('_valora_kw', searchKeywords);
+            if (utmSource) sessionStorage.setItem('_valora_utm_source', utmSource);
+            if (utmMedium) sessionStorage.setItem('_valora_utm_medium', utmMedium);
+            if (utmCampaign) sessionStorage.setItem('_valora_utm_campaign', utmCampaign);
+        } else {
+            // Récupérer le keyword détecté en début de session (navigation interne)
+            searchKeywords = sessionStorage.getItem('_valora_kw') || '';
+        }
+
+        // Construire un label enrichi si UTM disponible
+        const utmLabel = [
+            utmSource || sessionStorage.getItem('_valora_utm_source'),
+            utmMedium || sessionStorage.getItem('_valora_utm_medium'),
+            utmCampaign || sessionStorage.getItem('_valora_utm_campaign'),
+        ].filter(Boolean).join(' / ');
+        if (utmLabel && !searchKeywords) searchKeywords = `[Campagne] ${utmLabel}`;
+        // ────────────────────────────────────────────────────────────────────
 
         const geoCache = sessionStorage.getItem('_valora_geo');
 

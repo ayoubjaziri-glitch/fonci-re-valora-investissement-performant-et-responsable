@@ -452,12 +452,16 @@ function VisiteursSources({ pageViews }) {
     pageViews.forEach(v => {
       const src = getDetailedSource(v.referrer || '');
       const key = src.label;
-      if (!map[key]) map[key] = { ...src, count: 0, sessions: new Set(), referrers: {}, pages: {}, cities: {}, devices: {}, browsers: {}, oses: {}, hours: {} };
+      if (!map[key]) map[key] = { ...src, count: 0, sessions: new Set(), referrers: {}, pages: {}, cities: {}, devices: {}, browsers: {}, oses: {}, hours: {}, keywords: {} };
       map[key].count++;
       map[key].sessions.add(v.session_id);
       if (v.referrer) map[key].referrers[v.referrer] = (map[key].referrers[v.referrer] || 0) + 1;
       if (v.page) map[key].pages[v.page] = (map[key].pages[v.page] || 0) + 1;
       if (v.city) map[key].cities[v.city] = (map[key].cities[v.city] || 0) + 1;
+      if (v.search_keywords && v.search_keywords.trim()) {
+        const kw = v.search_keywords.trim();
+        map[key].keywords[kw] = (map[key].keywords[kw] || 0) + 1;
+      }
       const dev = getDeviceType(v.user_agent); map[key].devices[dev] = (map[key].devices[dev] || 0) + 1;
       const br = getBrowser(v.user_agent); map[key].browsers[br] = (map[key].browsers[br] || 0) + 1;
       const os = getOS(v.user_agent); map[key].oses[os] = (map[key].oses[os] || 0) + 1;
@@ -524,7 +528,30 @@ function VisiteursSources({ pageViews }) {
   const CATEGORY_LABELS = { direct: 'Direct', search: 'Moteurs de recherche', social: 'Réseaux sociaux', referral: 'Sites référents' };
   const CATEGORY_COLORS = { direct: '#6366f1', search: '#ea4335', social: '#0077b5', referral: '#C9A961' };
 
+  // Mots-clés détectés (search_keywords enregistrés)
+  const allKeywords = useMemo(() => {
+    const kw = {};
+    pageViews.forEach(v => {
+      if (v.search_keywords && v.search_keywords.trim()) {
+        const k = v.search_keywords.trim();
+        if (!kw[k]) kw[k] = { count: 0, sources: {}, pages: {}, cities: {} };
+        kw[k].count++;
+        const src = getDetailedSource(v.referrer || '').label;
+        kw[k].sources[src] = (kw[k].sources[src] || 0) + 1;
+        if (v.page) kw[k].pages[v.page] = (kw[k].pages[v.page] || 0) + 1;
+        if (v.city) kw[k].cities[v.city] = (kw[k].cities[v.city] || 0) + 1;
+      }
+    });
+    return Object.entries(kw).sort((a, b) => b[1].count - a[1].count);
+  }, [pageViews]);
+
+  // Mots-clés dans les sources (inclure les campagnes UTM)
+  const sourcesWithKeywords = useMemo(() => {
+    return sourcesDetail.filter(([, data]) => Object.keys(data.keywords || {}).length > 0);
+  }, [sourcesDetail]);
+
   const tabs = [
+    { id: 'keywords', label: `🔑 Mots-clés${allKeywords.length > 0 ? ` (${allKeywords.length})` : ''}` },
     { id: 'sources', label: 'Sources de trafic' },
     { id: 'geo', label: 'Géographie' },
     { id: 'tech', label: 'Appareils & Tech' },
@@ -559,6 +586,90 @@ function VisiteursSources({ pageViews }) {
           </button>
         ))}
       </div>
+
+      {/* ── MOTS-CLÉS ── */}
+      {activeTab === 'keywords' && (
+        <div className="space-y-5">
+          {allKeywords.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-slate-200 p-10 text-center">
+              <Search className="h-12 w-12 text-slate-200 mx-auto mb-3" />
+              <p className="text-slate-600 font-semibold mb-2">Aucun mot-clé détecté pour le moment</p>
+              <p className="text-slate-400 text-sm max-w-md mx-auto mb-4">
+                Le système de détection est maintenant actif. Les mots-clés seront capturés pour les prochains visiteurs arrivant via :
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 mb-5">
+                {['Bing', 'DuckDuckGo', 'Yahoo', 'Qwant', 'Ecosia', 'Yandex', 'Google Ads (utm_term)', 'Campagnes UTM', 'Sites avec ?q='].map(src => (
+                  <span key={src} className="text-xs bg-slate-100 text-slate-600 rounded-full px-3 py-1">{src}</span>
+                ))}
+              </div>
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-left text-xs text-amber-800 max-w-lg mx-auto">
+                <strong>⚠️ Google Search (gratuit) :</strong> Google masque les mots-clés depuis 2013 pour les recherches organiques. Pour les récupérer, vous devez utiliser <strong>Google Ads</strong> (payant) ou <strong>Google Search Console</strong> (gratuit mais différé).
+              </div>
+            </div>
+          ) : (
+            <>
+              {/* Résumé */}
+              <div className="grid grid-cols-3 gap-4">
+                <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+                  <p className="text-3xl font-bold text-[#1A3A52]">{allKeywords.length}</p>
+                  <p className="text-xs text-slate-500 mt-1">Mots-clés uniques</p>
+                </div>
+                <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+                  <p className="text-3xl font-bold text-[#1A3A52]">{allKeywords.reduce((s, [,d]) => s + d.count, 0)}</p>
+                  <p className="text-xs text-slate-500 mt-1">Visites avec mot-clé</p>
+                </div>
+                <div className="bg-white rounded-2xl border border-slate-200 p-4 text-center">
+                  <p className="text-3xl font-bold text-[#C9A961]">{allKeywords[0]?.[0]?.slice(0,20) || '—'}</p>
+                  <p className="text-xs text-slate-500 mt-1">Mot-clé #1</p>
+                </div>
+              </div>
+
+              {/* Liste mots-clés */}
+              <div className="bg-white rounded-2xl border border-slate-200 p-6">
+                <h3 className="font-semibold text-[#1A3A52] mb-4 flex items-center gap-2">
+                  <Tag className="h-4 w-4 text-[#C9A961]" /> Tous les mots-clés détectés — classés par fréquence
+                </h3>
+                <div className="space-y-3">
+                  {allKeywords.map(([kw, data], i) => (
+                    <div key={i} className="border border-slate-100 rounded-xl p-4 bg-slate-50">
+                      <div className="flex items-start justify-between gap-3 mb-2">
+                        <div className="flex items-center gap-2 flex-1 min-w-0">
+                          <span className="text-xs font-bold text-slate-400 w-5 flex-shrink-0">{i+1}</span>
+                          <span className="font-semibold text-[#1A3A52] text-sm truncate">{kw}</span>
+                          {kw.startsWith('[Campagne]') && (
+                            <span className="text-[10px] bg-purple-100 text-purple-700 rounded-full px-1.5 py-0.5 font-medium flex-shrink-0">UTM</span>
+                          )}
+                        </div>
+                        <span className="text-xs font-bold bg-[#C9A961] text-[#1A3A52] rounded-full px-2 py-0.5 flex-shrink-0">{data.count}×</span>
+                      </div>
+                      <div className="ml-7 flex flex-wrap gap-2 text-xs">
+                        {/* Sources */}
+                        {Object.entries(data.sources).map(([src, n]) => (
+                          <span key={src} className="bg-blue-50 text-blue-700 border border-blue-200 rounded-full px-2 py-0.5">
+                            via {src} ×{n}
+                          </span>
+                        ))}
+                        {/* Pages atterrissage */}
+                        {Object.entries(data.pages).slice(0,3).map(([page, n]) => (
+                          <span key={page} className="bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full px-2 py-0.5">
+                            → {page}
+                          </span>
+                        ))}
+                        {/* Villes */}
+                        {Object.entries(data.cities).slice(0,2).map(([city, n]) => (
+                          <span key={city} className="bg-slate-100 text-slate-600 rounded-full px-2 py-0.5">
+                            📍 {city}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      )}
 
       {/* ── SOURCES ── */}
       {activeTab === 'sources' && (
@@ -615,6 +726,22 @@ function VisiteursSources({ pageViews }) {
                     ))}
                   </div>
                 </div>
+
+                {/* Mots-clés de cette source */}
+                {Object.keys(selected[1].keywords || {}).length > 0 && (
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 uppercase tracking-wide mb-2 flex items-center gap-1">
+                      <Tag className="h-3.5 w-3.5 text-[#C9A961]" /> Mots-clés détectés depuis cette source
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {Object.entries(selected[1].keywords).sort((a,b)=>b[1]-a[1]).map(([kw, n], i) => (
+                        <span key={i} className="text-xs bg-amber-50 border border-amber-200 text-amber-800 rounded-full px-2.5 py-1 font-medium flex items-center gap-1">
+                          <Tag className="h-2.5 w-2.5" />{kw} <strong>×{n}</strong>
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 {/* Villes */}
                 {Object.keys(selected[1].cities).length > 0 && (
@@ -827,7 +954,7 @@ function VisiteursSources({ pageViews }) {
       )}
 
       <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-xs text-amber-800">
-        <strong>💡 Pourquoi pas de mots-clés Google ?</strong> Depuis 2013, Google chiffre toutes les recherches et masque les mots-clés dans le referrer (trafic "not provided"). C'est une décision de Google, aucun outil ne peut les contourner sans Google Search Console. En revanche, toutes les autres sources (LinkedIn, Facebook, Bing, sites tiers...) sont analysées en détail ci-dessus.
+        <strong>🔑 Détection des mots-clés :</strong> Le système capture automatiquement les mots-clés de <strong>Bing, Yahoo, DuckDuckGo, Qwant, Yandex, Ecosia</strong> et toutes les campagnes avec paramètres <strong>utm_term, utm_content, utm_campaign</strong>. Google Search organique masque les mots-clés depuis 2013 — utilisez <strong>Google Ads</strong> (utm_term sera capturé) ou <strong>Google Search Console</strong> pour les récupérer.
       </div>
     </div>
   );
