@@ -4,36 +4,91 @@ import { db } from '@/lib/supabaseClient';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, XCircle, Loader, Play, RefreshCw } from 'lucide-react';
 
+// Colonnes autorisées par table (whitelist) — évite PGRST102 "All object keys must match"
+const ALLOWED_COLUMNS = {
+  taches: ['titre','description','statut','priorite','projet','section','assigne_a','responsable_email','date_debut','date_echeance','tags','sous_taches','commentaires','pieces_jointes','ordre','est_jalon','dependances','avancement'],
+  projets: ['nom','description','couleur','icone','statut','sections','date_debut','date_fin','membres'],
+  membres_equipe: ['nom','role','focus','description','experience','image_url','type','ordre','actif'],
+  articles_blog: ['titre','slug','extrait','contenu','categorie','auteur','image_url','temps_lecture','date_publication','publie'],
+  realisations_biens: ['titre','location','lat','lng','annee','image_avant','image_apres','surface','logements','investissement','dpe_avant','dpe_apres','description_avant','description_apres','travaux','rendement_brut','plus_value','ordre','actif'],
+  levees_fonds: ['nom','objectif','collecte','avancement','date_ouverture','date_cloture','ticket_min','rendement_cible','description','statut','nb_investisseurs','horizon','effet_levier','valorisation_an5','sous_titre','actif'],
+  site_images: ['key','url','description','category'],
+  site_content: ['cle','valeur','page','label','type_champ'],
+  site_sections: ['page','titre','sous_titre','contenu','image_url','type_section','ordre','actif'],
+  contact_requests: ['prenom','nom','email','telephone','type_demande','message','email_envoye'],
+  contact_config: ['cle','valeur','description'],
+  investisseurs_crm: ['prenom','nom','email','telephone','statut','montant_investi','date_prochain_contact','notes','source','tags'],
+  acces_associes: ['email','password','nom','actif'],
+  documents_associes: ['nom','categorie','type_acces','file_url','taille','date_document','actif'],
+  actualites_associes: ['titre','description','type','date_publication','actif'],
+  acquisitions_associes: ['ville','prix','lots','dpe','statut','avancement','livraison','type','valeur','occupation'],
+  map_locations: ['name','lat','lng','adresse','image_url','logements','dpe','actif'],
+  espace_associe_config: ['cle','section','donnees'],
+  roadmap_associes: ['etape','date_prevue','statut','avancement','ordre'],
+};
+
+// Tables avec colonnes uniques — on fait un upsert pour éviter les doublons
+const UPSERT_TABLES = {
+  site_images: 'key',
+  site_content: 'cle',
+  contact_config: 'cle',
+  espace_associe_config: 'cle',
+  acces_associes: 'email',
+};
+
+const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
+
+async function upsert(tableName, conflictCol, data) {
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${tableName}`, {
+    method: 'POST',
+    headers: {
+      'apikey': SUPABASE_KEY,
+      'Authorization': `Bearer ${SUPABASE_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': `resolution=merge-duplicates,return=representation`,
+      'On-Conflict': conflictCol,
+    },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
 const TABLES = [
-  { label: 'Membres Équipe',      src: () => base44.entities.MembreEquipe.list(),          dst: (d) => db.MembreEquipe.bulkCreate(d),          key: 'membres_equipe' },
-  { label: 'Articles Blog',       src: () => base44.entities.ArticleBlog.list(),            dst: (d) => db.ArticleBlog.bulkCreate(d),            key: 'articles_blog' },
-  { label: 'Réalisations Biens',  src: () => base44.entities.RealisationBien.list(),        dst: (d) => db.RealisationBien.bulkCreate(d),        key: 'realisations_biens' },
-  { label: 'Levées de Fonds',     src: () => base44.entities.LeveeFonds.list(),             dst: (d) => db.LeveeFonds.bulkCreate(d),             key: 'levees_fonds' },
-  { label: 'Site Images',         src: () => base44.entities.SiteImage.list(),              dst: (d) => db.SiteImage.bulkCreate(d),              key: 'site_images' },
-  { label: 'Site Content',        src: () => base44.entities.SiteContent.list(),            dst: (d) => db.SiteContent.bulkCreate(d),            key: 'site_content' },
-  { label: 'Site Sections',       src: () => base44.entities.SiteSection.list(),            dst: (d) => db.SiteSection.bulkCreate(d),            key: 'site_sections' },
-  { label: 'Contact Requests',    src: () => base44.entities.ContactRequest.list(),         dst: (d) => db.ContactRequest.bulkCreate(d),         key: 'contact_requests' },
-  { label: 'Contact Config',      src: () => base44.entities.ContactConfig.list(),          dst: (d) => db.ContactConfig.bulkCreate(d),          key: 'contact_config' },
-  { label: 'Investisseurs CRM',   src: () => base44.entities.InvestisseurCRM.list(),        dst: (d) => db.InvestisseurCRM.bulkCreate(d),        key: 'investisseurs_crm' },
-  { label: 'Accès Associés',      src: () => base44.entities.AccesAssocie.list(),           dst: (d) => db.AccesAssocie.bulkCreate(d),           key: 'acces_associes' },
-  { label: 'Documents Associés',  src: () => base44.entities.DocumentAssocie.list(),        dst: (d) => db.DocumentAssocie.bulkCreate(d),        key: 'documents_associes' },
-  { label: 'Actualités Associés', src: () => base44.entities.ActualiteAssocie.list(),       dst: (d) => db.ActualiteAssocie.bulkCreate(d),       key: 'actualites_associes' },
-  { label: 'Acquisitions',        src: () => base44.entities.AcquisitionAssocie.list(),     dst: (d) => db.AcquisitionAssocie.bulkCreate(d),     key: 'acquisitions_associes' },
-  { label: 'Map Locations',       src: () => base44.entities.MapLocation.list(),            dst: (d) => db.MapLocation.bulkCreate(d),            key: 'map_locations' },
-  { label: 'Espace Associé Config', src: () => base44.entities.EspaceAssocieConfig.list(), dst: (d) => db.EspaceAssocieConfig.bulkCreate(d),   key: 'espace_associe_config' },
-  { label: 'Roadmap Associés',    src: () => base44.entities.RoadmapAssocie.list(),         dst: (d) => db.RoadmapAssocie.bulkCreate(d),         key: 'roadmap_associes' },
-  { label: 'Tâches',              src: () => base44.entities.Tache.list(),                  dst: (d) => db.Tache.bulkCreate(d),                  key: 'taches' },
-  { label: 'Projets',             src: () => base44.entities.Projet.list(),                 dst: (d) => db.Projet.bulkCreate(d),                 key: 'projets' },
+  { label: 'Membres Équipe',      src: () => base44.entities.MembreEquipe.list(),          key: 'membres_equipe' },
+  { label: 'Articles Blog',       src: () => base44.entities.ArticleBlog.list(),            key: 'articles_blog' },
+  { label: 'Réalisations Biens',  src: () => base44.entities.RealisationBien.list(),        key: 'realisations_biens' },
+  { label: 'Levées de Fonds',     src: () => base44.entities.LeveeFonds.list(),             key: 'levees_fonds' },
+  { label: 'Site Images',         src: () => base44.entities.SiteImage.list(),              key: 'site_images' },
+  { label: 'Site Content',        src: () => base44.entities.SiteContent.list(),            key: 'site_content' },
+  { label: 'Site Sections',       src: () => base44.entities.SiteSection.list(),            key: 'site_sections' },
+  { label: 'Contact Requests',    src: () => base44.entities.ContactRequest.list(),         key: 'contact_requests' },
+  { label: 'Contact Config',      src: () => base44.entities.ContactConfig.list(),          key: 'contact_config' },
+  { label: 'Investisseurs CRM',   src: () => base44.entities.InvestisseurCRM.list(),        key: 'investisseurs_crm' },
+  { label: 'Accès Associés',      src: () => base44.entities.AccesAssocie.list(),           key: 'acces_associes' },
+  { label: 'Documents Associés',  src: () => base44.entities.DocumentAssocie.list(),        key: 'documents_associes' },
+  { label: 'Actualités Associés', src: () => base44.entities.ActualiteAssocie.list(),       key: 'actualites_associes' },
+  { label: 'Acquisitions',        src: () => base44.entities.AcquisitionAssocie.list(),     key: 'acquisitions_associes' },
+  { label: 'Map Locations',       src: () => base44.entities.MapLocation.list(),            key: 'map_locations' },
+  { label: 'Espace Associé Config', src: () => base44.entities.EspaceAssocieConfig.list(), key: 'espace_associe_config' },
+  { label: 'Roadmap Associés',    src: () => base44.entities.RoadmapAssocie.list(),         key: 'roadmap_associes' },
+  { label: 'Tâches',              src: () => base44.entities.Tache.list(),                  key: 'taches' },
+  { label: 'Projets',             src: () => base44.entities.Projet.list(),                 key: 'projets' },
 ];
 
-// Colonnes Base44 à supprimer avant insertion dans Supabase
-const STRIP_KEYS = ['created_date', 'updated_date', 'created_by', 'created_by_id', 'updated_by', 'updated_by_id', '__v', '_id', 'is_sample'];
-
-function cleanRecord(record) {
+function cleanRecord(record, tableKey) {
+  const allowed = ALLOWED_COLUMNS[tableKey];
+  if (allowed) {
+    // Whitelist : on ne garde que les colonnes connues de Supabase
+    const cleaned = {};
+    allowed.forEach(k => { if (record[k] !== undefined) cleaned[k] = record[k]; });
+    return cleaned;
+  }
+  // Fallback strip
+  const STRIP_KEYS = ['created_date','updated_date','created_by','created_by_id','updated_by','updated_by_id','__v','_id','is_sample','id'];
   const cleaned = { ...record };
   STRIP_KEYS.forEach(k => delete cleaned[k]);
-  // Supprimer l'id Base44 (UUID différent) pour laisser Supabase générer le sien
-  delete cleaned.id;
   return cleaned;
 }
 
@@ -55,8 +110,25 @@ export default function AdminMigration() {
           setStatus(table.key, { state: 'empty', count: 0 });
           continue;
         }
-        const cleaned = data.map(cleanRecord);
-        await table.dst(cleaned);
+        const cleaned = data.map(r => cleanRecord(r, table.key));
+        const conflictCol = UPSERT_TABLES[table.key];
+        if (conflictCol) {
+          await upsert(table.key, conflictCol, cleaned);
+        } else {
+          await db[Object.keys(db).find(k => db[k] && table.key === table.key)];
+          // Insert via fetch directement
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/${table.key}`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=representation',
+            },
+            body: JSON.stringify(cleaned),
+          });
+          if (!res.ok) throw new Error(await res.text());
+        }
         setStatus(table.key, { state: 'ok', count: cleaned.length });
       } catch (e) {
         setStatus(table.key, { state: 'error', error: e.message });
@@ -73,8 +145,23 @@ export default function AdminMigration() {
         setStatus(table.key, { state: 'empty', count: 0 });
         return;
       }
-      const cleaned = data.map(cleanRecord);
-      await table.dst(cleaned);
+      const cleaned = data.map(r => cleanRecord(r, table.key));
+      const conflictCol = UPSERT_TABLES[table.key];
+      if (conflictCol) {
+        await upsert(table.key, conflictCol, cleaned);
+      } else {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/${table.key}`, {
+          method: 'POST',
+          headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation',
+          },
+          body: JSON.stringify(cleaned),
+        });
+        if (!res.ok) throw new Error(await res.text());
+      }
       setStatus(table.key, { state: 'ok', count: cleaned.length });
     } catch (e) {
       setStatus(table.key, { state: 'error', error: e.message });
