@@ -1,136 +1,138 @@
-// lib/supabaseClient.js
-// Client Supabase via fetch natif — AUCUNE dépendance externe
-// Configurer dans .env.local :
-//   VITE_SUPABASE_URL=https://xxx.supabase.co
-//   VITE_SUPABASE_ANON_KEY=eyJ...
+// Configuration Supabase
+const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
 
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || '';
-const SUPABASE_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
-
-const headers = () => ({
-  'Content-Type': 'application/json',
+const headers = {
   'apikey': SUPABASE_KEY,
   'Authorization': `Bearer ${SUPABASE_KEY}`,
-  'Prefer': 'return=representation',
-});
+  'Content-Type': 'application/json',
+  'Prefer': 'return=representation'
+};
 
-const notConfigured = () => !SUPABASE_URL || !SUPABASE_KEY;
-
-function makeEntity(tableName) {
-  const base = () => `${SUPABASE_URL}/rest/v1/${tableName}`;
+// Fonction générique pour interagir avec une table Supabase
+function createEntity(tableName) {
+  const base = `${SUPABASE_URL}/rest/v1/${tableName}`;
 
   return {
-    async list(orderBy = '-created_at', limit = 500) {
-      if (notConfigured()) return [];
-      const col = orderBy.replace(/^-/, '');
-      const asc = !orderBy.startsWith('-');
-      const res = await fetch(`${base()}?order=${col}.${asc ? 'asc' : 'desc'}&limit=${limit}`, { headers: headers() });
+    // Lister tous les enregistrements
+    async list(orderBy = '-created_at', limit = 100) {
+      const column = orderBy.startsWith('-') ? orderBy.slice(1) : orderBy;
+      const direction = orderBy.startsWith('-') ? 'desc' : 'asc';
+      const url = `${base}?order=${column}.${direction}&limit=${limit}`;
+      const res = await fetch(url, { headers });
       if (!res.ok) throw new Error(await res.text());
       return res.json();
     },
 
-    async filter(filters = {}, orderBy = '-created_at', limit = 500) {
-      if (notConfigured()) return [];
-      const col = orderBy.replace(/^-/, '');
-      const asc = !orderBy.startsWith('-');
-      const params = Object.entries(filters).map(([k, v]) => `${k}=eq.${v}`).join('&');
-      const res = await fetch(`${base()}?${params}&order=${col}.${asc ? 'asc' : 'desc'}&limit=${limit}`, { headers: headers() });
+    // Filtrer les enregistrements
+    async filter(filters = {}, orderBy = '-created_at', limit = 100) {
+      const column = orderBy.startsWith('-') ? orderBy.slice(1) : orderBy;
+      const direction = orderBy.startsWith('-') ? 'desc' : 'asc';
+      const params = new URLSearchParams({ order: `${column}.${direction}`, limit });
+      Object.entries(filters).forEach(([k, v]) => params.append(k, `eq.${v}`));
+      const res = await fetch(`${base}?${params}`, { headers });
       if (!res.ok) throw new Error(await res.text());
       return res.json();
     },
 
+    // Obtenir un enregistrement par ID
     async get(id) {
-      if (notConfigured()) return null;
-      const res = await fetch(`${base()}?id=eq.${id}&limit=1`, { headers: { ...headers(), 'Accept': 'application/vnd.pgrst.object+json' } });
+      const res = await fetch(`${base}?id=eq.${id}`, { headers });
       if (!res.ok) throw new Error(await res.text());
-      return res.json();
+      const data = await res.json();
+      return data[0] || null;
     },
 
-    async create(payload) {
-      if (notConfigured()) return { ...payload, id: `local-${Date.now()}`, created_at: new Date().toISOString() };
-      const res = await fetch(base(), {
+    // Créer un enregistrement
+    async create(data) {
+      const payload = { ...data, created_at: new Date().toISOString(), updated_at: new Date().toISOString() };
+      const res = await fetch(base, {
         method: 'POST',
-        headers: { ...headers(), 'Accept': 'application/vnd.pgrst.object+json' },
-        body: JSON.stringify(payload),
+        headers,
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error(await res.text());
+      const result = await res.json();
+      return Array.isArray(result) ? result[0] : result;
+    },
+
+    // Créer plusieurs enregistrements
+    async bulkCreate(dataArray) {
+      const payload = dataArray.map(d => ({ ...d, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }));
+      const res = await fetch(base, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error(await res.text());
       return res.json();
     },
 
-    async update(id, payload) {
-      if (notConfigured()) return { ...payload, id };
-      const res = await fetch(`${base()}?id=eq.${id}`, {
+    // Mettre à jour un enregistrement
+    async update(id, data) {
+      const payload = { ...data, updated_at: new Date().toISOString() };
+      const res = await fetch(`${base}?id=eq.${id}`, {
         method: 'PATCH',
-        headers: { ...headers(), 'Accept': 'application/vnd.pgrst.object+json' },
-        body: JSON.stringify(payload),
+        headers,
+        body: JSON.stringify(payload)
       });
       if (!res.ok) throw new Error(await res.text());
-      return res.json();
+      const result = await res.json();
+      return Array.isArray(result) ? result[0] : result;
     },
 
+    // Supprimer un enregistrement
     async delete(id) {
-      if (notConfigured()) return true;
-      const res = await fetch(`${base()}?id=eq.${id}`, { method: 'DELETE', headers: headers() });
+      const res = await fetch(`${base}?id=eq.${id}`, {
+        method: 'DELETE',
+        headers
+      });
       if (!res.ok) throw new Error(await res.text());
       return true;
     },
 
-    async bulkCreate(items) {
-      if (notConfigured()) return items;
-      const res = await fetch(base(), {
-        method: 'POST',
-        headers: headers(),
-        body: JSON.stringify(items),
-      });
-      if (!res.ok) throw new Error(await res.text());
-      return res.json();
-    },
-
-    subscribe(callback) {
-      if (notConfigured()) return () => {};
-      let lastIds = new Set();
-      const poll = async () => {
+    // S'abonner aux changements (polling simple)
+    subscribe(callback, interval = 5000) {
+      let lastCheck = new Date().toISOString();
+      const poll = setInterval(async () => {
         try {
-          const res = await fetch(`${base()}?order=created_at.desc&limit=50`, { headers: headers() });
-          const data = await res.json();
-          data.forEach(row => {
-            if (!lastIds.has(row.id)) {
-              if (lastIds.size > 0) callback({ type: 'create', id: row.id, data: row });
-              lastIds.add(row.id);
+          const res = await fetch(`${base}?updated_at=gt.${lastCheck}&order=updated_at.desc`, { headers });
+          if (res.ok) {
+            const data = await res.json();
+            if (data.length > 0) {
+              lastCheck = new Date().toISOString();
+              data.forEach(item => callback({ type: 'update', id: item.id, data: item }));
             }
-          });
+          }
         } catch (e) {}
-      };
-      poll();
-      const interval = setInterval(poll, 5000);
-      return () => clearInterval(interval);
-    },
+      }, interval);
+      return () => clearInterval(poll);
+    }
   };
 }
 
+// Export de toutes les entités du projet
 export const db = {
-  Tache: makeEntity('taches'),
-  Projet: makeEntity('projets'),
-  PageView: makeEntity('page_views'),
-  ContactRequest: makeEntity('contact_requests'),
-  ContactConfig: makeEntity('contact_config'),
-  InvestisseurCRM: makeEntity('investisseurs_crm'),
-  ArticleBlog: makeEntity('articles_blog'),
-  RealisationBien: makeEntity('realisations_biens'),
-  MembreEquipe: makeEntity('membres_equipe'),
-  LeveeFonds: makeEntity('levees_fonds'),
-  SiteImage: makeEntity('site_images'),
-  SiteContent: makeEntity('site_content'),
-  SiteSection: makeEntity('site_sections'),
-  MapLocation: makeEntity('map_locations'),
-  AccesAdmin: makeEntity('acces_admin'),
-  AccesAssocie: makeEntity('acces_associes'),
-  DocumentAssocie: makeEntity('documents_associes'),
-  AcquisitionAssocie: makeEntity('acquisitions_associes'),
-  ActualiteAssocie: makeEntity('actualites_associes'),
-  EspaceAssocieConfig: makeEntity('espace_associe_config'),
-  RoadmapAssocie: makeEntity('roadmap_associes'),
-  Responsable: makeEntity('responsables'),
-  ValoraAIMemoire: makeEntity('valora_ai_memoire'),
-  ValoraAIAction: makeEntity('valora_ai_actions'),
+  ContactRequest: createEntity('contact_requests'),
+  SiteContent: createEntity('site_contents'),
+  SiteImage: createEntity('site_images'),
+  SiteSection: createEntity('site_sections'),
+  MembreEquipe: createEntity('membres_equipe'),
+  ArticleBlog: createEntity('articles_blog'),
+  RealisationBien: createEntity('realisations_biens'),
+  LeveeFonds: createEntity('levees_fonds'),
+  MapLocation: createEntity('map_locations'),
+  PageView: createEntity('page_views'),
+  AccesAdmin: createEntity('acces_admin'),
+  AccesAssocie: createEntity('acces_associes'),
+  DocumentAssocie: createEntity('documents_associes'),
+  ActualiteAssocie: createEntity('actualites_associes'),
+  AcquisitionAssocie: createEntity('acquisitions_associes'),
+  RoadmapAssocie: createEntity('roadmap_associes'),
+  EspaceAssocieConfig: createEntity('espace_associe_configs'),
+  ContactConfig: createEntity('contact_configs'),
+  InvestisseurCRM: createEntity('investisseurs_crm'),
+  Tache: createEntity('taches'),
+  Projet: createEntity('projets'),
+  Responsable: createEntity('responsables'),
 };
