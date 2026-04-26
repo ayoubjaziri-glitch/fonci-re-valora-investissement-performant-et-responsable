@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Download, FileCode, Database, Server, Package, Copy, Check, ChevronDown, ChevronRight, AlertCircle } from 'lucide-react';
+import { Download, FileCode, Database, Server, Package, Copy, Check, ChevronDown, ChevronRight, AlertCircle, Wifi, WifiOff, Loader } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { db } from '@/lib/supabaseClient';
 
 // ─── Fichiers générés ─────────────────────────────────────────────────────────
 
@@ -805,6 +806,40 @@ function CopyBtn({ text }) {
   );
 }
 
+// ─── Test connexion ───────────────────────────────────────────────────────────
+function TestConnexion() {
+  const [status, setStatus] = useState(null); // null | 'loading' | 'ok' | 'error'
+  const [detail, setDetail] = useState('');
+
+  const tester = async () => {
+    setStatus('loading');
+    setDetail('');
+    try {
+      await db.AccesAdmin.list('-created_at', 1);
+      setStatus('ok');
+      setDetail('Connexion Supabase réussie ! Les tables sont accessibles ✅');
+    } catch (e) {
+      setStatus('error');
+      setDetail(e.message || 'Erreur inconnue');
+    }
+  };
+
+  return (
+    <div className={`flex items-center gap-4 p-4 rounded-xl border ${status === 'ok' ? 'bg-emerald-50 border-emerald-200' : status === 'error' ? 'bg-red-50 border-red-200' : 'bg-blue-50 border-blue-200'}`}>
+      <div className="flex-1">
+        <p className="text-sm font-semibold text-slate-700 mb-1">🔌 Tester la connexion Supabase</p>
+        {detail && <p className={`text-xs ${status === 'ok' ? 'text-emerald-700' : 'text-red-700'}`}>{detail}</p>}
+        {!detail && <p className="text-xs text-slate-500">Cliquez pour vérifier que Supabase répond correctement</p>}
+      </div>
+      <Button onClick={tester} disabled={status === 'loading'}
+        className={`gap-2 flex-shrink-0 ${status === 'ok' ? 'bg-emerald-600 hover:bg-emerald-700' : status === 'error' ? 'bg-red-600 hover:bg-red-700' : 'bg-blue-600 hover:bg-blue-700'} text-white`}>
+        {status === 'loading' ? <Loader className="h-4 w-4 animate-spin" /> : status === 'ok' ? <Wifi className="h-4 w-4" /> : status === 'error' ? <WifiOff className="h-4 w-4" /> : <Wifi className="h-4 w-4" />}
+        {status === 'loading' ? 'Test...' : status === 'ok' ? 'Connecté !' : status === 'error' ? 'Erreur' : 'Tester'}
+      </Button>
+    </div>
+  );
+}
+
 // ─── Page principale ──────────────────────────────────────────────────────────
 export default function AdminExportBackend() {
   const [selected, setSelected] = useState('supabase_client');
@@ -832,6 +867,9 @@ export default function AdminExportBackend() {
             <Download className="h-4 w-4" /> Tout télécharger ({FILES.length} fichiers)
           </Button>
         </div>
+
+        {/* Test connexion */}
+        <TestConnexion />
 
         {/* Alerte */}
         <div className="flex items-start gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
