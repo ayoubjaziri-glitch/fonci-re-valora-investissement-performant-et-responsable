@@ -21,12 +21,15 @@ const ALLOWED_COLUMNS = {
   contact_config: ['cle','valeur','description'],
   investisseurs_crm: ['prenom','nom','email','telephone','statut','montant_investi','date_prochain_contact','notes','source','tags'],
   acces_associes: ['email','password','nom','actif'],
+  acces_admin: ['email','password','nom','actif'],
   documents_associes: ['nom','categorie','type_acces','file_url','taille','date_document','actif'],
   actualites_associes: ['titre','description','type','date_publication','actif'],
   acquisitions_associes: ['ville','prix','lots','dpe','statut','avancement','livraison','type','valeur','occupation'],
   map_locations: ['name','lat','lng','adresse','image_url','logements','dpe','actif'],
   espace_associe_config: ['cle','section','donnees'],
   roadmap_associes: ['etape','date_prevue','statut','avancement','ordre'],
+  page_views: ['page','path','session_id','user_agent','referrer','search_keywords','time_on_page','country','city','lat','lng','ip'],
+  responsables: ['nom','email','telephone','couleur','actif'],
 };
 
 // Colonne de conflit unique → upsert. Sinon → truncate + insert.
@@ -57,6 +60,9 @@ const TABLES = [
   { label: 'Roadmap Associés',      src: () => base44.entities.RoadmapAssocie.list(),         key: 'roadmap_associes' },
   { label: 'Tâches',                src: () => base44.entities.Tache.list(),                  key: 'taches' },
   { label: 'Projets',               src: () => base44.entities.Projet.list(),                 key: 'projets' },
+  { label: 'Accès Admin',           src: () => base44.entities.AccesAdmin.list(),             key: 'acces_admin' },
+  { label: 'Page Views',            src: () => base44.entities.PageView.list(),               key: 'page_views' },
+  { label: 'Responsables',          src: () => base44.entities.Responsable.list(),            key: 'responsables' },
 ];
 
 const headers = {
