@@ -1,4 +1,4 @@
-// Configuration Supabase
+// Configuration Supabase — Foncière Valora
 const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
 
@@ -9,23 +9,18 @@ const headers = {
   'Prefer': 'return=representation'
 };
 
-// Fonction générique pour interagir avec une table Supabase
 function createEntity(tableName) {
   const base = `${SUPABASE_URL}/rest/v1/${tableName}`;
 
   return {
-    // Lister tous les enregistrements
-    async list(orderBy = '-created_at', limit = 100) {
+    async list(orderBy = '-created_at', limit = 500) {
       const column = orderBy.startsWith('-') ? orderBy.slice(1) : orderBy;
       const direction = orderBy.startsWith('-') ? 'desc' : 'asc';
-      const url = `${base}?order=${column}.${direction}&limit=${limit}`;
-      const res = await fetch(url, { headers });
+      const res = await fetch(`${base}?order=${column}.${direction}&limit=${limit}`, { headers });
       if (!res.ok) throw new Error(await res.text());
       return res.json();
     },
-
-    // Filtrer les enregistrements
-    async filter(filters = {}, orderBy = '-created_at', limit = 100) {
+    async filter(filters = {}, orderBy = '-created_at', limit = 500) {
       const column = orderBy.startsWith('-') ? orderBy.slice(1) : orderBy;
       const direction = orderBy.startsWith('-') ? 'desc' : 'asc';
       const params = new URLSearchParams({ order: `${column}.${direction}`, limit });
@@ -34,87 +29,59 @@ function createEntity(tableName) {
       if (!res.ok) throw new Error(await res.text());
       return res.json();
     },
-
-    // Obtenir un enregistrement par ID
     async get(id) {
       const res = await fetch(`${base}?id=eq.${id}`, { headers });
       if (!res.ok) throw new Error(await res.text());
       const data = await res.json();
       return data[0] || null;
     },
-
-    // Créer un enregistrement
     async create(data) {
-      const payload = { ...data, created_at: new Date().toISOString(), updated_at: new Date().toISOString() };
       const res = await fetch(base, {
         method: 'POST',
         headers,
-        body: JSON.stringify(payload)
+        body: JSON.stringify(data)
       });
       if (!res.ok) throw new Error(await res.text());
       const result = await res.json();
       return Array.isArray(result) ? result[0] : result;
     },
-
-    // Créer plusieurs enregistrements
     async bulkCreate(dataArray) {
-      const payload = dataArray.map(d => ({ ...d, created_at: new Date().toISOString(), updated_at: new Date().toISOString() }));
       const res = await fetch(base, {
         method: 'POST',
         headers,
-        body: JSON.stringify(payload)
+        body: JSON.stringify(dataArray)
       });
       if (!res.ok) throw new Error(await res.text());
       return res.json();
     },
-
-    // Mettre à jour un enregistrement
     async update(id, data) {
-      const payload = { ...data, updated_at: new Date().toISOString() };
       const res = await fetch(`${base}?id=eq.${id}`, {
         method: 'PATCH',
         headers,
-        body: JSON.stringify(payload)
+        body: JSON.stringify(data)
       });
       if (!res.ok) throw new Error(await res.text());
       const result = await res.json();
       return Array.isArray(result) ? result[0] : result;
     },
-
-    // Supprimer un enregistrement
     async delete(id) {
-      const res = await fetch(`${base}?id=eq.${id}`, {
-        method: 'DELETE',
-        headers
-      });
+      const res = await fetch(`${base}?id=eq.${id}`, { method: 'DELETE', headers });
       if (!res.ok) throw new Error(await res.text());
       return true;
     },
-
-    // S'abonner aux changements (polling simple)
     subscribe(callback, interval = 5000) {
-      let lastCheck = new Date().toISOString();
+      let running = true;
       const poll = setInterval(async () => {
-        try {
-          const res = await fetch(`${base}?updated_at=gt.${lastCheck}&order=updated_at.desc`, { headers });
-          if (res.ok) {
-            const data = await res.json();
-            if (data.length > 0) {
-              lastCheck = new Date().toISOString();
-              data.forEach(item => callback({ type: 'update', id: item.id, data: item }));
-            }
-          }
-        } catch (e) {}
+        if (!running) return;
       }, interval);
-      return () => clearInterval(poll);
+      return () => { running = false; clearInterval(poll); };
     }
   };
 }
 
-// Export de toutes les entités du projet
 export const db = {
   ContactRequest: createEntity('contact_requests'),
-  SiteContent: createEntity('site_contents'),
+  SiteContent: createEntity('site_content'),
   SiteImage: createEntity('site_images'),
   SiteSection: createEntity('site_sections'),
   MembreEquipe: createEntity('membres_equipe'),
@@ -129,8 +96,8 @@ export const db = {
   ActualiteAssocie: createEntity('actualites_associes'),
   AcquisitionAssocie: createEntity('acquisitions_associes'),
   RoadmapAssocie: createEntity('roadmap_associes'),
-  EspaceAssocieConfig: createEntity('espace_associe_configs'),
-  ContactConfig: createEntity('contact_configs'),
+  EspaceAssocieConfig: createEntity('espace_associe_config'),
+  ContactConfig: createEntity('contact_config'),
   InvestisseurCRM: createEntity('investisseurs_crm'),
   Tache: createEntity('taches'),
   Projet: createEntity('projets'),
