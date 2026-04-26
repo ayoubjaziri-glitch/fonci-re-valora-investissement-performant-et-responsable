@@ -30,13 +30,11 @@ const ALLOWED_COLUMNS = {
 };
 
 // Colonne de conflit unique → upsert. Sinon → truncate + insert.
+// NOTE: site_images, site_content, acces_associes, articles_blog passent en vider+insérer
+// car soit doublons dans src, soit contrainte absente en Supabase.
 const CONFLICT_COL = {
-  site_images: 'key',
-  site_content: 'cle',
   contact_config: 'cle',
   espace_associe_config: 'cle',
-  acces_associes: 'email',
-  articles_blog: 'slug',
 };
 
 const TABLES = [
@@ -70,7 +68,9 @@ const headers = {
 function cleanRecord(record, tableKey) {
   const allowed = ALLOWED_COLUMNS[tableKey];
   const cleaned = {};
-  (allowed || []).forEach(k => { if (record[k] !== undefined && record[k] !== null) cleaned[k] = record[k]; });
+  // Inclure TOUTES les colonnes autorisées avec null comme valeur par défaut
+  // → tous les objets ont exactement les mêmes clés (évite PGRST102)
+  (allowed || []).forEach(k => { cleaned[k] = record[k] !== undefined ? record[k] : null; });
   return cleaned;
 }
 
