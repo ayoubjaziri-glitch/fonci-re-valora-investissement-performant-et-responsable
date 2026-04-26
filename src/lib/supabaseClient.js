@@ -1,6 +1,10 @@
 // Configuration Supabase — Foncière Valora
+import { createClient } from '@supabase/supabase-js';
+
 const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const headers = {
   'apikey': SUPABASE_KEY,

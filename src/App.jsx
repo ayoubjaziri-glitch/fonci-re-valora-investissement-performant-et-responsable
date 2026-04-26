@@ -10,8 +10,9 @@ import AdminExportBackend from './pages/AdminExportBackend';
 import AdminMigration from './pages/AdminMigration';
 import AdminBusinessPlan from './pages/AdminBusinessPlan';
 import BlogArticle from './pages/BlogArticle';
-import { AuthProvider, useAuth } from '@/lib/AuthContext';
-import UserNotRegisteredError from '@/components/UserNotRegisteredError';
+import AdminLogin from './pages/AdminLogin';
+import { CustomAuthProvider, useCustomAuth } from '@/lib/CustomAuthContext';
+import ProtectedRouteCustom from '@/components/ProtectedRouteCustom';
 
 const { Pages, Layout, mainPage } = pagesConfig;
 const mainPageKey = mainPage ?? Object.keys(Pages)[0];
@@ -22,10 +23,9 @@ const LayoutWrapper = ({ children, currentPageName }) => Layout ?
   : <>{children}</>;
 
 const AuthenticatedApp = () => {
-  const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
+  const { isLoadingAuth } = useCustomAuth();
 
-  // Show loading spinner while checking app public settings or auth
-  if (isLoadingPublicSettings || isLoadingAuth) {
+  if (isLoadingAuth) {
     return (
       <div className="fixed inset-0 flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-slate-200 border-t-slate-800 rounded-full animate-spin"></div>
@@ -33,18 +33,6 @@ const AuthenticatedApp = () => {
     );
   }
 
-  // Handle authentication errors
-  if (authError) {
-    if (authError.type === 'user_not_registered') {
-      return <UserNotRegisteredError />;
-    } else if (authError.type === 'auth_required') {
-      // Redirect to login automatically
-      navigateToLogin();
-      return null;
-    }
-  }
-
-  // Render the main app
   return (
     <Routes>
       <Route path="/" element={
@@ -63,10 +51,27 @@ const AuthenticatedApp = () => {
           }
         />
       ))}
-      <Route path="/admin" element={<AdminBackOffice />} />
-      <Route path="/admin/export-backend" element={<AdminExportBackend />} />
-      <Route path="/admin/migration" element={<AdminMigration />} />
-      <Route path="/admin/business-plan" element={<AdminBusinessPlan />} />
+      <Route path="/admin/login" element={<AdminLogin />} />
+      <Route path="/admin" element={
+        <ProtectedRouteCustom>
+          <AdminBackOffice />
+        </ProtectedRouteCustom>
+      } />
+      <Route path="/admin/export-backend" element={
+        <ProtectedRouteCustom>
+          <AdminExportBackend />
+        </ProtectedRouteCustom>
+      } />
+      <Route path="/admin/migration" element={
+        <ProtectedRouteCustom>
+          <AdminMigration />
+        </ProtectedRouteCustom>
+      } />
+      <Route path="/admin/business-plan" element={
+        <ProtectedRouteCustom>
+          <AdminBusinessPlan />
+        </ProtectedRouteCustom>
+      } />
       <Route path="/blog/:slug" element={<LayoutWrapper currentPageName="BlogArticle"><BlogArticle /></LayoutWrapper>} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
@@ -77,7 +82,7 @@ const AuthenticatedApp = () => {
 function App() {
 
   return (
-    <AuthProvider>
+    <CustomAuthProvider>
       <QueryClientProvider client={queryClientInstance}>
         <Router>
           <NavigationTracker />
@@ -85,7 +90,7 @@ function App() {
         </Router>
         <Toaster />
       </QueryClientProvider>
-    </AuthProvider>
+    </CustomAuthProvider>
   )
 }
 
