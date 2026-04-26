@@ -14,16 +14,8 @@ const headers = () => ({
   'Prefer': 'return=representation',
 });
 
-// Retourne des données vides si non configuré (évite les crash pendant migration)
-const notConfigured = () => {
-  if (!SUPABASE_URL || !SUPABASE_KEY) {
-    console.warn('[supabaseClient] VITE_SUPABASE_URL / VITE_SUPABASE_ANON_KEY non configurés. Configurer .env.local');
-    return true;
-  }
-  return false;
-};
+const notConfigured = () => !SUPABASE_URL || !SUPABASE_KEY;
 
-// ── Helper générique CRUD ──────────────────────────────────────────────────────
 function makeEntity(tableName) {
   const base = () => `${SUPABASE_URL}/rest/v1/${tableName}`;
 
@@ -32,8 +24,7 @@ function makeEntity(tableName) {
       if (notConfigured()) return [];
       const col = orderBy.replace(/^-/, '');
       const asc = !orderBy.startsWith('-');
-      const url = `${base()}?order=${col}.${asc ? 'asc' : 'desc'}&limit=${limit}`;
-      const res = await fetch(url, { headers: headers() });
+      const res = await fetch(`${base()}?order=${col}.${asc ? 'asc' : 'desc'}&limit=${limit}`, { headers: headers() });
       if (!res.ok) throw new Error(await res.text());
       return res.json();
     },
@@ -43,8 +34,7 @@ function makeEntity(tableName) {
       const col = orderBy.replace(/^-/, '');
       const asc = !orderBy.startsWith('-');
       const params = Object.entries(filters).map(([k, v]) => `${k}=eq.${v}`).join('&');
-      const url = `${base()}?${params}&order=${col}.${asc ? 'asc' : 'desc'}&limit=${limit}`;
-      const res = await fetch(url, { headers: headers() });
+      const res = await fetch(`${base()}?${params}&order=${col}.${asc ? 'asc' : 'desc'}&limit=${limit}`, { headers: headers() });
       if (!res.ok) throw new Error(await res.text());
       return res.json();
     },
@@ -96,7 +86,6 @@ function makeEntity(tableName) {
       return res.json();
     },
 
-    // Realtime via polling (fallback sans WebSocket Supabase)
     subscribe(callback) {
       if (notConfigured()) return () => {};
       let lastIds = new Set();
@@ -119,7 +108,6 @@ function makeEntity(tableName) {
   };
 }
 
-// ── Toutes les entités ─────────────────────────────────────────────────────────
 export const db = {
   Tache: makeEntity('taches'),
   Projet: makeEntity('projets'),
@@ -145,84 +133,4 @@ export const db = {
   Responsable: makeEntity('responsables'),
   ValoraAIMemoire: makeEntity('valora_ai_memoire'),
   ValoraAIAction: makeEntity('valora_ai_actions'),
-};
-
-// ── Compatibilité API base44.entities.X ───────────────────────────────────────
-// Permet import { base44 } from '@/api/base44Client' sans rien changer d'autre
-export const base44 = {
-  entities: db,
-  integrations: {
-    Core: {
-      async SendEmail({ to, subject, body, from_name }) {
-        if (notConfigured()) {
-          console.log('[SendEmail] Non configuré — email non envoyé');
-          return;
-        }
-        // Appelle l'Edge Function Supabase "send-email" (à déployer)
-        await fetch(`${SUPABASE_URL}/functions/v1/send-email`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
-          body: JSON.stringify({ to, subject, body, from_name }),
-        });
-      },
-      async InvokeLLM({ prompt, response_json_schema }) {
-        if (notConfigured()) return response_json_schema ? {} : '';
-        const res = await fetch(`${SUPABASE_URL}/functions/v1/invoke-llm`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
-          body: JSON.stringify({ prompt, response_json_schema }),
-        });
-        return res.json();
-      },
-      async UploadFile({ file }) {
-        if (notConfigured()) return { file_url: '' };
-        const formData = new FormData();
-        formData.append('file', file);
-        const fileName = `${Date.now()}-${file.name}`;
-        const res = await fetch(`${SUPABASE_URL}/storage/v1/object/public/${fileName}`, {
-          method: 'POST',
-          headers: { 'Authorization': `Bearer ${SUPABASE_KEY}` },
-          body: formData,
-        });
-        if (!res.ok) throw new Error(await res.text());
-        return { file_url: `${SUPABASE_URL}/storage/v1/object/public/${fileName}` };
-      },
-      async GenerateImage({ prompt }) {
-        if (notConfigured()) return { url: '' };
-        const res = await fetch(`${SUPABASE_URL}/functions/v1/generate-image`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
-          body: JSON.stringify({ prompt }),
-        });
-        return res.json();
-      },
-      async ExtractDataFromUploadedFile({ file_url, json_schema }) {
-        if (notConfigured()) return { status: 'error', output: null };
-        const res = await fetch(`${SUPABASE_URL}/functions/v1/extract-data`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${SUPABASE_KEY}` },
-          body: JSON.stringify({ file_url, json_schema }),
-        });
-        return res.json();
-      },
-    },
-  },
-  auth: {
-    async me() { return null; },
-    async isAuthenticated() { return false; },
-    logout() { window.location.reload(); },
-    redirectToLogin() {},
-    async updateMe() {},
-  },
-  appLogs: { logUserInApp() {} },
-  analytics: { track() {} },
-  agents: {
-    createConversation: async () => ({ id: null, messages: [] }),
-    listConversations: async () => [],
-    getConversation: async () => ({ id: null, messages: [] }),
-    addMessage: async () => {},
-    subscribeToConversation: () => () => {},
-    getWhatsAppConnectURL: () => '#',
-    getTelegramConnectURL: () => '#',
-  },
 };
