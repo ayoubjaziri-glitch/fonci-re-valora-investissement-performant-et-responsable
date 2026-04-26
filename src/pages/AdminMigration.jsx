@@ -75,9 +75,10 @@ function cleanRecord(record, tableKey) {
 }
 
 async function deleteAll(tableKey) {
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${tableKey}?id=neq.00000000-0000-0000-0000-000000000000`, {
+  // created_at exists on all tables — matches everything
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/${tableKey}?created_at=gte.2000-01-01`, {
     method: 'DELETE',
-    headers,
+    headers: { ...headers, 'Prefer': 'return=minimal' },
   });
   if (!res.ok) {
     const txt = await res.text();
