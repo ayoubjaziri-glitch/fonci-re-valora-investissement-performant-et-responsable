@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
-import { useAuth } from './AuthContext';
-import { base44 } from '@/api/base44Client';
+import { db } from './supabaseClient';
 import { pagesConfig } from '@/pages.config';
 
 function getSessionId() {
@@ -28,7 +27,6 @@ const PAGE_LABELS = {
 
 export default function NavigationTracker() {
     const location = useLocation();
-    const { isAuthenticated } = useAuth();
     const { Pages, mainPage } = pagesConfig;
     const mainPageKey = mainPage ?? Object.keys(Pages)[0];
     const lastPath = useRef(null);
@@ -36,29 +34,12 @@ export default function NavigationTracker() {
     const currentViewId = useRef(null);
     const enterTime = useRef(null);
 
-    // Log user activity when navigating to a page
-    useEffect(() => {
-        const pathname = location.pathname;
-        let pageName;
-        if (pathname === '/' || pathname === '') {
-            pageName = mainPageKey;
-        } else {
-            const pathSegment = pathname.replace(/^\//, '').split('/')[0];
-            const pageKeys = Object.keys(Pages);
-            const matchedKey = pageKeys.find(key => key.toLowerCase() === pathSegment.toLowerCase());
-            pageName = matchedKey || null;
-        }
-        if (isAuthenticated && pageName) {
-            base44.appLogs.logUserInApp(pageName).catch(() => {});
-        }
-    }, [location, isAuthenticated, Pages, mainPageKey]);
-
     // Mettre à jour le temps de la vue précédente avant d'enregistrer la nouvelle
     const updatePreviousTime = () => {
         if (currentViewId.current && enterTime.current) {
             const seconds = Math.round((Date.now() - enterTime.current) / 1000);
             if (seconds > 2) {
-                base44.entities.PageView.update(currentViewId.current, { time_on_page: seconds }).catch(() => {});
+                db.PageView.update(currentViewId.current, { time_on_page: seconds }).catch(() => {});
             }
             currentViewId.current = null;
             enterTime.current = null;
@@ -182,7 +163,7 @@ export default function NavigationTracker() {
         const geoCache = sessionStorage.getItem('_valora_geo');
 
         const saveView = (geo = {}) => {
-            base44.entities.PageView.create({
+            db.PageView.create({
                 page: label,
                 path: pathname,
                 session_id: getSessionId(),
