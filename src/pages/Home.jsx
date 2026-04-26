@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import RealisationsGallery from "../components/RealisationsGallery";
 import InterventionMap from "../components/InterventionMap";
 import { useQuery } from "@tanstack/react-query";
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import DynamicSections from '../components/DynamicSections';
 import { useSiteContent } from '../hooks/useSiteContent';
 
@@ -20,13 +20,13 @@ export default function Home() {
 
   const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
-    queryFn: () => base44.entities.SiteImage.list(),
+    queryFn: () => db.SiteImage.list(),
     initialData: []
   });
 
   const { data: levees = [] } = useQuery({
     queryKey: ['levees-fonds'],
-    queryFn: () => base44.entities.LeveeFonds.list('-created_date', 100),
+    queryFn: () => db.LeveeFonds.list('-created_at', 100),
     initialData: []
   });
 

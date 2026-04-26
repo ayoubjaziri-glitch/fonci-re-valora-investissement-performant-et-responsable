@@ -9,7 +9,7 @@ import {
 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 
 function ShareButtons({ handleShare, copied }) {
   return (
@@ -56,7 +56,7 @@ export default function BlogArticle() {
   // Charger tous les articles de la BDD
   const { data: articlesDB = [] } = useQuery({
     queryKey: ['blog-articles'],
-    queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 100),
+    queryFn: () => db.ArticleBlog.list('-date_publication', 100),
   });
 
   // Mapper les articles de la BDD au format utilisé

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
@@ -15,7 +15,7 @@ import { Button } from '@/components/ui/button';
 export default function DynamicSections({ page, minOrdre = 0, maxOrdre = Infinity }) {
   const { data: allSections = [] } = useQuery({
     queryKey: ['site-sections'],
-    queryFn: () => base44.entities.SiteSection.list('ordre', 200),
+    queryFn: () => db.SiteSection.list('ordre', 200),
     staleTime: 30000,
   });
 

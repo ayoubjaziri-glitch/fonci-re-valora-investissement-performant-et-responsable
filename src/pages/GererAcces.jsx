@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,11 +15,11 @@ export default function GererAcces({ embedded = false }) {
 
   const { data: acces = [], isLoading } = useQuery({
     queryKey: ['acces-associes'],
-    queryFn: () => base44.entities.AccesAssocie.list(),
+    queryFn: () => db.AccesAssocie.list(),
   });
 
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.AccesAssocie.create(data),
+    mutationFn: (data) => db.AccesAssocie.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['acces-associes'] });
       setNewAccess({ email: '', password: '', nom: '' });
@@ -27,14 +27,14 @@ export default function GererAcces({ embedded = false }) {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.AccesAssocie.delete(id),
+    mutationFn: (id) => db.AccesAssocie.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['acces-associes'] });
     },
   });
 
   const toggleActiveMutation = useMutation({
-    mutationFn: ({ id, actif }) => base44.entities.AccesAssocie.update(id, { actif }),
+    mutationFn: ({ id, actif }) => db.AccesAssocie.update(id, { actif }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['acces-associes'] });
     },

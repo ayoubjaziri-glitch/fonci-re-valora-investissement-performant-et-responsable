@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import BeforeAfterSlider from "../components/BeforeAfterSlider";
 import DynamicSections from '../components/DynamicSections';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 
 
 const getDPEColor = (dpe) => {
@@ -35,7 +35,7 @@ export default function Realisations() {
 
   const { data: biensDB = [] } = useQuery({
     queryKey: ['realisations-biens'],
-    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
+    queryFn: () => db.RealisationBien.list('ordre', 50),
     initialData: []
   });
 

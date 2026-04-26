@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import BeforeAfterSlider from "./BeforeAfterSlider";
 import { useQuery } from "@tanstack/react-query";
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 
 const FALLBACK_REALISATIONS = [
   {
@@ -52,7 +52,7 @@ const getDPEColor = (dpe) => {
 export default function RealisationsGallery() {
   const { data: dbRealisations = [] } = useQuery({
     queryKey: ['realisations-biens'],
-    queryFn: () => base44.entities.RealisationBien.list('ordre', 50),
+    queryFn: () => db.RealisationBien.list('ordre', 50),
     initialData: []
   });
 

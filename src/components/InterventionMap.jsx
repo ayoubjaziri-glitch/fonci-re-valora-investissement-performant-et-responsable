@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 're
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 
 // Fix default marker icons
 delete L.Icon.Default.prototype._getIconUrl;
@@ -105,7 +105,7 @@ export default function InterventionMap() {
 
   const { data: realisations = [] } = useQuery({
     queryKey: ['realisations-biens'],
-    queryFn: () => base44.entities.RealisationBien.filter({ actif: true }),
+    queryFn: () => db.RealisationBien.filter({ actif: true }),
     initialData: []
   });
 

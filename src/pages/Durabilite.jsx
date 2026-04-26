@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
 import { useQuery } from "@tanstack/react-query";
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import DynamicSections from '../components/DynamicSections';
 import { useSiteContent } from '../hooks/useSiteContent';
 import {
@@ -18,7 +18,7 @@ export default function Durabilite() {
   const { get } = useSiteContent();
   const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
-    queryFn: () => base44.entities.SiteImage.list(),
+    queryFn: () => db.SiteImage.list(),
     initialData: []
   });
 

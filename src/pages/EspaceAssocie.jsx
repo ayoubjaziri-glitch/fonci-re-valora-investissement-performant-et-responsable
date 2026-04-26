@@ -3,7 +3,7 @@ import { genererRapportPDF } from '../components/GenerateurRapportPDF';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQuery } from '@tanstack/react-query';
 import {
   TrendingUp, Building2, Percent, Shield, FileText, Users,
@@ -31,7 +31,7 @@ export default function EspaceAssocie() {
         try {
           const auth = JSON.parse(savedAuth);
           // Vérifier que le compte existe toujours et est actif
-          const allAccess = await base44.entities.AccesAssocie.list();
+          const allAccess = await db.AccesAssocie.list();
           const associe = allAccess.find((a) =>
           a.email === auth.email &&
           a.actif === true
@@ -67,7 +67,7 @@ export default function EspaceAssocie() {
 
     try {
       // Récupérer tous les accès actifs
-      const allAccess = await base44.entities.AccesAssocie.list();
+      const allAccess = await db.AccesAssocie.list();
 
       // Filtrer manuellement pour trouver l'associé avec cet email et actif
       const associe = allAccess.find((a) =>
@@ -106,12 +106,12 @@ export default function EspaceAssocie() {
   };
 
   // Fetch dynamic data
-  const { data: configs = [] } = useQuery({ queryKey: ['ea-config'], queryFn: () => base44.entities.EspaceAssocieConfig.list(), enabled: isLoggedIn });
-  const { data: docsDb = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => base44.entities.DocumentAssocie.filter({ actif: true }, '-date_document'), enabled: isLoggedIn });
-  const { data: actuDb = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => base44.entities.ActualiteAssocie.filter({ actif: true }, '-date_publication', 5), enabled: isLoggedIn });
-  const { data: acqDb = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => base44.entities.AcquisitionAssocie.list(), enabled: isLoggedIn });
-  const { data: realisationDb = [] } = useQuery({ queryKey: ['realisation-biens'], queryFn: () => base44.entities.RealisationBien.filter({ actif: true }), enabled: isLoggedIn });
-  const { data: roadmapDb = [] } = useQuery({ queryKey: ['roadmap-associe'], queryFn: () => base44.entities.RoadmapAssocie.list('ordre'), enabled: isLoggedIn });
+  const { data: configs = [] } = useQuery({ queryKey: ['ea-config'], queryFn: () => db.EspaceAssocieConfig.list(), enabled: isLoggedIn });
+  const { data: docsDb = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => db.DocumentAssocie.filter({ actif: true }, '-date_document'), enabled: isLoggedIn });
+  const { data: actuDb = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => db.ActualiteAssocie.filter({ actif: true }, '-date_publication', 5), enabled: isLoggedIn });
+  const { data: acqDb = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => db.AcquisitionAssocie.list(), enabled: isLoggedIn });
+  const { data: realisationDb = [] } = useQuery({ queryKey: ['realisation-biens'], queryFn: () => db.RealisationBien.filter({ actif: true }), enabled: isLoggedIn });
+  const { data: roadmapDb = [] } = useQuery({ queryKey: ['roadmap-associe'], queryFn: () => db.RoadmapAssocie.list('ordre'), enabled: isLoggedIn });
 
   const getConfig = (key, fallback) => {
     const found = configs.find((c) => c.cle === key);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { db } from '@/lib/supabaseClient';
 import { base44 } from '@/api/base44Client';
 import { useToast } from "@/components/ui/use-toast";
 import {
@@ -47,7 +48,7 @@ export default function Contact() {
     const dateStr = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
     // 1. Sauvegarder la demande en base de données
-    await base44.entities.ContactRequest.create({
+    await db.ContactRequest.create({
       prenom: formData.firstName,
       nom: formData.lastName,
       email: formData.email,
@@ -59,7 +60,7 @@ export default function Contact() {
     // 2. Récupérer les destinataires configurés
     let destinataires = ['Ayoubcontact33@gmail.com', 'Ayoubjaziri@gmail.com'];
     try {
-      const configs = await base44.entities.ContactConfig.list();
+      const configs = await db.ContactConfig.list();
       const cfg = configs.find(c => c.cle === 'email_destinataires');
       if (cfg && cfg.valeur) {
         destinataires = cfg.valeur.split(',').map(e => e.trim()).filter(Boolean);

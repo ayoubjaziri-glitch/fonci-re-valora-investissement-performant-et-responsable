@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import {
   Calendar, User, ArrowRight, Search, TrendingUp,
   Building2, Euro, Target, Briefcase, Award, FileText,
@@ -18,7 +18,7 @@ export default function Blog() {
 
   const { data: articlesDB = [] } = useQuery({
     queryKey: ['blog-articles'],
-    queryFn: () => base44.entities.ArticleBlog.list('-date_publication', 100),
+    queryFn: () => db.ArticleBlog.list('-date_publication', 100),
     initialData: []
   });
 
