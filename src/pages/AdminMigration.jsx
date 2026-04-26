@@ -87,16 +87,18 @@ async function deleteAll(tableKey) {
 
 async function insertAll(tableKey, data) {
   const conflictCol = CONFLICT_COL[tableKey];
+
+  const url = conflictCol
+    ? `${SUPABASE_URL}/rest/v1/${tableKey}?on_conflict=${conflictCol}`
+    : `${SUPABASE_URL}/rest/v1/${tableKey}`;
+
   const preferHeader = conflictCol
     ? `resolution=merge-duplicates,return=minimal`
     : `return=minimal`;
 
-  const reqHeaders = { ...headers, 'Prefer': preferHeader };
-  if (conflictCol) reqHeaders['On-Conflict'] = conflictCol;
-
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/${tableKey}`, {
+  const res = await fetch(url, {
     method: 'POST',
-    headers: reqHeaders,
+    headers: { ...headers, 'Prefer': preferHeader },
     body: JSON.stringify(data),
   });
   if (!res.ok) {
