@@ -531,7 +531,8 @@ const navGroups = [
   { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
   { id: 'acces', label: 'Accès Associés', icon: Users },
   { id: 'admin', label: 'Accès Admin', icon: Shield },
-  { id: 'audit', label: '🔍 Audit Global', icon: Shield }]
+  { id: 'audit', label: '🔍 Audit Global', icon: Shield },
+  { id: 'export_backend', label: '📦 Export Backend', icon: Rocket }]
 
 }];
 
@@ -648,6 +649,14 @@ export default function AdminBackOffice() {
         {/* Content */}
         <div className="flex-1 p-6 lg:p-8">
           {activeTab === 'audit' && <AuditGlobal />}
+          {activeTab === 'export_backend' && (
+            <div className="bg-white rounded-2xl border border-slate-200 p-6 text-center">
+              <p className="text-slate-500 mb-4">Cette section s'ouvre dans une page dédiée.</p>
+              <a href="/admin/export-backend" target="_blank" className="inline-flex items-center gap-2 bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-bold px-6 py-3 rounded-xl transition-colors">
+                <Rocket className="h-4 w-4" /> Ouvrir l'export backend →
+              </a>
+            </div>
+          )}
           {activeTab === 'dashboard' && <DashboardSection onNavigate={setActiveTab} />}
           {activeTab === 'taches' && <AdminTaches />}
           {activeTab === 'contacts' && <DemandesContactSection />}
