@@ -75,12 +75,21 @@ Deno.serve(async (req) => {
       ? destinataires
       : ['Ayoubcontact33@gmail.com', 'Ayoubjaziri@gmail.com'];
 
+    const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
+
     for (const to of toList) {
-      await base44.asServiceRole.integrations.Core.SendEmail({
-        to,
-        subject: `📩 Nouvelle demande - ${type_demande} | La Foncière Valora`,
-        body: emailBody,
-        from_name: 'La Foncière Valora'
+      await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${RESEND_API_KEY}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          from: 'La Foncière Valora <onboarding@resend.dev>',
+          to,
+          subject: `📩 Nouvelle demande - ${type_demande} | La Foncière Valora`,
+          html: emailBody
+        })
       });
     }
 
