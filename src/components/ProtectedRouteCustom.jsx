@@ -15,7 +15,7 @@ export default function ProtectedRouteCustom({ children }) {
   }
 
   if (!isAuthenticated) {
-    return <Navigate to={`/login?next=${location.pathname}`} replace />;
+    return <Navigate to={`/admin/login?next=${location.pathname}`} replace />;
   }
 
   return children;
