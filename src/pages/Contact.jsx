@@ -67,15 +67,21 @@ export default function Contact() {
     } catch (e) { /* fallback */ }
 
     // 3. Envoyer l'email via la backend function
-    await base44.functions.invoke('sendContactEmail', {
-      prenom: formData.firstName,
-      nom: formData.lastName,
-      email: formData.email,
-      telephone: formData.phone || '',
-      type_demande: typeLabel,
-      message: formData.message,
-      destinataires
-    });
+    try {
+      const res = await base44.functions.invoke('sendContactEmail', {
+        prenom: formData.firstName,
+        nom: formData.lastName,
+        email: formData.email,
+        telephone: formData.phone || '',
+        type_demande: typeLabel,
+        message: formData.message,
+        destinataires
+      });
+      console.log('Email envoyé:', res);
+    } catch (err) {
+      console.error('Erreur envoi email:', err);
+      alert('Erreur lors de l\'envoi de l\'email : ' + err.message);
+    }
 
     setSending(false);
     setSubmitted(true);
