@@ -71,9 +71,8 @@ Deno.serve(async (req) => {
 </body>
 </html>`;
 
-    const toList = destinataires && destinataires.length > 0
-      ? destinataires
-      : ['Ayoubcontact33@gmail.com', 'Ayoubjaziri@gmail.com'];
+    // Resend sans domaine vérifié : on force l'envoi vers l'email du compte Resend
+    const toList = ['ayoubjaziri@gmail.com'];
 
     const RESEND_API_KEY = Deno.env.get('RESEND_API_KEY');
 
