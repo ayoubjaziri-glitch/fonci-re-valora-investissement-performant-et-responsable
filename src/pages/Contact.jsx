@@ -68,7 +68,7 @@ export default function Contact() {
 
     // 3. Envoyer l'email via la backend function
     try {
-      await base44.functions.invoke('sendContactEmail', {
+      const res = await base44.functions.invoke('sendContactEmail', {
         prenom: formData.firstName,
         nom: formData.lastName,
         email: formData.email,
@@ -77,7 +77,7 @@ export default function Contact() {
         message: formData.message,
         destinataires
       });
-      console.log('Email envoyé');
+      console.log('Email envoyé:', res);
     } catch (err) {
       console.error('Erreur envoi email:', err);
       alert('Erreur lors de l\'envoi de l\'email : ' + err.message);
