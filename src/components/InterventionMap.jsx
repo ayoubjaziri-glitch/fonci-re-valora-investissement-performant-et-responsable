@@ -101,7 +101,7 @@ const MapController = ({ mapRef, onZoomChange }) => {
 
 export default function InterventionMap() {
   const mapRef = useRef(null);
-  const [currentZoom, setCurrentZoom] = useState(10);
+  const [currentZoom, setCurrentZoom] = useState(6);
 
   const { data: realisations = [] } = useQuery({
     queryKey: ['realisations-biens'],
@@ -129,8 +129,8 @@ export default function InterventionMap() {
 
   const showClusters = currentZoom < CLUSTER_ZOOM_THRESHOLD;
 
-  // Centre fixé sur la zone Vichy / Clermont-Ferrand
-  const center = [45.95, 3.35];
+  // Centre sur la France entière
+  const center = [46.5, 2.5];
 
   // City grouping for legend
   const cities = clusters.map(c => ({
@@ -151,7 +151,7 @@ export default function InterventionMap() {
       <div className="rounded-2xl overflow-hidden shadow-xl border border-slate-200" style={{ height: 520 }}>
         <MapContainer
           center={center}
-          zoom={10}
+          zoom={6}
           style={{ height: '100%', width: '100%' }}
           scrollWheelZoom={true}
         >
