@@ -22,7 +22,7 @@ export default function Partenaires() {
     category: get('ecosysteme_architectes_categorie', 'Architectes'),
     title: get('ecosysteme_architectes_titre', 'Vision architecturale & valorisation'),
     description: get('ecosysteme_architectes_description', "Les architectes partenaires interviennent sur la conception des projets de réhabilitation, apportant une signature architecturale respectueuse du patrimoine bâti tout en intégrant les exigences de performance énergétique."),
-    values: get('ecosysteme_architectes_valeurs', "Rôle clé dans la valorisation des actifs\nVision patrimoniale de long terme\nSignature architecturale soignée").split('\n').filter(v => v.trim()),
+    values: get('ecosysteme_architectes_valeurs', "Rôle clé dans la valorisation des actifs\nVision patrimoniale de long terme\nSignature architecturale soignée").split('\n').filter((v) => v.trim()),
     emoji: '🏛️'
   },
   {
@@ -33,7 +33,7 @@ export default function Partenaires() {
     category: get('ecosysteme_btp_categorie', 'Entreprises BTP'),
     title: get('ecosysteme_btp_titre', 'Excellence opérationnelle'),
     description: get('ecosysteme_btp_description', "Les entreprises du bâtiment avec lesquelles nous collaborons sont sélectionnées pour leur savoir-faire technique, leur engagement dans la transition énergétique et leur capacité à respecter les standards de performance énergétique."),
-    values: get('ecosysteme_btp_valeurs', "Qualité d'exécution garantie\nEngagement dans la transition énergétique\nPartenaires techniques de confiance").split('\n').filter(v => v.trim()),
+    values: get('ecosysteme_btp_valeurs', "Qualité d'exécution garantie\nEngagement dans la transition énergétique\nPartenaires techniques de confiance").split('\n').filter((v) => v.trim()),
     emoji: '🏗️'
   },
   {
@@ -44,7 +44,7 @@ export default function Partenaires() {
     category: get('ecosysteme_notaires_categorie', 'Notaires & Avocats'),
     title: get('ecosysteme_notaires_titre', 'Sécurisation juridique'),
     description: get('ecosysteme_notaires_description', "Accompagnement par des notaires et cabinets d'avocats spécialisés en droit immobilier, en structuration de sociétés et en gouvernance patrimoniale."),
-    values: get('ecosysteme_notaires_valeurs', "Sécurisation des opérations\nStructuration juridique adaptée\nConformité réglementaire").split('\n').filter(v => v.trim()),
+    values: get('ecosysteme_notaires_valeurs', "Sécurisation des opérations\nStructuration juridique adaptée\nConformité réglementaire").split('\n').filter((v) => v.trim()),
     emoji: '⚖️'
   },
   {
@@ -55,7 +55,7 @@ export default function Partenaires() {
     category: get('ecosysteme_agents_categorie', 'Agents immobiliers'),
     title: get('ecosysteme_agents_titre', 'Sourcing & commercialisation'),
     description: get('ecosysteme_agents_description', "Réseau d'agents immobiliers pour l'accès à des opportunités off-market et la commercialisation locative des actifs réhabilités."),
-    values: get('ecosysteme_agents_valeurs', "Accès privilégié au marché\nConnaissance locale approfondie\nRéactivité commerciale").split('\n').filter(v => v.trim()),
+    values: get('ecosysteme_agents_valeurs', "Accès privilégié au marché\nConnaissance locale approfondie\nRéactivité commerciale").split('\n').filter((v) => v.trim()),
     emoji: '🏠'
   },
   {
@@ -66,7 +66,7 @@ export default function Partenaires() {
     category: get('ecosysteme_banques_categorie', 'Établissements bancaires'),
     title: get('ecosysteme_banques_titre', 'Financement structuré'),
     description: get('ecosysteme_banques_description', "Partenariats avec des établissements de crédit pour structurer des financements adaptés aux opérations d'acquisition et de rénovation."),
-    values: get('ecosysteme_banques_valeurs', "Conditions négociées\nRelations de long terme\nExpertise financement immobilier").split('\n').filter(v => v.trim()),
+    values: get('ecosysteme_banques_valeurs', "Conditions négociées\nRelations de long terme\nExpertise financement immobilier").split('\n').filter((v) => v.trim()),
     emoji: '🏦'
   },
   {
@@ -77,7 +77,7 @@ export default function Partenaires() {
     category: get('ecosysteme_patrimoniaux_categorie', 'Partenaires patrimoniaux'),
     title: get('ecosysteme_patrimoniaux_titre', 'Accompagnement durable'),
     description: get('ecosysteme_patrimoniaux_description', "Des acteurs engagés dans la durée qui accompagnent les projets immobiliers par leur expertise, leur réseau et leur vision stratégique, contribuant à la pérennité du développement de la foncière."),
-    values: get('ecosysteme_patrimoniaux_valeurs', "Acteurs engagés dans la durée\nAccompagnement structuré des projets\nAlignement sur une vision patrimoniale").split('\n').filter(v => v.trim()),
+    values: get('ecosysteme_patrimoniaux_valeurs', "Acteurs engagés dans la durée\nAccompagnement structuré des projets\nAlignement sur une vision patrimoniale").split('\n').filter((v) => v.trim()),
     emoji: '🤝'
   }];
 
@@ -140,14 +140,14 @@ export default function Partenaires() {
 
                 <div className="flex items-start gap-4 mb-6">
                   <div className={`w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-200 ${partenaire.logoBg}`}>
-                    {partenaire.logoUrl ? (
-                      <img
-                        src={partenaire.logoUrl}
-                        alt={partenaire.logoAlt}
-                        className="w-12 h-12 object-contain"
-                        onError={e => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }}
-                      />
-                    ) : null}
+                    {partenaire.logoUrl ?
+                  <img
+                    src={partenaire.logoUrl}
+                    alt={partenaire.logoAlt}
+                    className="w-12 h-12 object-contain"
+                    onError={(e) => {e.target.style.display = 'none';e.target.nextSibling.style.display = 'flex';}} /> :
+
+                  null}
                     <span className={`text-2xl ${partenaire.logoUrl ? 'hidden' : 'flex'} items-center justify-center w-full h-full`} style={{ display: partenaire.logoUrl ? 'none' : 'flex' }}>
                       {partenaire.emoji}
                     </span>
@@ -188,7 +188,7 @@ export default function Partenaires() {
             <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
               {get('ecosysteme_cta_titre', 'Partenaires et opérateurs')}
             </h2>
-            <p className="text-[#1A3A52]/80 mb-8">
+            <p className="text-slate-800 mb-8">
               {get('ecosysteme_cta_description', "La foncière développe ses projets avec des partenaires : investisseurs privés, architectes, entreprises de construction et experts immobiliers.")}
             </p>
             <Link to={createPageUrl("Contact")}>
@@ -200,6 +200,6 @@ export default function Partenaires() {
           </motion.div>
         </div>
       </section>
-    </div>
-  );
+    </div>);
+
 }
