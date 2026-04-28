@@ -136,8 +136,43 @@ export default function Partenaires() {
         </div>
       </section>
 
-      {/* DynamicSections top */}
-      <DynamicSections page="ecosysteme" orderRange={[0, 3]} />
+      {/* Grille partenaires */}
+      <section className="py-16 bg-slate-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">Nos partenaires métiers</h2>
+            <p className="text-slate-600 max-w-2xl mx-auto">
+              Des acteurs qualifiés intervenant sur l'ensemble du cycle de valorisation.
+            </p>
+          </motion.div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {ecosysteme.map((p, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                className="bg-white rounded-3xl p-8 border border-slate-200 hover:shadow-2xl transition-all duration-300">
+                <div className="flex items-start gap-4 mb-6">
+                  <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center flex-shrink-0">
+                    <span className="text-3xl">{p.emoji}</span>
+                  </div>
+                  <div>
+                    <p className="text-sm text-[#C9A961] font-medium uppercase tracking-wider mb-1">{p.category}</p>
+                    <h3 className="text-xl font-serif text-[#1A3A52]">{p.title}</h3>
+                  </div>
+                </div>
+                <p className="text-slate-600 mb-6 leading-relaxed">{p.description}</p>
+                <div className="space-y-2">
+                  {p.values.map((val, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
+                      <CheckCircle2 className="h-4 w-4 text-[#C9A961] flex-shrink-0" />
+                      <span className="text-sm text-slate-600">{val}</span>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* Stats */}
       <section className="py-12 bg-white border-b border-slate-100">
@@ -229,44 +264,6 @@ export default function Partenaires() {
                 </motion.div>
               );
             })}
-          </div>
-        </div>
-      </section>
-
-      {/* Grille partenaires */}
-      <section className="py-16 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">Nos partenaires métiers</h2>
-            <p className="text-slate-600 max-w-2xl mx-auto">
-              Des acteurs qualifiés intervenant sur l'ensemble du cycle de valorisation.
-            </p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {ecosysteme.map((p, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="bg-white rounded-3xl p-8 border border-slate-200 hover:shadow-2xl transition-all duration-300">
-                <div className="flex items-start gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center flex-shrink-0">
-                    <span className="text-3xl">{p.emoji}</span>
-                  </div>
-                  <div>
-                    <p className="text-sm text-[#C9A961] font-medium uppercase tracking-wider mb-1">{p.category}</p>
-                    <h3 className="text-xl font-serif text-[#1A3A52]">{p.title}</h3>
-                  </div>
-                </div>
-                <p className="text-slate-600 mb-6 leading-relaxed">{p.description}</p>
-                <div className="space-y-2">
-                  {p.values.map((val, idx) => (
-                    <div key={idx} className="flex items-center gap-2">
-                      <CheckCircle2 className="h-4 w-4 text-[#C9A961] flex-shrink-0" />
-                      <span className="text-sm text-slate-600">{val}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
           </div>
         </div>
       </section>
