@@ -55,7 +55,7 @@ import EspaceAssocie from './pages/EspaceAssocie';
 import Home from './pages/Home';
 import InvestirDansFonciere from './pages/InvestirDansFonciere';
 import MentionsLegales from './pages/MentionsLegales';
-import Partenaires from './pages/Partenaires';
+import Partenaires from './pages/Partenaires.jsx';
 import PolitiqueConfidentialite from './pages/PolitiqueConfidentialite';
 import Realisations from './pages/Realisations';
 import Services from './pages/Services';
