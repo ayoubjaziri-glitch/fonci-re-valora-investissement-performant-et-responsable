@@ -11,19 +11,19 @@ import {
 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
-import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 
 const LOGO_URL = 'https://base44.app/api/apps/699460f1b03f6285dc8513a7/files/mp/public/699460f1b03f6285dc8513a7/eb47cc5e5_cropped.jpg';
 
 function LogoImage() {
-  const { data: images = [] } = useQuery({
+  const { data: rawImages = [] } = useQuery({
     queryKey: ['site-images'],
-    queryFn: () => db.SiteImage.list(),
+    queryFn: () => base44.entities.SiteImage.list(),
     initialData: []
   });
 
-  const logoImage = images.find((img) => img.key === 'logo');
-  const logoUrl = logoImage?.url || LOGO_URL;
+  const logoImage = rawImages.find((img) => (img.key ?? img.data?.key) === 'logo');
+  const logoUrl = (logoImage?.url ?? logoImage?.data?.url) || LOGO_URL;
 
   return (
     <img

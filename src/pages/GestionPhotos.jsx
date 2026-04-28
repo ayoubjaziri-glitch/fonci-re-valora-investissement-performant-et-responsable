@@ -241,7 +241,6 @@ export default function GestionPhotos({ embedded = false }) {
     queryFn: () => base44.entities.SiteImage.list(),
   });
 
-  // Normalise les champs Base44 (données dans record.data.xxx)
   const images = rawImages.map(img => ({
     id: img.id,
     key: img.key ?? img.data?.key,
