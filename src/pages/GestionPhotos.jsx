@@ -144,9 +144,11 @@ function RealisationsBiensSection() {
     setUploading({ id: bienId, type });
     try {
       const fileName = `realisations/${Date.now()}_${croppedFile.name}`;
-      await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
-      const { data } = supabase.storage.from('site-assets').getPublicUrl(fileName);
-      await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: data.publicUrl } });
+      const { error: uploadError } = await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
+      if (uploadError) throw uploadError;
+      
+      const { data: { publicUrl } } = supabase.storage.from('site-assets').getPublicUrl(fileName);
+      await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: publicUrl } });
       setUploading(null);
     } catch (error) {
       console.error('Error uploading image:', error);
@@ -270,9 +272,11 @@ export default function GestionPhotos({ embedded = false }) {
     setUploading(true);
     try {
       const fileName = `site-images/${Date.now()}_${croppedFile.name}`;
-      await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
-      const { data } = supabase.storage.from('site-assets').getPublicUrl(fileName);
-      await updateImageMutation.mutateAsync({ id: imageId, url: data.publicUrl });
+      const { error: uploadError } = await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
+      if (uploadError) throw uploadError;
+      
+      const { data: { publicUrl } } = supabase.storage.from('site-assets').getPublicUrl(fileName);
+      await updateImageMutation.mutateAsync({ id: imageId, url: publicUrl });
       setUploading(false);
     } catch (error) {
       console.error('Error uploading image:', error);
