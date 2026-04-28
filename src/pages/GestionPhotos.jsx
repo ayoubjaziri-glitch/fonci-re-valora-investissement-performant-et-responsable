@@ -147,7 +147,7 @@ function RealisationsBiensSection() {
       const { error: uploadError } = await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
       if (uploadError) throw uploadError;
       
-      const { data: { publicUrl } } = supabase.storage.from('site-assets').getPublicUrl(fileName);
+      const publicUrl = `${supabase.storageUrl}/object/public/site-assets/${fileName}`;
       await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: publicUrl } });
       setUploading(null);
     } catch (error) {
@@ -275,7 +275,7 @@ export default function GestionPhotos({ embedded = false }) {
       const { error: uploadError } = await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
       if (uploadError) throw uploadError;
       
-      const { data: { publicUrl } } = supabase.storage.from('site-assets').getPublicUrl(fileName);
+      const publicUrl = `${supabase.storageUrl}/object/public/site-assets/${fileName}`;
       await updateImageMutation.mutateAsync({ id: imageId, url: publicUrl });
       setUploading(false);
     } catch (error) {
