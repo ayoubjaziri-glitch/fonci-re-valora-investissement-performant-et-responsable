@@ -23,7 +23,7 @@ const PAGES = [
     id: 'accueil',
     label: 'Page Accueil',
     icon: Home,
-    keys: ['hero_home', 'hero_home_bg', 'hero_main', 'durabilite_home', 'service_souscription', 'service_sourcing', 'service_asset'],
+    keys: ['hero_home', 'hero_home_bg', 'hero_main', 'durabilite_home', 'service_souscription', 'service_sourcing', 'service_asset', 'photo_ayoub', 'photo_sophian', 'photo_renaud'],
   },
   {
     id: 'portefeuille',
