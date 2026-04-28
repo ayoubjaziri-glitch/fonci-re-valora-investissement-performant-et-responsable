@@ -144,10 +144,10 @@ function RealisationsBiensSection() {
     setUploading({ id: bienId, type });
     try {
       const fileName = `realisations/${Date.now()}_${croppedFile.name}`;
-      const { error: uploadError } = await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
+      const { error: uploadError } = await supabase.storage.from('uploads').upload(fileName, croppedFile, { upsert: true });
       if (uploadError) throw uploadError;
       
-      const publicUrl = `${supabase.storageUrl}/object/public/site-assets/${fileName}`;
+      const publicUrl = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/uploads/${fileName}`;
       await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: publicUrl } });
       setUploading(null);
     } catch (error) {
@@ -272,10 +272,10 @@ export default function GestionPhotos({ embedded = false }) {
     setUploading(true);
     try {
       const fileName = `site-images/${Date.now()}_${croppedFile.name}`;
-      const { error: uploadError } = await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
+      const { error: uploadError } = await supabase.storage.from('uploads').upload(fileName, croppedFile, { upsert: true });
       if (uploadError) throw uploadError;
       
-      const publicUrl = `${supabase.storageUrl}/object/public/site-assets/${fileName}`;
+      const publicUrl = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/uploads/${fileName}`;
       await updateImageMutation.mutateAsync({ id: imageId, url: publicUrl });
       setUploading(false);
     } catch (error) {
