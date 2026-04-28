@@ -2,36 +2,29 @@ import { useQuery } from '@tanstack/react-query';
 import { base44 } from '@/api/base44Client';
 
 /**
- * Hook pour lire les contenus éditables du site depuis Base44.
- * Les enregistrements ont la structure : { id, data: { cle, valeur, page, label, type_champ } }
+ * Hook pour lire les contenus éditables du site.
+ * Retourne une fonction get(cle, fallback) qui donne la valeur DB ou le fallback statique.
  */
 export function useSiteContent() {
-  const { data: rawContents = [] } = useQuery({
-    queryKey: ['site-content-b44'],
+  const { data: contents = [] } = useQuery({
+    queryKey: ['site-content'],
     queryFn: () => base44.entities.SiteContent.list(),
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
 
-  // Normalise : extrait data.cle / data.valeur
-  const contents = rawContents.map(c => ({
-    id: c.id,
-    cle: c.data?.cle ?? c.cle,
-    valeur: c.data?.valeur ?? c.valeur,
-    page: c.data?.page ?? c.page,
-    label: c.data?.label ?? c.label,
-    type_champ: c.data?.type_champ ?? c.type_champ,
-  }));
-
   const get = (cle, fallback = '') => {
-    const found = contents.find(c => c.cle === cle);
-    return found?.valeur ?? fallback;
+    const found = contents.find(c => (c.cle === cle) || (c.data?.cle === cle));
+    const valeur = found?.valeur ?? found?.data?.valeur;
+    return valeur ?? fallback;
   };
 
+  // Pour les listes (contenu séparé par \n)
   const getList = (cle, fallback = []) => {
-    const found = contents.find(c => c.cle === cle);
-    if (!found) return fallback;
-    return found.valeur.split('\n').filter(l => l.trim());
+    const found = contents.find(c => (c.cle === cle) || (c.data?.cle === cle));
+    const valeur = found?.valeur ?? found?.data?.valeur;
+    if (!valeur) return fallback;
+    return valeur.split('\n').filter(l => l.trim());
   };
 
   return { get, getList, contents };
