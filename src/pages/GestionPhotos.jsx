@@ -125,11 +125,16 @@ function RealisationsBiensSection() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => db.RealisationBien.update(id, data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['realisations-biens-photos'] });
-      queryClient.invalidateQueries({ queryKey: ['realisations-biens'] });
-    }
+   mutationFn: ({ id, data }) => db.RealisationBien.update(id, data),
+   onSuccess: (data) => {
+     console.log('Bien réalisation mis à jour:', data);
+     queryClient.invalidateQueries({ queryKey: ['realisations-biens-photos'] });
+     queryClient.invalidateQueries({ queryKey: ['realisations-biens'] });
+   },
+   onError: (error) => {
+     console.error('Erreur mise à jour bien:', error);
+     alert('Erreur : ' + error.message);
+   }
   });
 
   const handleFileUpload = (bienId, type, file) => {
@@ -252,11 +257,16 @@ export default function GestionPhotos({ embedded = false }) {
 
   const updateImageMutation = useMutation({
     mutationFn: ({ id, url }) => db.SiteImage.update(id, { url }),
-    onSuccess: () => {
+    onSuccess: (data) => {
+      console.log('Image mise à jour:', data);
       queryClient.invalidateQueries({ queryKey: ['site-images'] });
       setEditingImage(null);
       setNewUrl('');
     },
+    onError: (error) => {
+      console.error('Erreur mise à jour image:', error);
+      alert('Erreur : ' + error.message);
+    }
   });
 
   const handleFileUpload = async (imageId, file) => {

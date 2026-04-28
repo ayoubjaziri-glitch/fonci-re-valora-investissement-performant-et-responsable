@@ -57,7 +57,8 @@ export default function AdminRealisationsPlus() {
         return db.RealisationBien.create(payload);
       }
     },
-    onSuccess: () => { 
+    onSuccess: (data) => {
+      console.log('Réalisation sauvegardée:', data);
       qc.invalidateQueries({ queryKey: ['realisations-biens'] }); 
       setModal(false); 
       setEditId(null);
@@ -65,6 +66,10 @@ export default function AdminRealisationsPlus() {
         dpe_avant: 'D', dpe_apres: 'B', description_avant: '', description_apres: '', travaux: '', rendement_brut: '', plus_value: '', ordre: 0, actif: true });
       setGeoError('');
     },
+    onError: (error) => {
+      console.error('Erreur sauvegarde:', error);
+      alert('Erreur : ' + error.message);
+    }
   });
 
   const deleteMutation = useMutation({

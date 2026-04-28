@@ -26,7 +26,15 @@ export default function AdminEquipe() {
     mutationFn: (data) => editing === 'new'
       ? db.MembreEquipe.create(data)
       : db.MembreEquipe.update(editing.id, data),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['membres-equipe'] }); setEditing(null); },
+    onSuccess: (data) => { 
+      console.log('Membre sauvegardé:', data);
+      qc.invalidateQueries({ queryKey: ['membres-equipe'] }); 
+      setEditing(null); 
+    },
+    onError: (error) => {
+      console.error('Erreur sauvegarde:', error);
+      alert('Erreur : ' + error.message);
+    }
   });
 
   const deleteMutation = useMutation({
