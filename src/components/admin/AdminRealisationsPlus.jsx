@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -57,8 +58,7 @@ export default function AdminRealisationsPlus() {
         return db.RealisationBien.create(payload);
       }
     },
-    onSuccess: (data) => {
-      console.log('Réalisation sauvegardée:', data);
+    onSuccess: () => { 
       qc.invalidateQueries({ queryKey: ['realisations-biens'] }); 
       setModal(false); 
       setEditId(null);
@@ -66,10 +66,6 @@ export default function AdminRealisationsPlus() {
         dpe_avant: 'D', dpe_apres: 'B', description_avant: '', description_apres: '', travaux: '', rendement_brut: '', plus_value: '', ordre: 0, actif: true });
       setGeoError('');
     },
-    onError: (error) => {
-      console.error('Erreur sauvegarde:', error);
-      alert('Erreur : ' + error.message);
-    }
   });
 
   const deleteMutation = useMutation({
@@ -91,8 +87,8 @@ export default function AdminRealisationsPlus() {
     setCropModal(null);
     setUploadingPhoto(true);
     try {
-      const { file_url } = await db.uploadFile(croppedFile);
-      setForm({ ...form, [photoType === 'avant' ? 'image_avant' : 'image_apres']: file_url });
+      const res = await base44.integrations.Core.UploadFile({ file: croppedFile });
+      setForm({ ...form, [photoType === 'avant' ? 'image_avant' : 'image_apres']: res.file_url });
     } finally {
       setUploadingPhoto(false);
     }

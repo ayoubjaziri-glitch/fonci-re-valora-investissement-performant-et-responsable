@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -28,23 +28,23 @@ export default function AdminMemoire() {
 
   const { data: notes = [] } = useQuery({
     queryKey: ['valora-memoire'],
-    queryFn: () => db.ValoraAIMemoire.list('-created_date', 200),
+    queryFn: () => base44.entities.ValoraAIMemoire.list('-created_date', 200),
   });
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ['valora-memoire'] });
 
   const createMut = useMutation({
-    mutationFn: (data) => db.ValoraAIMemoire.create(data),
+    mutationFn: (data) => base44.entities.ValoraAIMemoire.create(data),
     onSuccess: invalidate,
   });
 
   const updateMut = useMutation({
-    mutationFn: ({ id, data }) => db.ValoraAIMemoire.update(id, data),
+    mutationFn: ({ id, data }) => base44.entities.ValoraAIMemoire.update(id, data),
     onSuccess: invalidate,
   });
 
   const deleteMut = useMutation({
-    mutationFn: (id) => db.ValoraAIMemoire.delete(id),
+    mutationFn: (id) => base44.entities.ValoraAIMemoire.delete(id),
     onSuccess: invalidate,
   });
 

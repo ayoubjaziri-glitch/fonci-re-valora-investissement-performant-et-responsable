@@ -5,7 +5,6 @@ const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-supabase.storageUrl = SUPABASE_URL;
 
 const headers = {
   'apikey': SUPABASE_KEY,
@@ -107,13 +106,4 @@ export const db = {
   Tache: createEntity('taches'),
   Projet: createEntity('projets'),
   Responsable: createEntity('responsables'),
-  async uploadFile(file) {
-    const fileName = `${Date.now()}-${file.name}`;
-    const { data, error } = await supabase.storage
-      .from('site-assets')
-      .upload(`uploads/${fileName}`, file, { upsert: false });
-    if (error) throw error;
-    const file_url = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/site-assets/${data.path}`;
-    return { file_url };
-  }
 };

@@ -11,10 +11,6 @@ export const CustomAuthProvider = ({ children }) => {
   const [authError, setAuthError] = useState(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoadingAuth(false);
-    }, 3000);
-
     checkAuth();
     
     // Listen for auth changes
@@ -28,10 +24,7 @@ export const CustomAuthProvider = ({ children }) => {
       }
     });
 
-    return () => {
-      clearTimeout(timer);
-      subscription?.unsubscribe();
-    };
+    return () => subscription?.unsubscribe();
   }, []);
 
   const checkAuth = async () => {

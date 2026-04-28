@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Lock, Eye, EyeOff, Image, Users, BarChart3, Newspaper,

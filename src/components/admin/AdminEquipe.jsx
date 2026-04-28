@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,15 +27,7 @@ export default function AdminEquipe() {
     mutationFn: (data) => editing === 'new'
       ? db.MembreEquipe.create(data)
       : db.MembreEquipe.update(editing.id, data),
-    onSuccess: (data) => { 
-      console.log('Membre sauvegardé:', data);
-      qc.invalidateQueries({ queryKey: ['membres-equipe'] }); 
-      setEditing(null); 
-    },
-    onError: (error) => {
-      console.error('Erreur sauvegarde:', error);
-      alert('Erreur : ' + error.message);
-    }
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['membres-equipe'] }); setEditing(null); },
   });
 
   const deleteMutation = useMutation({
@@ -56,8 +49,8 @@ export default function AdminEquipe() {
     setCropModal(null);
     setUploadingPhoto(true);
     try {
-      const { file_url } = await db.uploadFile(croppedFile);
-      setForm({ ...form, image_url: file_url });
+      const res = await base44.integrations.Core.UploadFile({ file: croppedFile });
+      setForm({ ...form, image_url: res.file_url });
     } catch (err) {
       console.error('Upload échoué:', err);
     } finally {

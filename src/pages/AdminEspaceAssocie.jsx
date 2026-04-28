@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -287,13 +288,9 @@ function DocumentsSection() {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(true);
-    try {
-      const { file_url } = await db.uploadFile(file);
-      const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-      setForm(f => ({ ...f, file_url, taille }));
-    } catch (err) {
-      console.error('Upload failed:', err);
-    }
+    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+    setForm(f => ({ ...f, file_url, taille }));
     setUploading(false);
   };
 

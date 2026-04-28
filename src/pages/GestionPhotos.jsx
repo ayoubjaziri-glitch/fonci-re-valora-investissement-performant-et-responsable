@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { db, supabase } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -125,16 +126,11 @@ function RealisationsBiensSection() {
   });
 
   const updateMutation = useMutation({
-   mutationFn: ({ id, data }) => db.RealisationBien.update(id, data),
-   onSuccess: (data) => {
-     console.log('Bien réalisation mis à jour:', data);
-     queryClient.invalidateQueries({ queryKey: ['realisations-biens-photos'] });
-     queryClient.invalidateQueries({ queryKey: ['realisations-biens'] });
-   },
-   onError: (error) => {
-     console.error('Erreur mise à jour bien:', error);
-     alert('Erreur : ' + error.message);
-   }
+    mutationFn: ({ id, data }) => db.RealisationBien.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['realisations-biens-photos'] });
+      queryClient.invalidateQueries({ queryKey: ['realisations-biens'] });
+    }
   });
 
   const handleFileUpload = (bienId, type, file) => {
@@ -148,18 +144,12 @@ function RealisationsBiensSection() {
     setCropModal(null);
     setUploading({ id: bienId, type });
     try {
-      const fileName = `realisation-${bienId}-${type}-${Date.now()}.jpg`;
-      const { data, error } = await supabase.storage
-        .from('site-assets')
-        .upload(`realisations/${fileName}`, croppedFile, { upsert: false });
-      if (error) throw error;
-      const publicUrl = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/site-assets/${data.path}`;
-      console.log('Réalisation image uploaded:', publicUrl);
+      const result = await base44.integrations.Core.UploadFile({ file: croppedFile });
+      const publicUrl = result.file_url;
       await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: publicUrl } });
       setUploading(null);
     } catch (error) {
       console.error('Error uploading image:', error);
-      alert('Erreur upload: ' + error.message);
       setUploading(null);
     }
   };
@@ -259,16 +249,11 @@ export default function GestionPhotos({ embedded = false }) {
 
   const updateImageMutation = useMutation({
     mutationFn: ({ id, url }) => db.SiteImage.update(id, { url }),
-    onSuccess: (data) => {
-      console.log('Image mise à jour:', data);
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['site-images'] });
       setEditingImage(null);
       setNewUrl('');
     },
-    onError: (error) => {
-      console.error('Erreur mise à jour image:', error);
-      alert('Erreur : ' + error.message);
-    }
   });
 
   const handleFileUpload = async (imageId, file) => {
@@ -284,18 +269,12 @@ export default function GestionPhotos({ embedded = false }) {
     setCropModal(null);
     setUploading(true);
     try {
-      const fileName = `site-image-${imageId}-${Date.now()}.jpg`;
-      const { data, error } = await supabase.storage
-        .from('site-assets')
-        .upload(`images/${fileName}`, croppedFile, { upsert: false });
-      if (error) throw error;
-      const publicUrl = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/site-assets/${data.path}`;
-      console.log('Image uploaded:', publicUrl);
+      const result = await base44.integrations.Core.UploadFile({ file: croppedFile });
+      const publicUrl = result.file_url;
       await updateImageMutation.mutateAsync({ id: imageId, url: publicUrl });
       setUploading(false);
     } catch (error) {
       console.error('Error uploading image:', error);
-      alert('Erreur upload: ' + error.message);
       setUploading(false);
     }
   };

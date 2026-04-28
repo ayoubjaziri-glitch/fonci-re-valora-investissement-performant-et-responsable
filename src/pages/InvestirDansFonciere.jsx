@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { createPageUrl } from '../utils';
 import { ArrowRight } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -10,7 +10,7 @@ import ReactMarkdown from 'react-markdown';
 export default function InvestirDansFonciere() {
   const { data: articles = [], isLoading } = useQuery({
     queryKey: ['blog-articles'],
-    queryFn: () => db.ArticleBlog.filter({ publie: true }),
+    queryFn: () => base44.entities.ArticleBlog.filter({ publie: true }),
   });
 
   const article = articles.find(a => a.slug === 'investissement-immobilier-2026-guide-fonciere-valora');

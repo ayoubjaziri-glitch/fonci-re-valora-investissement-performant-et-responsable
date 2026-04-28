@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -43,7 +43,7 @@ export default function AIPageGenerator({ onClose }) {
     setLoading(true);
     setGeneratedCode('');
 
-    const res = await db.invokeLLM({
+    const res = await base44.integrations.Core.InvokeLLM({
       prompt: `${BRAND_CONTEXT}
 
 MISSION : Génère le code complet d'une nouvelle page React pour le site de La Foncière Valora.
