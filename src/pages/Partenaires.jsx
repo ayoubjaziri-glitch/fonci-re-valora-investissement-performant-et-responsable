@@ -6,11 +6,28 @@ import { CheckCircle2, ArrowRight, Quote, Building2, Users, TrendingUp, Shield }
 import { Button } from "@/components/ui/button";
 import DynamicSections from '../components/DynamicSections';
 import { useSiteContent } from '../hooks/useSiteContent';
+import { useQuery } from '@tanstack/react-query';
+import { base44 } from '@/api/base44Client';
 
 const VALEUR_ICONS = [Shield, TrendingUp, Users, Building2];
 
+function useSiteImages() {
+  const { data: rawImages = [] } = useQuery({
+    queryKey: ['site-images'],
+    queryFn: () => base44.entities.SiteImage.list(),
+    staleTime: 0,
+  });
+  const images = rawImages.map(img => ({
+    key: img.key ?? img.data?.key,
+    url: img.url ?? img.data?.url ?? '',
+  }));
+  const getImg = (key, fallback = '') => images.find(i => i.key === key)?.url || fallback;
+  return { getImg };
+}
+
 export default function Partenaires() {
   const { get } = useSiteContent();
+  const { getImg } = useSiteImages();
 
   const ecosysteme = [
     {
@@ -197,7 +214,11 @@ export default function Partenaires() {
                   {get('ecosysteme_citation_texte', '"Notre conviction est que la création de valeur durable dans l\'immobilier résidentiel passe par une approche intégrée : sourcing off-market, réhabilitation énergétique, et gestion active des actifs."')}
                 </p>
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 bg-[#C9A961] rounded-full flex items-center justify-center text-white font-bold text-lg">AJ</div>
+                  {getImg('ecosysteme_citation_photo') ? (
+                    <img src={getImg('ecosysteme_citation_photo')} alt="Auteur" className="w-12 h-12 rounded-full object-cover border-2 border-[#C9A961]" />
+                  ) : (
+                    <div className="w-12 h-12 bg-[#C9A961] rounded-full flex items-center justify-center text-white font-bold text-lg">AJ</div>
+                  )}
                   <div>
                     <p className="text-white font-semibold">{get('ecosysteme_citation_auteur', 'Ayoub Jaziri')}</p>
                     <p className="text-white/50 text-sm">{get('ecosysteme_citation_role', 'Fondateur, La Foncière Valora')}</p>
