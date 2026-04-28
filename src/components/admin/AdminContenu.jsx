@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -159,14 +159,24 @@ export default function AdminContenu() {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
 
-  const { data: contents = [], isLoading } = useQuery({
-    queryKey: ['site-content'],
-    queryFn: () => db.SiteContent.list(),
+  const { data: rawContents = [], isLoading } = useQuery({
+    queryKey: ['site-content-b44'],
+    queryFn: () => base44.entities.SiteContent.list(),
   });
 
+  // Normalise les enregistrements Base44 (structure data.cle / data.valeur)
+  const contents = rawContents.map(c => ({
+    id: c.id,
+    cle: c.data?.cle ?? c.cle,
+    valeur: c.data?.valeur ?? c.valeur,
+    page: c.data?.page ?? c.page,
+    label: c.data?.label ?? c.label,
+    type_champ: c.data?.type_champ ?? c.type_champ,
+  }));
+
   const updateMutation = useMutation({
-    mutationFn: ({ id, valeur }) => db.SiteContent.update(id, { valeur }),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['site-content'] }),
+    mutationFn: ({ id, valeur }) => base44.entities.SiteContent.update(id, { valeur }),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['site-content-b44'] }),
   });
 
   const handleSave = (id, valeur) => updateMutation.mutate({ id, valeur });
