@@ -407,7 +407,9 @@ function DemandesContactSection() {
 
   const { data: contacts = [] } = useQuery({
     queryKey: ['contacts'],
-    queryFn: () => db.ContactRequest.list('-created_date', 200)
+    queryFn: () => db.ContactRequest.list('-created_date', 200),
+    staleTime: 0,
+    refetchOnWindowFocus: true
   });
 
   const markDoneMutation = useMutation({
