@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { db } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 
 /**
  * Hook pour lire les contenus éditables du site.
@@ -8,7 +8,7 @@ import { db } from '@/lib/supabaseClient';
 export function useSiteContent() {
   const { data: contents = [] } = useQuery({
     queryKey: ['site-content'],
-    queryFn: () => db.SiteContent.list(),
+    queryFn: () => base44.entities.SiteContent.list(),
     staleTime: 0,
     refetchOnWindowFocus: true,
   });
