@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
 import {
   Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight, Clock, Loader2 } from
 'lucide-react';
@@ -68,16 +67,21 @@ export default function Contact() {
 
     // 3. Envoyer l'email via la backend function
     try {
-      const res = await base44.functions.invoke('sendContactEmail', {
-        prenom: formData.firstName,
-        nom: formData.lastName,
-        email: formData.email,
-        telephone: formData.phone || '',
-        type_demande: typeLabel,
-        message: formData.message,
-        destinataires
+      const res = await fetch('/api/sendContactEmail', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          prenom: formData.firstName,
+          nom: formData.lastName,
+          email: formData.email,
+          telephone: formData.phone || '',
+          type_demande: typeLabel,
+          message: formData.message,
+          destinataires
+        })
       });
-      console.log('Email envoyé:', res);
+      if (!res.ok) throw new Error('Erreur serveur');
+      console.log('Email envoyé');
     } catch (err) {
       console.error('Erreur envoi email:', err);
       alert('Erreur lors de l\'envoi de l\'email : ' + err.message);

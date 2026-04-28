@@ -5,6 +5,7 @@ const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+supabase.storageUrl = SUPABASE_URL;
 
 const headers = {
   'apikey': SUPABASE_KEY,

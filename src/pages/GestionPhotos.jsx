@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { db, supabase } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -144,8 +143,12 @@ function RealisationsBiensSection() {
     setCropModal(null);
     setUploading({ id: bienId, type });
     try {
-      const result = await base44.integrations.Core.UploadFile({ file: croppedFile });
-      const publicUrl = result.file_url;
+      const fileName = `realisation-${bienId}-${type}-${Date.now()}.jpg`;
+      const { data, error } = await supabase.storage
+        .from('site-assets')
+        .upload(`realisations/${fileName}`, croppedFile, { upsert: false });
+      if (error) throw error;
+      const publicUrl = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/site-assets/${data.path}`;
       await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: publicUrl } });
       setUploading(null);
     } catch (error) {
@@ -269,8 +272,12 @@ export default function GestionPhotos({ embedded = false }) {
     setCropModal(null);
     setUploading(true);
     try {
-      const result = await base44.integrations.Core.UploadFile({ file: croppedFile });
-      const publicUrl = result.file_url;
+      const fileName = `site-image-${imageId}-${Date.now()}.jpg`;
+      const { data, error } = await supabase.storage
+        .from('site-assets')
+        .upload(`images/${fileName}`, croppedFile, { upsert: false });
+      if (error) throw error;
+      const publicUrl = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/site-assets/${data.path}`;
       await updateImageMutation.mutateAsync({ id: imageId, url: publicUrl });
       setUploading(false);
     } catch (error) {
