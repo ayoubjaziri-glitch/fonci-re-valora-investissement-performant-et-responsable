@@ -11,17 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { ResponsiveContainer, AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import InvestmentSimulator from "../components/InvestmentSimulator";
-import { base44 } from "@/api/base44Client";
 import DynamicSections from '../components/DynamicSections';
 
 export default function StrategyPerformance() {
   const { get } = useSiteContent();
-  useEffect(() => {
-    base44.analytics.track({
-      eventName: "strategy_performance_page_viewed",
-      properties: { timestamp: new Date().toISOString() }
-    });
-  }, []);
 
   const strategyPoints = [
   { icon: Home, titleKey: "strategie_pilier1_titre", descKey: "strategie_pilier1_desc", titleFallback: "Rénovation BBC", descFallback: "DPE D–E transformé en A–B pour maximiser la valeur" },
