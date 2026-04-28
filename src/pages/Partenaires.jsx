@@ -304,7 +304,7 @@ export default function Partenaires() {
                   <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=300&fit=crop" alt="Finance" className="w-full h-full object-cover" />
                 </div>
                 <div className="rounded-2xl overflow-hidden h-52 mt-4">
-                  <img src="https://images.unsplash.com/photo-1573496358773-21b4b72ec89c?w=400&h=300&fit=crop" alt="Réunion" className="w-full h-full object-cover" />
+                  <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?w=400&h=300&fit=crop" alt="Réunion" className="w-full h-full object-cover" />
                 </div>
               </div>
             </motion.div>
