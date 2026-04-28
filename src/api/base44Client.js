@@ -1,2 +1,3 @@
 // Base44 client removed — using Supabase directly
-// This file can be deleted after migration
+// Stub export to prevent import errors during migration
+export const base44 = {};
