@@ -54,7 +54,7 @@ const PAGES = [
     id: 'partenaires',
     label: 'Page Écosystème',
     icon: Globe,
-    keys: ['partenaires_hero', 'hero_partenaires'],
+    keys: ['partenaires_hero', 'hero_partenaires', 'ecosysteme_photo1', 'ecosysteme_photo2', 'ecosysteme_photo3', 'ecosysteme_photo4', 'ecosysteme_citation_photo'],
   },
   {
     id: 'durabilite',
