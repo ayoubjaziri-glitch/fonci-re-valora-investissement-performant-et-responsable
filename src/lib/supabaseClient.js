@@ -107,4 +107,13 @@ export const db = {
   Tache: createEntity('taches'),
   Projet: createEntity('projets'),
   Responsable: createEntity('responsables'),
+  async uploadFile(file) {
+    const fileName = `${Date.now()}-${file.name}`;
+    const { data, error } = await supabase.storage
+      .from('site-assets')
+      .upload(`uploads/${fileName}`, file, { upsert: false });
+    if (error) throw error;
+    const file_url = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/site-assets/${data.path}`;
+    return { file_url };
+  }
 };
