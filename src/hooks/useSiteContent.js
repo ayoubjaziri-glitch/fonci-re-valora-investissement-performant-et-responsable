@@ -13,18 +13,23 @@ export function useSiteContent() {
     refetchOnWindowFocus: true,
   });
 
+  // Normalise les enregistrements Base44
+  const normalized = contents.map(c => ({
+    id: c.id,
+    cle: c.cle ?? c.data?.cle,
+    valeur: c.valeur ?? c.data?.valeur,
+  }));
+
   const get = (cle, fallback = '') => {
-    const found = contents.find(c => (c.cle === cle) || (c.data?.cle === cle));
-    const valeur = found?.valeur ?? found?.data?.valeur;
-    return valeur ?? fallback;
+    const found = normalized.find(c => c.cle === cle);
+    return found?.valeur ?? fallback;
   };
 
   // Pour les listes (contenu séparé par \n)
   const getList = (cle, fallback = []) => {
-    const found = contents.find(c => (c.cle === cle) || (c.data?.cle === cle));
-    const valeur = found?.valeur ?? found?.data?.valeur;
-    if (!valeur) return fallback;
-    return valeur.split('\n').filter(l => l.trim());
+    const found = normalized.find(c => c.cle === cle);
+    if (!found?.valeur) return fallback;
+    return found.valeur.split('\n').filter(l => l.trim());
   };
 
   return { get, getList, contents };

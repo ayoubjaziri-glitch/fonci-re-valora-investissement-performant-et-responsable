@@ -236,13 +236,22 @@ export default function GestionPhotos({ embedded = false }) {
   const [activePage, setActivePage] = useState('global');
   const queryClient = useQueryClient();
 
-  const { data: images = [], isLoading } = useQuery({
+  const { data: rawImages = [], isLoading } = useQuery({
     queryKey: ['site-images'],
-    queryFn: () => db.SiteImage.list(),
+    queryFn: () => base44.entities.SiteImage.list(),
   });
 
+  // Normalise les champs Base44 (données dans record.data.xxx)
+  const images = rawImages.map(img => ({
+    id: img.id,
+    key: img.key ?? img.data?.key,
+    url: img.url ?? img.data?.url ?? '',
+    description: img.description ?? img.data?.description ?? '',
+    category: img.category ?? img.data?.category,
+  }));
+
   const updateImageMutation = useMutation({
-    mutationFn: ({ id, url }) => db.SiteImage.update(id, { url }),
+    mutationFn: ({ id, url }) => base44.entities.SiteImage.update(id, { url }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['site-images'] });
       setEditingImage(null);
