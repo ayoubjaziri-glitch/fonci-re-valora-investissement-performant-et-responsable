@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -49,8 +48,8 @@ export default function AdminEquipe() {
     setCropModal(null);
     setUploadingPhoto(true);
     try {
-      const res = await base44.integrations.Core.UploadFile({ file: croppedFile });
-      setForm({ ...form, image_url: res.file_url });
+      const { file_url } = await db.uploadFile(croppedFile);
+      setForm({ ...form, image_url: file_url });
     } catch (err) {
       console.error('Upload échoué:', err);
     } finally {

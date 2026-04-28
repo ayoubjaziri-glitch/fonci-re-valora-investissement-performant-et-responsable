@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, XCircle, Loader, Play, RefreshCw, Trash2 } from 'lucide-react';
 
@@ -40,30 +40,7 @@ const CONFLICT_COL = {
   espace_associe_config: 'cle',
 };
 
-const TABLES = [
-  { label: 'Membres Équipe',        src: () => base44.entities.MembreEquipe.list(),          key: 'membres_equipe' },
-  { label: 'Articles Blog',         src: () => base44.entities.ArticleBlog.list(),            key: 'articles_blog' },
-  { label: 'Réalisations Biens',    src: () => base44.entities.RealisationBien.list(),        key: 'realisations_biens' },
-  { label: 'Levées de Fonds',       src: () => base44.entities.LeveeFonds.list(),             key: 'levees_fonds' },
-  { label: 'Site Images',           src: () => base44.entities.SiteImage.list(),              key: 'site_images' },
-  { label: 'Site Content',          src: () => base44.entities.SiteContent.list(),            key: 'site_content' },
-  { label: 'Site Sections',         src: () => base44.entities.SiteSection.list(),            key: 'site_sections' },
-  { label: 'Contact Requests',      src: () => base44.entities.ContactRequest.list(),         key: 'contact_requests' },
-  { label: 'Contact Config',        src: () => base44.entities.ContactConfig.list(),          key: 'contact_config' },
-  { label: 'Investisseurs CRM',     src: () => base44.entities.InvestisseurCRM.list(),        key: 'investisseurs_crm' },
-  { label: 'Accès Associés',        src: () => base44.entities.AccesAssocie.list(),           key: 'acces_associes' },
-  { label: 'Documents Associés',    src: () => base44.entities.DocumentAssocie.list(),        key: 'documents_associes' },
-  { label: 'Actualités Associés',   src: () => base44.entities.ActualiteAssocie.list(),       key: 'actualites_associes' },
-  { label: 'Acquisitions',          src: () => base44.entities.AcquisitionAssocie.list(),     key: 'acquisitions_associes' },
-  { label: 'Map Locations',         src: () => base44.entities.MapLocation.list(),            key: 'map_locations' },
-  { label: 'Espace Associé Config', src: () => base44.entities.EspaceAssocieConfig.list(),    key: 'espace_associe_config' },
-  { label: 'Roadmap Associés',      src: () => base44.entities.RoadmapAssocie.list(),         key: 'roadmap_associes' },
-  { label: 'Tâches',                src: () => base44.entities.Tache.list(),                  key: 'taches' },
-  { label: 'Projets',               src: () => base44.entities.Projet.list(),                 key: 'projets' },
-  { label: 'Accès Admin',           src: () => base44.entities.AccesAdmin.list(),             key: 'acces_admin' },
-  { label: 'Page Views',            src: () => base44.entities.PageView.list(),               key: 'page_views' },
-  { label: 'Responsables',          src: () => base44.entities.Responsable.list(),            key: 'responsables' },
-];
+const TABLES = [];
 
 const headers = {
   'apikey': SUPABASE_KEY,
