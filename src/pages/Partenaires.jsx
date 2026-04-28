@@ -207,7 +207,7 @@ export default function Partenaires() {
               { number: '6', label: 'Métiers représentés', icon: Users },
               { number: '15+', label: 'Partenaires actifs', icon: Handshake },
               { number: '100%', label: 'Sélectionnés sur dossier', icon: Shield },
-              { number: '3 ans', label: "Durée moyenne d'engagement", icon: TrendingUp },
+              { number: '5 ans', label: "Durée moyenne d'engagement", icon: TrendingUp },
             ].map(({ number, label, icon: Icon }, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 className="text-center p-6 rounded-2xl bg-white/5 border border-white/10">
