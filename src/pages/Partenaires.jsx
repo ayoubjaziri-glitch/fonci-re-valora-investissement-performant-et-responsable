@@ -7,20 +7,16 @@ import { Button } from "@/components/ui/button";
 import DynamicSections from '../components/DynamicSections';
 import { useSiteContent } from '../hooks/useSiteContent';
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 
 const VALEUR_ICONS = [Shield, TrendingUp, Users, Building2];
 
 function useSiteImages() {
-  const { data: rawImages = [] } = useQuery({
+  const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
-    queryFn: () => base44.entities.SiteImage.list(),
+    queryFn: () => db.SiteImage.list(),
     staleTime: 0
   });
-  const images = rawImages.map((img) => ({
-    key: img.key ?? img.data?.key,
-    url: img.url ?? img.data?.url ?? ''
-  }));
   const getImg = (key, fallback = '') => images.find((i) => i.key === key)?.url || fallback;
   return { getImg };
 }

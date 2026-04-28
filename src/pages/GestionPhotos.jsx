@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { db } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
+import { db, supabase } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -143,8 +142,10 @@ function RealisationsBiensSection() {
     const { bienId, type } = cropModal;
     setCropModal(null);
     setUploading({ id: bienId, type });
-    const { file_url } = await base44.integrations.Core.UploadFile({ file: croppedFile });
-    await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: file_url } });
+    const fileName = `realisations/${Date.now()}_${croppedFile.name}`;
+    const { data: uploadData, error } = await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
+    const { data: { publicUrl } } = supabase.storage.from('site-assets').getPublicUrl(fileName);
+    await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: publicUrl } });
     setUploading(null);
   };
 
@@ -236,21 +237,13 @@ export default function GestionPhotos({ embedded = false }) {
   const [activePage, setActivePage] = useState('global');
   const queryClient = useQueryClient();
 
-  const { data: rawImages = [], isLoading } = useQuery({
+  const { data: images = [], isLoading } = useQuery({
     queryKey: ['site-images'],
-    queryFn: () => base44.entities.SiteImage.list(),
+    queryFn: () => db.SiteImage.list(),
   });
 
-  const images = rawImages.map(img => ({
-    id: img.id,
-    key: img.key ?? img.data?.key,
-    url: img.url ?? img.data?.url ?? '',
-    description: img.description ?? img.data?.description ?? '',
-    category: img.category ?? img.data?.category,
-  }));
-
   const updateImageMutation = useMutation({
-    mutationFn: ({ id, url }) => base44.entities.SiteImage.update(id, { url }),
+    mutationFn: ({ id, url }) => db.SiteImage.update(id, { url }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['site-images'] });
       setEditingImage(null);
@@ -270,8 +263,10 @@ export default function GestionPhotos({ embedded = false }) {
     const { imageId } = cropModal;
     setCropModal(null);
     setUploading(true);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file: croppedFile });
-    await updateImageMutation.mutateAsync({ id: imageId, url: file_url });
+    const fileName = `site-images/${Date.now()}_${croppedFile.name}`;
+    const { data: uploadData, error } = await supabase.storage.from('site-assets').upload(fileName, croppedFile, { upsert: true });
+    const { data: { publicUrl } } = supabase.storage.from('site-assets').getPublicUrl(fileName);
+    await updateImageMutation.mutateAsync({ id: imageId, url: publicUrl });
     setUploading(false);
   };
 

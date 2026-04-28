@@ -12,24 +12,17 @@ import RealisationsGallery from "../components/RealisationsGallery";
 import InterventionMap from "../components/InterventionMap";
 import { useQuery } from "@tanstack/react-query";
 import { db } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
 import DynamicSections from '../components/DynamicSections';
 import { useSiteContent } from '../hooks/useSiteContent';
 
 export default function Home() {
   const { get, getList } = useSiteContent();
 
-  const { data: rawImages = [] } = useQuery({
+  const { data: images = [] } = useQuery({
     queryKey: ['site-images'],
-    queryFn: () => base44.entities.SiteImage.list(),
+    queryFn: () => db.SiteImage.list(),
     initialData: []
   });
-
-  const images = rawImages.map(img => ({
-    id: img.id,
-    key: img.key ?? img.data?.key,
-    url: img.url ?? img.data?.url ?? '',
-  }));
 
   const { data: levees = [] } = useQuery({
     queryKey: ['levees-fonds'],
@@ -37,7 +30,7 @@ export default function Home() {
     initialData: []
   });
 
-  const getImageUrl = (key, fallback) => {
+  const getImageUrl = (key, fallback = '') => {
     const image = images.find((img) => img.key === key);
     return image?.url || fallback;
   };
