@@ -204,7 +204,7 @@ export default function Layout({ children, currentPageName }) {
               {/* Réseaux sociaux */}
               <div className="flex items-center gap-3 mt-6">
                 <a
-                  href="https://www.linkedin.com/company/la-fonciere-patrimoniale"
+                  href="https://www.linkedin.com/company/foncierevalora"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 bg-white/10 hover:bg-[#C9A961] rounded-full flex items-center justify-center transition-colors">
@@ -214,7 +214,7 @@ export default function Layout({ children, currentPageName }) {
                   </svg>
                 </a>
                 <a
-                  href="https://www.instagram.com/lafoncierepatrimoniale"
+                  href="https://www.instagram.com/foncierevalora"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 bg-white/10 hover:bg-[#C9A961] rounded-full flex items-center justify-center transition-colors">
