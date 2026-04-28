@@ -2,14 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { createPageUrl } from '../utils';
 import { motion } from 'framer-motion';
-import { CheckCircle2, ArrowRight } from 'lucide-react';
+import { CheckCircle2, ArrowRight, Quote, Building2, Users, TrendingUp, Shield } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import DynamicSections from '../components/DynamicSections';
 
 const ecosysteme = [
   {
-    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/1/18/Logo_UNSFA.svg/200px-Logo_UNSFA.svg.png',
-    logoAlt: 'Architecture',
-    logoBg: 'bg-white',
     emoji: '🏛️',
     category: 'Architectes',
     title: 'Vision architecturale & valorisation',
@@ -21,9 +19,6 @@ const ecosysteme = [
     ],
   },
   {
-    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/5/52/Logo_FFB.svg/200px-Logo_FFB.svg.png',
-    logoAlt: 'BTP',
-    logoBg: 'bg-white',
     emoji: '🏗️',
     category: 'Entreprises BTP',
     title: 'Excellence opérationnelle',
@@ -35,9 +30,6 @@ const ecosysteme = [
     ],
   },
   {
-    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/0/09/Logo_Conseil_Superieur_du_Notariat.svg/200px-Logo_Conseil_Superieur_du_Notariat.svg.png',
-    logoAlt: 'Notaires',
-    logoBg: 'bg-white',
     emoji: '⚖️',
     category: 'Notaires & Avocats',
     title: 'Sécurisation juridique',
@@ -49,9 +41,6 @@ const ecosysteme = [
     ],
   },
   {
-    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/4/44/Logo_FNAIM.svg/200px-Logo_FNAIM.svg.png',
-    logoAlt: 'Agents immobiliers',
-    logoBg: 'bg-white',
     emoji: '🏠',
     category: 'Agents immobiliers',
     title: 'Sourcing & commercialisation',
@@ -63,9 +52,6 @@ const ecosysteme = [
     ],
   },
   {
-    logoUrl: 'https://upload.wikimedia.org/wikipedia/fr/thumb/e/e4/Logo_FBF.svg/200px-Logo_FBF.svg.png',
-    logoAlt: 'Banques',
-    logoBg: 'bg-white',
     emoji: '🏦',
     category: 'Établissements bancaires',
     title: 'Financement structuré',
@@ -77,9 +63,6 @@ const ecosysteme = [
     ],
   },
   {
-    logoUrl: null,
-    logoAlt: 'Patrimoniaux',
-    logoBg: 'bg-[#1A3A52]',
     emoji: '🤝',
     category: 'Partenaires patrimoniaux',
     title: 'Accompagnement durable',
@@ -106,11 +89,37 @@ const etapes = [
   { titre: 'Intégration', desc: "Référencement dans notre panel de partenaires avec un suivi qualité régulier sur l'ensemble des missions." },
 ];
 
+const valeurs = [
+  {
+    icon: Shield,
+    titre: 'Confiance',
+    desc: 'Chaque partenaire est sélectionné sur la base de critères stricts de professionnalisme et d\'intégrité.',
+  },
+  {
+    icon: TrendingUp,
+    titre: 'Performance',
+    desc: 'Nous collaborons avec des acteurs dont l\'excellence opérationnelle est reconnue sur leurs marchés.',
+  },
+  {
+    icon: Users,
+    titre: 'Engagement',
+    desc: 'Nos relations partenariales s\'inscrivent dans la durée, pour une création de valeur partagée et durable.',
+  },
+  {
+    icon: Building2,
+    titre: 'Complémentarité',
+    desc: 'Un écosystème couvrant l\'intégralité du cycle immobilier, de l\'acquisition à la valorisation locative.',
+  },
+];
+
 export default function Partenaires() {
   return (
     <div className="min-h-screen bg-white">
+
       {/* Hero */}
       <section className="relative py-24 bg-slate-900 overflow-hidden">
+        <div className="absolute inset-0 opacity-20"
+          style={{ backgroundImage: 'radial-gradient(circle at 60% 40%, #C9A961 0%, transparent 60%)' }} />
         <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
             <div className="flex items-center gap-3 mb-6">
@@ -120,24 +129,23 @@ export default function Partenaires() {
             <h1 className="text-4xl md:text-5xl font-serif text-white mb-6">
               Écosystème de partenaires
             </h1>
-            <p className="text-xl text-white/70">
+            <p className="text-xl text-white/70 leading-relaxed">
               Plus qu'une équipe, un modèle d'engagement : nous intégrons nos partenaires techniques et patrimoniaux au cœur de notre structure capitalistique. En alliant leurs expertises à nos objectifs de croissance, nous assurons une exécution fluide et une création de valeur optimisée à chaque cycle d'investissement.
             </p>
           </motion.div>
         </div>
       </section>
 
+      {/* DynamicSections top */}
+      <DynamicSections page="ecosysteme" orderRange={[0, 3]} />
+
       {/* Stats */}
       <section className="py-12 bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-10">
-            <h2 className="text-2xl font-serif text-[#1A3A52] mb-2">Notre réseau en action</h2>
-            <p className="text-slate-500">Un réseau dense de professionnels qualifiés pour une exécution irréprochable.</p>
-          </motion.div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((s, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
-                className="text-center p-6 bg-slate-50 rounded-2xl">
+                className="text-center p-6 bg-slate-50 rounded-2xl border border-slate-100">
                 <p className="text-3xl font-bold text-[#C9A961] mb-1">{s.valeur}</p>
                 <p className="text-sm text-slate-600">{s.label}</p>
               </motion.div>
@@ -146,11 +154,90 @@ export default function Partenaires() {
         </div>
       </section>
 
+      {/* Groupe Auvergne et Patrimoine */}
+      <section className="py-16 bg-[#1A3A52]">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-1 bg-[#C9A961]" />
+                <span className="text-[#C9A961] font-medium tracking-wider uppercase text-sm">Notre ancrage</span>
+              </div>
+              <h2 className="text-3xl font-serif text-white mb-6">Groupe Auvergne et Patrimoine</h2>
+              <p className="text-white/70 leading-relaxed mb-6">
+                La Foncière Valora s'appuie sur les expertises et le réseau du Groupe Auvergne et Patrimoine, fondé en 2008. Ce groupe spécialisé dans le conseil en gestion de patrimoine et en investissement immobilier constitue le socle sur lequel la foncière développe ses opérations.
+              </p>
+              <p className="text-white/70 leading-relaxed mb-8">
+                Cette appartenance à un groupe structuré apporte à la foncière un accès privilégié à un réseau d'investisseurs, à des opportunités de sourcing off-market, et à une expertise patrimoniale et financière reconnue.
+              </p>
+              <div className="grid grid-cols-2 gap-4">
+                {[
+                  { val: '2008', label: 'Année de création du groupe' },
+                  { val: '15 ans', label: "D'expérience patrimoniale" },
+                  { val: 'Vichy', label: 'Ancrage Auvergne-Rhône-Alpes' },
+                  { val: '360°', label: 'Vision patrimoniale globale' },
+                ].map((item, i) => (
+                  <div key={i} className="bg-white/10 rounded-xl p-4">
+                    <p className="text-[#C9A961] font-bold text-xl">{item.val}</p>
+                    <p className="text-white/60 text-sm mt-1">{item.label}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+            <motion.div initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
+              {/* Citation */}
+              <div className="bg-white/10 rounded-3xl p-8 border border-white/20">
+                <Quote className="h-10 w-10 text-[#C9A961] mb-4" />
+                <p className="text-white text-lg leading-relaxed italic mb-6">
+                  "Notre conviction est que la création de valeur durable dans l'immobilier résidentiel passe par une approche intégrée : sourcing off-market, réhabilitation énergétique, et gestion active des actifs. L'écosystème que nous avons constitué autour de la foncière reflète cette vision."
+                </p>
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 bg-[#C9A961] rounded-full flex items-center justify-center text-white font-bold text-lg">
+                    AJ
+                  </div>
+                  <div>
+                    <p className="text-white font-semibold">Ayoub Jaziri</p>
+                    <p className="text-white/50 text-sm">Fondateur, La Foncière Valora</p>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Nos valeurs partenariales */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+            <h2 className="text-3xl font-serif text-[#1A3A52] mb-3">Nos valeurs partenariales</h2>
+            <p className="text-slate-500 max-w-xl mx-auto">
+              Les principes qui guident chaque relation partenariale que nous nouons.
+            </p>
+          </motion.div>
+          <div className="grid md:grid-cols-4 gap-6">
+            {valeurs.map((v, i) => {
+              const Icon = v.icon;
+              return (
+                <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
+                  className="p-6 bg-slate-50 rounded-2xl border border-slate-100 text-center">
+                  <div className="w-12 h-12 bg-[#C9A961]/10 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Icon className="h-6 w-6 text-[#C9A961]" />
+                  </div>
+                  <h4 className="font-semibold text-[#1A3A52] mb-2">{v.titre}</h4>
+                  <p className="text-sm text-slate-500 leading-relaxed">{v.desc}</p>
+                </motion.div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Grille partenaires */}
       <section className="py-16 bg-slate-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Nos partenaires</h2>
+            <h2 className="text-3xl md:text-4xl font-serif text-slate-900 mb-4">Nos partenaires métiers</h2>
             <p className="text-slate-600 max-w-2xl mx-auto">
               Des acteurs qualifiés intervenant sur l'ensemble du cycle de valorisation.
             </p>
@@ -161,14 +248,8 @@ export default function Partenaires() {
               <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}
                 className="bg-white rounded-3xl p-8 border border-slate-200 hover:shadow-2xl transition-all duration-300">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className={`w-16 h-16 rounded-2xl flex items-center justify-center flex-shrink-0 overflow-hidden border border-slate-200 ${p.logoBg}`}>
-                    {p.logoUrl ? (
-                      <img src={p.logoUrl} alt={p.logoAlt} className="w-12 h-12 object-contain"
-                        onError={(e) => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }} />
-                    ) : null}
-                    <span className="text-2xl items-center justify-center w-full h-full" style={{ display: p.logoUrl ? 'none' : 'flex' }}>
-                      {p.emoji}
-                    </span>
+                  <div className="w-16 h-16 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center flex-shrink-0">
+                    <span className="text-3xl">{p.emoji}</span>
                   </div>
                   <div>
                     <p className="text-sm text-[#C9A961] font-medium uppercase tracking-wider mb-1">{p.category}</p>
@@ -177,10 +258,10 @@ export default function Partenaires() {
                 </div>
                 <p className="text-slate-600 mb-6 leading-relaxed">{p.description}</p>
                 <div className="space-y-2">
-                  {p.values.map((v, idx) => (
+                  {p.values.map((val, idx) => (
                     <div key={idx} className="flex items-center gap-2">
                       <CheckCircle2 className="h-4 w-4 text-[#C9A961] flex-shrink-0" />
-                      <span className="text-sm text-slate-600">{v}</span>
+                      <span className="text-sm text-slate-600">{val}</span>
                     </div>
                   ))}
                 </div>
@@ -214,13 +295,16 @@ export default function Partenaires() {
         </div>
       </section>
 
+      {/* DynamicSections bottom */}
+      <DynamicSections page="ecosysteme" orderRange={[4, 99]} />
+
       {/* CTA */}
       <section className="py-16 bg-[#C9A961]">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Partenaires et opérateurs</h2>
-            <p className="text-slate-800 mb-8">
-              La foncière développe ses projets avec des partenaires : investisseurs privés, architectes, entreprises de construction et experts immobiliers.
+            <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">Rejoindre notre écosystème</h2>
+            <p className="text-slate-800 mb-8 max-w-2xl mx-auto">
+              Vous êtes un professionnel de l'immobilier, un architecte, une entreprise du bâtiment ou un investisseur patrimonial ? Découvrez comment collaborer avec La Foncière Valora.
             </p>
             <Link to={createPageUrl("Contact")}>
               <Button className="bg-slate-900 hover:bg-[#2A4A6F] text-white px-8 py-4 text-base font-semibold rounded-md gap-2">
@@ -231,6 +315,7 @@ export default function Partenaires() {
           </motion.div>
         </div>
       </section>
+
     </div>
   );
 }
