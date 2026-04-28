@@ -151,7 +151,7 @@ function RealisationsBiensSection() {
       const fileName = `realisation-${bienId}-${type}-${Date.now()}.jpg`;
       const { data, error } = await supabase.storage
         .from('site-assets')
-        .upload(`realisations/${fileName}`, croppedFile, { upsert: true });
+        .upload(`realisations/${fileName}`, croppedFile, { upsert: false });
       if (error) throw error;
       const publicUrl = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/site-assets/${data.path}`;
       console.log('Réalisation image uploaded:', publicUrl);
@@ -287,7 +287,7 @@ export default function GestionPhotos({ embedded = false }) {
       const fileName = `site-image-${imageId}-${Date.now()}.jpg`;
       const { data, error } = await supabase.storage
         .from('site-assets')
-        .upload(`images/${fileName}`, croppedFile, { upsert: true });
+        .upload(`images/${fileName}`, croppedFile, { upsert: false });
       if (error) throw error;
       const publicUrl = `https://cnulpkwcfpbujojwefah.supabase.co/storage/v1/object/public/site-assets/${data.path}`;
       console.log('Image uploaded:', publicUrl);
