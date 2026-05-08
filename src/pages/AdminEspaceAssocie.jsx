@@ -314,22 +314,29 @@ function DocumentsSection() {
       const bucketName = 'associes-documents';
       const fileName = `${Date.now()}_${file.name}`;
       
-      // Vérifier/créer le bucket
-      const { data: buckets } = await supabase.storage.listBuckets();
-      const bucketExists = buckets?.some(b => b.name === bucketName);
-
-      if (!bucketExists) {
-        await supabase.storage.createBucket(bucketName, {
-          public: true,
-          fileSizeLimit: 52428800,
-        });
-      }
-
-      const { error } = await supabase.storage
+      // Essayer d'uploader
+      let uploadError = null;
+      const { error: uploadErr } = await supabase.storage
         .from(bucketName)
         .upload(fileName, file);
       
-      if (error) throw error;
+      if (uploadErr && uploadErr.message.includes('Bucket not found')) {
+        // Créer le bucket s'il n'existe pas
+        const { error: createErr } = await supabase.storage.createBucket(bucketName, {
+          public: true,
+          fileSizeLimit: 52428800,
+        });
+        
+        if (createErr) throw createErr;
+        
+        // Réessayer l'upload
+        const { error: retryErr } = await supabase.storage
+          .from(bucketName)
+          .upload(fileName, file);
+        if (retryErr) throw retryErr;
+      } else if (uploadErr) {
+        throw uploadErr;
+      }
 
       const { data: { publicUrl } } = supabase.storage
         .from(bucketName)
