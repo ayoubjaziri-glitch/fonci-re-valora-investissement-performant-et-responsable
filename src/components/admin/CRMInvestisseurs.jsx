@@ -666,25 +666,17 @@ export default function CRMInvestisseurs() {
           <FormulaireInvestisseur
             form={form} setForm={setForm}
             onSave={() => {
-              // Envoyer uniquement les colonnes confirmées dans la table Supabase
+              // Colonnes confirmées dans la table Supabase investisseurs_crm
               const clean = {
                 prenom: form.prenom || null,
                 nom: form.nom,
                 email: form.email,
                 telephone: form.telephone || null,
-                societe: form.societe || null,
-                ville: form.ville || null,
-                pays: form.pays || 'France',
                 statut: form.statut,
                 source: form.source,
-                profil_investisseur: form.profil_investisseur,
                 montant_investi: form.montant_investi || 0,
-                nb_parts: form.nb_parts || 0,
+                date_prochain_contact: form.date_prochain_contact || null,
                 notes: form.notes || null,
-                interactions: form.interactions || null,
-                scoring: form.scoring || 0,
-                newsletter: form.newsletter,
-                rgpd_consent: form.rgpd_consent,
                 tags: form.tags || null,
               };
               saveMutation.mutate(clean);
