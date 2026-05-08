@@ -8,7 +8,7 @@ import {
   Building2, Rocket, MapPin, LogOut, Shield, LayoutDashboard,
   FileText, Mail, TrendingUp, Euro, MessageSquare, CheckCircle2, Globe,
   Clock, AlertCircle, ChevronRight, Phone, Trash2, ArrowRight,
-  Activity, Target, Zap, UserCheck, CalendarClock, TriangleAlert } from
+  Activity, Target, Zap, UserCheck, CalendarClock, TriangleAlert, RefreshCw } from
 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -110,15 +110,21 @@ function AdminLogin({ onLogin }) {
 function DashboardSection({ onNavigate }) {
   const now = new Date();
 
-  const { data: contacts = [] } = useQuery({ queryKey: ['contacts'], queryFn: () => db.ContactRequest.list('-created_date', 200) });
-  const { data: docs = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => db.DocumentAssocie.list() });
-  const { data: actu = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => db.ActualiteAssocie.list() });
-  const { data: acq = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => db.AcquisitionAssocie.list() });
-  const { data: accesAssocies = [] } = useQuery({ queryKey: ['acces-associes'], queryFn: () => db.AccesAssocie.list() });
-  const { data: taches = [] } = useQuery({ queryKey: ['taches'], queryFn: () => db.Tache.list('-created_date', 500) });
-  const { data: crm = [] } = useQuery({ queryKey: ['crm-investisseurs'], queryFn: () => db.InvestisseurCRM.list() });
-  const { data: levees = [] } = useQuery({ queryKey: ['levees'], queryFn: () => db.LeveeFonds.list() });
-  const { data: articles = [] } = useQuery({ queryKey: ['articles'], queryFn: () => db.ArticleBlog.list() });
+  const REFRESH = { refetchInterval: 30000, staleTime: 0 };
+
+  const { data: contacts = [], dataUpdatedAt, refetch: refetchAll } = useQuery({ queryKey: ['contacts'], queryFn: () => db.ContactRequest.list('-created_date', 200), ...REFRESH });
+  const { data: docs = [] } = useQuery({ queryKey: ['docs-associe'], queryFn: () => db.DocumentAssocie.list(), ...REFRESH });
+  const { data: actu = [] } = useQuery({ queryKey: ['actu-associe'], queryFn: () => db.ActualiteAssocie.list(), ...REFRESH });
+  const { data: acq = [] } = useQuery({ queryKey: ['acq-associe'], queryFn: () => db.AcquisitionAssocie.list(), ...REFRESH });
+  const { data: accesAssocies = [] } = useQuery({ queryKey: ['acces-associes'], queryFn: () => db.AccesAssocie.list(), ...REFRESH });
+  const { data: taches = [] } = useQuery({ queryKey: ['taches'], queryFn: () => db.Tache.list('-created_date', 500), ...REFRESH });
+  const { data: crm = [] } = useQuery({ queryKey: ['crm-investisseurs'], queryFn: () => db.InvestisseurCRM.list(), ...REFRESH });
+  const { data: levees = [] } = useQuery({ queryKey: ['levees'], queryFn: () => db.LeveeFonds.list(), ...REFRESH });
+  const { data: articles = [] } = useQuery({ queryKey: ['articles'], queryFn: () => db.ArticleBlog.list(), ...REFRESH });
+
+  const qc = useQueryClient();
+  const refreshAll = () => qc.invalidateQueries();
+  const lastUpdate = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '—';
 
   // Calculs tâches
   const tachesActives = taches.filter((t) => t.statut !== 'Terminé');
@@ -159,9 +165,19 @@ function DashboardSection({ onNavigate }) {
           <h2 className="text-xl font-bold text-[#1A3A52]">Vue d'ensemble</h2>
           <p className="text-slate-400 text-sm">{now.toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
         </div>
-        <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
-          <Activity className="h-4 w-4 text-emerald-500" />
-          <span className="text-xs font-semibold text-emerald-700">Système opérationnel</span>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-2">
+            <Clock className="h-3.5 w-3.5 text-slate-400" />
+            <span className="text-xs text-slate-500">Sync : {lastUpdate}</span>
+          </div>
+          <button onClick={refreshAll} className="flex items-center gap-2 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white rounded-xl px-3 py-2 transition-colors">
+            <RefreshCw className="h-3.5 w-3.5" />
+            <span className="text-xs font-semibold">Actualiser</span>
+          </button>
+          <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
+            <Activity className="h-4 w-4 text-emerald-500" />
+            <span className="text-xs font-semibold text-emerald-700">Auto-sync 30s</span>
+          </div>
         </div>
       </div>
 
