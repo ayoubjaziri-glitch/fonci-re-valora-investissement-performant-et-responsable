@@ -716,24 +716,24 @@ export default function EspaceAssocie() {
               </div>
               
               <div className="space-y-3 mb-4">
-                {documentsFinanciers.map((doc, index) =>
-                <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-100 hidden">
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-slate-900">{doc.name}</p>
-                      <div className="flex items-center gap-2 mt-1">
-                        <span className="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700">
-                          {doc.type}
-                        </span>
-                        <span className="text-xs text-slate-500">{doc.date}</span>
-                        <span className="text-xs text-slate-400">• {doc.size}</span>
-                      </div>
-                    </div>
-                    {doc.url ?
-                  <a href={doc.url} target="_blank" rel="noreferrer" className="text-[#C9A961] hover:text-[#B8994F]"><Download className="h-5 w-5" /></a> :
+                {documentsFinanciers.map((doc, index) => null
 
-                  <button className="text-slate-300 cursor-not-allowed"><Download className="h-5 w-5" /></button>
-                  }
-                  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 )}
               </div>
 
