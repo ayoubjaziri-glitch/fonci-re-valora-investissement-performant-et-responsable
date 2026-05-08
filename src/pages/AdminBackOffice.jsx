@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { db } from '@/lib/supabaseClient';
+import { db, supabase } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   Lock, Eye, EyeOff, Image, Users, BarChart3, Newspaper,
@@ -419,13 +419,45 @@ function DashboardSection({ onNavigate }) {
 function DemandesContactSection() {
   const qc = useQueryClient();
   const [filter, setFilter] = useState('tous');
+  const [lastSync, setLastSync] = useState('—');
+  const [realtimeStatus, setRealtimeStatus] = useState('connecting'); // connecting | live | error
 
-  const { data: contacts = [] } = useQuery({
+  const { data: contacts = [], refetch: refetchContacts } = useQuery({
     queryKey: ['contacts'],
     queryFn: () => db.ContactRequest.list('-created_date', 200),
     staleTime: 0,
-    refetchOnWindowFocus: true
   });
+
+  // ── Supabase Realtime — écoute les INSERT sur contact_requests en temps réel ──
+  useEffect(() => {
+    const channel = supabase
+      .channel('contact_requests_live')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'contact_requests' },
+        (payload) => {
+          qc.invalidateQueries({ queryKey: ['contacts'] });
+          setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') setRealtimeStatus('live');
+        else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') setRealtimeStatus('error');
+      });
+
+    // Fallback polling 8s si realtime échoue
+    const fallbackInterval = setInterval(() => {
+      if (realtimeStatus !== 'live') {
+        qc.invalidateQueries({ queryKey: ['contacts'] });
+        setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+      }
+    }, 8000);
+
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(fallbackInterval);
+    };
+  }, []);
 
   const markDoneMutation = useMutation({
     mutationFn: (id) => db.ContactRequest.update(id, { email_envoye: true }),
@@ -443,6 +475,11 @@ function DemandesContactSection() {
     return true;
   });
 
+  const handleRefresh = useCallback(() => {
+    refetchContacts();
+    setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+  }, [refetchContacts]);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -450,13 +487,24 @@ function DemandesContactSection() {
           <h2 className="text-xl font-semibold text-[#1A3A52]">Demandes de Contact</h2>
           <p className="text-slate-500 text-sm">{contacts.filter((c) => !c.email_envoye).length} non traitées sur {contacts.length}</p>
         </div>
-        <div className="flex gap-2">
-          {[['tous', 'Toutes'], ['non_traite', 'Non traitées'], ['traite', 'Traitées']].map(([v, l]) =>
-          <button key={v} onClick={() => setFilter(v)}
-          className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${filter === v ? 'bg-[#1A3A52] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
-              {l}
-            </button>
-          )}
+        <div className="flex items-center gap-3">
+          <div className={`flex items-center gap-2 rounded-xl px-3 py-2 border ${realtimeStatus === 'live' ? 'bg-emerald-50 border-emerald-200' : realtimeStatus === 'error' ? 'bg-amber-50 border-amber-200' : 'bg-slate-50 border-slate-200'}`}>
+            <span className={`w-2 h-2 rounded-full ${realtimeStatus === 'live' ? 'bg-emerald-500 animate-pulse' : realtimeStatus === 'error' ? 'bg-amber-500' : 'bg-slate-400 animate-pulse'}`} />
+            <span className={`text-xs font-semibold ${realtimeStatus === 'live' ? 'text-emerald-700' : realtimeStatus === 'error' ? 'text-amber-700' : 'text-slate-500'}`}>
+              {realtimeStatus === 'live' ? '⚡ Temps réel' : realtimeStatus === 'error' ? '⏱ Polling 8s' : 'Connexion…'} · {lastSync}
+            </span>
+          </div>
+          <button onClick={handleRefresh} className="flex items-center gap-2 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white rounded-xl px-3 py-2 transition-colors text-xs font-semibold">
+            <RefreshCw className="h-3.5 w-3.5" /> Actualiser
+          </button>
+          <div className="flex gap-2">
+            {[['tous', 'Toutes'], ['non_traite', 'Non traitées'], ['traite', 'Traitées']].map(([v, l]) =>
+            <button key={v} onClick={() => setFilter(v)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${filter === v ? 'bg-[#1A3A52] text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-50'}`}>
+                {l}
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
