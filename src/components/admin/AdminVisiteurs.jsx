@@ -1092,22 +1092,38 @@ function VisiteursListe({ pageViews }) {
 export default function AdminVisiteurs() {
   const [tab, setTab] = useState('realtime');
 
-  const { data: pageViews = [], refetch: refetchPageViews } = useQuery({
+  const { data: pageViews = [], refetch: refetchPageViews, dataUpdatedAt } = useQuery({
     queryKey: ['page-views'],
     queryFn: () => db.PageView.list('-created_date', 2000),
-    refetchInterval: 60000, // Refresh every minute
+    refetchInterval: 5000, // Refresh toutes les 5 secondes — temps réel
+    staleTime: 0,
   });
 
   const { data: contacts = [] } = useQuery({
     queryKey: ['contacts-analytics'],
     queryFn: () => db.ContactRequest.list('-created_date', 500),
+    refetchInterval: 10000,
+    staleTime: 0,
   });
+
+  const lastSync = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '—';
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-semibold text-[#1A3A52] mb-1">Statistiques Visiteurs</h2>
-        <p className="text-slate-500 text-sm">Données réelles de trafic sur votre site</p>
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-semibold text-[#1A3A52] mb-1">Statistiques Visiteurs</h2>
+          <p className="text-slate-500 text-sm">Données réelles de trafic sur votre site</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
+            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
+            <span className="text-xs font-semibold text-emerald-700">Live · sync {lastSync}</span>
+          </div>
+          <button onClick={() => refetchPageViews()} className="flex items-center gap-2 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white rounded-xl px-3 py-2 transition-colors text-xs font-semibold">
+            <RefreshCw className="h-3.5 w-3.5" /> Actualiser
+          </button>
+        </div>
       </div>
 
       <div className="flex gap-2">

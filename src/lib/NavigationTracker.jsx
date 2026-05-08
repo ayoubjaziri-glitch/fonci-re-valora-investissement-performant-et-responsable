@@ -2,6 +2,9 @@ import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { db } from './supabaseClient';
 
+const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
+
 function getSessionId() {
     let sid = sessionStorage.getItem('_valora_sid');
     if (!sid) {
@@ -24,195 +27,212 @@ const PAGE_LABELS = {
     '/EspaceAssocie': 'Espace Associés',
 };
 
+// Insertion directe dans Supabase sans passer par le client REST (plus rapide)
+async function insertPageView(data) {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/page_views`, {
+        method: 'POST',
+        headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+            'Prefer': 'return=representation',
+        },
+        body: JSON.stringify(data),
+    });
+    if (!res.ok) return null;
+    const result = await res.json();
+    return Array.isArray(result) ? result[0] : result;
+}
+
+async function updatePageViewTime(id, seconds) {
+    await fetch(`${SUPABASE_URL}/rest/v1/page_views?id=eq.${id}`, {
+        method: 'PATCH',
+        headers: {
+            'apikey': SUPABASE_KEY,
+            'Authorization': `Bearer ${SUPABASE_KEY}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ time_on_page: seconds }),
+    });
+}
+
+// Géolocalisation avec 3 APIs en fallback, résultat mis en cache session
+async function getGeo() {
+    const cached = sessionStorage.getItem('_valora_geo');
+    if (cached) return JSON.parse(cached);
+
+    // API 1 : ip-api.com (rapide, précise)
+    try {
+        const r = await fetch('https://ip-api.com/json/?fields=status,country,city,lat,lon,query', { signal: AbortSignal.timeout(3000) });
+        const g = await r.json();
+        if (g.status === 'success' && g.lat) {
+            const geo = { country: g.country, city: g.city, lat: g.lat, lon: g.lon, query: g.query };
+            sessionStorage.setItem('_valora_geo', JSON.stringify(geo));
+            return geo;
+        }
+    } catch {}
+
+    // API 2 : ipapi.co
+    try {
+        const r = await fetch('https://ipapi.co/json/', { signal: AbortSignal.timeout(3000) });
+        const g = await r.json();
+        if (g.latitude) {
+            const geo = { country: g.country_name, city: g.city, lat: g.latitude, lon: g.longitude, query: g.ip };
+            sessionStorage.setItem('_valora_geo', JSON.stringify(geo));
+            return geo;
+        }
+    } catch {}
+
+    // API 3 : freeipapi.com
+    try {
+        const r = await fetch('https://freeipapi.com/api/json/', { signal: AbortSignal.timeout(3000) });
+        const g = await r.json();
+        if (g.latitude) {
+            const geo = { country: g.countryName, city: g.cityName, lat: g.latitude, lon: g.longitude, query: g.ipAddress };
+            sessionStorage.setItem('_valora_geo', JSON.stringify(geo));
+            return geo;
+        }
+    } catch {}
+
+    return {};
+}
+
+function extractKeywords() {
+    const currentUrl = new URL(window.location.href);
+    let kw = '';
+
+    const utmTerm = currentUrl.searchParams.get('utm_term');
+    const utmContent = currentUrl.searchParams.get('utm_content');
+    const utmCampaign = currentUrl.searchParams.get('utm_campaign');
+    const utmSource = currentUrl.searchParams.get('utm_source');
+    const utmMedium = currentUrl.searchParams.get('utm_medium');
+
+    if (utmTerm) kw = utmTerm;
+    else if (utmContent) kw = utmContent;
+
+    if (!kw && document.referrer) {
+        try {
+            const ref = new URL(document.referrer);
+            const h = ref.hostname;
+            if (/google\./i.test(h)) kw = ref.searchParams.get('q') || '';
+            else if (/bing\.com/i.test(h)) kw = ref.searchParams.get('q') || '';
+            else if (/yahoo\.com/i.test(h)) kw = ref.searchParams.get('p') || ref.searchParams.get('q') || '';
+            else if (/duckduckgo\.com/i.test(h)) kw = ref.searchParams.get('q') || '';
+            else if (/ecosia\.org|qwant\.com/i.test(h)) kw = ref.searchParams.get('q') || '';
+            else if (/yandex\./i.test(h)) kw = ref.searchParams.get('text') || '';
+            else if (/baidu\.com/i.test(h)) kw = ref.searchParams.get('wd') || ref.searchParams.get('q') || '';
+            else kw = ref.searchParams.get('q') || ref.searchParams.get('query') || '';
+        } catch {}
+    }
+
+    if (!kw) kw = currentUrl.searchParams.get('q') || currentUrl.searchParams.get('query') || '';
+
+    if (kw) {
+        sessionStorage.setItem('_valora_kw', kw);
+        if (utmSource) sessionStorage.setItem('_valora_utm_source', utmSource);
+        if (utmMedium) sessionStorage.setItem('_valora_utm_medium', utmMedium);
+        if (utmCampaign) sessionStorage.setItem('_valora_utm_campaign', utmCampaign);
+    } else {
+        kw = sessionStorage.getItem('_valora_kw') || '';
+    }
+
+    const utmLabel = [
+        utmSource || sessionStorage.getItem('_valora_utm_source'),
+        utmMedium || sessionStorage.getItem('_valora_utm_medium'),
+        utmCampaign || sessionStorage.getItem('_valora_utm_campaign'),
+    ].filter(Boolean).join(' / ');
+    if (utmLabel && !kw) kw = `[Campagne] ${utmLabel}`;
+
+    return kw;
+}
+
 export default function NavigationTracker() {
     const location = useLocation();
     const lastPath = useRef(null);
-    // Stocker l'ID de la vue créée et l'heure d'entrée pour mise à jour du temps
     const currentViewId = useRef(null);
     const enterTime = useRef(null);
 
-    // Mettre à jour le temps de la vue précédente avant d'enregistrer la nouvelle
-    const updatePreviousTime = () => {
+    const flushTime = () => {
         if (currentViewId.current && enterTime.current) {
             const seconds = Math.round((Date.now() - enterTime.current) / 1000);
             if (seconds > 2) {
-                db.PageView.update(currentViewId.current, { time_on_page: seconds }).catch(() => {});
+                updatePageViewTime(currentViewId.current, seconds);
             }
             currentViewId.current = null;
             enterTime.current = null;
         }
     };
 
-    // Track real page views
     useEffect(() => {
         const pathname = location.pathname;
         if (lastPath.current === pathname) return;
 
-        // Mettre à jour le temps passé sur la page précédente
-        updatePreviousTime();
-
+        flushTime();
         lastPath.current = pathname;
 
+        // Ne pas tracker les pages admin/espace associés
         if (pathname.startsWith('/admin') || pathname.startsWith('/EspaceAssocie')) return;
 
-        const label = PAGE_LABELS[pathname] || pathname.replace('/', '') || 'Accueil';
+        const label = PAGE_LABELS[pathname] || pathname.replace(/^\//, '') || 'Accueil';
         enterTime.current = Date.now();
+        const keywords = extractKeywords();
+        const sessionId = getSessionId();
+        const userAgent = navigator.userAgent.slice(0, 200);
+        const referrer = document.referrer ? document.referrer.slice(0, 500) : '';
 
-        // ── Détection exhaustive des mots-clés ──────────────────────────────
-        let searchKeywords = '';
-        const currentUrl = new URL(window.location.href);
-
-        // 1. Paramètres UTM dans l'URL actuelle (campagnes Google Ads, LinkedIn Ads, etc.)
-        const utmTerm = currentUrl.searchParams.get('utm_term');
-        const utmContent = currentUrl.searchParams.get('utm_content');
-        const utmCampaign = currentUrl.searchParams.get('utm_campaign');
-        const utmSource = currentUrl.searchParams.get('utm_source');
-        const utmMedium = currentUrl.searchParams.get('utm_medium');
-
-        if (utmTerm) searchKeywords = utmTerm;
-        else if (utmContent) searchKeywords = utmContent;
-
-        // 2. Mots-clés depuis le referrer (moteurs de recherche)
-        if (!searchKeywords && document.referrer) {
-            try {
-                const refUrl = new URL(document.referrer);
-                const host = refUrl.hostname;
-                // Google (tous les pays)
-                if (/google\./i.test(host)) {
-                    searchKeywords = refUrl.searchParams.get('q') || '';
-                }
-                // Bing
-                else if (/bing\.com/i.test(host)) {
-                    searchKeywords = refUrl.searchParams.get('q') || '';
-                }
-                // Yahoo
-                else if (/yahoo\.com/i.test(host)) {
-                    searchKeywords = refUrl.searchParams.get('p') || refUrl.searchParams.get('q') || '';
-                }
-                // DuckDuckGo
-                else if (/duckduckgo\.com/i.test(host)) {
-                    searchKeywords = refUrl.searchParams.get('q') || '';
-                }
-                // Ecosia
-                else if (/ecosia\.org/i.test(host)) {
-                    searchKeywords = refUrl.searchParams.get('q') || '';
-                }
-                // Qwant
-                else if (/qwant\.com/i.test(host)) {
-                    searchKeywords = refUrl.searchParams.get('q') || '';
-                }
-                // Baidu
-                else if (/baidu\.com/i.test(host)) {
-                    searchKeywords = refUrl.searchParams.get('wd') || refUrl.searchParams.get('q') || '';
-                }
-                // Yandex
-                else if (/yandex\./i.test(host)) {
-                    searchKeywords = refUrl.searchParams.get('text') || '';
-                }
-                // Fallback générique — essayer tous les params communs
-                else {
-                    searchKeywords = refUrl.searchParams.get('q') ||
-                        refUrl.searchParams.get('query') ||
-                        refUrl.searchParams.get('search') ||
-                        refUrl.searchParams.get('keyword') ||
-                        refUrl.searchParams.get('s') || '';
-                }
-            } catch (e) {}
-        }
-
-        // 3. Paramètres de recherche dans l'URL actuelle elle-même
-        if (!searchKeywords) {
-            searchKeywords = currentUrl.searchParams.get('q') ||
-                currentUrl.searchParams.get('query') ||
-                currentUrl.searchParams.get('keyword') ||
-                currentUrl.searchParams.get('search') ||
-                currentUrl.searchParams.get('s') || '';
-        }
-
-        // 4. Hashtag significatif dans l'URL (certaines campagnes l'utilisent)
-        if (!searchKeywords && window.location.hash && window.location.hash.length > 1) {
-            const hashVal = window.location.hash.slice(1).replace(/-|_/g, ' ').trim();
-            if (hashVal.length > 2 && hashVal.length < 100 && !/^\d+$/.test(hashVal)) {
-                searchKeywords = hashVal;
-            }
-        }
-
-        // 5. Stocker le keyword de la 1ère session pour retrouver la source sur les pages suivantes
-        if (searchKeywords) {
-            sessionStorage.setItem('_valora_kw', searchKeywords);
-            if (utmSource) sessionStorage.setItem('_valora_utm_source', utmSource);
-            if (utmMedium) sessionStorage.setItem('_valora_utm_medium', utmMedium);
-            if (utmCampaign) sessionStorage.setItem('_valora_utm_campaign', utmCampaign);
-        } else {
-            // Récupérer le keyword détecté en début de session (navigation interne)
-            searchKeywords = sessionStorage.getItem('_valora_kw') || '';
-        }
-
-        // Construire un label enrichi si UTM disponible
-        const utmLabel = [
-            utmSource || sessionStorage.getItem('_valora_utm_source'),
-            utmMedium || sessionStorage.getItem('_valora_utm_medium'),
-            utmCampaign || sessionStorage.getItem('_valora_utm_campaign'),
-        ].filter(Boolean).join(' / ');
-        if (utmLabel && !searchKeywords) searchKeywords = `[Campagne] ${utmLabel}`;
-        // ────────────────────────────────────────────────────────────────────
-
-        const geoCache = sessionStorage.getItem('_valora_geo');
-
-        const saveView = (geo = {}) => {
-            db.PageView.create({
-                page: label,
-                path: pathname,
-                session_id: getSessionId(),
-                user_agent: navigator.userAgent.slice(0, 200),
-                referrer: document.referrer ? document.referrer.slice(0, 500) : '',
-                search_keywords: searchKeywords.slice(0, 200),
-                country: geo.country || '',
-                city: geo.city || '',
-                lat: geo.lat || null,
-                lng: geo.lon || null,
-                ip: geo.query ? geo.query.split('.').slice(0, 3).join('.') + '.x' : '',
-                time_on_page: 0,
-            }).then(created => {
-                if (created?.id) currentViewId.current = created.id;
-            }).catch(() => {});
+        // Envoi IMMÉDIAT sans attendre la géo (visible dans le back-office en <1s)
+        const baseData = {
+            page: label,
+            path: pathname,
+            session_id: sessionId,
+            user_agent: userAgent,
+            referrer,
+            search_keywords: keywords.slice(0, 200),
+            country: '',
+            city: '',
+            lat: null,
+            lng: null,
+            ip: '',
+            time_on_page: 0,
         };
 
-        if (geoCache) {
-            saveView(JSON.parse(geoCache));
-        } else {
-            fetch('https://ip-api.com/json/?fields=status,country,city,lat,lon,query')
-                .then(r => r.json())
-                .then(geo => {
-                    if (geo.status === 'success' && geo.lat) {
-                        sessionStorage.setItem('_valora_geo', JSON.stringify(geo));
-                        saveView(geo);
-                    } else throw new Error('no geo');
-                })
-                .catch(() => {
-                    fetch('https://ipapi.co/json/')
-                        .then(r => r.json())
-                        .then(geo => {
-                            const normalized = { country: geo.country_name, city: geo.city, lat: geo.latitude, lon: geo.longitude, query: geo.ip };
-                            sessionStorage.setItem('_valora_geo', JSON.stringify(normalized));
-                            saveView(normalized);
-                        })
-                        .catch(() => saveView());
+        insertPageView(baseData).then(created => {
+            if (created?.id) {
+                currentViewId.current = created.id;
+
+                // Enrichir avec la géo dès qu'elle est disponible (async, sans bloquer)
+                getGeo().then(geo => {
+                    if (geo && geo.country && created.id) {
+                        fetch(`${SUPABASE_URL}/rest/v1/page_views?id=eq.${created.id}`, {
+                            method: 'PATCH',
+                            headers: {
+                                'apikey': SUPABASE_KEY,
+                                'Authorization': `Bearer ${SUPABASE_KEY}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                country: geo.country || '',
+                                city: geo.city || '',
+                                lat: geo.lat || null,
+                                lng: geo.lon || null,
+                                ip: geo.query ? geo.query.split('.').slice(0, 3).join('.') + '.x' : '',
+                            }),
+                        });
+                    }
                 });
-        }
+            }
+        });
+
     }, [location.pathname]);
 
-    // Mettre à jour le temps quand l'utilisateur ferme/quitte l'onglet
     useEffect(() => {
-        const handleUnload = () => updatePreviousTime();
-        const handleVisibility = () => {
-            if (document.visibilityState === 'hidden') updatePreviousTime();
-        };
-        window.addEventListener('beforeunload', handleUnload);
-        document.addEventListener('visibilitychange', handleVisibility);
+        const onUnload = () => flushTime();
+        const onVisibility = () => { if (document.visibilityState === 'hidden') flushTime(); };
+        window.addEventListener('beforeunload', onUnload);
+        document.addEventListener('visibilitychange', onVisibility);
         return () => {
-            window.removeEventListener('beforeunload', handleUnload);
-            document.removeEventListener('visibilitychange', handleVisibility);
+            window.removeEventListener('beforeunload', onUnload);
+            document.removeEventListener('visibilitychange', onVisibility);
         };
     }, []);
 
