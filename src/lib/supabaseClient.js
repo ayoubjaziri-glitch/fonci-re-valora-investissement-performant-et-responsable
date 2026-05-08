@@ -4,7 +4,13 @@ import { createClient } from '@supabase/supabase-js';
 const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
 
-export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+export const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, {
+  realtime: {
+    params: {
+      eventsPerSecond: 10,
+    },
+  },
+});
 
 const headers = {
   'apikey': SUPABASE_KEY,

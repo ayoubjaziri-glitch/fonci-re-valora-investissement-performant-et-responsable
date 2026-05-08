@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react';
-import { db } from '@/lib/supabaseClient';
-import { useQuery } from '@tanstack/react-query';
+import React, { useState, useMemo, useEffect, useRef, useCallback } from 'react';
+import { db, supabase } from '@/lib/supabaseClient';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { Users, Globe, MapPin, TrendingUp, Clock, Eye, RefreshCw, Calendar, BarChart3, Monitor, Smartphone, Tablet, Search, ExternalLink, Tag } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -1091,22 +1091,62 @@ function VisiteursListe({ pageViews }) {
 // ── Composant Principal ───────────────────────────────────────────────────────
 export default function AdminVisiteurs() {
   const [tab, setTab] = useState('realtime');
+  const [lastSync, setLastSync] = useState('—');
+  const [realtimeStatus, setRealtimeStatus] = useState('connecting'); // connecting | live | error
+  const qc = useQueryClient();
 
-  const { data: pageViews = [], refetch: refetchPageViews, dataUpdatedAt } = useQuery({
+  const { data: pageViews = [], refetch: refetchPageViews } = useQuery({
     queryKey: ['page-views'],
     queryFn: () => db.PageView.list('-created_date', 2000),
-    refetchInterval: 5000, // Refresh toutes les 5 secondes — temps réel
     staleTime: 0,
   });
 
   const { data: contacts = [] } = useQuery({
     queryKey: ['contacts-analytics'],
     queryFn: () => db.ContactRequest.list('-created_date', 500),
-    refetchInterval: 10000,
+    refetchInterval: 30000,
     staleTime: 0,
   });
 
-  const lastSync = dataUpdatedAt ? new Date(dataUpdatedAt).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '—';
+  // ── Supabase Realtime — écoute les INSERT sur page_views en temps réel ──
+  useEffect(() => {
+    const channel = supabase
+      .channel('page_views_live')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'page_views' },
+        (payload) => {
+          // Dès qu'une ligne est insérée/modifiée, invalider le cache → refetch immédiat
+          qc.invalidateQueries({ queryKey: ['page-views'] });
+          setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') setRealtimeStatus('live');
+        else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') {
+          setRealtimeStatus('error');
+          // Fallback : polling 8s si le realtime échoue
+        }
+      });
+
+    // Fallback polling léger en cas d'échec realtime
+    const fallbackInterval = setInterval(() => {
+      if (realtimeStatus !== 'live') {
+        qc.invalidateQueries({ queryKey: ['page-views'] });
+        setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+      }
+    }, 8000);
+
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(fallbackInterval);
+    };
+  }, []);
+
+  const handleRefresh = useCallback(() => {
+    refetchPageViews();
+    setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+  }, [refetchPageViews]);
 
   return (
     <div className="space-y-6">
@@ -1116,11 +1156,13 @@ export default function AdminVisiteurs() {
           <p className="text-slate-500 text-sm">Données réelles de trafic sur votre site</p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 bg-emerald-50 border border-emerald-200 rounded-xl px-3 py-2">
-            <span className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse" />
-            <span className="text-xs font-semibold text-emerald-700">Live · sync {lastSync}</span>
+          <div className={`flex items-center gap-2 rounded-xl px-3 py-2 border ${realtimeStatus === 'live' ? 'bg-emerald-50 border-emerald-200' : realtimeStatus === 'error' ? 'bg-amber-50 border-amber-200' : 'bg-slate-50 border-slate-200'}`}>
+            <span className={`w-2 h-2 rounded-full ${realtimeStatus === 'live' ? 'bg-emerald-500 animate-pulse' : realtimeStatus === 'error' ? 'bg-amber-500' : 'bg-slate-400 animate-pulse'}`} />
+            <span className={`text-xs font-semibold ${realtimeStatus === 'live' ? 'text-emerald-700' : realtimeStatus === 'error' ? 'text-amber-700' : 'text-slate-500'}`}>
+              {realtimeStatus === 'live' ? '⚡ Temps réel' : realtimeStatus === 'error' ? '⏱ Polling 8s' : 'Connexion…'} · {lastSync}
+            </span>
           </div>
-          <button onClick={() => refetchPageViews()} className="flex items-center gap-2 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white rounded-xl px-3 py-2 transition-colors text-xs font-semibold">
+          <button onClick={handleRefresh} className="flex items-center gap-2 bg-[#1A3A52] hover:bg-[#2A4A6F] text-white rounded-xl px-3 py-2 transition-colors text-xs font-semibold">
             <RefreshCw className="h-3.5 w-3.5" /> Actualiser
           </button>
         </div>
@@ -1146,7 +1188,7 @@ export default function AdminVisiteurs() {
         </button>
       </div>
 
-      {tab === 'realtime' && <VisiteursTempsReel pageViews={pageViews} contacts={contacts} refetchPageViews={refetchPageViews} />}
+      {tab === 'realtime' && <VisiteursTempsReel pageViews={pageViews} contacts={contacts} refetchPageViews={handleRefresh} />}
       {tab === 'stats' && <VisiteursCumul pageViews={pageViews} contacts={contacts} />}
       {tab === 'sources' && <VisiteursSources pageViews={pageViews} />}
       {tab === 'visitors' && <VisiteursListe pageViews={pageViews} />}
