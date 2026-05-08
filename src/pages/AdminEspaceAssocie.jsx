@@ -297,7 +297,14 @@ function DocumentsSection() {
       if (editId) {
         return db.DocumentAssocie.update(editId, payload);
       } else {
-        return db.DocumentAssocie.create(payload);
+        // Use backend function to bypass RLS
+        const res = await fetch('/api/functions/insertDocumentAssocie', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (!res.ok) throw new Error('Failed to insert document');
+        return res.json();
       }
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['docs-associe'] }); setModal(false); setEditId(null); setForm({ nom: '', categorie: 'Juridique', type_acces: 'privé', date_document: '', file_url: '', taille: '' }); },
