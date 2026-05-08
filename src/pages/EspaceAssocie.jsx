@@ -760,40 +760,40 @@ export default function EspaceAssocie() {
             </motion.div>
 
             {/* Documents Juridiques */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.25 }}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hidden">
+            
 
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-slate-900">Documents Juridiques</h3>
-                <FileText className="h-6 w-6 text-slate-400" />
-              </div>
-              
-              <div className="space-y-3 max-h-80 overflow-y-auto">
-                {documents.map((doc, index) =>
-                <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors">
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-slate-900">{doc.name}</p>
-                    <div className="flex items-center gap-2 mt-1">
-                      <span className={`text-xs px-2 py-0.5 rounded-full ${
-                      doc.type === 'public' ? 'bg-emerald-100 text-emerald-700' : 'bg-blue-100 text-blue-700'}`
-                      }>
-                        {doc.type}
-                      </span>
-                      <span className="text-xs text-slate-500">{doc.date}</span>
-                    </div>
-                  </div>
-                  {doc.url ?
-                  <a href={doc.url} target="_blank" rel="noreferrer" className="text-[#C9A961] hover:text-[#B8994F]"><Download className="h-5 w-5" /></a> :
 
-                  <button className="text-slate-300 cursor-not-allowed"><Download className="h-5 w-5" /></button>
-                  }
-                </div>
-                )}
-              </div>
-            </motion.div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
 
             {/* Actualités */}
             <motion.div
