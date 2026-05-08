@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { db } from './supabaseClient';
-import { pagesConfig } from '@/pages.config';
 
 function getSessionId() {
     let sid = sessionStorage.getItem('_valora_sid');
@@ -27,8 +26,6 @@ const PAGE_LABELS = {
 
 export default function NavigationTracker() {
     const location = useLocation();
-    const { Pages, mainPage } = pagesConfig;
-    const mainPageKey = mainPage ?? Object.keys(Pages)[0];
     const lastPath = useRef(null);
     // Stocker l'ID de la vue créée et l'heure d'entrée pour mise à jour du temps
     const currentViewId = useRef(null);
