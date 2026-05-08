@@ -31,23 +31,23 @@ export default function Durabilite() {
   { icon: Thermometer, titleKey: "durabilite_engagement1_titre", titleFallback: "Objectif DPE C, B ou A", descKey: "durabilite_engagement1_desc", descFallback: "Nous visons systématiquement un DPE C minimum.", metricKey: "durabilite_engagement1_metric", metricFallback: "DPE C, B ou A", metricLabelKey: "durabilite_engagement1_label", metricLabelFallback: "Selon opportunité" },
   { icon: Zap, titleKey: "durabilite_engagement2_titre", titleFallback: "Réduction énergétique", descKey: "durabilite_engagement2_desc", descFallback: "Objectif de réduction moyenne de 40% de la consommation énergétique après réhabilitation.", metricKey: "durabilite_engagement2_metric", metricFallback: "-40%", metricLabelKey: "durabilite_engagement2_label", metricLabelFallback: "consommation" },
   { icon: Target, titleKey: "durabilite_engagement3_titre", titleFallback: "Éradication passoires", descKey: "durabilite_engagement3_desc", descFallback: "100% du parc hors des classes E, F et G d'ici 2027.", metricKey: "durabilite_engagement3_metric", metricFallback: "100%", metricLabelKey: "durabilite_engagement3_label", metricLabelFallback: "hors E/F/G" },
-  { icon: Droplets, titleKey: "durabilite_engagement4_titre", titleFallback: "Gestion de l'eau", descKey: "durabilite_engagement4_desc", descFallback: "Installation de mousseurs et chasses d'eau double flux.", metricKey: "durabilite_engagement4_metric", metricFallback: "-20%", metricLabelKey: "durabilite_engagement4_label", metricLabelFallback: "conso eau" }
-  ];
+  { icon: Droplets, titleKey: "durabilite_engagement4_titre", titleFallback: "Gestion de l'eau", descKey: "durabilite_engagement4_desc", descFallback: "Installation de mousseurs et chasses d'eau double flux.", metricKey: "durabilite_engagement4_metric", metricFallback: "-20%", metricLabelKey: "durabilite_engagement4_label", metricLabelFallback: "conso eau" }];
+
 
 
   const piliers = [
   { titleKey: "durabilite_pilier1_titre", titleFallback: "Environnement (E)", icon: Globe, itemsKey: "durabilite_pilier1_items", itemsFallback: "Transformation de passoires thermiques en actifs performants\nIsolation systématique des combles et planchers bas\nRemplacement des chaudières fioul/gaz par des systèmes performants\nUtilisation de matériaux à faible impact\nGestion responsable des déchets de chantier" },
   { titleKey: "durabilite_pilier2_titre", titleFallback: "Social (S)", icon: Users, itemsKey: "durabilite_pilier2_items", itemsFallback: "Logements sains : VMC performante pour éviter l'humidité\nRéduction des charges locatives grâce à l'efficacité énergétique\nConfort thermique été comme hiver\nPartenariats avec entreprises locales\nÉquipements modernes : bornes de recharge véhicules électriques si opportun" },
-  { titleKey: "durabilite_pilier3_titre", titleFallback: "Gouvernance (G)", icon: ShieldCheck, itemsKey: "durabilite_pilier3_items", itemsFallback: "Rapport annuel sur l'évolution du DPE moyen du parc\nTransparence totale avec les investisseurs\nBudgets de travaux maîtrisés et prévisibles\nRespect des réglementations thermiques\nAudit énergétique systématique avant acquisition" }
-  ];
+  { titleKey: "durabilite_pilier3_titre", titleFallback: "Gouvernance (G)", icon: ShieldCheck, itemsKey: "durabilite_pilier3_items", itemsFallback: "Rapport annuel sur l'évolution du DPE moyen du parc\nTransparence totale avec les investisseurs\nBudgets de travaux maîtrisés et prévisibles\nRespect des réglementations thermiques\nAudit énergétique systématique avant acquisition" }];
+
 
 
   const trajectoire = [
   { year: "2026", objectifKey: "durabilite_traj1_objectif", objectifFallback: "100%", descKey: "durabilite_traj1_desc", descFallback: "DPE C minimum" },
   { year: "2027", objectifKey: "durabilite_traj2_objectif", objectifFallback: "80%", descKey: "durabilite_traj2_desc", descFallback: "DPE B ou A" },
   { year: "2028", objectifKey: "durabilite_traj3_objectif", objectifFallback: "90%", descKey: "durabilite_traj3_desc", descFallback: "DPE B ou A" },
-  { year: "2030", objectifKey: "durabilite_traj4_objectif", objectifFallback: "95%", descKey: "durabilite_traj4_desc", descFallback: "DPE B ou A" }
-  ];
+  { year: "2030", objectifKey: "durabilite_traj4_objectif", objectifFallback: "95%", descKey: "durabilite_traj4_desc", descFallback: "DPE B ou A" }];
+
 
 
   return (
@@ -210,7 +210,7 @@ export default function Durabilite() {
                 </div>
                 <h3 className="text-xl font-semibold text-[#1A3A52] mb-4">{get(pilier.titleKey, pilier.titleFallback)}</h3>
                 <ul className="space-y-3">
-                  {get(pilier.itemsKey, pilier.itemsFallback).split('\n').filter(i => i.trim()).map((item, idx) =>
+                  {get(pilier.itemsKey, pilier.itemsFallback).split('\n').filter((i) => i.trim()).map((item, idx) =>
                 <li key={idx} className="flex items-start gap-2">
                       <CheckCircle2 className="h-5 w-5 mt-0.5 flex-shrink-0 text-[#C9A961]" />
                       <span className="text-slate-700 text-sm">{item}</span>
@@ -281,9 +281,9 @@ export default function Durabilite() {
               <Thermometer className="h-10 w-10 text-[#C9A961] mb-4" />
               <h3 className="font-semibold text-[#1A3A52] mb-3">{get('durabilite_travaux1_titre', 'Isolation thermique')}</h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                {get('durabilite_travaux1_items', 'Isolation systématique des combles et planchers bas\nMenuiseries double vitrage performantes\nITE si nécessaire selon diagnostic\nTraitement des ponts thermiques critiques').split('\n').filter(i => i.trim()).map((item, idx) => (
-                  <li key={idx}>• {item}</li>
-                ))}
+                {get('durabilite_travaux1_items', 'Isolation systématique des combles et planchers bas\nMenuiseries double vitrage performantes\nITE si nécessaire selon diagnostic\nTraitement des ponts thermiques critiques').split('\n').filter((i) => i.trim()).map((item, idx) =>
+                <li key={idx}>• {item}</li>
+                )}
               </ul>
             </div>
 
@@ -291,9 +291,9 @@ export default function Durabilite() {
               <Zap className="h-10 w-10 text-[#C9A961] mb-4" />
               <h3 className="font-semibold text-[#1A3A52] mb-3">{get('durabilite_travaux2_titre', 'Systèmes énergétiques')}</h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                {get('durabilite_travaux2_items', 'Remplacement fioul/gaz par systèmes performants\nRaccordement réseau chaleur urbain si disponible\nVMC performante (simple ou double flux)\nRégulation et programmation optimisées').split('\n').filter(i => i.trim()).map((item, idx) => (
-                  <li key={idx}>• {item}</li>
-                ))}
+                {get('durabilite_travaux2_items', 'Remplacement fioul/gaz par systèmes performants\nRaccordement réseau chaleur urbain si disponible\nVMC performante (simple ou double flux)\nRégulation et programmation optimisées').split('\n').filter((i) => i.trim()).map((item, idx) =>
+                <li key={idx}>• {item}</li>
+                )}
               </ul>
             </div>
 
@@ -301,9 +301,9 @@ export default function Durabilite() {
               <Sun className="h-10 w-10 text-[#C9A961] mb-4" />
               <h3 className="font-semibold text-[#1A3A52] mb-3">{get('durabilite_travaux3_titre', 'Compléments & services')}</h3>
               <ul className="space-y-2 text-sm text-slate-600">
-                {get('durabilite_travaux3_items', 'Bornes de recharge véhicules électriques si opportun\nMousseurs et chasses d\'eau double flux\nÉclairage LED dans les parties communes\nMatériaux à faible impact privilégiés').split('\n').filter(i => i.trim()).map((item, idx) => (
-                  <li key={idx}>• {item}</li>
-                ))}
+                {get('durabilite_travaux3_items', 'Bornes de recharge véhicules électriques si opportun\nMousseurs et chasses d\'eau double flux\nÉclairage LED dans les parties communes\nMatériaux à faible impact privilégiés').split('\n').filter((i) => i.trim()).map((item, idx) =>
+                <li key={idx}>• {item}</li>
+                )}
               </ul>
             </div>
           </div>
@@ -314,7 +314,7 @@ export default function Durabilite() {
       <CO2Simulator />
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="bg-[#C9A961] py-6">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
 
@@ -330,7 +330,7 @@ export default function Durabilite() {
               </Button>
             </Link>
             <Link to={createPageUrl("Realisations")}>
-              <Button variant="outline" className="border-[#1A3A52]/30 text-[#1A3A52] hover:bg-[#1A3A52]/10 px-8 py-6 font-semibold">
+              <Button variant="outline" className="border-[#1A3A52]/30 text-[#1A3A52] hover:bg-[#1A3A52]/10 py-6 font-semibold px-8 mx-1">
                 Voir nos réalisations
               </Button>
             </Link>
