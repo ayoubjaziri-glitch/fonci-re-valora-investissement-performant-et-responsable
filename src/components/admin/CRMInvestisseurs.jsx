@@ -666,7 +666,18 @@ export default function CRMInvestisseurs() {
           <FormulaireInvestisseur
             form={form} setForm={setForm}
             onSave={() => {
-              const clean = { ...form };
+              // Champs connus dans la table Supabase
+              const ALLOWED = ['prenom', 'nom', 'email', 'telephone', 'societe', 'ville', 'pays',
+                'statut', 'source', 'profil_investisseur', 'montant_investi', 'nb_parts',
+                'date_entree', 'notes', 'interactions', 'date_prochain_contact', 'responsable_suivi',
+                'scoring', 'newsletter', 'rgpd_consent', 'tags',
+                // champs potentiellement présents
+                'capacite_investissement', 'ticket_vise', 'horizon_placement',
+                'tolerance_risque', 'objectifs_investissement', 'documents_signes'];
+              const clean = {};
+              for (const key of ALLOWED) {
+                if (key in form) clean[key] = form[key];
+              }
               if (!clean.date_entree) clean.date_entree = null;
               if (!clean.date_prochain_contact) clean.date_prochain_contact = null;
               saveMutation.mutate(clean);
