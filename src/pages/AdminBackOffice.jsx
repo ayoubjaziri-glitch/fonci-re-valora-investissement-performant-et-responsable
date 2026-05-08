@@ -602,8 +602,7 @@ const navGroups = [
   { id: 'contact_config', label: 'Paramètres contact', icon: Mail },
   { id: 'acces', label: 'Accès Associés', icon: Users },
   { id: 'admin', label: 'Accès Admin', icon: Shield },
-  { id: 'audit', label: '🔍 Audit Global', icon: Shield },
-  { id: 'export_backend', label: '📦 Export Backend', icon: Rocket }]
+  { id: 'audit', label: '🔍 Audit Global', icon: Shield }]
 
 }];
 
