@@ -27,7 +27,11 @@ function createEntity(tableName) {
       const column = orderBy.startsWith('-') ? orderBy.slice(1) : orderBy;
       const direction = orderBy.startsWith('-') ? 'desc' : 'asc';
       const res = await fetch(`${base}?order=${column}.${direction}&limit=${limit}`, { headers });
-      if (!res.ok) throw new Error(await res.text());
+      if (!res.ok) {
+        const err = await res.text();
+        console.error(`[Supabase ${tableName}] Error:`, err);
+        throw new Error(err);
+      }
       return res.json();
     },
     async filter(filters = {}, orderBy = '-created_at', limit = 500) {
