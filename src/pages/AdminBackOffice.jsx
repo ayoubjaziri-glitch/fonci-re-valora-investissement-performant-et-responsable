@@ -424,12 +424,15 @@ function DemandesContactSection() {
 
   const { data: contacts = [], refetch: refetchContacts } = useQuery({
     queryKey: ['contacts'],
-    queryFn: () => db.ContactRequest.list('-created_date', 200),
+    queryFn: () => db.ContactRequest.list('-created_date', 10000), // Charger TOUS les contacts
     staleTime: 0,
   });
 
   // ── Supabase Realtime — écoute les INSERT sur contact_requests en temps réel ──
   useEffect(() => {
+    // Refetch initial au montage pour charger les données existantes
+    refetchContacts();
+
     const channel = supabase
       .channel('contact_requests_live')
       .on(
