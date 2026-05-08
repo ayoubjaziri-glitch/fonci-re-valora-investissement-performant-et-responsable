@@ -306,11 +306,17 @@ function DocumentsSection() {
     setUploading(true);
     
     try {
-      const { base44 } = await import('@/api/base44Client');
       const formData = new FormData();
       formData.append('file', file);
-      const res = await base44.functions.invoke('uploadDocumentAssocie', formData);
-      const { file_url, size } = res.data;
+      
+      // Appel direct au backend via fetch
+      const res = await fetch('/.netlify/functions/uploadDocumentAssocie', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+      const { file_url, size } = await res.json();
       setForm(f => ({ ...f, file_url, taille: size }));
     } catch (err) {
       alert('Erreur upload: ' + err.message);
