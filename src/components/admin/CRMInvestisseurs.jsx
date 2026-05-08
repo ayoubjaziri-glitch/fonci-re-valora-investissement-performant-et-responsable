@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { db } from '@/lib/supabaseClient';
+import { toast } from 'sonner';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -459,6 +460,11 @@ export default function CRMInvestisseurs() {
       setShowModal(false);
       setEditId(null);
       setForm(EMPTY_FORM);
+      toast.success(editId ? 'Investisseur mis à jour' : 'Investisseur créé');
+    },
+    onError: (err) => {
+      console.error('CRM save error:', err);
+      toast.error(`Erreur : ${err.message}`);
     },
   });
 
