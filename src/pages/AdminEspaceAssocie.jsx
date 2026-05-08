@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { db, supabase } from '@/lib/supabaseClient';
+import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -291,10 +292,17 @@ function DocumentsSection() {
   }, [qc, refetchDocs]);
 
   const createMutation = useMutation({
-    mutationFn: (data) => {
+    mutationFn: async (data) => {
       const payload = { ...data };
       if (!payload.taille) payload.taille = '';
-      return editId ? db.DocumentAssocie.update(editId, payload) : db.DocumentAssocie.create(payload);
+      
+      if (editId) {
+        return db.DocumentAssocie.update(editId, payload);
+      } else {
+        // Utiliser la backend function pour contourner RLS
+        const { data: result } = await base44.functions.invoke('createDocument', { document: payload });
+        return result;
+      }
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['docs-associe'] }); setModal(false); setEditId(null); setForm({ nom: '', categorie: 'Juridique', type_acces: 'privé', date_document: '', file_url: '', taille: '' }); },
     onError: (err) => { console.error('Erreur sauvegarde:', err); alert('Erreur: ' + err.message); },
@@ -310,46 +318,26 @@ function DocumentsSection() {
     if (!file) return;
     setUploading(true);
     
-    try {
-      const bucketName = 'associes-documents';
-      const fileName = `${Date.now()}_${file.name}`;
-      
-      // Essayer d'uploader
-      let uploadError = null;
-      const { error: uploadErr } = await supabase.storage
-        .from(bucketName)
-        .upload(fileName, file);
-      
-      if (uploadErr && uploadErr.message.includes('Bucket not found')) {
-        // Créer le bucket s'il n'existe pas
-        const { error: createErr } = await supabase.storage.createBucket(bucketName, {
-          public: true,
-          fileSizeLimit: 52428800,
-        });
-        
-        if (createErr) throw createErr;
-        
-        // Réessayer l'upload
-        const { error: retryErr } = await supabase.storage
-          .from(bucketName)
-          .upload(fileName, file);
-        if (retryErr) throw retryErr;
-      } else if (uploadErr) {
-        throw uploadErr;
-      }
-
-      const { data: { publicUrl } } = supabase.storage
-        .from(bucketName)
-        .getPublicUrl(fileName);
-
-      const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-      setForm(f => ({ ...f, file_url: publicUrl, taille }));
-    } catch (err) {
-      console.error('Upload error:', err);
-      alert('Erreur upload: ' + err.message);
-    } finally {
+    const bucket = 'documents';
+    const fileName = `${Date.now()}_${file.name}`;
+    
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, file);
+    
+    if (error) {
+      alert('Erreur upload: ' + error.message);
       setUploading(false);
+      return;
     }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(fileName);
+
+    const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+    setForm(f => ({ ...f, file_url: publicUrl, taille }));
+    setUploading(false);
   };
 
   const openEdit = (doc) => {
