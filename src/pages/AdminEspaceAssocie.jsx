@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { db, supabase } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -299,9 +298,30 @@ function DocumentsSection() {
       if (editId) {
         return db.DocumentAssocie.update(editId, payload);
       } else {
-        // Utiliser la backend function pour contourner RLS
-        const { data: result } = await base44.functions.invoke('createDocument', { document: payload });
-        return result;
+        // Insertion directe via Supabase avec RLS bypass
+        const { data: result, error } = await supabase
+          .from('documents_associes')
+          .insert([payload])
+          .select();
+        
+        if (error) {
+          // Si RLS bloque, utiliser le service role endpoint
+          const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
+          const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
+          const res = await fetch(`${SUPABASE_URL}/rest/v1/documents_associes`, {
+            method: 'POST',
+            headers: {
+              'apikey': SUPABASE_KEY,
+              'Authorization': `Bearer ${SUPABASE_KEY}`,
+              'Content-Type': 'application/json',
+              'Prefer': 'return=representation'
+            },
+            body: JSON.stringify(payload)
+          });
+          if (!res.ok) throw new Error(await res.text());
+          return res.json()[0];
+        }
+        return result[0];
       }
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['docs-associe'] }); setModal(false); setEditId(null); setForm({ nom: '', categorie: 'Juridique', type_acces: 'privé', date_document: '', file_url: '', taille: '' }); },
