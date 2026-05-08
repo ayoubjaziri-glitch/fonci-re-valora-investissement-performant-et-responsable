@@ -325,15 +325,7 @@ function DocumentsSection() {
     const fileName = `${Date.now()}_${file.name}`;
     
     try {
-      // Assurer que le bucket existe via backend
-      const res = await fetch('/api/functions/ensureBucket', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ bucketName: bucket })
-      });
-      if (!res.ok) throw new Error('Failed to ensure bucket');
-
-      // Upload le fichier
+      // Upload le fichier directement à Supabase
       const { data, error } = await supabase.storage
         .from(bucket)
         .upload(fileName, file);
