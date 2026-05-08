@@ -307,9 +307,9 @@ function DocumentsSection() {
     
     try {
       const { base44 } = await import('@/api/base44Client');
-      const { file_url } = await base44.integrations.Core.UploadFile({ file });
-      const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-      setForm(f => ({ ...f, file_url, taille }));
+      const res = await base44.functions.invoke('uploadDocumentAssocie', {}, { file });
+      const { file_url, size } = res.data;
+      setForm(f => ({ ...f, file_url, taille: size }));
     } catch (err) {
       alert('Erreur upload: ' + err.message);
     } finally {
