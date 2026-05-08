@@ -424,7 +424,7 @@ function DemandesContactSection() {
 
   const { data: contacts = [], refetch: refetchContacts } = useQuery({
     queryKey: ['contacts'],
-    queryFn: () => db.ContactRequest.list('-created_date', 10000), // Charger TOUS les contacts
+    queryFn: () => db.ContactRequest.list('-created_at', 10000), // Charger TOUS les contacts
     staleTime: 0,
   });
 
