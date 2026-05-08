@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { base44 } from '@/api/base44Client';
 import { db, supabase } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
@@ -297,7 +298,9 @@ function DocumentsSection() {
       if (editId) {
         return db.DocumentAssocie.update(editId, payload);
       } else {
-        return db.DocumentAssocie.create(payload);
+        // Use backend function to bypass RLS
+        const res = await base44.functions.invoke('createDocumentAssocie', payload);
+        return res.data;
       }
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['docs-associe'] }); setModal(false); setEditId(null); setForm({ nom: '', categorie: 'Juridique', type_acces: 'privé', date_document: '', file_url: '', taille: '' }); },
