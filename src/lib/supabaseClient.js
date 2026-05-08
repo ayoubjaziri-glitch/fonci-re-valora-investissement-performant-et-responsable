@@ -103,6 +103,7 @@ export const db = {
   EspaceAssocieConfig: createEntity('espace_associe_config'),
   ContactConfig: createEntity('contact_config'),
   InvestisseurCRM: createEntity('investisseurs_crm'),
+  ValoraAIMemoire: createEntity('valora_ai_memoire'),
   Tache: createEntity('taches'),
   Projet: createEntity('projets'),
   Responsable: createEntity('responsables'),

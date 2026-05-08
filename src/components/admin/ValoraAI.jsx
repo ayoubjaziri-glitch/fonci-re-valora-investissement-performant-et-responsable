@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import {
   Send, Plus, Sparkles, Trash2, Bot, User, Loader2, Zap, Globe,
   Database, FileText, CheckSquare, Calendar, Share2, Check, X,
@@ -315,13 +316,13 @@ function MemoirePanel() {
 
   const { data: notes = [] } = useQuery({
     queryKey: ['valora-memoire'],
-    queryFn: () => base44.entities.ValoraAIMemoire.list('-created_date', 200),
+    queryFn: () => db.ValoraAIMemoire.list('-created_date', 200),
   });
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ['valora-memoire'] });
-  const createMut = useMutation({ mutationFn: (d) => base44.entities.ValoraAIMemoire.create(d), onSuccess: invalidate });
-  const updateMut = useMutation({ mutationFn: ({ id, data }) => base44.entities.ValoraAIMemoire.update(id, data), onSuccess: invalidate });
-  const deleteMut = useMutation({ mutationFn: (id) => base44.entities.ValoraAIMemoire.delete(id), onSuccess: invalidate });
+  const createMut = useMutation({ mutationFn: (d) => db.ValoraAIMemoire.create(d), onSuccess: invalidate });
+  const updateMut = useMutation({ mutationFn: ({ id, data }) => db.ValoraAIMemoire.update(id, data), onSuccess: invalidate });
+  const deleteMut = useMutation({ mutationFn: (id) => db.ValoraAIMemoire.delete(id), onSuccess: invalidate });
 
   const handleFileUpload = async (e) => {
     const file = e.target.files?.[0];
