@@ -45,7 +45,7 @@ Réponds UNIQUEMENT avec un JSON valide (pas de markdown autour) :
 }`;
 
     const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -70,10 +70,34 @@ Réponds UNIQUEMENT avec un JSON valide (pas de markdown autour) :
     // Extraire le JSON de la réponse
     const jsonMatch = rawText.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
-      return Response.json({ error: 'Réponse invalide de Gemini' }, { status: 500 });
+      return Response.json({ error: 'Réponse invalide de Gemini', raw: rawText.slice(0, 500) }, { status: 500 });
     }
 
-    const article = JSON.parse(jsonMatch[0]);
+    let article;
+    try {
+      article = JSON.parse(jsonMatch[0]);
+    } catch (parseErr) {
+      // Tentative de récupération : extraire les champs clés manuellement
+      const extract = (key) => {
+        const match = jsonMatch[0].match(new RegExp(`"${key}"\\s*:\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+        return match ? match[1] : '';
+      };
+      const contenuMatch = jsonMatch[0].match(/"contenu"\s*:\s*"([\s\S]*?)(?:",\s*"(?:categorie|auteur|image_url|temps_lecture|date_publication)"|\}\s*$)/);
+      article = {
+        titre: extract('titre'),
+        slug: extract('slug'),
+        extrait: extract('extrait'),
+        contenu: contenuMatch ? contenuMatch[1].replace(/\\n/g, '\n').replace(/\\"/g, '"') : '',
+        categorie: extract('categorie') || categorie || 'Investissement',
+        auteur: extract('auteur') || 'La Foncière Valora',
+        image_url: extract('image_url'),
+        temps_lecture: extract('temps_lecture'),
+        date_publication: extract('date_publication') || new Date().toISOString().split('T')[0],
+      };
+      if (!article.titre) {
+        return Response.json({ error: `JSON invalide: ${parseErr.message}`, raw: jsonMatch[0].slice(0, 1000) }, { status: 500 });
+      }
+    }
 
     // Nettoyer le slug
     const slug = (article.slug || article.titre || sujet)
