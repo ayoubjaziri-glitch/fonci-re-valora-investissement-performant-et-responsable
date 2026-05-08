@@ -44,27 +44,42 @@ Réponds UNIQUEMENT avec un JSON valide (pas de markdown autour) :
   "date_publication": "${new Date().toISOString().split('T')[0]}"
 }`;
 
-    const geminiRes = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`,
-      {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          contents: [{ parts: [{ text: prompt }] }],
-          generationConfig: {
-            temperature: 0.7,
-            maxOutputTokens: 8192,
-          }
-        })
-      }
-    );
+    const MODELS = ['gemini-2.5-flash', 'gemini-2.0-flash-lite', 'gemini-1.5-flash'];
+    let geminiData = null;
+    let lastError = '';
 
-    if (!geminiRes.ok) {
-      const err = await geminiRes.text();
-      return Response.json({ error: `Erreur Gemini: ${err}` }, { status: 500 });
+    for (const model of MODELS) {
+      const geminiRes = await fetch(
+        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`,
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{ parts: [{ text: prompt }] }],
+            generationConfig: {
+              temperature: 0.7,
+              maxOutputTokens: 8192,
+            }
+          })
+        }
+      );
+
+      if (geminiRes.ok) {
+        geminiData = await geminiRes.json();
+        break;
+      }
+
+      const errText = await geminiRes.text();
+      lastError = errText;
+      // Si 503 ou 429, on essaie le modèle suivant
+      if (geminiRes.status !== 503 && geminiRes.status !== 429) {
+        return Response.json({ error: `Erreur Gemini (${model}): ${errText}` }, { status: 500 });
+      }
     }
 
-    const geminiData = await geminiRes.json();
+    if (!geminiData) {
+      return Response.json({ error: `Tous les modèles sont indisponibles: ${lastError}` }, { status: 503 });
+    }
     const rawText = geminiData.candidates?.[0]?.content?.parts?.[0]?.text || '';
 
     // Extraire le JSON de la réponse
