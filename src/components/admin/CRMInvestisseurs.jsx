@@ -666,20 +666,17 @@ export default function CRMInvestisseurs() {
           <FormulaireInvestisseur
             form={form} setForm={setForm}
             onSave={() => {
-              // Champs connus dans la table Supabase
-              const ALLOWED = ['prenom', 'nom', 'email', 'telephone', 'societe', 'ville', 'pays',
-                'statut', 'source', 'profil_investisseur', 'montant_investi', 'nb_parts',
-                'date_entree', 'notes', 'interactions', 'date_prochain_contact', 'responsable_suivi',
-                'scoring', 'newsletter', 'rgpd_consent', 'tags',
-                // champs potentiellement présents
-                'capacite_investissement', 'ticket_vise', 'horizon_placement',
-                'tolerance_risque', 'objectifs_investissement', 'documents_signes'];
-              const clean = {};
-              for (const key of ALLOWED) {
-                if (key in form) clean[key] = form[key];
-              }
+              const clean = { ...form };
               if (!clean.date_entree) clean.date_entree = null;
               if (!clean.date_prochain_contact) clean.date_prochain_contact = null;
+              // Retirer les colonnes non encore présentes dans la table Supabase
+              delete clean.capacite_investissement;
+              delete clean.ticket_vise;
+              delete clean.horizon_placement;
+              delete clean.tolerance_risque;
+              delete clean.objectifs_investissement;
+              delete clean.responsable_suivi;
+              delete clean.documents_signes;
               saveMutation.mutate(clean);
             }}
             onCancel={() => setShowModal(false)}
