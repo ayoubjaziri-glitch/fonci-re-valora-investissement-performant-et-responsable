@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { db } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
+import { db, supabase } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -269,10 +268,27 @@ function DocumentsSection() {
   const [uploading, setUploading] = useState(false);
   const [editId, setEditId] = useState(null);
 
-  const { data: docs = [] } = useQuery({
+  const { data: docs = [], refetch: refetchDocs } = useQuery({
     queryKey: ['docs-associe'],
-    queryFn: () => db.DocumentAssocie.list('-date_document'),
+    queryFn: () => db.DocumentAssocie.list('-created_at'),
+    staleTime: 0,
   });
+
+  // ── Supabase Realtime
+  useEffect(() => {
+    refetchDocs();
+
+    const channel = supabase
+      .channel('documents_associes_live')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'documents_associes' },
+        () => qc.invalidateQueries({ queryKey: ['docs-associe'] })
+      )
+      .subscribe();
+
+    return () => supabase.removeChannel(channel);
+  }, [qc, refetchDocs]);
 
   const createMutation = useMutation({
     mutationFn: (data) => editId ? db.DocumentAssocie.update(editId, data) : db.DocumentAssocie.create(data),
@@ -288,9 +304,26 @@ function DocumentsSection() {
     const file = e.target.files[0];
     if (!file) return;
     setUploading(true);
-    const { file_url } = await base44.integrations.Core.UploadFile({ file });
+    
+    const bucket = 'documents';
+    const fileName = `${Date.now()}_${file.name}`;
+    
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .upload(fileName, file);
+    
+    if (error) {
+      alert('Erreur upload: ' + error.message);
+      setUploading(false);
+      return;
+    }
+
+    const { data: { publicUrl } } = supabase.storage
+      .from(bucket)
+      .getPublicUrl(fileName);
+
     const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-    setForm(f => ({ ...f, file_url, taille }));
+    setForm(f => ({ ...f, file_url: publicUrl, taille }));
     setUploading(false);
   };
 
