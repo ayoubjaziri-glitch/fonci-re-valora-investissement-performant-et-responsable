@@ -430,8 +430,10 @@ function DemandesContactSection() {
 
   // ── Supabase Realtime — écoute les INSERT sur contact_requests en temps réel ──
   useEffect(() => {
-    // Refetch initial au montage pour charger les données existantes
-    refetchContacts();
+    // Refetch initial immédiat au montage pour charger ALL les données existantes
+    refetchContacts().then(() => {
+      setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    });
 
     const channel = supabase
       .channel('contact_requests_live')
@@ -460,7 +462,7 @@ function DemandesContactSection() {
       supabase.removeChannel(channel);
       clearInterval(fallbackInterval);
     };
-  }, []);
+  }, [qc, refetchContacts]);
 
   const markDoneMutation = useMutation({
     mutationFn: (id) => db.ContactRequest.update(id, { email_envoye: true }),
