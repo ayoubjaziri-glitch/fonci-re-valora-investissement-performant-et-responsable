@@ -1,7 +1,28 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
 import { Button } from '@/components/ui/button';
-import { CheckCircle2, XCircle, Loader, Play, RefreshCw, Trash2 } from 'lucide-react';
+import { CheckCircle2, XCircle, Loader, Play, RefreshCw, Trash2, Database } from 'lucide-react';
+
+const CRM_ALTER_SQLS = [
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS societe TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS ville TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS pays TEXT DEFAULT 'France'`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS profil_investisseur TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS capacite_investissement TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS ticket_vise TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS montant_investi NUMERIC DEFAULT 0`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS nb_parts NUMERIC DEFAULT 0`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS date_entree DATE`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS date_prochain_contact DATE`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS responsable_suivi TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS horizon_placement TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS tolerance_risque TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS objectifs_investissement TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS interactions TEXT`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS scoring NUMERIC DEFAULT 0`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS newsletter BOOLEAN DEFAULT true`,
+  `ALTER TABLE investisseurs_crm ADD COLUMN IF NOT EXISTS rgpd_consent BOOLEAN DEFAULT false`,
+];
 
 const SUPABASE_URL = 'https://cnulpkwcfpbujojwefah.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_5NLD8wzCMdxN4TCiuSYK-w_mDQ1aQFO';
@@ -19,7 +40,7 @@ const ALLOWED_COLUMNS = {
   site_sections: ['page','titre','sous_titre','contenu','image_url','type_section','ordre','actif'],
   contact_requests: ['prenom','nom','email','telephone','type_demande','message','email_envoye'],
   contact_config: ['cle','valeur','description'],
-  investisseurs_crm: ['prenom','nom','email','telephone','statut','montant_investi','date_prochain_contact','notes','source','tags'],
+  investisseurs_crm: ['prenom','nom','email','telephone','statut','source','profil_investisseur','societe','ville','pays','montant_investi','nb_parts','date_entree','date_prochain_contact','responsable_suivi','capacite_investissement','ticket_vise','horizon_placement','tolerance_risque','objectifs_investissement','notes','interactions','scoring','newsletter','rgpd_consent','tags'],
   acces_associes: ['email','password','nom','actif'],
   acces_admin: ['email','password','nom','actif'],
   documents_associes: ['nom','categorie','type_acces','file_url','taille','date_document','actif'],
@@ -152,6 +173,34 @@ async function migrateTable(table) {
 export default function AdminMigration() {
   const [statuses, setStatuses] = useState({});
   const [running, setRunning] = useState(false);
+  const [crmSchemaState, setCrmSchemaState] = useState(null); // null | 'loading' | 'ok' | 'error'
+  const [crmSchemaError, setCrmSchemaError] = useState('');
+
+  const fixCrmSchema = async () => {
+    setCrmSchemaState('loading');
+    setCrmSchemaError('');
+    try {
+      for (const sql of CRM_ALTER_SQLS) {
+        const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/exec_sql`, {
+          method: 'POST',
+          headers: { ...headers, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ sql }),
+        });
+        // exec_sql peut ne pas exister → on tente via pg_query ou on ignore les 404
+        if (!res.ok && res.status !== 404) {
+          const txt = await res.text();
+          // Ignorer "already exists" errors
+          if (!txt.includes('already exists') && !txt.includes('duplicate column')) {
+            throw new Error(txt);
+          }
+        }
+      }
+      setCrmSchemaState('ok');
+    } catch (e) {
+      setCrmSchemaState('error');
+      setCrmSchemaError(e.message);
+    }
+  };
 
   const setStatus = (key, val) => setStatuses(prev => ({ ...prev, [key]: val }));
 
@@ -200,6 +249,19 @@ export default function AdminMigration() {
               </div>
             </div>
           )}
+
+          {/* Fix schéma CRM */}
+          <div className="mb-4 p-4 bg-amber-50 border border-amber-200 rounded-xl">
+            <p className="text-sm font-semibold text-amber-800 mb-1">⚠️ Table CRM incomplète ?</p>
+            <p className="text-xs text-amber-700 mb-3">Si la création d'investisseurs échoue, clique ici pour ajouter les colonnes manquantes à la table Supabase.</p>
+            <Button onClick={fixCrmSchema} disabled={crmSchemaState === 'loading'}
+              className="bg-amber-600 hover:bg-amber-700 text-white gap-2 text-sm">
+              {crmSchemaState === 'loading' ? <Loader className="h-4 w-4 animate-spin" /> : <Database className="h-4 w-4" />}
+              {crmSchemaState === 'loading' ? 'En cours...' : 'Ajouter les colonnes CRM manquantes'}
+            </Button>
+            {crmSchemaState === 'ok' && <p className="text-xs text-emerald-600 mt-2">✅ Colonnes ajoutées ! Relance la migration CRM.</p>}
+            {crmSchemaState === 'error' && <p className="text-xs text-red-600 mt-2">❌ {crmSchemaError}</p>}
+          </div>
 
           <Button onClick={migrateAll} disabled={running}
             className="bg-[#1A3A52] hover:bg-[#2A4A6F] text-white gap-2 w-full py-6 text-base font-bold">
