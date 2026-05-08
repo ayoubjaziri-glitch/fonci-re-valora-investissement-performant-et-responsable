@@ -342,20 +342,13 @@ function DocumentsSection() {
     const fileName = `${Date.now()}_${file.name}`;
     
     try {
-      // Créer le bucket s'il n'existe pas
-      const { data: buckets } = await supabase.storage.listBuckets();
-      const bucketExists = buckets?.some(b => b.name === bucket);
-      
-      if (!bucketExists) {
-        const { error: createError } = await supabase.storage.createBucket(bucket, {
-          public: true,
-          allowedMimeTypes: null,
-          fileSizeLimit: 104857600, // 100MB
-        });
-        if (createError && !createError.message.includes('already exists')) {
-          throw createError;
-        }
-      }
+      // Assurer que le bucket existe via backend
+      const res = await fetch('/api/functions/ensureBucket', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ bucketName: bucket })
+      });
+      if (!res.ok) throw new Error('Failed to ensure bucket');
 
       // Upload le fichier
       const { data, error } = await supabase.storage
