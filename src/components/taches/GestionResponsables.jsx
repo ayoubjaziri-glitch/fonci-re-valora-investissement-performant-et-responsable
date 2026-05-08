@@ -11,7 +11,7 @@ export default function GestionResponsables({ onClose }) {
 
   const { data: responsables = [] } = useQuery({
     queryKey: ['responsables'],
-    queryFn: () => db.Responsable.list('-created_date'),
+    queryFn: () => db.Responsable.list('-created_at'),
   });
 
   const handleAdd = async (e) => {

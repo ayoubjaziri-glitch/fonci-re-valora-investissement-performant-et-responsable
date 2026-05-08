@@ -110,7 +110,7 @@ export default function AdminTaches() {
 
   const { data: taches = [] } = useQuery({
     queryKey: ['taches'],
-    queryFn: () => db.Tache.list('-created_date', 500),
+    queryFn: () => db.Tache.list('-created_at', 500),
   });
 
   const { data: projets = [] } = useQuery({

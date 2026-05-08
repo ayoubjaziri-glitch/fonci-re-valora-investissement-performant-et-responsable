@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Plus, MoreHorizontal, Calendar, User, Flag, CheckSquare } from 'lucide-react';
-import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { useQueryClient } from '@tanstack/react-query';
 
 const STATUTS = ['A faire', 'En cours', 'En révision', 'Terminé', 'Bloqué'];
@@ -100,7 +100,7 @@ function AddTacheInline({ statut, projet, onAdd }) {
 
   const handleAdd = async () => {
     if (!titre.trim()) return;
-    await base44.entities.Tache.create({ titre: titre.trim(), statut, projet: projet || '' });
+    await db.Tache.create({ titre: titre.trim(), statut, projet: projet || '' });
     qc.invalidateQueries({ queryKey: ['taches'] });
     setTitre('');
     setActive(false);
