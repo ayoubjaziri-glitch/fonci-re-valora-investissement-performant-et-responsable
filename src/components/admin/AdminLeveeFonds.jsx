@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { db } from '@/lib/supabaseClient';
+import { db, supabase } from '@/lib/supabaseClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -26,11 +26,46 @@ export default function AdminLeveeFonds() {
   const qc = useQueryClient();
   const [editing, setEditing] = useState(null);
   const [form, setForm] = useState(EMPTY);
+  const [lastSync, setLastSync] = useState('—');
+  const [realtimeStatus, setRealtimeStatus] = useState('connecting');
 
-  const { data: levees = [] } = useQuery({
+  const { data: levees = [], refetch: refetchLevees } = useQuery({
     queryKey: ['levees-fonds'],
-    queryFn: () => db.LeveeFonds.list('-created_date', 50),
+    queryFn: () => db.LeveeFonds.list('-created_at', 50),
+    staleTime: 0,
   });
+
+  // ── Supabase Realtime
+  useEffect(() => {
+    refetchLevees();
+
+    const channel = supabase
+      .channel('levees_fonds_live')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'levees_fonds' },
+        () => {
+          qc.invalidateQueries({ queryKey: ['levees-fonds'] });
+          setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+        }
+      )
+      .subscribe((status) => {
+        if (status === 'SUBSCRIBED') setRealtimeStatus('live');
+        else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') setRealtimeStatus('error');
+      });
+
+    const fallbackInterval = setInterval(() => {
+      if (realtimeStatus !== 'live') {
+        qc.invalidateQueries({ queryKey: ['levees-fonds'] });
+        setLastSync(new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+      }
+    }, 8000);
+
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(fallbackInterval);
+    };
+  }, [qc, refetchLevees]);
 
   const saveMutation = useMutation({
     mutationFn: (data) => editing === 'new'
@@ -54,9 +89,15 @@ export default function AdminLeveeFonds() {
           <h2 className="text-xl font-semibold text-[#1A3A52]">Levées de Fonds</h2>
           <p className="text-slate-500 text-sm">{levees.length} levée{levees.length > 1 ? 's' : ''}</p>
         </div>
-        <Button onClick={openNew} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
-          <Plus className="h-4 w-4 mr-2" /> Nouvelle levée
-        </Button>
+        <div className="flex items-center gap-3">
+          <div className={`flex items-center gap-2 rounded-xl px-3 py-2 border text-xs ${realtimeStatus === 'live' ? 'bg-emerald-50 border-emerald-200 text-emerald-700' : 'bg-slate-50 border-slate-200 text-slate-500'}`}>
+            <span className={`w-2 h-2 rounded-full ${realtimeStatus === 'live' ? 'bg-emerald-500 animate-pulse' : 'bg-slate-400'}`} />
+            {realtimeStatus === 'live' ? '⚡ Temps réel' : '⏱ Polling'} · {lastSync}
+          </div>
+          <Button onClick={openNew} className="bg-[#C9A961] hover:bg-[#B8994F] text-[#1A3A52] font-semibold">
+            <Plus className="h-4 w-4 mr-2" /> Nouvelle levée
+          </Button>
+        </div>
       </div>
 
       {/* Modal */}
