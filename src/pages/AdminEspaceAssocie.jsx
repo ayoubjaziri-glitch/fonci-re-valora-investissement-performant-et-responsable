@@ -305,26 +305,38 @@ function DocumentsSection() {
     if (!file) return;
     setUploading(true);
     
-    const bucket = 'documents';
+    const bucketName = 'associes-documents';
     const fileName = `${Date.now()}_${file.name}`;
     
-    const { data, error } = await supabase.storage
-      .from(bucket)
-      .upload(fileName, file);
-    
-    if (error) {
-      alert('Erreur upload: ' + error.message);
+    try {
+      // Créer le bucket s'il n'existe pas
+      const { data: buckets } = await supabase.storage.listBuckets();
+      const bucketExists = buckets?.some(b => b.name === bucketName);
+      
+      if (!bucketExists) {
+        await supabase.storage.createBucket(bucketName, { 
+          public: true,
+          fileSizeLimit: 52428800 // 50MB
+        });
+      }
+
+      const { data, error } = await supabase.storage
+        .from(bucketName)
+        .upload(fileName, file);
+      
+      if (error) throw error;
+
+      const { data: { publicUrl } } = supabase.storage
+        .from(bucketName)
+        .getPublicUrl(fileName);
+
+      const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+      setForm(f => ({ ...f, file_url: publicUrl, taille }));
+    } catch (err) {
+      alert('Erreur upload: ' + err.message);
+    } finally {
       setUploading(false);
-      return;
     }
-
-    const { data: { publicUrl } } = supabase.storage
-      .from(bucket)
-      .getPublicUrl(fileName);
-
-    const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-    setForm(f => ({ ...f, file_url: publicUrl, taille }));
-    setUploading(false);
   };
 
   const openEdit = (doc) => {
