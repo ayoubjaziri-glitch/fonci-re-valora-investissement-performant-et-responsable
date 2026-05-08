@@ -764,7 +764,7 @@ export default function EspaceAssocie() {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.25 }}
-              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200">
+              className="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hidden">
 
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-lg font-semibold text-slate-900">Documents Juridiques</h3>
