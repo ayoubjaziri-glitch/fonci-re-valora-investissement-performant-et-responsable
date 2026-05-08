@@ -717,7 +717,7 @@ export default function EspaceAssocie() {
               
               <div className="space-y-3 mb-4">
                 {documentsFinanciers.map((doc, index) =>
-                <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-100">
+                <div key={index} className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors border border-slate-100 hidden">
                     <div className="flex-1">
                       <p className="text-sm font-medium text-slate-900">{doc.name}</p>
                       <div className="flex items-center gap-2 mt-1">
