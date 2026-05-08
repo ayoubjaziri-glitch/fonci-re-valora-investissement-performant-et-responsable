@@ -8,6 +8,7 @@ import PageNotFound from './lib/PageNotFound';
 import AdminBackOffice from './pages/AdminBackOffice';
 import AdminExportBackend from './pages/AdminExportBackend';
 import AdminMigration from './pages/AdminMigration';
+import AdminCRMSchema from './pages/AdminCRMSchema';
 import AdminBusinessPlan from './pages/AdminBusinessPlan';
 import BlogArticle from './pages/BlogArticle';
 import AdminLogin from './pages/AdminLogin';
@@ -65,6 +66,11 @@ const AuthenticatedApp = () => {
       <Route path="/admin/migration" element={
         <ProtectedRouteCustom>
           <AdminMigration />
+        </ProtectedRouteCustom>
+      } />
+      <Route path="/admin/crm-schema" element={
+        <ProtectedRouteCustom>
+          <AdminCRMSchema />
         </ProtectedRouteCustom>
       } />
       <Route path="/admin/business-plan" element={
