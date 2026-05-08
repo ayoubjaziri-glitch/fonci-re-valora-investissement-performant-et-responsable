@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { base44 } from '@/api/base44Client';
+import { db } from '@/lib/supabaseClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -27,68 +28,17 @@ export default function AIBlogGenerator({ onClose, onSuccess }) {
     setStep('generating');
     try {
 
-    const prompt = `Tu es un expert en immobilier d'investissement, fiscalité et rénovation énergétique en France. Tu rédiges pour le blog de "La Foncière Valora", une foncière résidentielle premium basée à Vichy, dédiée à l'acquisition, réhabilitation et valorisation d'immeubles avec fort potentiel de création de valeur.
-
-MISSION : Rédige un article de blog complet et long (3000-5000 MOTS), optimisé SEO, en français, sur le sujet suivant :
-
-Sujet : "${sujet}"
-Catégorie : "${categorie}"
-Mots-clés SEO à intégrer naturellement : "${motsCles || 'investissement immobilier, foncière, rénovation, rendement, immeuble de rapport'}"
-Angle éditorial / ton souhaité : "${angle || 'Expert et professionnel, ton conseiller pour investisseurs patrimoniaux'}"
-
-RÈGLES STRICTES :
-- Format : Markdown pur, UNIQUEMENT des paragraphes longs (pas de tableaux, AUCUN)
-- Seulement 3-4 titres H2 (##) maximum pour structurer les grandes sections
-- AUCUN sous-titre H3, aucune liste à puces, aucun formatting gras ou italique sauf très rare
-- 3000-5000 mots de paragraphes denses et bien développés
-- Ton: professionnel, pédagogique, écrit par un humain expert - pas de contenu trop "IA"
-- Inclure des exemples concrets et chiffrés intégrés naturellement dans le texte
-- Mentionner la Foncière Valora naturellement 2-3 fois
-- L'extrait (résumé) doit faire 2-3 phrases accrocheuses pour le SEO
-- Calculer le temps de lecture approximatif (environ 1 mot = 0.006 min)
-- Choisir une URL Unsplash en rapport avec l'immobilier ou la rénovation
-
-Réponds UNIQUEMENT avec un JSON valide :
-{
-  "titre": "...",
-  "slug": "...",
-  "extrait": "...",
-  "contenu": "...(Markdown, 3000-5000 mots, paragraphes longs, minimaliste)...",
-  "categorie": "${categorie}",
-  "auteur": "La Foncière Valora",
-  "image_url": "https://images.unsplash.com/photo-...",
-  "temps_lecture": "X min",
-  "date_publication": "${new Date().toISOString().split('T')[0]}"
-}`;
-
-    const result = await base44.integrations.Core.InvokeLLM({
-      prompt,
-      model: 'gemini_3_flash',
-      response_json_schema: {
-        type: 'object',
-        properties: {
-          titre: { type: 'string' },
-          slug: { type: 'string' },
-          extrait: { type: 'string' },
-          contenu: { type: 'string' },
-          categorie: { type: 'string' },
-          auteur: { type: 'string' },
-          image_url: { type: 'string' },
-          temps_lecture: { type: 'string' },
-          date_publication: { type: 'string' },
-        },
-        required: ['titre', 'slug', 'extrait', 'contenu']
-      }
+    const response = await base44.functions.invoke('generateBlogArticle', {
+      sujet,
+      categorie,
+      motsCles,
+      angle,
     });
 
-    // Ensure slug is clean
-    const articleData = {
-      ...result,
-      slug: slugify(result.slug || result.titre || sujet),
-      publie: true,
-    };
+    const articleData = response.data;
+    if (articleData.error) throw new Error(articleData.error);
 
-    await base44.entities.ArticleBlog.create(articleData);
+    await db.ArticleBlog.create(articleData);
     setStep('done');
     onSuccess();
     } catch (err) {
