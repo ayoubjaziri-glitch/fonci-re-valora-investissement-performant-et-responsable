@@ -291,8 +291,13 @@ function DocumentsSection() {
   }, [qc, refetchDocs]);
 
   const createMutation = useMutation({
-    mutationFn: (data) => editId ? db.DocumentAssocie.update(editId, data) : db.DocumentAssocie.create(data),
-    onSuccess: () => { qc.invalidateQueries({ queryKey: ['docs-associe'] }); setModal(false); setEditId(null); setForm({ nom: '', categorie: 'Juridique', type_acces: 'privé', date_document: '', file_url: '' }); },
+    mutationFn: (data) => {
+      const payload = { ...data };
+      if (!payload.taille) payload.taille = '';
+      return editId ? db.DocumentAssocie.update(editId, payload) : db.DocumentAssocie.create(payload);
+    },
+    onSuccess: () => { qc.invalidateQueries({ queryKey: ['docs-associe'] }); setModal(false); setEditId(null); setForm({ nom: '', categorie: 'Juridique', type_acces: 'privé', date_document: '', file_url: '', taille: '' }); },
+    onError: (err) => { console.error('Erreur sauvegarde:', err); alert('Erreur: ' + err.message); },
   });
 
   const deleteMutation = useMutation({
@@ -306,20 +311,34 @@ function DocumentsSection() {
     setUploading(true);
     
     try {
+      const bucketName = 'associes-documents';
       const fileName = `${Date.now()}_${file.name}`;
-      const { data, error } = await supabase.storage
-        .from('associes-documents')
+      
+      // Vérifier/créer le bucket
+      const { data: buckets } = await supabase.storage.listBuckets();
+      const bucketExists = buckets?.some(b => b.name === bucketName);
+
+      if (!bucketExists) {
+        await supabase.storage.createBucket(bucketName, {
+          public: true,
+          fileSizeLimit: 52428800,
+        });
+      }
+
+      const { error } = await supabase.storage
+        .from(bucketName)
         .upload(fileName, file);
       
       if (error) throw error;
-      
+
       const { data: { publicUrl } } = supabase.storage
-        .from('associes-documents')
+        .from(bucketName)
         .getPublicUrl(fileName);
-      
-      const sizeMB = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-      setForm(f => ({ ...f, file_url: publicUrl, taille: sizeMB }));
+
+      const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+      setForm(f => ({ ...f, file_url: publicUrl, taille }));
     } catch (err) {
+      console.error('Upload error:', err);
       alert('Erreur upload: ' + err.message);
     } finally {
       setUploading(false);
@@ -390,15 +409,8 @@ function DocumentsSection() {
               {form.file_url && <p className="text-xs text-emerald-600 mt-1 truncate">{form.file_url}</p>}
             </div>
             <div className="flex gap-2">
-              <Button onClick={() => {
-                if (!form.nom) return;
-                if (!form.file_url) {
-                  alert('Veuillez d\'abord uploader un fichier');
-                  return;
-                }
-                createMutation.mutate(form);
-              }} className="flex-1 bg-[#1A3A52] text-white" disabled={!form.nom || !form.file_url}>
-                <Save className="h-4 w-4 mr-2" /> {editId ? 'Mettre à jour' : 'Créer'}
+              <Button onClick={() => createMutation.mutate(form)} className="flex-1 bg-[#1A3A52] text-white" disabled={!form.nom || createMutation.isPending}>
+                <Save className="h-4 w-4 mr-2" /> {createMutation.isPending ? 'En cours...' : editId ? 'Mettre à jour' : 'Créer'}
               </Button>
               <Button variant="outline" onClick={() => setModal(false)}><X className="h-4 w-4" /></Button>
             </div>
