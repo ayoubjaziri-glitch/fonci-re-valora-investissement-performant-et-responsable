@@ -305,33 +305,11 @@ function DocumentsSection() {
     if (!file) return;
     setUploading(true);
     
-    const bucketName = 'associes-documents';
-    const fileName = `${Date.now()}_${file.name}`;
-    
     try {
-      // Créer le bucket s'il n'existe pas
-      const { data: buckets } = await supabase.storage.listBuckets();
-      const bucketExists = buckets?.some(b => b.name === bucketName);
-      
-      if (!bucketExists) {
-        await supabase.storage.createBucket(bucketName, { 
-          public: true,
-          fileSizeLimit: 52428800 // 50MB
-        });
-      }
-
-      const { data, error } = await supabase.storage
-        .from(bucketName)
-        .upload(fileName, file);
-      
-      if (error) throw error;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from(bucketName)
-        .getPublicUrl(fileName);
-
+      const { base44 } = await import('@/api/base44Client');
+      const { file_url } = await base44.integrations.Core.UploadFile({ file });
       const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-      setForm(f => ({ ...f, file_url: publicUrl, taille }));
+      setForm(f => ({ ...f, file_url, taille }));
     } catch (err) {
       alert('Erreur upload: ' + err.message);
     } finally {
