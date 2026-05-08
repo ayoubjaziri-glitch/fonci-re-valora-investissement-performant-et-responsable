@@ -133,7 +133,10 @@ export default function AdminTaches() {
   }, [taches, projetActif, filterStatut, filterPriorite, search, showTerminees]);
 
   const handleCreate = async (form) => {
-    await db.Tache.create(form);
+    const clean = { ...form };
+    if (!clean.date_echeance) clean.date_echeance = null;
+    if (!clean.date_debut) clean.date_debut = null;
+    await db.Tache.create(clean);
     qc.invalidateQueries({ queryKey: ['taches'] });
   };
 
