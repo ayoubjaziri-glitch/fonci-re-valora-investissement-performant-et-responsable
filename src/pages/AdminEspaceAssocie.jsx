@@ -306,18 +306,19 @@ function DocumentsSection() {
     setUploading(true);
     
     try {
-      const formData = new FormData();
-      formData.append('file', file);
+      const fileName = `${Date.now()}_${file.name}`;
+      const { data, error } = await supabase.storage
+        .from('associes-documents')
+        .upload(fileName, file);
       
-      // Appel direct au backend via fetch
-      const res = await fetch('/.netlify/functions/uploadDocumentAssocie', {
-        method: 'POST',
-        body: formData,
-      });
+      if (error) throw error;
       
-      if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
-      const { file_url, size } = await res.json();
-      setForm(f => ({ ...f, file_url, taille: size }));
+      const { data: { publicUrl } } = supabase.storage
+        .from('associes-documents')
+        .getPublicUrl(fileName);
+      
+      const sizeMB = (file.size / 1024 / 1024).toFixed(1) + ' MB';
+      setForm(f => ({ ...f, file_url: publicUrl, taille: sizeMB }));
     } catch (err) {
       alert('Erreur upload: ' + err.message);
     } finally {
@@ -389,7 +390,14 @@ function DocumentsSection() {
               {form.file_url && <p className="text-xs text-emerald-600 mt-1 truncate">{form.file_url}</p>}
             </div>
             <div className="flex gap-2">
-              <Button onClick={() => createMutation.mutate(form)} className="flex-1 bg-[#1A3A52] text-white" disabled={!form.nom}>
+              <Button onClick={() => {
+                if (!form.nom) return;
+                if (!form.file_url) {
+                  alert('Veuillez d\'abord uploader un fichier');
+                  return;
+                }
+                createMutation.mutate(form);
+              }} className="flex-1 bg-[#1A3A52] text-white" disabled={!form.nom || !form.file_url}>
                 <Save className="h-4 w-4 mr-2" /> {editId ? 'Mettre à jour' : 'Créer'}
               </Button>
               <Button variant="outline" onClick={() => setModal(false)}><X className="h-4 w-4" /></Button>
