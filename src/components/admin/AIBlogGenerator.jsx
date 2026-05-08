@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { base44 } from '@/api/base44Client';
+import { generateBlogArticle } from '@/lib/aiService';
 import { db } from '@/lib/supabaseClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -27,20 +27,18 @@ export default function AIBlogGenerator({ onClose, onSuccess }) {
     setError('');
     setStep('generating');
     try {
+      const articleData = await generateBlogArticle({
+        sujet,
+        categorie,
+        motsCles,
+        angle,
+      });
 
-    const response = await base44.functions.invoke('generateBlogArticle', {
-      sujet,
-      categorie,
-      motsCles,
-      angle,
-    });
+      if (articleData.error) throw new Error(articleData.error);
 
-    const articleData = response.data;
-    if (articleData.error) throw new Error(articleData.error);
-
-    await db.ArticleBlog.create(articleData);
-    setStep('done');
-    onSuccess();
+      await db.ArticleBlog.create(articleData);
+      setStep('done');
+      onSuccess();
     } catch (err) {
       console.error('AI Blog generation error:', err);
       setError("Une erreur s'est produite lors de la génération. Veuillez réessayer.");

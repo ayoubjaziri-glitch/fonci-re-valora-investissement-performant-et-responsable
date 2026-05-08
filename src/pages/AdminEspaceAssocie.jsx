@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { db, supabase } from '@/lib/supabaseClient';
+import { uploadAndSaveDocument } from '@/lib/documentService';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -292,19 +293,10 @@ function DocumentsSection() {
 
   const createMutation = useMutation({
     mutationFn: async (data) => {
-      const payload = { ...data, taille: data.taille || '' };
-      
       if (editId) {
-        return db.DocumentAssocie.update(editId, payload);
+        return db.DocumentAssocie.update(editId, data);
       } else {
-        // Use backend function to bypass RLS
-        const res = await fetch('/api/functions/insertDocumentAssocie', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        if (!res.ok) throw new Error('Failed to insert document');
-        return res.json();
+        return db.DocumentAssocie.create(data);
       }
     },
     onSuccess: () => { qc.invalidateQueries({ queryKey: ['docs-associe'] }); setModal(false); setEditId(null); setForm({ nom: '', categorie: 'Juridique', type_acces: 'privé', date_document: '', file_url: '', taille: '' }); },
@@ -321,23 +313,20 @@ function DocumentsSection() {
     if (!file) return;
     setUploading(true);
     
-    const bucket = 'documents';
-    const fileName = `${Date.now()}_${file.name}`;
-    
     try {
-      // Upload le fichier directement à Supabase
-      const { data, error } = await supabase.storage
-        .from(bucket)
-        .upload(fileName, file);
+      const result = await uploadAndSaveDocument(file, {
+        nom: form.nom || file.name,
+        categorie: form.categorie,
+        type_acces: form.type_acces,
+        date_document: form.date_document
+      });
       
-      if (error) throw error;
-
-      const { data: { publicUrl } } = supabase.storage
-        .from(bucket)
-        .getPublicUrl(fileName);
-
-      const taille = (file.size / 1024 / 1024).toFixed(1) + ' MB';
-      setForm(f => ({ ...f, file_url: publicUrl, taille }));
+      setForm(f => ({ 
+        ...f, 
+        file_url: result.file_url, 
+        taille: result.taille,
+        nom: result.nom
+      }));
     } catch (err) {
       console.error('Upload error:', err);
       alert('Erreur upload: ' + err.message);

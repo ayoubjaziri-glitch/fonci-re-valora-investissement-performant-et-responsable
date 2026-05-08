@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
+import { sendContactEmail } from '@/lib/emailService';
 import {
   Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight, Clock, Loader2 } from
 'lucide-react';
@@ -56,28 +56,16 @@ export default function Contact() {
       message: formData.message
     });
 
-    // 2. Récupérer les destinataires configurés
-    let destinataires = ['Ayoubcontact33@gmail.com', 'Ayoubjaziri@gmail.com'];
+    // 2. Envoyer l'email directement
     try {
-      const configs = await db.ContactConfig.list();
-      const cfg = configs.find(c => c.cle === 'email_destinataires');
-      if (cfg && cfg.valeur) {
-        destinataires = cfg.valeur.split(',').map(e => e.trim()).filter(Boolean);
-      }
-    } catch (e) { /* fallback */ }
-
-    // 3. Envoyer l'email via la backend function
-    try {
-      const res = await base44.functions.invoke('sendContactEmail', {
+      await sendContactEmail({
         prenom: formData.firstName,
         nom: formData.lastName,
         email: formData.email,
         telephone: formData.phone || '',
         type_demande: typeLabel,
-        message: formData.message,
-        destinataires
+        message: formData.message
       });
-      console.log('Email envoyé:', res);
     } catch (err) {
       console.error('Erreur envoi email:', err);
       alert('Erreur lors de l\'envoi de l\'email : ' + err.message);
