@@ -330,7 +330,7 @@ export default function Durabilite() {
               </Button>
             </Link>
             <Link to={createPageUrl("Realisations")}>
-              <Button variant="outline" className="border-[#1A3A52]/30 text-[#1A3A52] hover:bg-[#1A3A52]/10 py-6 font-semibold px-8 mx-1">
+              <Button variant="outline" className="border-[#1A3A52]/30 text-[#1A3A52] hover:bg-[#1A3A52]/10 font-semibold px-8 mx-2 py-4">
                 Voir nos réalisations
               </Button>
             </Link>
