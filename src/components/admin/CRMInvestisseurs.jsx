@@ -447,7 +447,7 @@ export default function CRMInvestisseurs() {
 
   const { data: investisseurs = [] } = useQuery({
     queryKey: ['crm-investisseurs'],
-    queryFn: () => db.InvestisseurCRM.list('-created_date', 500),
+    queryFn: () => db.InvestisseurCRM.list('-created_at', 500),
   });
 
   const saveMutation = useMutation({
@@ -659,7 +659,12 @@ export default function CRMInvestisseurs() {
           </DialogHeader>
           <FormulaireInvestisseur
             form={form} setForm={setForm}
-            onSave={() => saveMutation.mutate(form)}
+            onSave={() => {
+              const clean = { ...form };
+              if (!clean.date_entree) clean.date_entree = null;
+              if (!clean.date_prochain_contact) clean.date_prochain_contact = null;
+              saveMutation.mutate(clean);
+            }}
             onCancel={() => setShowModal(false)}
             editId={editId}
           />
