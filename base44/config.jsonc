@@ -1,0 +1,9 @@
+{
+  "name": "Fonci\u00e8re Valora - Investissement performant et responsable",
+  "site": {
+    "installCommand": "npm install",
+    "buildCommand": "npm run build",
+    "serveCommand": "npm run dev",
+    "outputDirectory": "./dist"
+  }
+}
