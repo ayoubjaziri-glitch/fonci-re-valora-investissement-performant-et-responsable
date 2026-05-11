@@ -48,8 +48,8 @@ export default function Layout({ children, currentPageName }) {
   { name: 'Notre histoire', page: 'Equipe' },
   { name: 'Écosystème', page: 'Partenaires' },
   { name: 'Durabilité', page: 'Durabilite' },
-  { name: 'Nos biens', page: 'Realisations' },
-];
+  { name: 'Nos biens', page: 'Realisations' }];
+
 
   return (
     <div className="min-h-screen bg-white">
@@ -185,9 +185,9 @@ export default function Layout({ children, currentPageName }) {
               <h4 className="font-semibold mb-4">Contact</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">
-                    <Mail className="h-4 w-4" />
-                    ayoubjaziri@gmail.com
+                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">A.jaziri@
+
+
                   </a>
                 </li>
                 <li>
