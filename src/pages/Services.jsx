@@ -247,7 +247,7 @@ export default function Services() {
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">
             {get('missions_cta_titre', "S'associer à notre dynamique de valorisation")}
           </h2>
-          <p className="text-[#1A3A52]/80 mb-8">
+          <p className="mb-8 text-[hsl(var(--sidebar-foreground))]">
             {get('missions_cta_description', "Accédez à une exposition immobilière organisée autour d'un pilotage professionnel et d'une gouvernance claire.")}
           </p>
           <Link to={createPageUrl("Contact")}>
