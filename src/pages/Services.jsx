@@ -26,8 +26,8 @@ export default function Services() {
   { icon: Hammer, titleKey: "missions_service3_titre", titleFallback: "Rénovation & Valorisation BBC", descKey: "missions_service3_description", descFallback: "Travaux pilotés par experts BTP avec objectif DPE A ou B systématique.", featuresKey: "missions_service3_features", featuresFallback: "Plus-value latentes +10–15%\nRéseau de 30+ entreprises BTP\nConformité énergétique garantie" },
   { icon: Users, titleKey: "missions_service4_titre", titleFallback: "Gestion déléguée, vision partagée", descKey: "missions_service4_description", descFallback: "La gestion opérationnelle est intégralement pilotée par la foncière.", featuresKey: "missions_service4_features", featuresFallback: "Gestion opérationnelle complète\nReporting régulier\nGouvernance transparente" },
   { icon: HomeIcon, titleKey: "missions_service5_titre", titleFallback: "Gestion locative & Pilotage", descKey: "missions_service5_description", descFallback: "Commercialisation multi-canaux visant un taux d'occupation cible supérieur à 98 %.", featuresKey: "missions_service5_features", featuresFallback: "Sélection rigoureuse des locataires\nReporting semestriel structuré\nSuivi administratif et financier des flux locatifs" },
-  { icon: Briefcase, titleKey: "missions_service6_titre", titleFallback: "Arbitrage Stratégique & Fiscalité", descKey: "missions_service6_description", descFallback: "Cessions d'actifs, en bloc ou de manière sélective, intégrant une approche patrimoniale.", featuresKey: "missions_service6_features", featuresFallback: "Stratégie de sortie structurée dans une logique de long terme\nCadre fiscal PEA-PME\nValorisation progressive du patrimoine" }
-  ];
+  { icon: Briefcase, titleKey: "missions_service6_titre", titleFallback: "Arbitrage Stratégique & Fiscalité", descKey: "missions_service6_description", descFallback: "Cessions d'actifs, en bloc ou de manière sélective, intégrant une approche patrimoniale.", featuresKey: "missions_service6_features", featuresFallback: "Stratégie de sortie structurée dans une logique de long terme\nCadre fiscal PEA-PME\nValorisation progressive du patrimoine" }];
+
 
   const processSteps = [
   { number: "01", titleKey: "missions_process1_titre", titleFallback: "Sourcing", descKey: "missions_process1_desc", descFallback: "Identification d'opportunités, y compris hors marché" },
@@ -35,8 +35,8 @@ export default function Services() {
   { number: "03", titleKey: "missions_process3_titre", titleFallback: "Acquisition", descKey: "missions_process3_desc", descFallback: "Structuration, négociation et financement des opérations" },
   { number: "04", titleKey: "missions_process4_titre", titleFallback: "Réhabilitation", descKey: "missions_process4_desc", descFallback: "Programmes de rénovation BBC pilotés et suivis" },
   { number: "05", titleKey: "missions_process5_titre", titleFallback: "Exploitation locative", descKey: "missions_process5_desc", descFallback: "Mise en location et gestion optimisée des actifs" },
-  { number: "06", titleKey: "missions_process6_titre", titleFallback: "Arbitrage", descKey: "missions_process6_desc", descFallback: "Cessions et réallocations stratégiques du portefeuille" }
-  ];
+  { number: "06", titleKey: "missions_process6_titre", titleFallback: "Arbitrage", descKey: "missions_process6_desc", descFallback: "Cessions et réallocations stratégiques du portefeuille" }];
+
 
 
   return (
@@ -151,7 +151,7 @@ export default function Services() {
                 <h3 className="text-xl font-semibold text-[#1A3A52] mb-3">{get(service.titleKey, service.titleFallback)}</h3>
                 <p className="text-slate-600 mb-6 leading-relaxed">{get(service.descKey, service.descFallback)}</p>
                 <ul className="space-y-2">
-                  {get(service.featuresKey, service.featuresFallback).split('\n').filter(f => f.trim()).map((feature, idx) =>
+                  {get(service.featuresKey, service.featuresFallback).split('\n').filter((f) => f.trim()).map((feature, idx) =>
                 <li key={idx} className="flex items-center gap-2 text-sm text-gray-600">
                       <div className="w-1.5 h-1.5 bg-[#C9A961] rounded-full" />
                       {feature}
@@ -242,7 +242,7 @@ export default function Services() {
       <DynamicSections page="missions" minOrdre={300} maxOrdre={Infinity} />
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="bg-[#C9A961] py-12">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">
             {get('missions_cta_titre', "S'associer à notre dynamique de valorisation")}
