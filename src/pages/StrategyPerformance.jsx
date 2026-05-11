@@ -36,15 +36,15 @@ export default function StrategyPerformance() {
   { icon: Search, titleKey: "strategie_contexte1_titre", titleFallback: "Sélection des actifs", descKey: "strategie_contexte1_desc", descFallback: "Identifier des immeubles à fort potentiel suppose une lecture fine des marchés, un réseau qualifié et une analyse multicritère approfondie." },
   { icon: Landmark, titleKey: "strategie_contexte2_titre", titleFallback: "Structuration du financement", descKey: "strategie_contexte2_desc", descFallback: "L'intégration de l'effet de levier et la négociation de conditions adaptées nécessitent une ingénierie financière cohérente avec la trajectoire patrimoniale." },
   { icon: Wrench, titleKey: "strategie_contexte3_titre", titleFallback: "Conduite des réhabilitations", descKey: "strategie_contexte3_desc", descFallback: "La rénovation BBC implique une coordination technique exigeante et un pilotage rigoureux des intervenants." },
-  { icon: CalendarDays, titleKey: "strategie_contexte4_titre", titleFallback: "Exploitation locative", descKey: "strategie_contexte4_desc", descFallback: "La gestion du patrimoine et le suivi administratif reposent sur une organisation opérationnelle structurée." }
-  ];
+  { icon: CalendarDays, titleKey: "strategie_contexte4_titre", titleFallback: "Exploitation locative", descKey: "strategie_contexte4_desc", descFallback: "La gestion du patrimoine et le suivi administratif reposent sur une organisation opérationnelle structurée." }];
+
 
   const solutions = [
   { titleKey: "strategie_solution1_titre", titleFallback: "Parcours d'investissement structuré", descKey: "strategie_solution1_desc", descFallback: "De l'acquisition à l'arbitrage, chaque étape du cycle immobilier est organisée dans une logique de gestion déléguée et de pilotage professionnel." },
   { titleKey: "strategie_solution2_titre", titleFallback: "Processus structuré", descKey: "strategie_solution2_desc", descFallback: "Analyses approfondies, réhabilitations BBC, mise en exploitation locative et reporting régulier." },
   { titleKey: "strategie_solution3_titre", titleFallback: "Structuration du financement", descKey: "strategie_solution3_desc", descFallback: "Recours maîtrisé à l'effet de levier et recherche de conditions bancaires adaptées à la stratégie patrimoniale." },
-  { titleKey: "strategie_solution4_titre", titleFallback: "Pilotage & transparence", descKey: "strategie_solution4_desc", descFallback: "Communication périodique, suivi des indicateurs clés et gouvernance favorisant une lecture claire de l'évolution du portefeuille." }
-  ];
+  { titleKey: "strategie_solution4_titre", titleFallback: "Pilotage & transparence", descKey: "strategie_solution4_desc", descFallback: "Communication périodique, suivi des indicateurs clés et gouvernance favorisant une lecture claire de l'évolution du portefeuille." }];
+
 
 
   const zones = [
@@ -574,7 +574,7 @@ Flat Tax (PFU)</p>
       <DynamicSections page="strategie" minOrdre={500} maxOrdre={Infinity} />
 
       {/* CTA */}
-      <section className="bg-[#C9A961] py-16">
+      <section className="bg-[#C9A961] py-8">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
 
