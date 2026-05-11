@@ -52,19 +52,19 @@ export default function Equipe() {
   { name: "Marie Dupont", role: "Responsable gestion locative", focus: "Relations locataires", description: "Pilote la gestion locative, le suivi des occupants et l'optimisation du taux d'occupation.", imageKey: "photo_marie" },
   { name: "Thomas Laurent", role: "Chargé de financement", focus: "Structuration bancaire", description: "Gère les relations bancaires, montages financiers et optimisation de l'effet de levier.", imageKey: "photo_thomas" },
   { name: "Sophie Martin", role: "Comptable", focus: "Reporting financier", description: "Assure la comptabilité, le reporting financier et le suivi des indicateurs de performance.", imageKey: "photo_sophie" },
-  { name: "Lucas Mercier", role: "Chargé d'acquisition", focus: "Sourcing & négociation", description: "Identifie et négocie les opportunités d'acquisition off-market auprès des notaires et agents.", imageKey: "photo_lucas" }
-  ];
+  { name: "Lucas Mercier", role: "Chargé d'acquisition", focus: "Sourcing & négociation", description: "Identifie et négocie les opportunités d'acquisition off-market auprès des notaires et agents.", imageKey: "photo_lucas" }];
 
-  const activeMembers = membresDB.filter(m => m.actif);
-  const dbFounders = activeMembers.filter(m => m.type === 'fondateur');
-  const dbTeam = activeMembers.filter(m => m.type === 'membre');
+
+  const activeMembers = membresDB.filter((m) => m.actif);
+  const dbFounders = activeMembers.filter((m) => m.type === 'fondateur');
+  const dbTeam = activeMembers.filter((m) => m.type === 'membre');
 
   // Utilise la BDD si elle contient des données, sinon fallback statique
-  const founders = dbFounders.length > 0 ? dbFounders.map(m => ({
+  const founders = dbFounders.length > 0 ? dbFounders.map((m) => ({
     name: m.nom, role: m.role, focus: m.focus, description: m.description, experience: m.experience, image: m.image_url
   })) : staticFounders;
 
-  const team = dbTeam.length > 0 ? dbTeam.map(m => ({
+  const team = dbTeam.length > 0 ? dbTeam.map((m) => ({
     name: m.nom, role: m.role, focus: m.focus, description: m.description, image: m.image_url
   })) : staticTeam;
 
@@ -428,7 +428,7 @@ export default function Equipe() {
       <DynamicSections page="equipe" minOrdre={300} maxOrdre={Infinity} />
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="bg-[#C9A961] py-10">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -438,7 +438,7 @@ export default function Equipe() {
             <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">{get('equipe_cta_titre', "Rejoignez une équipe d'experts")}
 
             </h2>
-            <p className="text-[#1A3A52]/80 mb-8">
+            <p className="mb-8 text-gray-800">
               {get('equipe_cta_description', 'Portée par un groupe solide depuis 2008, contribuez à la création de valeur patrimoniale durable.')}
             </p>
             <Link to={createPageUrl("Contact")}>
