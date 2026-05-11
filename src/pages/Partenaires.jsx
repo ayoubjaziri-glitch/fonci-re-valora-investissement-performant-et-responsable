@@ -283,7 +283,7 @@ export default function Partenaires() {
       <DynamicSections page="ecosysteme" minOrdre={0} maxOrdre={99} />
 
       {/* CTA */}
-      <section className="py-16 bg-[#C9A961]">
+      <section className="bg-[#C9A961] py-8">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
             <h2 className="text-slate-900 mb-4 text-3xl font-serif md:text-4xl">
