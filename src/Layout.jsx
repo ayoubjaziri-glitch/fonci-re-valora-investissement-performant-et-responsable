@@ -185,7 +185,7 @@ export default function Layout({ children, currentPageName }) {
               <h4 className="font-semibold mb-4">Contact</h4>
               <ul className="space-y-3">
                 <li>
-                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">A.jaziri@foncierevalora.com
+                  <a href="mailto:ayoubjaziri@gmail.com" className="flex items-center gap-2 text-white/60 hover:text-[#C9A961] transition-colors text-sm">A.jaziri@Foncierevalora.com
 
 
                   </a>
