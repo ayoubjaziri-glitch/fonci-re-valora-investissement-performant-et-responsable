@@ -40,7 +40,7 @@ export default function Realisations() {
   });
 
   // Adapter les champs BDD au format utilisé dans le JSX
-  const realisations = biensDB.filter(b => b.actif).map(b => ({
+  const realisations = biensDB.filter((b) => b.actif).map((b) => ({
     id: b.id,
     title: b.titre,
     location: b.location,
@@ -54,9 +54,9 @@ export default function Realisations() {
     dpeApres: b.dpe_apres,
     descriptionAvant: b.description_avant,
     descriptionApres: b.description_apres,
-    travaux: b.travaux ? b.travaux.split(',').map(t => t.trim()) : [],
+    travaux: b.travaux ? b.travaux.split(',').map((t) => t.trim()) : [],
     rendementBrut: b.rendement_brut,
-    plusValue: b.plus_value,
+    plusValue: b.plus_value
   }));
 
   const selectedRealisation = realisations.find((r) => r.id === selectedId);
@@ -240,12 +240,12 @@ export default function Realisations() {
       <DynamicSections page="nos_biens" minOrdre={300} maxOrdre={Infinity} />
 
       {/* CTA */}
-      <section className="bg-[#C9A961] py-12">
+      <section className="bg-[#C9A961] py-8">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">
             {get('realisations_cta_titre', 'Investir aux côtés de La Foncière Valora')}
           </h2>
-          <p className="text-slate-900 mb-8">
+          <p className="mb-8 text-slate-800">
             {get('realisations_cta_description', 'Accédez à une exposition immobilière structurée et à un pilotage professionnel.')}
           </p>
           <Link to={createPageUrl("Contact")}>
