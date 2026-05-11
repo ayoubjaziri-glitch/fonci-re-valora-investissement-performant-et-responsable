@@ -319,7 +319,7 @@ export default function Durabilite() {
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">S’associer à notre dynamique de valorisation
 
           </h2>
-          <p className="text-[#1A3A52]/80 mb-8">
+          <p className="mb-8 text-[hsl(var(--muted-foreground))]">
             {get('durabilite_cta_description', "Participez à une approche patrimoniale intégrant les enjeux de durabilité au sein d'une stratégie structurée.")}
           </p>
           <div className="flex flex-wrap justify-center gap-4">
