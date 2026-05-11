@@ -140,7 +140,7 @@ export default function Contact() {
                 <h2 className="text-slate-900 mb-8 text-2xl font-serif">Nous contacter</h2>
                 <div className="space-y-5 mb-10">
                   {[
-                  { icon: Mail, label: 'Email', content: <a href="mailto:ayoubjaziri@gmail.com" className="text-slate-600 hover:text-[#C9A961] transition-colors">ayoubjaziri@gmail.com</a> },
+                  { icon: Mail, label: 'Email', content: <a href="mailto:ayoubjaziri@gmail.com" className="text-slate-600 hover:text-[#C9A961] transition-colors">A.jaziri@Foncierevalora.com</a> },
                   { icon: Phone, label: 'Téléphone', content: <a href="tel:+33758736580" className="text-slate-600 hover:text-[#C9A961] transition-colors">+33 7 58 73 65 80</a> },
                   { icon: MapPin, label: 'Adresse', content: <p className="text-slate-600">16 Rue de la Laure<br />03200 Vichy</p> },
                   { icon: Clock, label: 'Horaires', content: <p className="text-slate-600">Lun – Ven : 9h – 18h<br />Sam : 10h – 15h</p> }].
