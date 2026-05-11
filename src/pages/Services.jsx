@@ -242,12 +242,12 @@ export default function Services() {
       <DynamicSections page="missions" minOrdre={300} maxOrdre={Infinity} />
 
       {/* CTA */}
-      <section className="bg-[#C9A961] py-12">
+      <section className="bg-[#C9A961] py-10">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h2 className="text-slate-900 mb-4 text-2xl font-serif md:text-3xl">
             {get('missions_cta_titre', "S'associer à notre dynamique de valorisation")}
           </h2>
-          <p className="mb-8 text-[hsl(var(--sidebar-foreground))]">
+          <p className="mb-8 text-slate-800">
             {get('missions_cta_description', "Accédez à une exposition immobilière organisée autour d'un pilotage professionnel et d'une gouvernance claire.")}
           </p>
           <Link to={createPageUrl("Contact")}>
