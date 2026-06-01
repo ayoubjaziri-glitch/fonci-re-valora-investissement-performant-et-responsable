@@ -116,10 +116,29 @@ export default function ImageCropper({ imageSrc, onCropComplete, onCancel, aspec
   };
 
   const handleCrop = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const croppedDataUrl = canvas.toDataURL('image/jpeg', 0.92);
-    // Convert dataURL to Blob then File
+    const img = imageRef.current;
+    if (!img) return;
+
+    // Calcul des coords de crop dans l'image originale
+    const scaleX = img.naturalWidth / (img.naturalWidth * scale);
+    const scaleY = img.naturalHeight / (img.naturalHeight * scale);
+
+    const srcX = -offset.x / scale;
+    const srcY = -offset.y / scale;
+    const srcW = cw / scale;
+    const srcH = ch / scale;
+
+    // Export en haute résolution (2x)
+    const outputW = Math.min(srcW, img.naturalWidth) * 2;
+    const outputH = Math.min(srcH, img.naturalHeight) * 2;
+
+    const exportCanvas = document.createElement('canvas');
+    exportCanvas.width = outputW;
+    exportCanvas.height = outputH;
+    const ctx = exportCanvas.getContext('2d');
+    ctx.drawImage(img, srcX, srcY, srcW, srcH, 0, 0, outputW, outputH);
+
+    const croppedDataUrl = exportCanvas.toDataURL('image/jpeg', 1.0); // qualité max
     fetch(croppedDataUrl)
       .then(r => r.blob())
       .then(blob => {
