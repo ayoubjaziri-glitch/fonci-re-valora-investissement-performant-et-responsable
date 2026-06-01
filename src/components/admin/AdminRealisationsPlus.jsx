@@ -2,6 +2,22 @@ import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/lib/supabaseClient';
 import { supabase } from '@/lib/supabaseClient';
+
+async function uploadPhotoToSupabase(file) {
+  const ext = file.name.split('.').pop();
+  const fileName = `realisations/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+  // Try to create bucket if needed
+  const bucket = 'public-files';
+  try {
+    await supabase.storage.createBucket(bucket, { public: true });
+  } catch (_) { /* bucket already exists, ignore */ }
+  const { error } = await supabase.storage.from(bucket).upload(fileName, file, {
+    cacheControl: '3600', upsert: false, contentType: file.type,
+  });
+  if (error) throw error;
+  const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(fileName);
+  return publicUrl;
+}
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -76,15 +92,7 @@ export default function AdminRealisationsPlus() {
     if (!file) return;
     setUploadingPhoto(true);
     try {
-      const ext = file.name.split('.').pop();
-      const fileName = `realisations/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
-      const { error } = await supabase.storage.from('public-files').upload(fileName, file, {
-        cacheControl: '3600',
-        upsert: false,
-        contentType: file.type,
-      });
-      if (error) throw error;
-      const { data: { publicUrl } } = supabase.storage.from('public-files').getPublicUrl(fileName);
+      const publicUrl = await uploadPhotoToSupabase(file);
       const field = photoType === 'avant' ? 'image_avant' : 'image_apres';
       setForm(prev => ({ ...prev, [field]: publicUrl }));
     } finally {
