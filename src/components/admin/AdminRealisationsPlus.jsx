@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { db } from '@/lib/supabaseClient';
-import { base44 } from '@/api/base44Client';
+import { supabase } from '@/lib/supabaseClient';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Plus, Trash2, Edit2, Save, X, Upload, MapPin, Loader2, ArrowRight } from 'lucide-react';
-import ImageCropper from '../ImageCropper';
 
 const getDPEColor = (dpe) => {
   const colors = { 'A': 'bg-emerald-500', 'B': 'bg-green-500', 'C': 'bg-lime-500', 'D': 'bg-yellow-500', 'E': 'bg-orange-500', 'F': 'bg-red-400', 'G': 'bg-red-600' };
@@ -25,7 +24,6 @@ export default function AdminRealisationsPlus() {
   });
   const [geoError, setGeoError] = useState('');
   const [geocoding, setGeocoding] = useState(false);
-  const [cropModal, setCropModal] = useState(null);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
   const [photoType, setPhotoType] = useState('avant');
 
@@ -73,22 +71,22 @@ export default function AdminRealisationsPlus() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['realisations-biens'] }),
   });
 
-  const handlePhotoUpload = (e) => {
+  const handlePhotoUpload = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      setCropModal({ src: event.target.result, originalFile: file });
-    };
-    reader.readAsDataURL(file);
-  };
-
-  const handleCropComplete = async (croppedFile) => {
-    setCropModal(null);
     setUploadingPhoto(true);
     try {
-      const res = await base44.integrations.Core.UploadFile({ file: croppedFile });
-      setForm({ ...form, [photoType === 'avant' ? 'image_avant' : 'image_apres']: res.file_url });
+      const ext = file.name.split('.').pop();
+      const fileName = `realisations/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+      const { error } = await supabase.storage.from('public-files').upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: file.type,
+      });
+      if (error) throw error;
+      const { data: { publicUrl } } = supabase.storage.from('public-files').getPublicUrl(fileName);
+      const field = photoType === 'avant' ? 'image_avant' : 'image_apres';
+      setForm(prev => ({ ...prev, [field]: publicUrl }));
     } finally {
       setUploadingPhoto(false);
     }
@@ -216,15 +214,6 @@ export default function AdminRealisationsPlus() {
                 </div>
               </div>
 
-              {/* Crop Modal */}
-              {cropModal && (
-                <Dialog open={!!cropModal} onOpenChange={(open) => { if (!open) setCropModal(null); }}>
-                  <DialogContent className="max-w-2xl">
-                    <DialogHeader><DialogTitle>Recadrer la photo</DialogTitle></DialogHeader>
-                    <ImageCropper imageSrc={cropModal.src} onCropComplete={handleCropComplete} onCancel={() => setCropModal(null)} aspectRatio={16/9} />
-                  </DialogContent>
-                </Dialog>
-              )}
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
