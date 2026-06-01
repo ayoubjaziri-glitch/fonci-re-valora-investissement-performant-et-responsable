@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { db, supabase } from '@/lib/supabaseClient';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { uploadFile } from '@/lib/uploadService';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -144,12 +144,9 @@ function RealisationsBiensSection() {
     setCropModal(null);
     setUploading({ id: bienId, type });
     try {
-      const result = await base44.integrations.Core.UploadFile({ file: croppedFile });
-      const publicUrl = result.file_url;
-      await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: publicUrl } });
-      setUploading(null);
-    } catch (error) {
-      console.error('Error uploading image:', error);
+      const result = await uploadFile(croppedFile, 'realisations');
+      await updateMutation.mutateAsync({ id: bienId, data: { [type === 'avant' ? 'image_avant' : 'image_apres']: result.file_url } });
+    } finally {
       setUploading(null);
     }
   };
@@ -269,12 +266,9 @@ export default function GestionPhotos({ embedded = false }) {
     setCropModal(null);
     setUploading(true);
     try {
-      const result = await base44.integrations.Core.UploadFile({ file: croppedFile });
-      const publicUrl = result.file_url;
-      await updateImageMutation.mutateAsync({ id: imageId, url: publicUrl });
-      setUploading(false);
-    } catch (error) {
-      console.error('Error uploading image:', error);
+      const result = await uploadFile(croppedFile, 'site-images');
+      await updateImageMutation.mutateAsync({ id: imageId, url: result.file_url });
+    } finally {
       setUploading(false);
     }
   };
