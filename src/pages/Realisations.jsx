@@ -9,7 +9,6 @@ import {
 'lucide-react';
 import InterventionMap from "../components/InterventionMap";
 import { Button } from "@/components/ui/button";
-import BeforeAfterSlider from "../components/BeforeAfterSlider";
 import DynamicSections from '../components/DynamicSections';
 import { useQuery } from '@tanstack/react-query';
 import { db } from '@/lib/supabaseClient';
@@ -138,12 +137,13 @@ export default function Realisations() {
               transition={{ delay: index * 0.1 }}
               className="group">
 
-                {/* Before/After Slider */}
+                {/* Photo */}
                 <div className="relative h-80 rounded-2xl overflow-hidden mb-6">
-                  <BeforeAfterSlider
-                  beforeImage={item.imageAvant}
-                  afterImage={item.imageApres}
-                  alt={item.title} />
+                  <img
+                    src={item.imageApres || item.imageAvant}
+                    alt={item.title}
+                    className="w-full h-full object-cover"
+                  />
 
                   
                   {/* DPE Badge */}

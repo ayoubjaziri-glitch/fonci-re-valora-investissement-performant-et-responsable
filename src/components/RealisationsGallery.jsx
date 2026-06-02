@@ -1,7 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
-import BeforeAfterSlider from "./BeforeAfterSlider";
 import { useQuery } from "@tanstack/react-query";
 import { db } from '@/lib/supabaseClient';
 
@@ -73,10 +72,10 @@ export default function RealisationsGallery() {
           className="group"
         >
           <div className="relative h-56 rounded-2xl overflow-hidden mb-4">
-            <BeforeAfterSlider 
-              beforeImage={item.image_avant}
-              afterImage={item.image_apres}
+            <img
+              src={item.image_apres || item.image_avant}
               alt={item.titre}
+              className="w-full h-full object-cover"
             />
             <div className="absolute bottom-3 left-3 flex items-center gap-1 z-10">
               <div className={`w-7 h-7 ${getDPEColor(item.dpe_avant)} text-white text-xs font-bold flex items-center justify-center rounded shadow-lg`}>
