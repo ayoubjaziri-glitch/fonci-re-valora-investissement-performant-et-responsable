@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { db } from '@/lib/supabaseClient';
+import { sendContactEmail } from '@/lib/emailService';
 import {
   Mail, Phone, MapPin, Send, CheckCircle2, ArrowRight, Clock, Loader2 } from
 'lucide-react';
@@ -54,6 +55,21 @@ export default function Contact() {
       type_demande: typeLabel,
       message: formData.message
     });
+
+    // 2. Envoyer l'email directement
+    try {
+      await sendContactEmail({
+        prenom: formData.firstName,
+        nom: formData.lastName,
+        email: formData.email,
+        telephone: formData.phone || '',
+        type_demande: typeLabel,
+        message: formData.message
+      });
+    } catch (err) {
+      console.error('Erreur envoi email:', err);
+      alert('Erreur lors de l\'envoi de l\'email : ' + err.message);
+    }
 
     setSending(false);
     setSubmitted(true);
