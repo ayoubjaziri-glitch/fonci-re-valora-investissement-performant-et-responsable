@@ -116,7 +116,7 @@ export default function AdminEquipe() {
               </div>
               <div>
                 <label className="text-sm font-medium text-slate-700 block mb-1">Photo du membre</label>
-                <div className="flex gap-3">
+                <div className="flex gap-3 mb-2">
                   <label className="flex-1 cursor-pointer">
                     <div className="border-2 border-dashed border-slate-300 rounded-lg p-4 text-center hover:border-[#C9A961] hover:bg-slate-50 transition-colors">
                       {uploadingPhoto ? (
@@ -132,6 +132,12 @@ export default function AdminEquipe() {
                   </label>
                   {form.image_url && <img src={form.image_url} alt="preview" className="w-16 h-16 object-cover rounded-lg flex-shrink-0" />}
                 </div>
+                <Input
+                  value={form.image_url}
+                  onChange={e => setForm({...form, image_url: e.target.value})}
+                  placeholder="Ou saisir l'URL de la photo manuellement"
+                  className="text-xs"
+                />
               </div>
               {cropModal && (
                 <Dialog open={!!cropModal} onOpenChange={(open) => { if (!open) setCropModal(null); }}>
