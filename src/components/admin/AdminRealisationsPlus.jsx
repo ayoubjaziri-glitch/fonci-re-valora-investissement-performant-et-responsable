@@ -186,23 +186,39 @@ export default function AdminRealisationsPlus() {
 
               {/* Photos Upload */}
               <div className="grid grid-cols-2 gap-4">
-                <div>
+                <div className="space-y-1">
                   <Label className="text-sm font-medium">Photo Avant</Label>
                   <label className="mt-1 flex items-center gap-3 p-3 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-[#C9A961] transition-colors">
                     <Upload className="h-5 w-5 text-slate-400" />
-                    <span className="text-sm text-slate-600">{uploadingPhoto && photoType === 'avant' ? 'Upload...' : form.image_avant ? '✓ Uploadée' : 'Cliquez'}</span>
+                    <span className="text-sm text-slate-600">{uploadingPhoto && photoType === 'avant' ? 'Upload...' : form.image_avant ? '✓ Uploadée' : 'Cliquez pour uploader'}</span>
                     <input type="file" accept="image/*" onChange={(e) => { setPhotoType('avant'); handlePhotoUpload(e); }} disabled={uploadingPhoto} className="hidden" />
                   </label>
-                  {form.image_avant && <p className="text-xs text-emerald-600 mt-1 truncate">{form.image_avant}</p>}
+                  {form.image_avant && (
+                    <img src={form.image_avant} alt="Avant" className="w-full h-20 object-cover rounded-md border border-slate-200" onError={e => e.target.style.display='none'} />
+                  )}
+                  <Input
+                    value={form.image_avant}
+                    onChange={e => setForm({...form, image_avant: e.target.value})}
+                    placeholder="Ou saisir l'URL manuellement"
+                    className="text-xs"
+                  />
                 </div>
-                <div>
+                <div className="space-y-1">
                   <Label className="text-sm font-medium">Photo Après</Label>
                   <label className="mt-1 flex items-center gap-3 p-3 border-2 border-dashed border-slate-300 rounded-lg cursor-pointer hover:border-[#C9A961] transition-colors">
                     <Upload className="h-5 w-5 text-slate-400" />
-                    <span className="text-sm text-slate-600">{uploadingPhoto && photoType === 'apres' ? 'Upload...' : form.image_apres ? '✓ Uploadée' : 'Cliquez'}</span>
+                    <span className="text-sm text-slate-600">{uploadingPhoto && photoType === 'apres' ? 'Upload...' : form.image_apres ? '✓ Uploadée' : 'Cliquez pour uploader'}</span>
                     <input type="file" accept="image/*" onChange={(e) => { setPhotoType('apres'); handlePhotoUpload(e); }} disabled={uploadingPhoto} className="hidden" />
                   </label>
-                  {form.image_apres && <p className="text-xs text-emerald-600 mt-1 truncate">{form.image_apres}</p>}
+                  {form.image_apres && (
+                    <img src={form.image_apres} alt="Après" className="w-full h-20 object-cover rounded-md border border-slate-200" onError={e => e.target.style.display='none'} />
+                  )}
+                  <Input
+                    value={form.image_apres}
+                    onChange={e => setForm({...form, image_apres: e.target.value})}
+                    placeholder="Ou saisir l'URL manuellement"
+                    className="text-xs"
+                  />
                 </div>
               </div>
 
