@@ -56,7 +56,7 @@ export default function Contact() {
       message: formData.message
     });
 
-    // 2. Envoyer l'email directement
+    // 2. Envoyer l'email via Edge Function Supabase
     try {
       await sendContactEmail({
         prenom: formData.firstName,
@@ -68,7 +68,7 @@ export default function Contact() {
       });
     } catch (err) {
       console.error('Erreur envoi email:', err);
-      alert('Erreur lors de l\'envoi de l\'email : ' + err.message);
+      // On ne bloque pas l'utilisateur — la demande est quand même sauvegardée en base
     }
 
     setSending(false);
