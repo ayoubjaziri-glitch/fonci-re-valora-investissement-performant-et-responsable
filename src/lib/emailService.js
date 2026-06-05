@@ -7,9 +7,9 @@ import emailjs from '@emailjs/browser';
 // 3. Créez un "Email Template" avec les variables ci-dessous
 // 4. Remplacez les 3 constantes suivantes
 
-const EMAILJS_SERVICE_ID = 'service_valora';    // ← votre Service ID
-const EMAILJS_TEMPLATE_ID = 'template_contact'; // ← votre Template ID
-const EMAILJS_PUBLIC_KEY = 'VOTRE_PUBLIC_KEY';  // ← votre Public Key
+const EMAILJS_SERVICE_ID = 'service_abc1234';
+const EMAILJS_TEMPLATE_ID = 'template_7llpt0a';
+const EMAILJS_PUBLIC_KEY = 'l2GGP5GaMJzYu-J6RUFhM';
 
 export async function sendContactEmail(data) {
   const { prenom, nom, email, telephone, type_demande, message } = data;
