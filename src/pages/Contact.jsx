@@ -46,19 +46,9 @@ export default function Contact() {
     const typeLabel = investmentOptions.find((o) => o.id === formData.investmentType)?.title || formData.investmentType;
     const dateStr = new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
-    // 1. Sauvegarder la demande en base de données
-    await db.ContactRequest.create({
-      prenom: formData.firstName,
-      nom: formData.lastName,
-      email: formData.email,
-      telephone: formData.phone || '',
-      type_demande: typeLabel,
-      message: formData.message
-    });
-
-    // 2. Envoyer l'email via Edge Function Supabase
+    // 1. Sauvegarder en base (silencieux si erreur)
     try {
-      await sendContactEmail({
+      await db.ContactRequest.create({
         prenom: formData.firstName,
         nom: formData.lastName,
         email: formData.email,
@@ -67,9 +57,18 @@ export default function Contact() {
         message: formData.message
       });
     } catch (err) {
-      console.error('Erreur envoi email:', err);
-      // On ne bloque pas l'utilisateur — la demande est quand même sauvegardée en base
+      console.warn('Sauvegarde base ignorée:', err);
     }
+
+    // 2. Envoyer l'email via EmailJS
+    await sendContactEmail({
+      prenom: formData.firstName,
+      nom: formData.lastName,
+      email: formData.email,
+      telephone: formData.phone || '',
+      type_demande: typeLabel,
+      message: formData.message
+    });
 
     setSending(false);
     setSubmitted(true);
