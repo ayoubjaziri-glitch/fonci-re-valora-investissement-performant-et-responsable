@@ -1,39 +1,32 @@
-import { base44 } from '@/api/base44Client';
+// Email via EmailJS — configurez vos identifiants sur https://www.emailjs.com/
+import emailjs from '@emailjs/browser';
+
+const EMAILJS_SERVICE_ID = 'service_abc1234';   // ⚠️ À remplacer par votre vrai Service ID
+const EMAILJS_TEMPLATE_ID = 'template_7llpt0a';
+const EMAILJS_PUBLIC_KEY = 'l2GGP5GaMJzYu-J6RUFhM';
 
 export async function sendContactEmail(data) {
   const { prenom, nom, email, telephone, type_demande, message } = data;
 
-  const subject = `[Foncière Valora] Nouvelle demande — ${type_demande}`;
-  const body = `
-Nouvelle demande de contact reçue sur foncierevalora.fr
+  const templateParams = {
+    from_name: `${prenom} ${nom}`,
+    from_email: email,
+    phone: telephone || 'Non renseigné',
+    subject: type_demande,
+    message,
+    reply_to: email,
+  };
 
----
-Nom : ${prenom} ${nom}
-Email : ${email}
-Téléphone : ${telephone || 'Non renseigné'}
-Objet : ${type_demande}
-
-Message :
-${message}
-
----
-Reçu le ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} à ${new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
-  `.trim();
-
-  await Promise.all([
-    base44.integrations.Core.SendEmail({
-      to: 'ayoubjaziri@gmail.com',
-      subject,
-      body,
-      from_name: 'Foncière Valora'
-    }),
-    base44.integrations.Core.SendEmail({
-      to: 'ayoubcontact33@gmail.com',
-      subject,
-      body,
-      from_name: 'Foncière Valora'
-    })
-  ]);
-
-  return { success: true };
+  try {
+    const result = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      templateParams,
+      EMAILJS_PUBLIC_KEY
+    );
+    return { success: result?.status === 200 };
+  } catch (err) {
+    console.warn('EmailJS non configuré — email non envoyé:', err);
+    return { success: false };
+  }
 }
