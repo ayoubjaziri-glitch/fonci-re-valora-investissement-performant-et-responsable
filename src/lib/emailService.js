@@ -23,16 +23,16 @@ export async function sendContactEmail(data) {
     reply_to: email,
   };
 
-  const result = await emailjs.send(
-    EMAILJS_SERVICE_ID,
-    EMAILJS_TEMPLATE_ID,
-    templateParams,
-    EMAILJS_PUBLIC_KEY
-  );
-
-  if (result.status !== 200) {
-    throw new Error('Erreur EmailJS : ' + result.text);
+  try {
+    const result = await emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TEMPLATE_ID,
+      templateParams,
+      EMAILJS_PUBLIC_KEY
+    );
+    return { success: result?.status === 200 };
+  } catch (err) {
+    console.warn('EmailJS error (non-blocking):', err);
+    return { success: false };
   }
-
-  return { success: true };
 }
