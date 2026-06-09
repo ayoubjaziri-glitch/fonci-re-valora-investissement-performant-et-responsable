@@ -550,7 +550,7 @@ export default function StrategyPerformance() {
 
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
                 <p className="text-white/60 text-sm mb-2">Régime Standard</p>
-                <p className="text-4xl font-bold text-white mb-2">30%</p>
+                <p className="text-4xl font-bold text-white mb-2">31,4%</p>
                 <p className="text-white/60 text-sm font-semibold">12,8% IR + 17,2% PS
 
 Flat Tax (PFU)</p>
