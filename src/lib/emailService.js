@@ -1,38 +1,39 @@
-// Service pour envoyer des emails via EmailJS (frontend only, no server needed)
-import emailjs from '@emailjs/browser';
-
-// ⚙️ À configurer sur https://www.emailjs.com/
-// 1. Créez un compte gratuit
-// 2. Ajoutez un "Email Service" (Gmail, Outlook, etc.)
-// 3. Créez un "Email Template" avec les variables ci-dessous
-// 4. Remplacez les 3 constantes suivantes
-
-const EMAILJS_SERVICE_ID = 'service_abc1234';
-const EMAILJS_TEMPLATE_ID = 'template_7llpt0a';
-const EMAILJS_PUBLIC_KEY = 'l2GGP5GaMJzYu-J6RUFhM';
+import { base44 } from '@/api/base44Client';
 
 export async function sendContactEmail(data) {
   const { prenom, nom, email, telephone, type_demande, message } = data;
 
-  const templateParams = {
-    from_name: `${prenom} ${nom}`,
-    from_email: email,
-    phone: telephone || 'Non renseigné',
-    subject: type_demande,
-    message: message,
-    reply_to: email,
-  };
+  const subject = `[Foncière Valora] Nouvelle demande — ${type_demande}`;
+  const body = `
+Nouvelle demande de contact reçue sur foncierevalora.fr
 
-  try {
-    const result = await emailjs.send(
-      EMAILJS_SERVICE_ID,
-      EMAILJS_TEMPLATE_ID,
-      templateParams,
-      EMAILJS_PUBLIC_KEY
-    );
-    return { success: result?.status === 200 };
-  } catch (err) {
-    console.warn('EmailJS error (non-blocking):', err);
-    return { success: false };
-  }
+---
+Nom : ${prenom} ${nom}
+Email : ${email}
+Téléphone : ${telephone || 'Non renseigné'}
+Objet : ${type_demande}
+
+Message :
+${message}
+
+---
+Reçu le ${new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })} à ${new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}
+  `.trim();
+
+  await Promise.all([
+    base44.integrations.Core.SendEmail({
+      to: 'ayoubjaziri@gmail.com',
+      subject,
+      body,
+      from_name: 'Foncière Valora'
+    }),
+    base44.integrations.Core.SendEmail({
+      to: 'ayoubcontact33@gmail.com',
+      subject,
+      body,
+      from_name: 'Foncière Valora'
+    })
+  ]);
+
+  return { success: true };
 }
