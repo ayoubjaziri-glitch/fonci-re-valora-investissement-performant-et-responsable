@@ -551,13 +551,13 @@ export default function StrategyPerformance() {
               <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 text-center border border-white/10">
                 <p className="text-white/60 text-sm mb-2">Régime Standard</p>
                 <p className="text-4xl font-bold text-white mb-2">31,4%</p>
-                <p className="text-white/60 text-sm font-semibold">12,8% IR + 17,2% PS
+                <p className="text-white/60 text-sm font-semibold">12,8% IR + 18,2% PS Flat Tax (PFU)
 
-Flat Tax (PFU)</p>
+                </p>
               </div>
               <div className="bg-[#C9A961] rounded-2xl p-6 text-center">
                 <p className="text-[#1A3A52]/80 text-sm mb-2">Avec PEA-PME</p>
-                <p className="text-4xl font-bold text-[#1A3A52] mb-2">17,2%</p>
+                <p className="text-4xl font-bold text-[#1A3A52] mb-2">18,6%</p>
                 <p className="text-[#1A3A52]/80 text-sm">Prélèvements sociaux</p>
                 <div className="mt-4 bg-[#1A3A52] rounded-lg py-2 px-4">
                   <p className="text-white text-sm font-semibold">Économie 12,8%</p>
