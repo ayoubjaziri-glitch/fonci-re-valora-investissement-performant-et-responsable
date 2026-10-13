@@ -854,7 +854,7 @@ La mission de la Foncière Valora consiste à acquérir des actifs avec une déc
 ## 5. L'Équipe Valora : 18 ans d'ancrage territorial
 
 - **Ayoub Jaziri :** Pilote la stratégie de financement optimisée à 80 % LTC.
-- **Sophian Naili :** Expert du sourcing "Off-Market" via un réseau de 45 agents partenaires.
+- **Sofhian Naili :** Expert du sourcing "Off-Market" via un réseau de 45 agents partenaires.
 - **Renaud Marchand :** Ingénieur BTP, garant de la qualité des rénovations BBC.
 
 ## Conclusion
@@ -927,7 +927,7 @@ La direction de la Foncière Valora ne perçoit sa rémunération (carried inter
 La solidité de la Foncière Valora repose sur l'expérience de ses dirigeants, qui gèrent déjà un patrimoine de **3,7 millions d'euros** au sein du Groupe Auvergne et Patrimoine :
 
 - **Ayoub Jaziri :** Expert en stratégie d'acquisition et financement, ancien chef de projet en promotion immobilière à Bordeaux.
-- **Sophian Naili :** Spécialiste du sourcing "Off-Market" via un réseau de 45 agents partenaires.
+- **Sofhian Naili :** Spécialiste du sourcing "Off-Market" via un réseau de 45 agents partenaires.
 - **Renaud Marchand :** Ingénieur BTP, garant de la qualité de la rénovation BBC et du respect des normes environnementales.
 
 ## Conclusion

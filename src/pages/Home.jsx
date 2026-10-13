@@ -449,7 +449,7 @@ export default function Home() {
           <div className="grid md:grid-cols-3 gap-8 mb-12">
             {[
             { key: 'photo_ayoub', nom: get('home_membre1_nom', 'Ayoub Jaziri'), role: get('home_membre1_role', 'Cofondateur'), desc: get('home_membre1_desc', "Stratégie d'acquisition, suivi des travaux, financement et gouvernance."), fallback: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80' },
-            { key: 'photo_sophian', nom: get('home_membre2_nom', 'Sophian Naili'), role: get('home_membre2_role', 'Cofondateur'), desc: get('home_membre2_desc', "Investissement, sourcing off-market et arbitrages • gouvernance juridique et vision stratégique de la foncière."), fallback: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80' },
+            { key: 'photo_sophian', nom: get('home_membre2_nom', 'Sofhian Naili'), role: get('home_membre2_role', 'Cofondateur'), desc: get('home_membre2_desc', "Investissement, sourcing off-market et arbitrages • gouvernance juridique et vision stratégique de la foncière."), fallback: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80' },
             { key: 'photo_renaud', nom: get('home_membre3_nom', 'Renaud Marchand'), role: get('home_membre3_role', 'Associé'), desc: get('home_membre3_desc', "Travaux & rénovation, pilotage des chantiers • Ingénieur BTP • expertise technique sur les projets de réhabilitation."), fallback: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80' }].
             map((m, i) =>
             <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1 }}

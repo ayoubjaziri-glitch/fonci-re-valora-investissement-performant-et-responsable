@@ -1027,7 +1027,7 @@ La Foncière Valora s'appuie sur deux leviers de croissance majeurs pour sécuri
 La force de la Foncière Valora réside dans l'expérience de ses fondateurs, dont les racines sont profondément ancrées dans la région Auvergne :
 
 - **Ayoub Jaziri :** Pilote la stratégie de financement optimisée à 80 % LTC (Loan-To-Cost).
-- **Sophian Naili :** Expert du sourcing "Off-Market", il permet à la Foncière Valora d'accéder à des immeubles de rapport avant leur mise sur le marché public.
+- **Sofhian Naili :** Expert du sourcing "Off-Market", il permet à la Foncière Valora d'accéder à des immeubles de rapport avant leur mise sur le marché public.
 - **Renaud Marchand :** Ingénieur BTP, il supervise la qualité des rénovations BBC et la conformité aux normes environnementales de 2026.
 
 ## Conclusion
@@ -1100,7 +1100,7 @@ La direction de la Foncière Valora ne perçoit sa rémunération (carried inter
 La solidité de la Foncière Valora repose sur l'expérience de ses dirigeants, qui gèrent déjà un patrimoine de **3,7 millions d'euros** au sein du Groupe Auvergne et Patrimoine :
 
 - **Ayoub Jaziri :** Expert en stratégie d'acquisition et financement, ancien chef de projet en promotion immobilière à Bordeaux.
-- **Sophian Naili :** Spécialiste du sourcing "Off-Market" via un réseau de 45 agents partenaires.
+- **Sofhian Naili :** Spécialiste du sourcing "Off-Market" via un réseau de 45 agents partenaires.
 - **Renaud Marchand :** Ingénieur BTP, garant de la qualité de la rénovation BBC et du respect des normes environnementales.
 
 ## Conclusion
