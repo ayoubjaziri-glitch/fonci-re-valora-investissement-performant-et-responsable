@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { db } from '@/lib/supabaseClient';
+import CookieConsent from './components/CookieConsent';
 
 const LOGO_URL = 'https://base44.app/api/apps/699460f1b03f6285dc8513a7/files/mp/public/699460f1b03f6285dc8513a7/eb47cc5e5_cropped.jpg';
 
@@ -239,6 +240,12 @@ export default function Layout({ children, currentPageName }) {
                 <Link to={createPageUrl("PolitiqueConfidentialite")} className="text-white/40 hover:text-white/70 text-sm transition-colors">
                   Politique de confidentialité
                 </Link>
+                <button
+                  onClick={() => window.dispatchEvent(new Event('open-cookie-consent'))}
+                  className="text-white/40 hover:text-white/70 text-sm transition-colors"
+                >
+                  Gérer mes cookies
+                </button>
 
               </div>
             </div>
@@ -248,6 +255,8 @@ export default function Layout({ children, currentPageName }) {
           </div>
         </div>
       </footer>
+
+      <CookieConsent />
     </div>);
 
 }
